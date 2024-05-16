@@ -1,9 +1,14 @@
 import { View, Text, Dimensions } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
-import MapView, {Marker} from 'react-native-maps'
-import { UserLocationContext } from '@/app/context/UserLocationContext'
+import React, { useState, useEffect } from 'react'
+import MapView, { Marker } from 'react-native-maps'
+import useLocation from '../../hooks/useLocation'
+import * as Location from 'expo-location';
 
 export default function GoogleMapView() {
+  const { location, setLocation } = useLocation()
+  const [errorMsg, setErrorMsg] = useState(null);
+  let yourLocation
+
   const [mapRegion, setMapRegion] = useState({
     latitude: -0.3077631314438677,
     longitude: -78.4500717340893,
@@ -11,18 +16,33 @@ export default function GoogleMapView() {
     longitudeDelta: 0.0421,
   })
 
-  const { location, setLocation } = useContext(UserLocationContext)
+
+  const userLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync()
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access loctaion was denied')
+    }
+     yourLocation = await Location.getCurrentPositionAsync({ enabledHighAcurracy: true })
+
+     setLocation({...location,
+      latitude: yourLocation.coords.latitude,
+      longitude: yourLocation.coords.longitude
+     })
+
+    setMapRegion({
+      latitude: yourLocation.coords.latitude,
+      longitude: yourLocation.coords.longitude,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+
+    })
+  }
 
   useEffect(() => {
-    if (location) {
-      setMapRegion({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        latitudeDelta: 0.0122,
-        longitudeDelta: 0.0121,
-      })
-    }
+    userLocation()
   }, [])
+
+  console.log(location)
 
 
   return (
@@ -41,14 +61,13 @@ export default function GoogleMapView() {
             height: Dimensions.get('screen').height * 0.23,
             borderRadius: 20,
           }}
-          showsUserLocation={true}
           region={mapRegion}
 
         >
-          <Marker 
-          title='You'
-          coordinate={mapRegion}
-          
+          <Marker
+            title='You'
+            coordinate={mapRegion}
+
           />
 
         </MapView>

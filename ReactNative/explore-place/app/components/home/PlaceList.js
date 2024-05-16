@@ -1,24 +1,39 @@
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
-import PlaceItem from './PlaceItem'
+import PlaceItem from './PlaceItem.js'
+import { useNavigation } from '@react-navigation/native'
 
-export default function PlaceList({placeList}) {
+export default function PlaceList({ placeList }) {
+  const navigator = useNavigation()
+  const onPlaceClick = (item) => {
+    navigator.navigate('place-detail', { place: item })
+  }
+
+
   return (
-    <View>
+    <ScrollView >
       <Text style={{
-        fontSize:20,
+        fontSize: 20,
         marginTop: 10
 
       }}>
         Found {placeList.length} places</Text>
 
-      <FlatList
+        {placeList.map((item, index) => (
+            <TouchableOpacity key={index} onPress={() => onPlaceClick(item)}>
+              <PlaceItem key={index} place={item} />
+            </TouchableOpacity>
+        ))}
+
+      {/* <FlatList
         data={placeList}
-        renderItem={({item})=>{
+        renderItem={({item})=>(
+          <TouchableOpacity onPress={()=>onPlaceClick(item)}>
             <PlaceItem place={item} />
-        }}
-      
-      />
-    </View>
+          </TouchableOpacity>
+        )}
+        horizontal={false}
+      /> */}
+    </ScrollView>
   )
 }
