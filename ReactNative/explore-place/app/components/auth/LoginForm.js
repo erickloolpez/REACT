@@ -1,76 +1,149 @@
+import { useState } from 'react'
 import { View, Text, Image, TextInput, Button, StyleSheet, KeyboardAvoidingView, SafeAreaView, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
 import React from 'react'
 import Header from './Header'
+import { user, userDetails } from '../../utils/userDB'
+import useAuth from '../../hooks/useAuth'
+import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function LoginForm() {
+    const [error, setError] = useState("");
+    const { login, auth, listAuth } = useAuth()
+
+    const navigator = useNavigation()
+    const onSignUpClick = () => {
+        navigator.navigate('register')
+    }
+
+    const formik = useFormik({
+        initialValues: initialValues(),
+        validationSchema: Yup.object(validationSchema()),
+        validateOnChange: false,
+        onSubmit: (formValue) => {
+            setError("");
+            const { username, password } = formValue;
+
+            let usuario
+
+            listAuth.forEach((item) => {
+                if (item[0].nombre == username) {
+                    usuario = item[0]
+                }
+            })
+
+            console.log('FILTRO USUARIO', usuario)
+
+            if (usuario.nombre !== username || usuario.contra !== password) {
+                setError("El usuario o la contraseña no son correcto");
+                console.log('se cayo')
+            } else {
+                login(usuario);
+                console.log(auth)
+            }
+        },
+    });
+
     return (
         <SafeAreaView>
-            <TouchableWithoutFeedback onPress={()=>{
+            <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss()
             }}>
-            <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={20} style={{ height: hp(100) }}>
-                <Header />
-                <View style={styles.container}>
-                    <View
-                        style={{
-                            width: '90%',
-                        }}
-                    >
-                        <Text
+                <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={20} style={{}}>
+                    <Header />
+                    <View style={styles.container}>
+                        <View
                             style={{
-                                fontSize: 24,
-                                fontWeight: '400'
+                                width: '90%',
+                                height: 60,
                             }}
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 24,
+                                    fontWeight: '400'
+                                }}
 
-                        >Welcome Back!
-                        </Text>
-                        <Text style={{ color: 'gray' }}>Hello there login to continue</Text>
-                    </View>
-                    <View style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        width: '100%',
-                        gap: 18
-                    }}>
-                        <View style={styles.pills}>
-                            <Image
-                                source={require('../../../assets/images/google.png')}
-                                style={styles.pillsImage}
+                            >Welcome Back!
+                            </Text>
+                            <Text style={{ color: 'gray', marginTop: 4 }}>Hello there login to continue</Text>
+                        </View>
+                        <View style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            width: '100%',
+                            gap: 18,
+                            height: 40
+                        }}>
+                            <View style={styles.pills}>
+                                <Image
+                                    source={require('../../../assets/images/google.png')}
+                                    style={styles.pillsImage}
+                                />
+                                <Text>Google</Text>
+                            </View>
+                            <View style={styles.pills}>
+                                <Image
+                                    source={require('../../../assets/images/facebook.png')}
+                                    style={styles.pillsImage}
+                                />
+                                <Text>Facebook</Text>
+                            </View>
+                        </View>
+                        <Text>or sign in with</Text>
+                        <View style={styles.containerForm}>
+                            <Text >Email Address</Text>
+                            <TextInput
+                                style={styles.input}
+                                autoCapitalize='none'
+                                value={formik.values.username}
+                                onChangeText={(text) => formik.setFieldValue('username', text)}
+
                             />
-                            <Text>Google</Text>
-                        </View>
-                        <View style={styles.pills}>
-                            <Image
-                                source={require('../../../assets/images/facebook.png')}
-                                style={styles.pillsImage}
+                            <Text> Password</Text>
+                            <TextInput
+                                style={styles.input}
+                                autoCapitalize='none'
+                                secureTextEntry= {true}
+                                value={formik.values.password}
+                                onChangeText={(text) => formik.setFieldValue('password', text)}
                             />
-                            <Text>Facebook</Text>
+                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: '100%' }}>
+                                <Text>Forgot Password?</Text>
+                            </View>
                         </View>
-                    </View>
-                    <Text>or sign in with</Text>
-                    <View style={styles.containerForm}>
-                        <Text >Email Address</Text>
-                        <TextInput style={styles.input} />
-                        <Text> Password</Text>
-                        <TextInput style={styles.input} />
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: '100%' }}>
-                            <Text>Forgot Password?</Text>
+                        <View style={styles.button}>
+                            <Button title='Login Account' onPress={formik.handleSubmit} />
                         </View>
+                        <TouchableOpacity onPress={() => onSignUpClick()}>
+                            <Text>Don't have account? Sign Up</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.error}>{formik.errors.username}</Text>
+                        <Text style={styles.error}>{formik.errors.password}</Text>
+                        <Text style={styles.error}>{error}</Text>
                     </View>
-                    <View style={styles.button}>
-                        <Button title='Login Account' />
-                    </View>
-                    <Text>Don't have account? Sign Up</Text>
-
-                </View>
-            </KeyboardAvoidingView>
-
-
+                </KeyboardAvoidingView>
             </TouchableWithoutFeedback>
         </SafeAreaView>
     )
+}
+
+function initialValues() {
+    return {
+        username: "",
+        password: "",
+    };
+}
+
+function validationSchema() {
+    return {
+        username: Yup.string().required("El usuario es obligatorio"),
+        password: Yup.string().required("La contraseña es obligatoria"),
+    };
 }
 
 const styles = StyleSheet.create({
@@ -78,11 +151,12 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'col',
         alignItems: 'center',
-        justifyContent: 'space-evenly',
-        height: hp(60)
+        justifyContent: 'space-between',
+        height: 460
     },
     containerForm: {
         width: '90%',
+        height: 190,
     },
     pills: {
         display: 'flex',
@@ -92,7 +166,7 @@ const styles = StyleSheet.create({
         width: 130,
         padding: 8,
         borderRadius: 50,
-        borderWidth:1
+        borderWidth: 1
     },
     pillsImage: {
         width: 30,
@@ -106,7 +180,7 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         marginTop: 10,
         marginBottom: 15,
-        borderRadius:5,
+        borderRadius: 5,
     },
     button: {
         width: '90%',
@@ -115,7 +189,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 10
+        borderRadius: 10,
+    },
+    error: {
+        textAlign: "center",
+        color: "#f00",
+        marginTop: 20,
     }
 
 })

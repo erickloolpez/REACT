@@ -9,9 +9,9 @@ export default function Header() {
          source={require('../../../assets/images/Cityscapes Small City.png')}
          style={{
             width :'100%',
-            height: hp(25),
+            height: 200,
             borderBottomLeftRadius: 70,
-            objectFit: 'cover'
+            objectFit: 'cover',
          }}
          />
     </View>

@@ -13,28 +13,35 @@ export default function Home() {
     const getPlaces = () => {
         setPlaceList([
             {
-                latitude: 'loool',
-                longitude: 'lol',
+                latitude: -0.3077631314438677,
+                longitude:-78.4500717340893,
                 nombre: 'Basurero Eloy Alfaro',
                 peticiones: 4,
                 imagen: '../../assets/images/placeholder.jpg',
-                estado: 'pendiente'
+                estado: 'pendiente',
+                descripcion: 'Los desechos no se están manejando correctamente y esto está teniendo un impacto negativo en nuestro entorno. He notado que los residuos sólidos y líquidos están filtrándose en el suelo, lo que temo pueda contaminar nuestras fuentes de agua. Esta contaminación podría causar problemas de salud tanto para nosotros como para la vida silvestre que habita en nuestra zona.',
+                tipo:'basurero'
             },
             {
-                latitude: 'loool',
-                longitude: 'lol',
+                latitude: -0.3077631314438677,
+                longitude:-78.4500717340893,
                 nombre: 'Basurero Eloy Alfaro',
                 peticiones: 4,
                 imagen: '../../assets/images/placeholder.jpg',
-                estado: 'pendiente'
+                estado: 'proceso',
+                descripcion: 'Los desechos no se están manejando correctamente y esto está teniendo un impacto negativo en nuestro entorno. He notado que los residuos sólidos y líquidos están filtrándose en el suelo, lo que temo pueda contaminar nuestras fuentes de agua. Esta contaminación podría causar problemas de salud tanto para nosotros como para la vida silvestre que habita en nuestra zona.',
+                tipo:'basurero'
             },
             {
-                latitude: 'loool',
-                longitude: 'lol',
+                latitude: -0.3077631314438677,
+                longitude:-78.4500717340893,
                 nombre: 'Basurero Eloy Alfaro',
                 peticiones: 4,
                 imagen: '../../assets/images/placeholder.jpg',
-                estado: 'pendiente'
+                estado: 'completado',
+                descripcion: 'Los desechos no se están manejando correctamente y esto está teniendo un impacto negativo en nuestro entorno. He notado que los residuos sólidos y líquidos están filtrándose en el suelo, lo que temo pueda contaminar nuestras fuentes de agua. Esta contaminación podría causar problemas de salud tanto para nosotros como para la vida silvestre que habita en nuestra zona.',
+                tipo:'basurero'
+
             },
         ])
 

@@ -2,13 +2,14 @@ import React,{useState, createContext} from 'react'
 
 export const AuthContext = createContext({
     auth: undefined,
-    logini: ()=>{},
+    login: ()=>{},
     logout: ()=>{}
 })
 
 export function AuthProvider(props){
     const {children} = props
     const [auth, setAuth] = useState(undefined)
+    const [listAuth, setListAuth] = useState([])
 
     const login = (userData)=>{
         setAuth(userData)
@@ -18,10 +19,16 @@ export function AuthProvider(props){
         setAuth(undefined)
     }
 
+    const signUp = (listUsers) =>{
+        setListAuth([...listAuth, listUsers])
+    }
+
     const valueContext ={
         auth,
         login,
-        logout
+        logout,
+        signUp,
+        listAuth
     }
 
     return(

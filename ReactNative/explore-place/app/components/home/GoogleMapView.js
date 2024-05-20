@@ -42,8 +42,6 @@ export default function GoogleMapView() {
     userLocation()
   }, [])
 
-  console.log(location)
-
 
   return (
     <View style={{ marginTop: 20 }}>

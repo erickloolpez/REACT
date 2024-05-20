@@ -1,10 +1,8 @@
 import React from 'react'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import HomeNavigation from '../navigations/HomeNavigation'
-import Home from '../screens/home'
-import Fav from '../screens/fav'
-import Search from '../screens/search'
-import Profile from '../screens/profile'
+import AccountNavigation from '../navigations/AccountNavigation'
+import ReportNavigation from '../navigations/ReportNavigation'
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -14,7 +12,7 @@ export default function Tab_Navigation(){
         <Tab.Navigator screenOptions={{
             headerShown: false
         }}>
-            <Tab.Screen name='Search' component={Search} options={{
+            <Tab.Screen name='Report' component={ReportNavigation} options={{
                 tabBarLabel: 'Search',
                 tabBarIcon: ({color, size})=>(
                     <Ionicons name="document-text-outline" size={24} color="black" />
@@ -26,7 +24,7 @@ export default function Tab_Navigation(){
                     <Ionicons name="home-outline" size={24} color="black" />
                 )
             }}/>
-            <Tab.Screen name='Profile' component={Profile} options={{
+            <Tab.Screen name='Profile' component={AccountNavigation} options={{
                 tabBarLabel: 'Profile',
                 tabBarIcon: ({color, size})=>(
                     <AntDesign name="user" size={24} color="black" />

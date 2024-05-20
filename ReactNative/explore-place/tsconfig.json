@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "app/index.js", "app/navigations/tab_navigation.js", "app/context/UserLocationContext.js", "app/components/home/header.js", "app/screens/search.js", "app/screens/profile.js", "app/screens/home.js", "app/screens/fav.js", "app/components/home/GoogleMapView.js"  ]
+, "app/index.js", "app/navigations/tab_navigation.js", "app/context/UserLocationContext.js", "app/components/home/header.js", "app/screens/report.js", "app/screens/profile.js", "app/screens/home.js", "app/screens/fav.js", "app/components/home/GoogleMapView.js"  ]
 }
