@@ -48,7 +48,10 @@ export default function LoginForm() {
     });
 
     return (
-        <SafeAreaView>
+        <View style={{
+            width: '100%',
+            height: '100%'
+        }}>
             <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss()
             }}>
@@ -58,7 +61,7 @@ export default function LoginForm() {
                         <View
                             style={{
                                 width: '90%',
-                                height: 60,
+                                height: '10%',
                             }}
                         >
                             <Text
@@ -77,7 +80,7 @@ export default function LoginForm() {
                             justifyContent: 'center',
                             width: '100%',
                             gap: 18,
-                            height: 40
+                            height: '10%',
                         }}>
                             <View style={styles.pills}>
                                 <Image
@@ -94,7 +97,9 @@ export default function LoginForm() {
                                 <Text>Facebook</Text>
                             </View>
                         </View>
-                        <Text>or sign in with</Text>
+                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: '10%' }}>
+                            <Text>or sign in with</Text>
+                        </View>
                         <View style={styles.containerForm}>
                             <Text >Email Address</Text>
                             <TextInput
@@ -108,7 +113,7 @@ export default function LoginForm() {
                             <TextInput
                                 style={styles.input}
                                 autoCapitalize='none'
-                                secureTextEntry= {true}
+                                secureTextEntry={true}
                                 value={formik.values.password}
                                 onChangeText={(text) => formik.setFieldValue('password', text)}
                             />
@@ -119,16 +124,24 @@ export default function LoginForm() {
                         <View style={styles.button}>
                             <Button title='Login Account' onPress={formik.handleSubmit} />
                         </View>
-                        <TouchableOpacity onPress={() => onSignUpClick()}>
+                        <TouchableOpacity sytle={{
+                            width: '90%',
+                            height: '10%',
+                        }} onPress={() => onSignUpClick()}>
                             <Text>Don't have account? Sign Up</Text>
                         </TouchableOpacity>
-                        <Text style={styles.error}>{formik.errors.username}</Text>
-                        <Text style={styles.error}>{formik.errors.password}</Text>
-                        <Text style={styles.error}>{error}</Text>
+                        <View style={{
+                            width:'90%',
+                            height: '10%',
+                        }}>
+                            <Text style={styles.error}>{formik.errors.username}</Text>
+                            <Text style={styles.error}>{formik.errors.password}</Text>
+                            <Text style={styles.error}>{error}</Text>
+                        </View>
                     </View>
                 </KeyboardAvoidingView>
             </TouchableWithoutFeedback>
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -148,15 +161,18 @@ function validationSchema() {
 
 const styles = StyleSheet.create({
     container: {
+        width: '100%',
+        height: '70%',
         display: 'flex',
         flexDirection: 'col',
         alignItems: 'center',
         justifyContent: 'space-between',
-        height: 460
+        backgroundColor: 'white',
+        borderTopRightRadius: 70,
     },
     containerForm: {
         width: '90%',
-        height: 190,
+        height: '40%',
     },
     pills: {
         display: 'flex',
@@ -184,7 +200,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: '90%',
-        height: 50,
+        height: '10%',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',

@@ -7,7 +7,9 @@ import LoginForm from '../components/auth/LoginForm'
 export default function Profile(){
     const {auth} = useAuth()
     return(
-        <View>
+        <View style={{
+            flex: 1
+        }}>
             {auth ? <UserData/> : <LoginForm/>}
         </View>
     )

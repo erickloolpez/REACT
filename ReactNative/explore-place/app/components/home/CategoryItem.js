@@ -12,7 +12,8 @@ export default function CategoryItem({category}) {
             height: 100,
             backgroundColor: 'white',
             justifyContent: 'center',
-            borderRadius: 10
+            borderRadius: 10,
+            borderWidth: 1,
         }}
     
     >

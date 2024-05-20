@@ -44,8 +44,15 @@ export default function GoogleMapView() {
 
 
   return (
-    <View style={{ marginTop: 20 }}>
+    <View style={{
+      width:'100%',
+      height:'34%',
+       marginTop: 20,
+
+       }}>
       <Text style={{
+        width:'100%',
+        height:'10%',
         fontSize: 20,
         marginBottom: 10,
         fontWeight: '600',
@@ -55,8 +62,8 @@ export default function GoogleMapView() {
       <View>
         <MapView
           style={{
-            width: Dimensions.get('screen').width * 0.9,
-            height: Dimensions.get('screen').height * 0.23,
+            width: '100%', 
+            height: '90%',
             borderRadius: 20,
           }}
           region={mapRegion}

@@ -9,9 +9,12 @@ import { AntDesign } from '@expo/vector-icons';
 export default function Tab_Navigation(){
     const Tab = createBottomTabNavigator()
     return(
-        <Tab.Navigator screenOptions={{
+        <Tab.Navigator
+             screenOptions={{
             headerShown: false
-        }}>
+            }}
+            initialRouteName='Home'
+        >
             <Tab.Screen name='Report' component={ReportNavigation} options={{
                 tabBarLabel: 'Search',
                 tabBarIcon: ({color, size})=>(

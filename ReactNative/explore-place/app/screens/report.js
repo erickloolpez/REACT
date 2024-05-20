@@ -84,8 +84,8 @@ export default function Report() {
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={{
-                width:'100%',
-                height:'100%',
+                width: '100%',
+                height: '100%',
                 display: 'flex',
                 flexDirection: 'col',
                 alignItems: 'center',
@@ -98,22 +98,33 @@ export default function Report() {
                     backgroundColor: 'white',
                     borderTopLeftRadius: 50,
                     borderTopRightRadius: 50,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
                     borderWidth: 2,
+                    borderBottomWidth: 0,
                     overflow: 'hidden',
                 }}>
-                    <View style={{//Contenedor donde esta la foto del MAIN grande
-                        width: '60%',
-                        height: '80%',
-                        position: 'relative',
+                    <View style={{
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderStyle: 'dotted',
+                        borderWidth:2,
+                        margin: -2,
+                        marginBottom: 0,
                     }}>
-                        <Image style={{ width: '100%', height: '100%', objectFit: 'contain' }} source={require('../../assets/images/Icon Container.png')} />
-                        <Image style={{ position: 'absolute', right: '20%', bottom: '-1%', backgroundColor: '#60A096', width: 30, height: 30, borderRadius: 50 }} source={require('../../assets/images/check_white.png')} />
+                        <View style={{//Contenedor donde esta la foto del MAIN grande
+                            width: '60%',
+                            height: '80%',
+                            position: 'relative',
+                        }}>
+                            <Image style={{ width: '100%', height: '100%', objectFit: 'contain' }} source={require('../../assets/images/Icon Container.png')} />
+                            <Image style={{ position: 'absolute', right: '20%', bottom: '-1%', backgroundColor: '#60A096', width: 30, height: 30, borderRadius: 50 }} source={require('../../assets/images/check_white.png')} />
 
+                        </View>
                     </View>
+
                 </View>
                 <View style={{//Contenedor donde esta el formulario
                     width: '90%',
@@ -187,7 +198,7 @@ export default function Report() {
                     }}>
                         <TextInput
                             placeholderTextColor={'gray'}
-                             placeholder='Ingresa una descripcion del reporte que vas a realizar....' multiline style={{height:'80%', backgroundColor:'white'}}
+                            placeholder='Ingresa una descripcion del reporte que vas a realizar....' multiline style={{ height: '80%', backgroundColor: 'white' }}
                         />
                     </View>
                     <TouchableOpacity style={{
@@ -196,8 +207,8 @@ export default function Report() {
                         display: 'flex',
                         flexDirection: 'row',
                         justifyContent: 'center',
-                        borderWidth:1,
-                        borderRadius:4
+                        borderWidth: 1,
+                        borderRadius: 4
                     }}
                         onPress={() => {
                             setOpenModal(true)

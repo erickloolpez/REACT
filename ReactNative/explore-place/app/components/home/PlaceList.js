@@ -14,8 +14,9 @@ export default function PlaceList({ placeList }) {
     <ScrollView >
       <Text style={{
         fontSize: 20,
-        marginTop: 10
-
+        marginTop: 10,
+        marginBottom: 10,
+        fontWeight: '600',
       }}>
         Found {placeList.length} places</Text>
 

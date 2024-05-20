@@ -25,12 +25,23 @@ export default function CategoryList() {
 
   return (
     <View style={{
+        width:'100%',
+        height:'23%',
         marginTop:15,
     }}>
+
       <Text style={{
+        width:'100%',
+        heigh:'10%',
         fontSize: 20,
+        fontWeight: '600',
       }}>Select Top Category</Text>
       <FlatList 
+      style={{
+        width: '100%',
+        height:'90%',
+        paddingTop: 5,
+      }}
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       data={categoryList}

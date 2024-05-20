@@ -4,12 +4,15 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
 export default function Header() {
   return (
-    <View>
+    <View style={{
+      width: '100%',
+      height: '30%',
+    }}>
         <Image
          source={require('../../../assets/images/Cityscapes Small City.png')}
          style={{
             width :'100%',
-            height: 200,
+            height: '100%',
             borderBottomLeftRadius: 70,
             objectFit: 'cover',
          }}
