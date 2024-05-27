@@ -54,7 +54,7 @@ export default function GoogleMapView({ placeList }) {
     setMapRegion({
       latitude: yourLocation.coords.latitude,
       longitude: yourLocation.coords.longitude,
-      latitudeDelta: 0.01,
+      latitudeDelta: 0.01450,
       longitudeDelta: 0.015,
 
     })

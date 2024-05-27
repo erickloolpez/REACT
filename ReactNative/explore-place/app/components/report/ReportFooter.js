@@ -2,8 +2,8 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import useLocation from '../../hooks/useLocation'
 
-export default function ReportFooter({ dropdown, image, inputValue, setImage, setInputValue, setDropDown }) {
-    const { location, addPlace } = useLocation()
+export default function ReportFooter({ dropdown, image, inputValue, setImage, setInputValue, setDropDown, triggerModalForm, setVerifyAddress }) {
+    const { location, addPlace, placeList } = useLocation()
 
     const cleanInputs = async (image) => {
         try {
@@ -13,6 +13,25 @@ export default function ReportFooter({ dropdown, image, inputValue, setImage, se
         } catch (error) {
             throw error
         }
+    }
+
+    function toRadians(degrees) {
+        return degrees * (Math.PI / 180);
+    }
+
+    function haversineDistance(userLocation, circleCenter) {
+        const R = 6371e3; // radio medio de la Tierra en metros
+        const φ1 = toRadians(userLocation.latitude);
+        const φ2 = toRadians(circleCenter.latitude);
+        const Δφ = toRadians(circleCenter.latitude - userLocation.latitude);
+        const Δλ = toRadians(circleCenter.longitude - userLocation.longitude);
+
+        const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+            Math.cos(φ1) * Math.cos(φ2) *
+            Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c;
     }
 
     return (
@@ -30,19 +49,43 @@ export default function ReportFooter({ dropdown, image, inputValue, setImage, se
             <TouchableOpacity
                 style={[styles.containerButtons, { backgroundColor: '#ffa929' }]}
                 onPress={() => {
+                    let flag = true
                     let newPlace = {
                         id: '1',
                         latitude: location.latitude,
                         longitude: location.longitude,
                         nombre: 'Basurero Urb Bohios',
-                        peticiones: 8,
+                        peticiones: 12,
                         imagen: `${image}`,
                         estado: 'pendiente',
                         descripcion: `${inputValue}`,
-                        tipo: 'basurero'
+                        tipo: `${dropdown}`
                     }
                     cleanInputs()
-                    addPlace(newPlace)
+                    placeList.forEach(place => {
+                        const circleCenter = { latitude: place.latitude, longitude: place.longitude }
+                        if (haversineDistance(location, circleCenter) <= 500) {
+                            flag = false
+                        }
+                    })
+                    if (flag) {
+                        setVerifyAddress({
+                            value: true,
+                            title: 'REPORTE EXITOSO!',
+                            text: 'Felicitaciones! Tu reporte se ha generado con exito.',
+                            button: 'HECHO',
+                        })
+                        addPlace(newPlace)
+                    } else {
+                        console.log('no puedes, ya existen un punto ahi.')
+                        setVerifyAddress({
+                            value: false,
+                            title : 'OH NO...',
+                            text : 'Algo salio mal, intentalo de nuevo.',
+                            button : 'INTENTAR',
+                        })
+                    }
+                        triggerModalForm()
                 }}
             >
                 <Text>Enviar</Text>

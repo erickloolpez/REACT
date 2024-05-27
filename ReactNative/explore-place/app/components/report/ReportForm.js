@@ -3,10 +3,21 @@ import ReportFooter from '../report/ReportFooter'
 import placeholder from '../../../assets/images/placeholder.jpg'
 import React,{useState} from 'react'
 import ReportDropDown from '../report/ReportDropdown'
+import ReportModalForm from '../report/ReportModalForm'
 
 export default function ReportForm({ image, setOpenModal, setImage }) {
+    const [openModalForm, setOpenModalForm] = useState(false)
+    const [verifyAddress ,setVerifyAddress] = useState({})
     const [value, setValue] = useState(null);//Es para el dropdown
     const [inputValue, setInputValue] = useState('')
+
+    const closeModalForm = ()=>{
+        setOpenModalForm(false)
+    }
+
+    const triggerModalForm = ()=>{
+        setOpenModalForm(true)
+    }
 
     return (
         <View style={{//Contenedor donde esta el formulario
@@ -81,7 +92,8 @@ export default function ReportForm({ image, setOpenModal, setImage }) {
             >
                 <Image source={image ? { uri: image } : placeholder} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </TouchableOpacity>
-            <ReportFooter dropDown={value} image={image} inputValue={inputValue} setImage={setImage} setInputValue={setInputValue} setDropDown={setValue} />
+            <ReportFooter dropDown={value} image={image} inputValue={inputValue} setImage={setImage} setInputValue={setInputValue} setDropDown={setValue} triggerModalForm={triggerModalForm} setVerifyAddress={setVerifyAddress} />
+            <ReportModalForm openModalForm={openModalForm} closeModalForm={closeModalForm} verifyAddress={verifyAddress} />
         </View>
 
     )
