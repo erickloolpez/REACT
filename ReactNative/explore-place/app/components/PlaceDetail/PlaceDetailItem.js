@@ -46,8 +46,8 @@ export default function PlaceDetailItem({ place }) {
     const [mapRegion, setMapRegion] = useState({
         latitude: place.latitude,
         longitude: place.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        latitudeDelta: 0.0322,
+        longitudeDelta: 0.0121,
     })
 
     return (

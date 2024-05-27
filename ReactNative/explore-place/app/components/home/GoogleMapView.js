@@ -1,10 +1,31 @@
-import { View, Text, Dimensions } from 'react-native'
+import { View, Text, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Marker, Circle, Callout } from 'react-native-maps'
 import useLocation from '../../hooks/useLocation'
 import * as Location from 'expo-location';
+import { useNavigation } from '@react-navigation/native'
 
-export default function GoogleMapView() {
+export default function GoogleMapView({ placeList }) {
+
+  const navigator = useNavigation()
+  const openMap = (mapRegion) => {
+    navigator.navigate('map-complete', { coords: mapRegion, placeList: placeList })
+  }
+
+  const circleStyle = (estado) => {
+    let color
+
+    if (estado == 'pendiente') {
+      color = '#ff7676'
+    } else if (estado == 'proceso') {
+      color = '#ffff77'
+    } else {
+      color = '#5ccb5f'
+    }
+
+    return color
+  }
+
   const { location, setLocation } = useLocation()
   const [errorMsg, setErrorMsg] = useState(null);
   let yourLocation
@@ -12,8 +33,8 @@ export default function GoogleMapView() {
   const [mapRegion, setMapRegion] = useState({
     latitude: -0.3077631314438677,
     longitude: -78.4500717340893,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitudeDelta: 0.09,
+    longitudeDelta: 0.035,
   })
 
 
@@ -22,18 +43,19 @@ export default function GoogleMapView() {
     if (status !== 'granted') {
       setErrorMsg('Permission to access loctaion was denied')
     }
-     yourLocation = await Location.getCurrentPositionAsync({ enabledHighAcurracy: true })
+    yourLocation = await Location.getCurrentPositionAsync({ enabledHighAcurracy: true })
 
-     setLocation({...location,
+    setLocation({
+      ...location,
       latitude: yourLocation.coords.latitude,
       longitude: yourLocation.coords.longitude
-     })
+    })
 
     setMapRegion({
       latitude: yourLocation.coords.latitude,
       longitude: yourLocation.coords.longitude,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.015,
 
     })
   }
@@ -45,14 +67,14 @@ export default function GoogleMapView() {
 
   return (
     <View style={{
-      width:'100%',
-      height:'34%',
-       marginTop: 20,
+      width: '100%',
+      height: '34%',
+      marginTop: 20,
 
-       }}>
+    }}>
       <Text style={{
-        width:'100%',
-        height:'10%',
+        width: '100%',
+        height: '10%',
         fontSize: 20,
         marginBottom: 10,
         fontWeight: '600',
@@ -62,11 +84,12 @@ export default function GoogleMapView() {
       <View>
         <MapView
           style={{
-            width: '100%', 
+            width: '100%',
             height: '90%',
             borderRadius: 20,
           }}
           region={mapRegion}
+          onPress={() => openMap(mapRegion)}
 
         >
           <Marker
@@ -74,6 +97,26 @@ export default function GoogleMapView() {
             coordinate={mapRegion}
 
           />
+          {
+            placeList.map((marker, index) => (
+              <React.Fragment key={index}>
+                <Circle
+                  center={{ latitude: marker.latitude, longitude: marker.longitude }}
+                  radius={500}
+                  fillColor={circleStyle(marker.estado)}
+                />
+                <Marker
+                  coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+                  title={marker.name}
+                >
+                  <Callout>
+                    <Image style={{ width: '100%', height: 50 }} source={require('../../../assets/images/basurero.jpg')} />
+                    <Text>{marker.nombre}</Text>
+                  </Callout>
+                </Marker>
+              </React.Fragment>
+            ))
+          }
 
         </MapView>
 
