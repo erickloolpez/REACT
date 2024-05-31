@@ -12,9 +12,9 @@ export default function PlaceList({ placeList }) {
 
 
   return (
-    <View style={{
+    <ScrollView style={{
       width: '90%',
-      height: 'auto',
+      height: 450,
       borderWidth: 2,
       borderRadius: 20,
     }} >
@@ -47,6 +47,6 @@ export default function PlaceList({ placeList }) {
         )}
         horizontal={false}
       /> */}
-    </View>
+    </ScrollView>
   )
 }

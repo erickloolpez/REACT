@@ -1,6 +1,6 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
-import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function PlaceItem({ place }) {
   let colorAnswer
@@ -14,26 +14,42 @@ export default function PlaceItem({ place }) {
 
   return (
     <View style={{
+      position: 'relative',
       width: '90%',
-      height: 110,
+      height: 130,
       display: 'flex',
       flexDirection: 'row',
-      alignItems: 'center ',
+      alignItems: 'center',
       justifyContent: 'space-around',
-      marginBottom: 10,
       marginTop: 8,
-      borderBottomWidth: 2,
-      paddingBottom:8,
+      marginBottom: 10,
+      borderWidth: 2,
+      borderRadius:10
     }}>
       <Image
         source={require('../../../assets/images/basurero.jpg')}
         style={{
-          width: '100%',
-          height: '100%',
+          width: '40%',
+          height: '80%',
           borderRadius: 8,
-          borderWidth: 2,
+          borderWidth: 1,
         }}
       />
+      <View style={{ width: '50%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
+        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Text>{place.nombre}</Text>
+          <AntDesign name="sharealt" size={24} color="black" />
+        </View>
+        <Text>Tipo: {place.tipo}</Text>
+        <View style={{ width: '44%', padding: 4, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderRadius: 4 }}>
+          <Text>Leer</Text>
+        </View>
+        <View style={{position: 'absolute',right:-10, bottom:0, width:44, height: 20, backgroundColor:'#232124', display:'flex',flexDirection:'row', justifyContent: 'center', alignItems:'center', borderTopLeftRadius:10, borderBottomRightRadius:10}}>
+          <View style={{width:14, height:14,backgroundColor:colorAnswer, borderRadius:50}} />
+          <Text style={{marginLeft:4, color:'white'}}>{place.peticiones}</Text>
+        </View>
+
+      </View>
       {/* <View style={{
         width:'60%',
         height: '100%',

@@ -1,4 +1,4 @@
-import { View, Image } from 'react-native'
+import {Text, View, Image } from 'react-native'
 import React from 'react'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
@@ -7,16 +7,11 @@ export default function Header() {
     <View style={{
       width: '100%',
       height: '30%',
+      display:'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
     }}>
-        <Image
-         source={require('../../../assets/images/Cityscapes Small City.png')}
-         style={{
-            width :'100%',
-            height: '100%',
-            borderBottomLeftRadius: 70,
-            objectFit: 'cover',
-         }}
-         />
+
     </View>
   )
 }
