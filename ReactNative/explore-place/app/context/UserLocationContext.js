@@ -49,6 +49,54 @@ export function UserLocationProvider(props) {
                 tipo:'basurero'
 
             },
+            {
+                id: '3',
+                latitude:-0.29473674764517127, 
+                longitude:-78.46159563877885,
+                nombre: 'Basurero Eloy Alfaro',
+                peticiones: 4,
+                imagen: '../../assets/images/placeholder.jpg',
+                estado: 'completado',
+                descripcion: 'Los desechos no se están manejando correctamente y esto está teniendo un impacto negativo en nuestro entorno. He notado que los residuos sólidos y líquidos están filtrándose en el suelo, lo que temo pueda contaminar nuestras fuentes de agua. Esta contaminación podría causar problemas de salud tanto para nosotros como para la vida silvestre que habita en nuestra zona.',
+                tipo:'basurero'
+
+            },
+            {
+                id: '3',
+                latitude:-0.29473674764517127, 
+                longitude:-78.46159563877885,
+                nombre: 'Basurero Eloy Alfaro',
+                peticiones: 4,
+                imagen: '../../assets/images/placeholder.jpg',
+                estado: 'completado',
+                descripcion: 'Los desechos no se están manejando correctamente y esto está teniendo un impacto negativo en nuestro entorno. He notado que los residuos sólidos y líquidos están filtrándose en el suelo, lo que temo pueda contaminar nuestras fuentes de agua. Esta contaminación podría causar problemas de salud tanto para nosotros como para la vida silvestre que habita en nuestra zona.',
+                tipo:'basurero'
+
+            },
+            {
+                id: '3',
+                latitude:-0.29473674764517127, 
+                longitude:-78.46159563877885,
+                nombre: 'Basurero Eloy Alfaro',
+                peticiones: 4,
+                imagen: '../../assets/images/placeholder.jpg',
+                estado: 'completado',
+                descripcion: 'Los desechos no se están manejando correctamente y esto está teniendo un impacto negativo en nuestro entorno. He notado que los residuos sólidos y líquidos están filtrándose en el suelo, lo que temo pueda contaminar nuestras fuentes de agua. Esta contaminación podría causar problemas de salud tanto para nosotros como para la vida silvestre que habita en nuestra zona.',
+                tipo:'basurero'
+
+            },
+            {
+                id: '3',
+                latitude:-0.29473674764517127, 
+                longitude:-78.46159563877885,
+                nombre: 'Basurero Eloy Alfaro',
+                peticiones: 4,
+                imagen: '../../assets/images/placeholder.jpg',
+                estado: 'completado',
+                descripcion: 'Los desechos no se están manejando correctamente y esto está teniendo un impacto negativo en nuestro entorno. He notado que los residuos sólidos y líquidos están filtrándose en el suelo, lo que temo pueda contaminar nuestras fuentes de agua. Esta contaminación podría causar problemas de salud tanto para nosotros como para la vida silvestre que habita en nuestra zona.',
+                tipo:'basurero'
+
+            },
         ])
 
     }

@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../components/home/header'
 import GoogleMapView from '../components/home/GoogleMapView'
@@ -7,7 +7,7 @@ import PlaceList from '../components/home/PlaceList'
 import useLocation from '../hooks/useLocation'
 
 export default function Home() {
-    const {placeList} = useLocation()
+    const { placeList } = useLocation()
     //En caso de tener una API usar esto
     /*
     useEffect(()=>{
@@ -21,11 +21,13 @@ export default function Home() {
 
     }*/
     return (
-        <View style={{ padding: 20, flex:1 }}>
-            <Header />
-            <GoogleMapView placeList={placeList} />
-            <CategoryList />
-            {placeList ? <PlaceList placeList={placeList} /> : null}
-        </View>
+        <ScrollView style={{ flex: 1 }} >
+            <View style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Header />
+                <GoogleMapView placeList={placeList} />
+                <CategoryList />
+                {placeList ? <PlaceList placeList={placeList} /> : null}
+            </View>
+        </ScrollView>
     )
 }

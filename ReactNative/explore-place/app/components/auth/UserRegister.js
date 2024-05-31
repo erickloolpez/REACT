@@ -50,7 +50,7 @@ export default function RegistrationForm() {
                 marginBottom: 20,
                 marginTop: 30
             }}>
-                <Text style={{ fontSize: 30 }}>Sign Up</Text>
+                <Text style={{ fontSize: 30 }}>Registrarse</Text>
             </View>
             <View style={{
                 width: '90%',
@@ -61,7 +61,7 @@ export default function RegistrationForm() {
             }}>
                 <TextInput
                     style={styles.input}
-                    placeholder='Name'
+                    placeholder='Nombre'
                     autoCapitalize='none'
                     placeholderTextColor='gray'
                     value={formik.values.username}
@@ -69,7 +69,7 @@ export default function RegistrationForm() {
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder='Email'
+                    placeholder='Correo'
                     autoCapitalize='none'
                     placeholderTextColor='gray'
                     value={formik.values.email}
@@ -77,7 +77,7 @@ export default function RegistrationForm() {
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder='Password'
+                    placeholder='Clave'
                     autoCapitalize='none'
                     placeholderTextColor='gray'
                     secureTextEntry={true}
@@ -86,7 +86,7 @@ export default function RegistrationForm() {
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder='Confirm Password'
+                    placeholder='Confirma tu clave'
                     autoCapitalize='none'
                     placeholderTextColor='gray'
                     secureTextEntry={true}

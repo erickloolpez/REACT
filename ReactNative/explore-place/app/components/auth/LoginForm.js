@@ -1,11 +1,9 @@
-import { useState } from 'react'
-import { View, Text, Image, TextInput, Button, StyleSheet, KeyboardAvoidingView, SafeAreaView, Keyboard, TouchableWithoutFeedback } from 'react-native'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useState, useEffect } from 'react'
+import { View, Text, Image, TextInput, Button, StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import React from 'react'
 import Header from './Header'
-import { user, userDetails } from '../../utils/userDB'
 import useAuth from '../../hooks/useAuth'
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -24,7 +22,6 @@ export default function LoginForm() {
         validationSchema: Yup.object(validationSchema()),
         validateOnChange: false,
         onSubmit: (formValue) => {
-            setError("");
             const { username, password } = formValue;
 
             let usuario
@@ -37,12 +34,11 @@ export default function LoginForm() {
 
             console.log('FILTRO USUARIO', usuario)
 
-            if (usuario.nombre !== username || usuario.contra !== password) {
+            if (usuario.nombre != username || usuario.contra != password) {
                 setError("El usuario o la contraseña no son correcto");
                 console.log('se cayo')
             } else {
                 login(usuario);
-                console.log(auth)
             }
         },
     });
@@ -70,7 +66,7 @@ export default function LoginForm() {
                                     fontWeight: '400'
                                 }}
 
-                            >Welcome Back!
+                            >Hola de nuevo!
                             </Text>
                             <Text style={{ color: 'gray', marginTop: 4 }}>Hello there login to continue</Text>
                         </View>
@@ -98,10 +94,10 @@ export default function LoginForm() {
                             </View>
                         </View>
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: '10%' }}>
-                            <Text>or sign in with</Text>
+                            <Text>o iniciar con</Text>
                         </View>
                         <View style={styles.containerForm}>
-                            <Text >Email Address</Text>
+                            <Text >Email</Text>
                             <TextInput
                                 style={styles.input}
                                 autoCapitalize='none'
@@ -109,7 +105,7 @@ export default function LoginForm() {
                                 onChangeText={(text) => formik.setFieldValue('username', text)}
 
                             />
-                            <Text> Password</Text>
+                            <Text>Clave</Text>
                             <TextInput
                                 style={styles.input}
                                 autoCapitalize='none'
@@ -118,20 +114,20 @@ export default function LoginForm() {
                                 onChangeText={(text) => formik.setFieldValue('password', text)}
                             />
                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: '100%' }}>
-                                <Text>Forgot Password?</Text>
+                                <Text>Olvido su clave?</Text>
                             </View>
                         </View>
                         <View style={styles.button}>
-                            <Button title='Login Account' onPress={formik.handleSubmit} />
+                            <Button title='Iniciar Sesion' onPress={formik.handleSubmit} />
                         </View>
                         <TouchableOpacity sytle={{
                             width: '90%',
                             height: '10%',
                         }} onPress={() => onSignUpClick()}>
-                            <Text>Don't have account? Sign Up</Text>
+                            <Text>No tiene un usuario? Registrese</Text>
                         </TouchableOpacity>
                         <View style={{
-                            width:'90%',
+                            width: '90%',
                             height: '10%',
                         }}>
                             <Text style={styles.error}>{formik.errors.username}</Text>

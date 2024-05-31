@@ -69,7 +69,7 @@ export default function Report() {
                 flexDirection: 'col',
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: '#dedede'
+                backgroundColor: '#ededed'
             }}>
                 <View style={{//Contenedor donde esta el MAIL grande
                     width: '90%',

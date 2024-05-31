@@ -1,6 +1,7 @@
 import { View, Text, FlatList, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import PlaceItem from './PlaceItem.js'
+import PlaceItemBig from './PlaceItemBig'
 import { useNavigation } from '@react-navigation/native'
 
 export default function PlaceList({ placeList }) {
@@ -11,20 +12,31 @@ export default function PlaceList({ placeList }) {
 
 
   return (
-    <ScrollView >
+    <View style={{
+      width: '90%',
+      height: 'auto',
+      borderWidth: 2,
+      borderRadius: 20,
+    }} >
       <Text style={{
-        fontSize: 20,
-        marginTop: 10,
+        fontSize: 16,
+        marginTop: 4,
+        marginLeft: 8,
         marginBottom: 10,
-        fontWeight: '600',
+        fontWeight: 600,
       }}>
-        Found {placeList.length} places</Text>
+        Reportes Totales: {placeList.length}</Text>
 
-        {placeList.map((item, index) => (
-            <TouchableOpacity key={index} onPress={() => onPlaceClick(item)}>
-              <PlaceItem key={index} place={item} />
-            </TouchableOpacity>
-        ))}
+      {placeList.map((item, index) => {
+        const PlaceComponent = index % 2 == 0 ? PlaceItem : PlaceItemBig;
+
+        return (
+          <TouchableOpacity style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} key={index} onPress={() => onPlaceClick(item)}>
+            <PlaceComponent place={item} />
+          </TouchableOpacity>
+        );
+      })}
+
 
       {/* <FlatList
         data={placeList}
@@ -35,6 +47,6 @@ export default function PlaceList({ placeList }) {
         )}
         horizontal={false}
       /> */}
-    </ScrollView>
+    </View>
   )
 }

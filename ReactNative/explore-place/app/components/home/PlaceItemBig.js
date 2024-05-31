@@ -28,13 +28,13 @@ export default function PlaceItem({ place }) {
       <Image
         source={require('../../../assets/images/basurero.jpg')}
         style={{
-          width: '40%',
+          width: '100%',
           height: '100%',
           borderRadius: 8,
           borderWidth: 2,
         }}
       />
-      <View style={{
+      {/* <View style={{
         width:'60%',
         height: '100%',
         display: 'flex',
@@ -65,7 +65,7 @@ export default function PlaceItem({ place }) {
           <Text style={{ color: colorAnswer }}>{place.estado}</Text>
         </View>
 
-      </View>
+      </View> */}
     </View>
 
   )

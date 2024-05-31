@@ -67,26 +67,30 @@ export default function GoogleMapView({ placeList }) {
 
   return (
     <View style={{
-      width: '100%',
-      height: '34%',
+      width: '90%',
+      height: 230,
       marginTop: 20,
-
     }}>
       <Text style={{
         width: '100%',
         height: '10%',
-        fontSize: 20,
-        marginBottom: 10,
-        fontWeight: '600',
+        fontSize: 16,
+        fontWeight: 600,
       }}>
-        Top Near By Places
+        Reportes en el Mapa
       </Text>
-      <View>
+      <View style={{
+        width: '100%',
+        height: '84%',
+        borderRadius: 40,
+        overflow: 'hidden',
+        marginTop: 10,
+        borderWidth: 2
+      }} >
         <MapView
           style={{
             width: '100%',
-            height: '90%',
-            borderRadius: 20,
+            height: '100%',
           }}
           region={mapRegion}
           onPress={() => openMap(mapRegion)}

@@ -1,36 +1,47 @@
-import { View, Text , Image} from 'react-native'
+import { View, Text, Image } from 'react-native'
 import React from 'react'
 
-export default function CategoryItem({category}) {
+export default function CategoryItem({ category }) {
   return (
-    <View 
-        style={{
-            padding: 5,
-            alignItems: 'center',
-            margin: 5,
-            width: 100,
-            height: 100,
-            backgroundColor: 'white',
-            justifyContent: 'center',
-            borderRadius: 10,
-            borderWidth: 1,
-        }}
-    
+    <View
+      style={{
+        padding: 5,
+        margin: 5,
+        width: 150,
+        height: 65,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        borderWidth: 2,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent:'center',
+        gap: 4
+      }}
+
     >
-        <Image
-         source={category.icon}
-         style={{
-            width: 50,
-            height:50,
-         }}
-         
-         />
-      <Text
+      <Image
+        source={category.icon}
         style={{
-            fontSize: 13
+          width: 50,
+          height: 50,
+          objectFit:'contain',
         }}
-      
-      >{category.name}</Text>
+
+      />
+      <View style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems:'center',
+        justifyContent: 'space-around',
+      }}>
+        <Text
+          style={{
+            fontSize: 13
+          }}
+        >{category.name}</Text>
+        <Text style={{fontSize:11, marginTop:5}}>{category.reportes} Reportes</Text>
+      </View>
     </View>
   )
 }
