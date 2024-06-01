@@ -43,7 +43,7 @@ export default function ReportModalForm({ openModalForm, closeModalForm, verifyA
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
-                        <Image style={{ width: '100%', height: '100%' }} source={image} />
+                        <Image style={{ width: '100%', height: '100%', objectFit:'contain' }} source={image} />
                     </View>
                     <View style={{
                         width: '100%',

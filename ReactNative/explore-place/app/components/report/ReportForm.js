@@ -1,11 +1,11 @@
 import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native'
 import ReportFooter from '../report/ReportFooter'
-import placeholder from '../../../assets/images/placeholder.jpg'
+import placeholder from '../../../assets/images/choosePicture.png'
 import React,{useState} from 'react'
 import ReportDropDown from '../report/ReportDropdown'
 import ReportModalForm from '../report/ReportModalForm'
 
-export default function ReportForm({ image, setOpenModal, setImage }) {
+export default function ReportForm({ image, setOpenModal, setImage, closeModalTicket }) {
     const [openModalForm, setOpenModalForm] = useState(false)
     const [verifyAddress ,setVerifyAddress] = useState({})
     const [value, setValue] = useState(null);//Es para el dropdown
@@ -35,23 +35,30 @@ export default function ReportForm({ image, setOpenModal, setImage }) {
         }}>
             <View style={{
                 position: 'absolute',
-                width: 30,
-                height: 30,
+                width: 24,
+                height: 24,
                 backgroundColor: '#dedede',
+                borderTopWidth:2,
                 borderRightWidth: 2,
-                borderRadius: 50,
+                borderBottomWidth:2,
+                borderTopRightRadius:50,
+                borderBottomRightRadius: 50,
+
                 top: -18,
-                left: -12,
+                left: 0,
             }} />
             <View style={{
                 position: 'absolute',
-                width: 30,
-                height: 30,
+                width: 24,
+                height: 24,
                 backgroundColor: '#dedede',
+                borderTopWidth:2,
                 borderLeftWidth: 2,
-                borderRadius: 50,
+                borderBottomWidth:2,
+                borderTopLeftRadius:50,
+                borderBottomLeftRadius: 50,
                 top: -18,
-                right: -12,
+                right: 0,
             }} />
             <View style={{
                 width: '90%',
@@ -83,16 +90,18 @@ export default function ReportForm({ image, setOpenModal, setImage }) {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'center',
-                borderWidth: 1,
-                borderRadius: 4
+                borderWidth: 2,
+                borderStyle:'dotted',
+                borderRadius: 8,
+                padding:2
             }}
                 onPress={() => {
                     setOpenModal(true)
                 }}
             >
-                <Image source={image ? { uri: image } : placeholder} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                <Image source={image ? { uri: image } : placeholder} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </TouchableOpacity>
-            <ReportFooter dropDown={value} image={image} inputValue={inputValue} setImage={setImage} setInputValue={setInputValue} setDropDown={setValue} triggerModalForm={triggerModalForm} setVerifyAddress={setVerifyAddress} />
+            <ReportFooter dropDown={value} image={image} inputValue={inputValue} setImage={setImage} setInputValue={setInputValue} setDropDown={setValue} triggerModalForm={triggerModalForm} setVerifyAddress={setVerifyAddress} closeModalTicket={closeModalTicket} />
             <ReportModalForm openModalForm={openModalForm} closeModalForm={closeModalForm} verifyAddress={verifyAddress} />
         </View>
 

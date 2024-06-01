@@ -1,10 +1,10 @@
-import { View , Image,  TouchableWithoutFeedback, Keyboard,Modal } from 'react-native'
+import { View, Image, TouchableWithoutFeedback, Keyboard, Modal } from 'react-native'
 import React, { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
 import ModalForm from '../components/report/ReportModal'
 import ReportForm from '../components/report/ReportForm'
 
-export default function Report() {
+export default function Report({ stateModal, closeModalTicket }) {
     const [openModal, setOpenModal] = useState(false)
     const [image, setImage] = useState()
 
@@ -62,52 +62,63 @@ export default function Report() {
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <Modal style={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'col',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#ededed'
-            }}>
-                <View style={{//Contenedor donde esta el MAIL grande
-                    width: '90%',
-                    height: '20%',
-                    backgroundColor: 'white',
-                    borderTopLeftRadius: 50,
-                    borderTopRightRadius: 50,
-                    borderWidth: 2,
-                    borderBottomWidth: 0,
-                    overflow: 'hidden',
+            <Modal visible={stateModal} transparent={true}>
+                <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'rgba(0,0,0,0.5)'
                 }}>
                     <View style={{
-                        width: '100%',
-                        height: '100%',
+                        width: '90%',
+                        height: '80%',
                         display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
+                        flexDirection: 'col',
                         alignItems: 'center',
-                        borderStyle: 'dotted',
-                        borderWidth:2,
-                        margin: -2,
-                        marginBottom: 0,
+                        justifyContent: 'center',
                     }}>
-                        <View style={{//Contenedor donde esta la foto del MAIN grande
-                            width: '60%',
-                            height: '80%',
-                            position: 'relative',
+                        <View style={{//Contenedor donde esta el MAIL grande
+                            width: '90%',
+                            height: '20%',
+                            backgroundColor: 'white',
+                            borderTopLeftRadius: 50,
+                            borderTopRightRadius: 50,
+                            borderWidth: 2,
+                            borderBottomWidth: 0,
+                            overflow: 'hidden',
                         }}>
-                            <Image style={{ width: '100%', height: '100%', objectFit: 'contain' }} source={require('../../assets/images/Icon Container.png')} />
-                            <Image style={{ position: 'absolute', right: '20%', bottom: '-1%', backgroundColor: '#60A096', width: 30, height: 30, borderRadius: 50 }} source={require('../../assets/images/check_white.png')} />
+                            <View style={{
+                                width: '100%',
+                                height: '100%',
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderStyle: 'dotted',
+                                borderWidth: 2,
+                                margin: -2,
+                                marginBottom: 0,
+                            }}>
+                                <View style={{//Contenedor donde esta la foto del MAIN grande
+                                    width: '60%',
+                                    height: '80%',
+                                    position: 'relative',
+                                }}>
+                                    <Image style={{ width: '100%', height: '100%', objectFit: 'contain' }} source={require('../../assets/images/Icon Container.png')} />
+                                    <Image style={{ position: 'absolute', right: '20%', bottom: '-1%', backgroundColor: '#60A096', width: 30, height: 30, borderRadius: 50 }} source={require('../../assets/images/check_white.png')} />
 
+                                </View>
+                            </View>
                         </View>
+                        <ReportForm image={image} setImage={setImage} setOpenModal={setOpenModal} closeModalTicket={closeModalTicket} />
+                        <ModalForm openModal={openModal} removeImage={removeImage} uploadImage={uploadImage} />
                     </View>
-                </View>
-                <ReportForm image={image} setImage={setImage} setOpenModal ={setOpenModal}/>
-                <ModalForm openModal={openModal} removeImage={removeImage} uploadImage={uploadImage} />
-            </Modal>
 
+
+                </View>
+
+            </Modal>
         </TouchableWithoutFeedback>
     )
 }

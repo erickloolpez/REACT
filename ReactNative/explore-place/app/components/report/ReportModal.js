@@ -16,8 +16,7 @@ export default function ReportModal({ openModal, removeImage, uploadImage }) {
             }}>
                 <View style={{
                     width: '80%',
-                    height: '28%',
-                    backgroundColor: 'white',
+                    height: '20%',
                     display: 'flex',
                     flexDirection: 'col',
                     alignItems: 'center',
@@ -25,17 +24,8 @@ export default function ReportModal({ openModal, removeImage, uploadImage }) {
                     borderRadius: 10
                 }}>
                     <View style={{
-                        height: '20%',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                        <Text style={{ fontSize: 18 }}>Sube una Fotografia</Text>
-                    </View>
-                    <View style={{
                         width: '100%',
-                        height: '80%',
+                        height: '100%',
                         display: 'flex',
                         flexDirection: 'row',
                         justifyContent: 'space-around',
@@ -45,19 +35,19 @@ export default function ReportModal({ openModal, removeImage, uploadImage }) {
                         <TouchableOpacity style={styles.containerOptions}
                             onPress={() => uploadImage()}
                         >
-                            <Image source={require('../../../assets/images/cameraIcon.png')} />
+                            <Image source={require('../../../assets/images/cameraIcon.png')} style={{width:'100%', height:'50%',objectFit:'contain'}} />
                             <Text>Camara</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.containerOptions}
                             onPress={() => uploadImage('gallery')}
                         >
-                            <Image source={require('../../../assets/images/albumIcon.png')} />
+                            <Image source={require('../../../assets/images/albumIcon.png')} style={{width:'100%', height:'50%', objectFit:'contain'}} />
                             <Text>Album</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.containerOptions}
                             onPress={() => removeImage()}
                         >
-                            <Image source={require('../../../assets/images/Close.png')} />
+                            <Image source={require('../../../assets/images/Close.png')} style={{width:'100%', height:'50%', objectFit:'contain'}} />
                             <Text style={{}}>Cancelar</Text>
                         </TouchableOpacity>
 

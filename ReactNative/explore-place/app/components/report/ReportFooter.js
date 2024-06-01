@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import useLocation from '../../hooks/useLocation'
 
-export default function ReportFooter({ dropdown, image, inputValue, setImage, setInputValue, setDropDown, triggerModalForm, setVerifyAddress }) {
+export default function ReportFooter({ dropdown, image, inputValue, setImage, setInputValue, setDropDown, triggerModalForm, setVerifyAddress, closeModalTicket }) {
     const { location, addPlace, placeList } = useLocation()
 
     const cleanInputs = async (image) => {
@@ -43,7 +43,7 @@ export default function ReportFooter({ dropdown, image, inputValue, setImage, se
             justifyContent: 'space-around',
             alignItems: 'center',
         }}>
-            <TouchableOpacity style={styles.containerButtons}>
+            <TouchableOpacity style={styles.containerButtons} onPress={()=>closeModalTicket()}>
                 <Text>Cancelar</Text>
             </TouchableOpacity>
             <TouchableOpacity
