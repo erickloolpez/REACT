@@ -1,37 +1,48 @@
-import React,{useState, createContext} from 'react'
+import React, { useState, createContext } from 'react'
 
 export const AuthContext = createContext({
     auth: undefined,
-    login: ()=>{},
-    logout: ()=>{}
+    login: () => { },
+    logout: () => { }
 })
 
-export function AuthProvider(props){
-    const {children} = props
-    const [auth, setAuth] = useState(undefined)
+export function AuthProvider(props) {
+    const { children } = props
+    const [auth, setAuth] = useState("")
     const [listAuth, setListAuth] = useState([])
 
-    const login = (userData)=>{
+    const getList = () =>{
+        return listAuth
+    }
+
+    const login = (userData) => {
         setAuth(userData)
     }
 
-    const logout = ()=>{
-        setAuth(undefined)
+    const logout = () => {
+        setAuth("")
     }
 
-    const signUp = (listUsers) =>{
-        setListAuth([...listAuth, listUsers])
+    const signUp = (newUser) => {
+        let exist = listAuth.some(person => person.username === newUser.username)
+        if(exist){
+            return false
+        }else{
+            listAuth.push(newUser)
+            setAuth(newUser)
+            return true
+        }
     }
 
-    const valueContext ={
+    const valueContext = {
         auth,
         login,
         logout,
         signUp,
-        listAuth
+        getList
     }
 
-    return(
+    return (
         <AuthContext.Provider value={valueContext}>
             {children}
         </AuthContext.Provider>

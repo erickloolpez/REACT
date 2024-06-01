@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity, Image, StyleSheet, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View , Image,  TouchableWithoutFeedback, Keyboard,Modal } from 'react-native'
 import React, { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
-import Modal from '../components/report/ReportModal'
+import ModalForm from '../components/report/ReportModal'
 import ReportForm from '../components/report/ReportForm'
 
 export default function Report() {
@@ -62,7 +62,7 @@ export default function Report() {
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={{
+            <Modal style={{
                 width: '100%',
                 height: '100%',
                 display: 'flex',
@@ -105,8 +105,8 @@ export default function Report() {
                     </View>
                 </View>
                 <ReportForm image={image} setImage={setImage} setOpenModal ={setOpenModal}/>
-                <Modal openModal={openModal} removeImage={removeImage} uploadImage={uploadImage} />
-            </View>
+                <ModalForm openModal={openModal} removeImage={removeImage} uploadImage={uploadImage} />
+            </Modal>
 
         </TouchableWithoutFeedback>
     )

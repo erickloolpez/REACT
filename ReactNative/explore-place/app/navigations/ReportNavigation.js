@@ -1,6 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
+import Presentation from '../components/auth/Presentation'
 import Report from '../screens/report'
 
 export default function ReportNavigation() {
@@ -9,6 +10,7 @@ export default function ReportNavigation() {
     <Stack.Navigator screenOptions={{
       headerShown: false,
     }}>
+        <Stack.Screen name ='news' component={Presentation}/>
         <Stack.Screen name='report' component={Report}/>
     </Stack.Navigator>
   )

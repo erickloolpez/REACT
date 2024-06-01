@@ -1,105 +1,119 @@
-import React, { useState } from 'react'
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Image, Keyboard } from 'react-native'
 import { useFormik } from 'formik'
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native"
 import * as Yup from 'yup'
 import useAuth from '../../hooks/useAuth'
 
-export default function RegistrationForm() {
-    const [error, setError] = useState("");
+export default function RegistrationForm(props) {
+    const navigator = useNavigation()
+    const { navigation } = props
     const { signUp, listAuth } = useAuth()
-    const listUsers = []
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
+                <AntDesign name="left" size={24} style={{ marginLeft: 20 }} color="black" onPress={navigation.goBack} />
+            )
+        })
+    }, [navigation])
+
+
+
 
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: Yup.object(validationSchema()),
         validateOnChange: false,
         onSubmit: (formValue) => {
+            console.log('Valores del Form Registro:', formValue)
+
             setError("");
+
             const { username, email, password, passwordTwo } = formValue;
 
-            if (password !== passwordTwo) {
-                setError("Las password deben ser iguales");
+            const user = {
+                username,
+                email,
+                password,
+                passwordTwo
+            }
+            let answer = signUp(user)
+            if (answer) {
+                navigator.navigate('userData')
             } else {
-                const user = {
-                    nombre: username,
-                    correo: email,
-                    contra: password,
-                    contraDo: passwordTwo
-                }
-
-                listUsers.push(user)
-                signUp(listUsers)
-
-
-                Alert.alert('SUCCESS', 'Tu cuenta se ha creado con exito!', [
-                    {
-                        text: 'Muy Bien',
-                        onPress: () => console.log('se cerro la alerta')
-                    }
-                ])
-
+                setError('Ya existe ese usuario')
             }
         },
     });
 
 
     return (
-        <View style={{ flex: 1, display: 'flex', flexDirection: 'col', alignItems: 'center', backgroundColor: 'white' }}>
-            <View style={{
-                width: '90%',
-                marginBottom: 20,
-                marginTop: 30
+        <View style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+        }}>
+            <TouchableWithoutFeedback onPress={() => {
+                Keyboard.dismiss()
             }}>
-                <Text style={{ fontSize: 30 }}>Registrarse</Text>
-            </View>
-            <View style={{
-                width: '90%',
-                height: 400,
-                display: 'flex',
-                flexDirection: 'col',
-                justifyContent: 'space-between'
-            }}>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Nombre'
-                    autoCapitalize='none'
-                    placeholderTextColor='gray'
-                    value={formik.values.username}
-                    onChangeText={(text) => formik.setFieldValue('username', text)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder='Correo'
-                    autoCapitalize='none'
-                    placeholderTextColor='gray'
-                    value={formik.values.email}
-                    onChangeText={(text) => formik.setFieldValue('email', text)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder='Clave'
-                    autoCapitalize='none'
-                    placeholderTextColor='gray'
-                    secureTextEntry={true}
-                    value={formik.values.password}
-                    onChangeText={(text) => formik.setFieldValue('password', text)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder='Confirma tu clave'
-                    autoCapitalize='none'
-                    placeholderTextColor='gray'
-                    secureTextEntry={true}
-                    value={formik.values.passwordTwo}
-                    onChangeText={(text) => formik.setFieldValue('passwordTwo', text)}
-                />
-            </View>
-            <View style={{ marginTop: 30 }}>
-                <Button title="Sign Up" onPress={formik.handleSubmit} />
-            </View>
-            <Text style={styles.error}>{formik.errors.username}</Text>
-            <Text style={styles.error}>{formik.errors.password}</Text>
-            <Text style={styles.error}>{error}</Text>
+                <View style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
+                    <Image source={require('../../../assets/images/waveAlreves.png')} style={{ width: 250, height: 160, objectFit: 'fill', position: 'absolute', right: 0, top: 0, zIndex: 1 }} />
+                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', zIndex: 2, width: 110, position: 'absolute', top: '10%', left: '5%' }}>
+                        <Text style={{ fontSize: 28, fontWeight: 500 }}>Crear Cuenta</Text>
+                    </View>
+                    <View style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'absolute', top: '24%' }}>
+                        <View style={{ width: '90%' }}>
+                            <TextInput style={{ borderBottomWidth: 1, borderColor: '#b5bac9', paddingBottom: 14, paddingTop: 4, paddingLeft: 2, marginBottom: 22, fontSize: 16 }} placeholder={'Nombre'} placeholderTextColor={'gray'} autoCapitalize={'none'} value={formik.values.username} onChangeText={(text) => formik.setFieldValue('username', text)} />
+                            <TextInput style={{ borderBottomWidth: 1, borderColor: '#b5bac9', paddingBottom: 14, paddingTop: 4, paddingLeft: 2, marginBottom: 22, fontSize: 16 }} placeholder={'Correo'} placeholderTextColor={'gray'} autoCapitalize={'none'} value={formik.values.email} onChangeText={(text) => formik.setFieldValue('email', text)} />
+                            <TextInput style={{ borderBottomWidth: 1, borderColor: '#b5bac9', paddingBottom: 14, paddingTop: 4, paddingLeft: 2, marginBottom: 22, fontSize: 16 }} placeholder={'Clave'} placeholderTextColor={'gray'} autoCapitalize={'none'} value={formik.values.password} onChangeText={(text) => formik.setFieldValue('password', text)} secureTextEntry={true} />
+                            <TextInput style={{ borderBottomWidth: 1, borderColor: '#b5bac9', paddingBottom: 14, paddingTop: 4, paddingLeft: 2, fontSize: 16 }} placeholder={'Confirme su Clave'} placeholderTextColor={'gray'} autoCapitalize={'none'} value={formik.values.passwordTwo} onChangeText={(text) => formik.setFieldValue('passwordTwo', text)} secureTextEntry={true} />
+                        </View>
+                    </View>
+                    <View style={{ width: 200, height: 20, position: 'absolute', bottom: '38%', left: '26%', overflow: 'hidden' }}>
+                        {Object.values(formik.errors).map((err, index) => (
+                            <Text key={index.toString()} style={{ height: 20, marginBottom: 10, textAlign: 'center', color: '#f00' }}>
+                                {err}
+                            </Text>
+                        ))}
+                    </View>
+                    <View style={{ width: 200, height: 20, position: 'absolute', bottom: '38%', left: '26%', overflow: 'hidden' }}>
+                        <Text style={{ height: 20, marginBottom: 10, textAlign: 'center', color: '#f00' }}>{error}</Text>
+                    </View>
+                    <View style={{ width: '90%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', position: 'absolute', bottom: '28%', left: '5%' }}>
+                        <Text style={{ fontSize: 28, fontWeight: 500 }}>Regristrarse</Text>
+                        <View style={{ backgroundColor: '#60BC55', borderRadius: 50, padding: 16 }}>
+                            <TouchableOpacity onPress={formik.handleSubmit}>
+                                <AntDesign name="arrowright" size={28} color="white" />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'absolute', bottom: '25%' }}>
+                        <Text>O continua con ...</Text>
+                    </View>
+                    <View style={{ width: '100%', display: 'flex', gap: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: '13%' }}>
+                        <View style={{ width: 60, height: 60, backgroundColor: 'white', padding: 12, borderRadius: 50, shadowOffset: { width: -1, height: 2 }, shadowOpacity: 0.6, shadowRadius: 1 }}>
+                            <Image source={require('../../../assets/images/facebook.png')} style={{ width: '100%', height: '100%' }} />
+                        </View>
+                        <View style={{ width: 60, height: 60, backgroundColor: 'white', padding: 12, borderRadius: 50, shadowOffset: { width: -1, height: 2 }, shadowOpacity: 0.6, shadowRadius: 1 }}>
+                            <Image source={require('../../../assets/images/google.png')} style={{ width: '100%', height: '100%' }} />
+                        </View>
+                        <View style={{ width: 60, height: 60, backgroundColor: 'white', padding: 12, borderRadius: 50, shadowOffset: { width: -1, height: 2 }, shadowOpacity: 0.6, shadowRadius: 1 }}>
+                            <Image source={require('../../../assets/images/instagram.png')} style={{ width: '100%', height: '100%' }} />
+                        </View>
+                    </View>
+                    <View style={{ width: '90%', position: 'absolute', bottom: '5%', left: '5%' }}>
+                        <TouchableOpacity onPress={() => { onSignUpClick() }}>
+                            <Text style={{ textDecorationLine: 'underline' }}>Terminos y Conidiciones</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </TouchableWithoutFeedback>
         </View>
     );
 };
@@ -107,28 +121,17 @@ export default function RegistrationForm() {
 function initialValues() {
     return {
         username: "",
-        email: '',
+        email: "",
         password: "",
-        passwordTwo: ''
+        passwordTwo: ""
     };
 }
 
 function validationSchema() {
     return {
         username: Yup.string().required("El usuario es obligatorio"),
-        password: Yup.string().required("La contraseña es obligatoria"),
         email: Yup.string().required("El email es obligatorio"),
-        passwordTwo: Yup.string().required("Debes confirmar tu password"),
+        password: Yup.string().required("La contraseña es obligatoria"),
+        passwordTwo: Yup.string().oneOf([Yup.ref('password')], 'Las dos claves deben coincidir').required("Debes confirmar tu password"),
     };
 }
-
-const styles = StyleSheet.create({
-    input: {
-        borderWidth: 1,
-        height: 50,
-        backgroundColor: '#f5f5f5',
-        marginBottom: 30,
-        borderRadius: 8,
-        padding: 10
-    }
-})

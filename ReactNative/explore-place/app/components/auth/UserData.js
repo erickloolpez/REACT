@@ -1,14 +1,16 @@
 import { View, Text, StyleSheet, Button, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import useAuth from '../../hooks/useAuth'
+import {useNavigation} from '@react-navigation/native'
 
 export default function UserData() {
+  const navigator = useNavigation()
   const { auth, logout } = useAuth()
   return (
     <View style={styles.content}>
       <View style={styles.titleBlock}>
         <Text style={styles.title}>Bienvenido,</Text>
-        <Text style={styles.title}>{`${auth.nombre} ${auth.nombre}`}</Text>
+        <Text style={styles.title}>{auth.username}</Text>
       </View>
       <View style={{width: '100%', height:'15%', display:'flex',flexDirection:'row', justifyContent:'center'}}>
         <TouchableOpacity style={{width:'25%', height:'100%', borderRadius:50, overflow:'hidden', borderWidth:1}}>
@@ -17,15 +19,18 @@ export default function UserData() {
       </View>
 
       <View style={styles.dataContent}>
-        <ItemMenu title="Nombre" text={`${auth.nombre} ${auth.nombre}`} />
-        <ItemMenu title="Username" text={auth.nombre} />
-        <ItemMenu title="Email" text={auth.correo} />
+        <ItemMenu title="Nombre" text={auth.username} />
+        <ItemMenu title="Username" text={auth.username} />
+        <ItemMenu title="Email" text={auth.email} />
         <ItemMenu title="Total de Reportes" text={`0 reportes`} />
       </View>
 
       <TouchableOpacity
         style={{width:'100%', height:'24%', display:'flex', alignItems:'center',justifyContent: 'center' }}
-        onPress={logout}
+        onPress={()=>{
+          navigator.navigate('login')
+          logout()
+        }}
       >
         <View style={{width:'40%', height:'34%', backgroundColor: '#ff7676',display: 'flex',flexDirection:'row', justifyContent: 'center', alignItems: 'center', borderRadius:4}} >
         <Text style={{color:'white', fontWeight:600}}>DESCONECTARSE</Text>
