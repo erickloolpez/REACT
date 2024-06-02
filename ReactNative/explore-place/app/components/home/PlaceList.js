@@ -12,12 +12,7 @@ export default function PlaceList({ placeList }) {
 
 
   return (
-    <ScrollView style={{
-      width: '90%',
-      height: 450,
-      borderWidth: 2,
-      borderRadius: 20,
-    }} >
+    <View style={{ width: '90%' }}>
       <Text style={{
         fontSize: 16,
         marginTop: 4,
@@ -26,27 +21,24 @@ export default function PlaceList({ placeList }) {
         fontWeight: 600,
       }}>
         Reportes Totales: {placeList.length}</Text>
+      <ScrollView style={{
+        width: '100%',
+        height: 450,
+        borderWidth: 2,
+        borderRadius: 20,
+      }} >
 
-      {placeList.map((item, index) => {
-        const PlaceComponent = index % 2 == 0 ? PlaceItem : PlaceItemBig;
+        {placeList.map((item, index) => {
+          const PlaceComponent = index % 2 == 0 ? PlaceItem : PlaceItemBig;
 
-        return (
-          <TouchableOpacity style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} key={index} onPress={() => onPlaceClick(item)}>
-            <PlaceComponent place={item} />
-          </TouchableOpacity>
-        );
-      })}
+          return (
+            <TouchableOpacity style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} key={index} onPress={() => onPlaceClick(item)}>
+              <PlaceComponent place={item} />
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
 
-
-      {/* <FlatList
-        data={placeList}
-        renderItem={({item})=>(
-          <TouchableOpacity onPress={()=>onPlaceClick(item)}>
-            <PlaceItem place={item} />
-          </TouchableOpacity>
-        )}
-        horizontal={false}
-      /> */}
-    </ScrollView>
+    </View>
   )
 }

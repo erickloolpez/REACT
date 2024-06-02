@@ -14,7 +14,7 @@ export default function AccountNavigation() {
         }}
     >
         <Stack.Screen name='login' component={LoginForm} options={{title:'',headerShown: false}}/>
-        <Stack.Screen name='register' component={UserRegister} options={{title:"",headerTransparent:true}}/>
+        <Stack.Screen name='register' component={UserRegister} options={{title:"",headerShown:false}}/>
         <Stack.Screen name='userData' component={UserData} options={{title:"",headerShown:false}}/>
     </Stack.Navigator>
   )

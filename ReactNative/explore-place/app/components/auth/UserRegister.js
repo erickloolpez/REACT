@@ -12,17 +12,6 @@ export default function RegistrationForm(props) {
     const { signUp, listAuth } = useAuth()
     const [error, setError] = useState("");
 
-    useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => (
-                <AntDesign name="left" size={24} style={{ marginLeft: 20 }} color="black" onPress={navigation.goBack} />
-            )
-        })
-    }, [navigation])
-
-
-
-
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: Yup.object(validationSchema()),
@@ -64,6 +53,7 @@ export default function RegistrationForm(props) {
             }}>
                 <View style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
                     <Image source={require('../../../assets/images/waveAlreves.png')} style={{ width: 250, height: 160, objectFit: 'fill', position: 'absolute', right: 0, top: 0, zIndex: 1 }} />
+                    <AntDesign name="left" size={24} style={{ position: 'absolute', top: '4%', left: '5%' }} color="black" onPress={navigation.goBack} />
                     <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', zIndex: 2, width: 110, position: 'absolute', top: '10%', left: '5%' }}>
                         <Text style={{ fontSize: 28, fontWeight: 500 }}>Crear Cuenta</Text>
                     </View>

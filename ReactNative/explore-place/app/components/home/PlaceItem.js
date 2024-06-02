@@ -54,12 +54,11 @@ export default function PlaceItem({ place }) {
       marginTop: 8,
     }}>
       <Image
-        source={require('../../../assets/images/basurero.jpg')}
+        source={require('../../../assets/images/calle.jpg')}
         style={{
           width: '40%',
           height: '100%',
           borderRadius: 8,
-          borderWidth: 1,
         }}
       />
       <View style={{
