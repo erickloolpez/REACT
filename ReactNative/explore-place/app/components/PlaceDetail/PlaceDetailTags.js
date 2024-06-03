@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function PlaceDetailTags({place}) {
   return (
-            <View style={{ width: '100%', height: 84, backgroundColor: 'white', padding: 8, display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
+            <View style={{ width: '100%', height: 84, padding: 8, display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
                 <View style={{ width: '50%', height: 30 , position:'relative'}}>
                     <View style={{ width: '100%', height: '100%', borderWidth: 1, borderRadius: 8, display: 'flex', flexDirection: 'row', zIndex: 2, backgroundColor:'white', alignItems:'center', paddingHorizontal:4 }}>
                         <Image source={require('../../../assets/images/calendario.png')} style={{ width: 20, height: 20, objectFit: 'contain' }} />

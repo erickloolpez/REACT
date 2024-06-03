@@ -1,10 +1,19 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, TextInput, FlatList, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { useRoute } from '@react-navigation/native'
 import MapView, { Marker, Circle, Callout } from 'react-native-maps'
+import { LinearGradient } from 'expo-linear-gradient'
+import { AntDesign } from '@expo/vector-icons';
+import DetailMap from './DetailMap'
+import {useNavigation} from '@react-navigation/native'
 
 export default function Map() {
     const params = useRoute().params
+  const navigator = useNavigation()
+
+  const onPlaceClick = (item) => {
+    navigator.navigate('place-detail', { place: item })
+  }
 
     const [mapRegion, setMapRegion] = useState({
         latitude: params.coords.latitude,
@@ -29,41 +38,75 @@ export default function Map() {
 
     return (
         <View style={{ flex: 1 }}>
-            <MapView
-                style={{
-                    width: '100%',
-                    height: '100%',
-                }}
-                region={mapRegion}
-            >
-                <Marker
-                    title='You'
-                    coordinate={params.coords}
-                />
-                {
-                    params.placeList.map((marker, index) => (
-                        <React.Fragment key={index}>
-                            <Circle
-                                center={{ latitude: marker.latitude, longitude: marker.longitude }}
-                                radius={500}
-                                fillColor={circleStyle(marker.estado)}
+            <View style={{ width: '100%', height: '18%', borderWidth: 1, position: 'absolute', zIndex: 2 }}>
+                <LinearGradient colors={['white', 'transparent']} style={{ width: '100%', height: '100%', position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center' }} start={{ x: 0.5, y: 0.3 }}  >
+                    <Text style={{ width: '90%', fontSize: 22, fontWeight: 500, marginTop: 8 }}>Descubre</Text>
+                    <View style={{
+                        width: '100%',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginTop: 10,
+                    }}>
+                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', borderWidth: 2, width: '90%', height: 42, backgroundColor: 'white', borderRadius: 8, paddingLeft: 10, }}>
+                            <AntDesign name="search1" size={24} color="black" />
+                            <TextInput placeholder='Busqueda de Reportes' placeholderTextColor={'gray'}
+                                style={{ borderColor: '#000', padding: 4, borderRadius: 50, paddingLeft: 10 }}
                             />
-                            <Marker
-                                coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
-                                title={marker.name}
-                            >
-                                <Callout>
-                                    <Image style={{ width: '100%', height: 50 }} source={require('../../../assets/images/basurero.jpg')} />
-                                    <Text>{marker.nombre}</Text>
-                                </Callout>
-                            </Marker>
-                        </React.Fragment>
-                    ))
-                }
+                        </View>
+                    </View>
 
+                </LinearGradient>
+            </View>
 
-            </MapView>
-
+            <View style={{ width: '100%', height: '100%', position: 'relative', zIndex: 1 }}>
+                <MapView
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                    }}
+                    region={mapRegion}
+                >
+                    <Marker
+                        title='You'
+                        coordinate={params.coords}
+                    />
+                    {
+                        params.placeList.map((marker, index) => (
+                            <React.Fragment key={index}>
+                                <Circle
+                                    center={{ latitude: marker.latitude, longitude: marker.longitude }}
+                                    radius={500}
+                                    fillColor={circleStyle(marker.estado)}
+                                />
+                                <Marker
+                                    coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+                                    title={marker.name}
+                                >
+                                    <Callout>
+                                        <Image style={{ width: '100%', height: 50 }} source={{uri:marker.imagen}} />
+                                        <Text>{marker.nombre}</Text>
+                                    </Callout>
+                                </Marker>
+                            </React.Fragment>
+                        ))
+                    }
+                </MapView>
+            </View>
+            <View style={{ width: '100%', height: '28%', borderWidth: 1, position: 'absolute', zIndex: 2, bottom: 0, paddingHorizontal: 10, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                <FlatList
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={(item,index)=> index.toString()}
+                    data={params.placeList}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity style={{marginRight:30, marginLeft:6}}  onPress={() => onPlaceClick(item)}>
+                            <DetailMap place={item} />
+                        </TouchableOpacity>
+                    )}
+                />
+            </View>
         </View>
     )
 }

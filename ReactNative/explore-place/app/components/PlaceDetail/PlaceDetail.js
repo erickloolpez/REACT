@@ -11,7 +11,7 @@ export default function PlaceDetail() {
   // },[])
 
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor:'white'}}>
       <PlaceDetailItem  place={params.place}/>
     </ScrollView>
   )

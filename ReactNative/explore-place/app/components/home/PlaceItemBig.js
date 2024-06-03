@@ -27,7 +27,7 @@ export default function PlaceItem({ place }) {
       borderRadius:10
     }}>
       <Image
-        source={require('../../../assets/images/basurero.jpg')}
+        source={{uri:place.imagen}}
         style={{
           width: '40%',
           height: '80%',

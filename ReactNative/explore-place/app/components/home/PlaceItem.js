@@ -54,7 +54,7 @@ export default function PlaceItem({ place }) {
       marginTop: 8,
     }}>
       <Image
-        source={require('../../../assets/images/calle.jpg')}
+        source={{uri:place.imagen}}
         style={{
           width: '40%',
           height: '100%',

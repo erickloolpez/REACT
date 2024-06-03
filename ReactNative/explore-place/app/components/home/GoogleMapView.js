@@ -114,7 +114,7 @@ export default function GoogleMapView({ placeList }) {
                   title={marker.name}
                 >
                   <Callout>
-                    <Image style={{ width: '100%', height: 50 }} source={require('../../../assets/images/basurero.jpg')} />
+                    <Image style={{ width: '100%', height: 50 }} source={{uri:marker.imagen}} />
                     <Text>{marker.nombre}</Text>
                   </Callout>
                 </Marker>

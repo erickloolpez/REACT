@@ -10,9 +10,15 @@ export default function PlaceList({ placeList }) {
     navigator.navigate('place-detail', { place: item })
   }
 
+  let scrollHeight
+  if(placeList.length >= 3){
+    scrollHeight = 450
+  }else{
+    scrollHeight = 'auto'
+  }
 
   return (
-    <View style={{ width: '90%' }}>
+    <View style={{ width: '94%' }}>
       <Text style={{
         fontSize: 16,
         marginTop: 4,
@@ -23,8 +29,7 @@ export default function PlaceList({ placeList }) {
         Reportes Totales: {placeList.length}</Text>
       <ScrollView style={{
         width: '100%',
-        height: 450,
-        borderWidth: 2,
+        height: scrollHeight,
         borderRadius: 20,
       }} >
 

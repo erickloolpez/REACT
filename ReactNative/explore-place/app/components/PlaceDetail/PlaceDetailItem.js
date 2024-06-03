@@ -37,9 +37,9 @@ export default function PlaceDetailItem({ place }) {
             <PlaceDetailTags place={place} />
             <PlaceDetailDesc place={place} />
             <PlaceDetailState place={place}/>
-            <PlaceDetailChat place={place}/>
-            <Text style={{padding:8, fontSize:16, fontWeight:500, marginBottom:10}}>Personas que sigue el caso: #{place.peticiones}</Text>
+            <Text style={{padding:8, fontSize:16, fontWeight:500,marginTop:24, marginBottom:10}}>Personas que sigue el caso: #{place.peticiones}</Text>
             <PlaceDetailPipol/>
+            <PlaceDetailChat place={place}/>
 
         </View>
     )

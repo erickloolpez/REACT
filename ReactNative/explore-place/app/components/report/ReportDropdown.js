@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     dropdown: {
         margin: 16,
         height: 50,
-        backgroundColor: 'white',
         borderRadius: 12,
         padding: 12,
         shadowColor: '#000',
@@ -78,7 +77,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     textItem: {
-        flex: 1,
         fontSize: 16,
     },
     placeholderStyle: {

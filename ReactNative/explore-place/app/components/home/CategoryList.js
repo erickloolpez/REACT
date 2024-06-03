@@ -2,7 +2,7 @@ import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import React from 'react'
 import CategoryItem from '../../components/home/CategoryItem'
 
-export default function CategoryList() {
+export default function CategoryList({depureList}) {
   const categoryList = [{
     id: 1,
     name: 'Parques',
@@ -71,7 +71,7 @@ export default function CategoryList() {
         showsHorizontalScrollIndicator={false}
         data={categoryList}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => console.log(item.name)}>
+          <TouchableOpacity onPress={() => depureList(item.name)}>
             <CategoryItem category={item} />
           </TouchableOpacity>
         )}

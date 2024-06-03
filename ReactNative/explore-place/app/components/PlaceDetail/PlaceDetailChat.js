@@ -36,7 +36,7 @@ export default function PlaceDetailChat({place}) {
 
 
     return (
-        <View style={{ width: '100%', marginTop: 40 ,padding:8 }}>
+        <View style={{ width: '100%', marginTop: 10 ,padding:8, marginBottom:10 }}>
             <Text style={{fontSize:16, fontWeight: 500, marginBottom:10}}>Respuestas:</Text>
             <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: 8 }}>
                 <View style={{ width: '48%', height: 40, borderWidth: 1, marginTop: 4, backgroundColor: 'white', borderTopRightRadius: 12, borderBottomEndRadius: 12, borderTopLeftRadius: 12, padding: 2 }}>

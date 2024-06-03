@@ -7,7 +7,7 @@ import PlaceList from '../components/home/PlaceList'
 import useLocation from '../hooks/useLocation'
 
 export default function Home() {
-    const { placeList } = useLocation()
+    const {depureList, placeCategory } = useLocation()
     //En caso de tener una API usar esto
     /*
     useEffect(()=>{
@@ -24,9 +24,9 @@ export default function Home() {
         <ScrollView style={{ flex: 1 }} >
             <View style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Header />
-                <GoogleMapView placeList={placeList} />
-                <CategoryList />
-                {placeList ? <PlaceList placeList={placeList} /> : null}
+                <GoogleMapView placeList={placeCategory} />
+                <CategoryList depureList={depureList} />
+                {placeCategory ? <PlaceList placeList={placeCategory} /> : null}
             </View>
         </ScrollView>
     )
