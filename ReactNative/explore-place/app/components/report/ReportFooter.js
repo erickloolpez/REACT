@@ -64,7 +64,7 @@ export default function ReportFooter({ dropdown, image, inputValue, setImage, se
                     cleanInputs()
                     placeList.forEach(place => {
                         const circleCenter = { latitude: place.latitude, longitude: place.longitude }
-                        if (haversineDistance(location, circleCenter) <= 500) {
+                        if (haversineDistance(location, circleCenter) <= 100) {
                             flag = false
                         }
                     })

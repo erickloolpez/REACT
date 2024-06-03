@@ -106,7 +106,7 @@ export default function GoogleMapView({ placeList }) {
               <React.Fragment key={index}>
                 <Circle
                   center={{ latitude: marker.latitude, longitude: marker.longitude }}
-                  radius={500}
+                  radius={100}
                   fillColor={circleStyle(marker.estado)}
                 />
                 <Marker
