@@ -43,7 +43,7 @@ export default function PlaceDetailChat({place}) {
                     <Text>Un saludo, este es mi reporte uwu</Text>
                 </View>
                 <View style={{ width: '40%', height: 180, borderWidth: 1, marginTop: 4, backgroundColor: 'white', borderTopRightRadius: 12, borderBottomEndRadius: 12, borderTopLeftRadius: 12, }}>
-                    <Image source={require('../../../assets/images/basurero.jpg')} style={{ width: '100%', height: '100%', objectFit: 'cover', borderTopRightRadius: 12, borderBottomEndRadius: 12, borderTopLeftRadius: 12, }} />
+                    <Image source={{uri:place.imagen}} style={{ width: '100%', height: '100%', objectFit: 'cover', borderTopRightRadius: 12, borderBottomEndRadius: 12, borderTopLeftRadius: 12, }} />
                 </View>
 
             </View>

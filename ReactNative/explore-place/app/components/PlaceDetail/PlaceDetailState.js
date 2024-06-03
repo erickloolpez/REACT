@@ -6,32 +6,32 @@ export default function PlaceDetailState({place}) {
         if (state == 'pendiente') {
             return {
                 width: `8%`,
-                backgroundColor: '#73c902'
+                backgroundColor: '#7EBA94'
             }
         } else if (state == 'proceso') {
             return {
                 width: `50%`,
-                backgroundColor: '#73c902'
+                backgroundColor: '#7EBA94'
             }
         } else {
             return {
                 width: `100%`,
-                backgroundColor: '#73c902'
+                backgroundColor: '#7EBA94'
             }
         }
     }
     const iconStyles = (state, index) => {
         if (state == 'pendiente' && index == 0) {
             return {
-                backgroundColor: '#73c902'
+                backgroundColor: '#7EBA94'
             }
         } else if (state == 'proceso' && (index == 1 || index == 0)) {
             return {
-                backgroundColor: '#73c902'
+                backgroundColor: '#7EBA94'
             }
         } else if (state == 'completado' && index <= 2) {
             return {
-                backgroundColor: '#73c902'
+                backgroundColor: '#7EBA94'
             }
         } else {
             return {

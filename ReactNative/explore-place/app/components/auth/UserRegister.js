@@ -53,7 +53,7 @@ export default function RegistrationForm(props) {
             }}>
                 <View style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
                     <Image source={require('../../../assets/images/waveAlreves.png')} style={{ width: 250, height: 160, objectFit: 'fill', position: 'absolute', right: 0, top: 0, zIndex: 1 }} />
-                    <AntDesign name="left" size={24} style={{ position: 'absolute', top: '4%', left: '5%' }} color="black" onPress={navigation.goBack} />
+                    <AntDesign name="left" size={24} style={{ position: 'absolute', top: '4%', left: '5%' }} color="black" onPress={()=>navigation.goBack()} />
                     <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', zIndex: 2, width: 110, position: 'absolute', top: '10%', left: '5%' }}>
                         <Text style={{ fontSize: 28, fontWeight: 500 }}>Crear Cuenta</Text>
                     </View>
@@ -78,7 +78,7 @@ export default function RegistrationForm(props) {
                     <View style={{ width: '90%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', position: 'absolute', bottom: '28%', left: '5%' }}>
                         <Text style={{ fontSize: 28, fontWeight: 500 }}>Regristrarse</Text>
                         <View style={{ backgroundColor: '#60BC55', borderRadius: 50, padding: 16 }}>
-                            <TouchableOpacity onPress={formik.handleSubmit}>
+                            <TouchableOpacity onPress={()=>formik.handleSubmit()}>
                                 <AntDesign name="arrowright" size={28} color="white" />
                             </TouchableOpacity>
                         </View>

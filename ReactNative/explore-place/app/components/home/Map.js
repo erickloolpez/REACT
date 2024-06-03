@@ -38,8 +38,8 @@ export default function Map() {
 
     return (
         <View style={{ flex: 1 }}>
-            <View style={{ width: '100%', height: '18%', borderWidth: 1, position: 'absolute', zIndex: 2 }}>
-                <LinearGradient colors={['white', 'transparent']} style={{ width: '100%', height: '100%', position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center' }} start={{ x: 0.5, y: 0.3 }}  >
+            <View style={{ width: '100%', height: '18%', position: 'absolute', zIndex: 2 }}>
+                <LinearGradient colors={['white', 'transparent']} style={{ width: '100%', height: '100%', position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center' }} start={{ x: 0.5, y:0.25 }}  >
                     <Text style={{ width: '90%', fontSize: 22, fontWeight: 500, marginTop: 8 }}>Descubre</Text>
                     <View style={{
                         width: '100%',
@@ -94,7 +94,7 @@ export default function Map() {
                     }
                 </MapView>
             </View>
-            <View style={{ width: '100%', height: '28%', borderWidth: 1, position: 'absolute', zIndex: 2, bottom: 0, paddingHorizontal: 10, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ width: '100%', height: '28%', position: 'absolute', zIndex: 2, bottom: 0, paddingHorizontal: 10, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                 <FlatList
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}

@@ -83,7 +83,7 @@ export default function LoginForm() {
                     <View style={{ width: '90%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', position: 'absolute', bottom: '30%', left: '5%' }}>
                         <Text style={{ fontSize: 28, fontWeight: 500 }}>Iniciar Sesion</Text>
                         <View style={{ backgroundColor: '#5D6A70', borderRadius: 50, padding: 16 }}>
-                            <TouchableOpacity onPress={formik.handleSubmit}>
+                            <TouchableOpacity onPress={()=>formik.handleSubmit()}>
                                 <AntDesign name="arrowright" size={28} color="white" />
                             </TouchableOpacity>
                         </View>
