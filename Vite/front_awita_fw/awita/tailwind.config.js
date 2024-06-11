@@ -31,6 +31,10 @@ export default {
       gridTemplateRows:{
         'home-grid': "10% 90%"
       },
+      gridTemplateColumns:{
+        'stats-rem':'16rem auto'
+
+      },
     },
   },
   plugins: [],

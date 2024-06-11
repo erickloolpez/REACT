@@ -6,7 +6,7 @@ import x from '../../assets/svg/x-twitter.svg'
 
 const TopNav = () => {
     return(
-        <div className='xl:w-11/12 2xl:w-3/4 h-16 flex items-center justify-between'>
+        <div className='lg:w-full xl:w-11/12 2xl:w-3/4 h-16 flex items-center justify-between'>
             <div className='h-full flex items-center  '>
                 <div className='w-7 h-7 flex justify-center items-center bg-palette rounded-3xl mr-2'>
                     <img src={`${mail}`} alt="mail-svg" className=' w-4 h-4' />

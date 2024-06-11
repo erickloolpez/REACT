@@ -2,7 +2,7 @@
 import botellon from '../../assets/img/bottellon.png'
 const Landing = () => {
     return (
-        <div className='xl:w-11/12 2xl:w-3/4 grid grid-cols-2 place-items-center'>
+        <div className='lg:w-full xl:w-11/12 2xl:w-3/4 grid grid-cols-2 place-items-center'>
             <div >
                 <div className='xl:w-2/3 h-12 bg-palette flex justify-center items-center rounded-md'>
                     <h2 className='text-white font-Rubik text-xlg text-bold'>WATER IS NOTHING BUT LIFE</h2>

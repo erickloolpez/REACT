@@ -1,9 +1,10 @@
+import Layout from '../components/stats/Layout'
+import Aside from '../components/stats/Aside'
 const Stats = ()=>{
     return(
-        <div>
-            <h1>Hola perros</h1>
-        </div>
-
+        <Layout>
+            <Aside/>
+        </Layout>
     )
 }
 
