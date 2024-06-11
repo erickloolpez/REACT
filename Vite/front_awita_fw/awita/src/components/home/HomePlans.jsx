@@ -3,7 +3,7 @@ import checkSVG from '../../assets/svg/check.svg'
 
 const HomePlans = () => {
     return (
-        <div className='w-full flex flex-col items-center'>
+        <div className='xl:w-11/12 2xl:w-3/4 mt-12 flex flex-col items-center mb-10'>
             <div className="flex flex-col items-center mb-4 ">
                 <h1 className='text-5xl font-Rubik m-1 text-head-color'>Choose Your Plan</h1>
                 <img src={`${line}`} alt="line" className='w-20 h-4 object-contain' />

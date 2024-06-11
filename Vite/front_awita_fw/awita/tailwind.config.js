@@ -15,7 +15,8 @@ export default {
       },
       height:{
         'home-height':'100vh',
-        'home-plan': '90vh'
+        'home-plan': '90vh',
+        'home-screen':'210vh'
       },
       textColor:{
         'title-color': '#5e17df',
