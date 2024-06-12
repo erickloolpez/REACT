@@ -17,7 +17,8 @@ export default {
       height:{
         'home-height':'650px',
         'home-plan': '620px',
-        'home-screen':'180vh'
+        'home-screen':'180vh',
+        'table':'45%'
       },
       textColor:{
         'title-color': '#5e17df',
@@ -33,7 +34,8 @@ export default {
         'home-grid': "10% 90%"
       },
       gridTemplateColumns:{
-        'stats-rem':'16rem auto'
+        'stats-rem':'16rem auto',
+        'table-detail':'70% 30%',
 
       },
     },
