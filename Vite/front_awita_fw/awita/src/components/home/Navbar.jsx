@@ -5,7 +5,7 @@ import menu from '../../assets/svg/menu.svg'
 const Navbar = () => {
     const activeStyle = 'underline underline-offset-4 text-white font-Rubik font-bold'
     return (
-        <nav className='lg:w-full xl:w-11/12 2xl:w-3/4 h-1/8 flex items-center border-b border-l-0 border-r-0  border-t-0 border-white border-dashed '>
+        <nav className='sm:w-full lg:w-full xl:w-11/12 2xl:w-4/5 h-1/8 flex items-center border-b border-l-0 border-r-0  border-t-0 border-white border-dashed z-10 '>
             <ul className='w-full h-full flex justify-between items-center'>
                 <li className='w-32 h-full list-none'>
                     <img src={`${logo}`} alt="awita_logo" className='w-full h-full object-contain' />

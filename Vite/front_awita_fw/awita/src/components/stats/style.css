@@ -1,3 +1,22 @@
+:root {
+    --color-primary: #6C9BCF;
+    --color-danger: #FF0060;
+    --color-success: #1B9C85;
+    --color-warning: #F7D060;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-dark: #363949;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 1.2rem;
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
 aside {
     width:100%;
     height: 100%;
@@ -105,3 +124,151 @@ aside {
             font-size: 11px;
             border-radius: var(--border-radius-1);
         }
+
+
+/*Circles*/
+     .analyse {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.6rem;
+        align-items: center;
+        height: 20%;
+    }
+
+         .analyse > div {
+            height: 100px;
+            background-color: var(--color-white);
+            padding: var(--card-padding);
+            border-radius: var(--card-border-radius);
+            margin-top: 1rem;
+            margin-left: 14px;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+             .analyse > div:hover {
+                box-shadow: none;
+            }
+
+             .analyse > div .status {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                height: 100%;
+            }
+
+         .analyse h3 {
+            margin-left: 0.6rem;
+            font-size: 1rem;
+        }
+
+         .analyse .progresss {
+            position: relative;
+            width: 92px;
+            height: 92px;
+            border-radius: 50%;
+        }
+
+         .analyse svg {
+            width: 7rem;
+            height: 7rem;
+        }
+
+             .analyse svg circle {
+                fill: none;
+                stroke-width: 10;
+                stroke-linecap: round;
+                transform: translate(5px, 5px);
+            }
+
+         .analyse .sales svg circle {
+            stroke: var(--color-success);
+            stroke-dashoffset: -30;
+            stroke-dasharray: 200;
+        }
+
+         .analyse .visits svg circle {
+            stroke: var(--color-danger);
+            stroke-dashoffset: -30;
+            stroke-dasharray: 200;
+        }
+
+         .analyse .searches svg circle {
+            stroke: var(--color-primary);
+            stroke-dashoffset: -30;
+            stroke-dasharray: 200;
+        }
+
+         .analyse .progresss .percentage {
+            position: absolute;
+            top: -3px;
+            left: -1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+
+/*Section Charts*/
+.sectionCharts {
+    display: grid;
+    grid-template-columns: 30% 66%;
+    grid-template-rows: 100%;
+    height: 30%;
+    gap: 1.6rem;
+}
+
+.containerCharts {
+    width: 100%;
+    height:100%;
+    position: relative;
+}
+
+.controls {
+    margin-top: 30px;
+    text-align: center;
+}
+
+
+.btn {
+    padding: 8px 15px;
+    border: none;
+    background-color: #303f9f;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+#canvas-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#canvas-containerTwo{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-container{
+    width:100%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    border-radius: 6px;
+}

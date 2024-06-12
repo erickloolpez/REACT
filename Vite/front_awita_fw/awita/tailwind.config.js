@@ -11,12 +11,13 @@ export default {
         'Rubik':['Rubik', 'sans-serif']
       },
       width:{
-        'box-title': "40%"
+        'box-title': "40%",
+        'plus-ultra':'130%'
       },
       height:{
-        'home-height':'100vh',
-        'home-plan': '90vh',
-        'home-screen':'210vh'
+        'home-height':'650px',
+        'home-plan': '620px',
+        'home-screen':'180vh'
       },
       textColor:{
         'title-color': '#5e17df',
