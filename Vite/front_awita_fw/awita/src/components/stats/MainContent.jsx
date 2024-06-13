@@ -12,7 +12,7 @@ const MainContent = () => {
         <div className='w-full h-full'>
             <Circles />
             <Charts />
-            <div className={`w-full h-table bg-green-300 grid ${rowView ? 'grid-cols-table-detail' : 'grid-cols-1'}`}>
+            <div className={`w-full h-table grid ${rowView ? 'grid-cols-table-detail' : 'grid-cols-1'} grid-rows-1`}>
                 <Tables />
                 <Detail/>
             </div>

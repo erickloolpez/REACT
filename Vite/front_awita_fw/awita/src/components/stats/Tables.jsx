@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import MUIDataTable from "mui-datatables";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useGlobal from '../../hooks/useGlobal'
+import './style.css'
 
 const Tables = () => {
-    const { fillDataRow, openRow,table,obtainTemplate } = useGlobal()
+    const { fillDataRow, openRow, table, obtainTemplate } = useGlobal()
     const [users, setUsers] = useState([]);
     const tablas = {
         'Clientes': [],
-        'Facturas':[]
+        'Facturas': []
     }
     const columns = [
         {
@@ -72,14 +73,16 @@ const Tables = () => {
     });
 
     return (
-        <ThemeProvider theme={getMuiTheme()}>
-            <MUIDataTable
-                title={"Lista de Hermosos Clientes uwu"}
-                data={users}
-                columns={columns}
-                options={options}
-            />
-        </ThemeProvider>
+        <div className='w-full h-full overflow-auto no-scrollbar'>
+            <ThemeProvider theme={getMuiTheme()}>
+                <MUIDataTable
+                    title={"Lista de Hermosos Clientes uwu"}
+                    data={users}
+                    columns={columns}
+                    options={options}
+                />
+            </ThemeProvider>
+        </div>
     );
 };
 
