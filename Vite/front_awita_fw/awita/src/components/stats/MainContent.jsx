@@ -1,6 +1,7 @@
 import Charts from "./Charts"
 import Circles from "./Circles"
 import Tables from "./Tables"
+import Detail from './Detail'
 import './style.css'
 import useGlobal from '../../hooks/useGlobal'
 
@@ -13,7 +14,7 @@ const MainContent = () => {
             <Charts />
             <div className={`w-full h-table bg-green-300 grid ${rowView ? 'grid-cols-table-detail' : 'grid-cols-1'}`}>
                 <Tables />
-                <div className={`bg-slate-500 ${rowView ? 'flex' : 'hidden'}`}></div>
+                <Detail/>
             </div>
         </div>
     )

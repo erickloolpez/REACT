@@ -4,6 +4,7 @@ import TopNav from '../components/topnav/index.jsx'
 import Home from '../screens/Home.jsx'
 import Stats from '../screens/Stats.jsx'
 import Footer from '../components/footer/index.jsx'
+import { GlobalProvider } from '../context/GlobalContext.jsx'
 import './App.css'
 
 const AppRoutes = () => {
@@ -20,9 +21,11 @@ function App() {
     return (
         <BrowserRouter>
             <Box>
-                <TopNav />
+                <GlobalProvider>
+                    <TopNav />
                     <AppRoutes />
-                <Footer />
+                    <Footer />
+                </GlobalProvider>
             </Box>
         </BrowserRouter>
     )
