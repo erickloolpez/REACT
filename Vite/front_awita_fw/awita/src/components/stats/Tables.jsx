@@ -5,41 +5,50 @@ import useGlobal from '../../hooks/useGlobal'
 import './style.css'
 
 const Tables = () => {
-    const { fillDataRow, openRow, table, obtainTemplate } = useGlobal()
-    const [users, setUsers] = useState([]);
-    const tablas = {
-        'Clientes': [],
-        'Facturas': []
-    }
-    const columns = [
-        {
-            name: 'id',
-            label: 'Cedula'
-        },
-        {
-            name: 'nombre',
-            label: 'Nombre'
-        },
-        {
-            name: 'email',
-            label: 'Correo'
-        },
-    ];
+    const { fillDataRow, openRow, table, obtainTemplate,rows } = useGlobal()
+
+    const columns = []
+    table.template.forEach(column =>{
+        let col = {
+            name: column,
+            label: column
+        }
+        columns.push(col)
+    })
+    // const columns = [
+    //     {
+    //         name: 'id',
+    //         label: 'Cedula'
+    //     },
+    //     {
+    //         name: 'nombre',
+    //         label: 'Nombre'
+    //     },
+    //     {
+    //         name:'apellido',
+    //         label:'Apellido'
+    //     },
+    //     {
+    //         name: 'email',
+    //         label: 'Correo'
+    //     },
+    // ];
 
     useEffect(() => {
         fetch(table.uri)
             .then(res => res.json())
             .then((data) => {
-                let local = data?.map((user) => ({
-                    ...user,
-                    nombre: user?.nombre + ' ' + user?.apellido,
-                }));
+                // let local = data?.map((user) => ({
+                //     ...user,
+                //     nombre: user?.nombre + ' ' + user?.apellido,
+                // }));
 
+                console.log('Data',data)
                 obtainTemplate(table.id, data)
 
-                setUsers(local);
+                // setUsers(local);
             });
-    }, []);
+    }, [table]);
 
     const options = {
         selectableRows: false,
@@ -47,7 +56,7 @@ const Tables = () => {
         rowsPerPage: 10,
         rowsPerPageOptions: [10, 20, 30],
         onRowClick: (rowData, rowMeta) => {
-            fillDataRow(rowData[0])
+            fillDataRow(table.id,rowData[0])
             openRow()
         },
     }; // Esta es la ubicación correcta para cerrar las opciones
@@ -77,7 +86,7 @@ const Tables = () => {
             <ThemeProvider theme={getMuiTheme()}>
                 <MUIDataTable
                     title={"Lista de Hermosos Clientes uwu"}
-                    data={users}
+                    data={rows}
                     columns={columns}
                     options={options}
                 />
