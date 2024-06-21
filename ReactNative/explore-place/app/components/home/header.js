@@ -1,9 +1,12 @@
 import { View, Text, TextInput, Image, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import React from 'react'
+import React,{useState} from 'react'
+import useLocation from '../../hooks/useLocation'
 
 export default function Header() {
+    const {depureListSearchBar} = useLocation()
+    const [searchValue, setSearchValue]= useState('')
     return (
         <View style={{
             width: '90%',
@@ -38,6 +41,11 @@ export default function Header() {
                     <AntDesign name="search1" size={24} color="black" />
                     <TextInput placeholder='Busqueda de Reportes' placeholderTextColor={'gray'}
                         style={styles.searchBar}
+                        onChangeText={(value)=>setSearchValue(value)}
+                        onSubmitEditing={()=>{
+                            console.log('Ingresa',searchValue)
+                            depureListSearchBar(searchValue)
+                        }}
                     />
                 </View>
             </View>

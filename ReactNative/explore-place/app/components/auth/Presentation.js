@@ -8,6 +8,10 @@ export default function Presentation() {
     const navigator = useNavigation()
     const [openModal, setOpenModal] = useState(false)
 
+    const goToLogin = ()=>{
+        navigator.navigate('Profile')
+    }
+
     const closeModalTicket = ()=>{
         setOpenModal(false)
     }
@@ -28,7 +32,10 @@ export default function Presentation() {
                             <Text style={{ fontWeight: 'light' }}> hermoso/hermosa gusto en verte de nuevo!</Text>
                         </Text>
                         <Text style={{ paddingLeft: 14, paddingRight: 23 }}>Con el fin de proporcionar informacion sobre ti y tus reportes necesitaremos que inicies sesion justo ahora</Text>
-                        <TouchableOpacity style={{ position: 'absolute', bottom: -21, left: 0, display: 'flex', flexDirection: 'row', width: '68%', backgroundColor: '#D4ECEA', justifyContent: 'space-between', alignItems: 'center', height: '20%', borderTopRightRadius: 50, borderBottomRightRadius: 50, paddingHorizontal: 20, borderWidth: 2, borderLeftWidth:0 }} onPress={()=>openModalTicket()}>
+                        <TouchableOpacity style={{ position: 'absolute', bottom: -21, left: 0, display: 'flex', flexDirection: 'row', width: '68%', backgroundColor: '#D4ECEA', justifyContent: 'space-between', alignItems: 'center', height: '20%', borderTopRightRadius: 50, borderBottomRightRadius: 50, paddingHorizontal: 20, borderWidth: 2, borderLeftWidth:0 }}
+                        // onPress={()=>openModalTicket()
+                        onPress={()=>goToLogin()}
+                        >
                             <Text style={{ fontWeight: 500 }}>Hagamoslo Ahora</Text>
                             <View style={{ borderRadius: 50, backgroundColor: 'black' }}>
                                 <AntDesign name="arrowright" size={28} color="white" />
