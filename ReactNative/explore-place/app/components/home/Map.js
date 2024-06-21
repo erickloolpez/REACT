@@ -5,15 +5,18 @@ import MapView, { Marker, Circle, Callout } from 'react-native-maps'
 import { LinearGradient } from 'expo-linear-gradient'
 import { AntDesign } from '@expo/vector-icons';
 import DetailMap from './DetailMap'
-import {useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
+import useLocation from '../../hooks/useLocation'
 
 export default function Map() {
     const params = useRoute().params
-  const navigator = useNavigation()
+    const navigator = useNavigation()
+    const { depureListSearchBar, placeSearch } = useLocation()
+    const [searchValue, setSearchValue] = useState('')
 
-  const onPlaceClick = (item) => {
-    navigator.navigate('place-detail', { place: item })
-  }
+    const onPlaceClick = (item) => {
+        navigator.navigate('place-detail', { place: item })
+    }
 
     const [mapRegion, setMapRegion] = useState({
         latitude: params.coords.latitude,
@@ -39,7 +42,7 @@ export default function Map() {
     return (
         <View style={{ flex: 1 }}>
             <View style={{ width: '100%', height: '18%', position: 'absolute', zIndex: 2 }}>
-                <LinearGradient colors={['white', 'transparent']} style={{ width: '100%', height: '100%', position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center' }} start={{ x: 0.5, y:0.25 }}  >
+                <LinearGradient colors={['white', 'transparent']} style={{ width: '100%', height: '100%', position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center' }} start={{ x: 0.5, y: 0.25 }}  >
                     <Text style={{ width: '90%', fontSize: 22, fontWeight: 500, marginTop: 8 }}>Descubre</Text>
                     <View style={{
                         width: '100%',
@@ -53,6 +56,10 @@ export default function Map() {
                             <AntDesign name="search1" size={24} color="black" />
                             <TextInput placeholder='Busqueda de Reportes' placeholderTextColor={'gray'}
                                 style={{ borderColor: '#000', padding: 4, borderRadius: 50, paddingLeft: 10 }}
+                                onChangeText={(value) => setSearchValue(value)}
+                                onSubmitEditing={() =>{
+                                     depureListSearchBar(searchValue)
+                                }}
                             />
                         </View>
                     </View>
@@ -73,7 +80,8 @@ export default function Map() {
                         coordinate={params.coords}
                     />
                     {
-                        params.placeList.map((marker, index) => (
+                        // params.placeList.map((marker, index) => (
+                        placeSearch.map((marker, index) => (
                             <React.Fragment key={index}>
                                 <Circle
                                     center={{ latitude: marker.latitude, longitude: marker.longitude }}
@@ -85,7 +93,7 @@ export default function Map() {
                                     title={marker.name}
                                 >
                                     <Callout>
-                                        <Image style={{ width: '100%', height: 50 }} source={{uri:marker.imagen}} />
+                                        <Image style={{ width: '100%', height: 50 }} source={{ uri: marker.imagen }} />
                                         <Text>{marker.nombre}</Text>
                                     </Callout>
                                 </Marker>
@@ -94,14 +102,15 @@ export default function Map() {
                     }
                 </MapView>
             </View>
-            <View style={{ width: '100%', height: '28%', position: 'absolute', zIndex: 2, bottom: 0, paddingHorizontal: 10, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ width: '100%', height: '28%', position: 'absolute', zIndex: 2, bottom: 0, paddingHorizontal: 10, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <FlatList
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item,index)=> index.toString()}
-                    data={params.placeList}
+                    keyExtractor={(item, index) => index.toString()}
+                    // data={params.placeList}
+                    data={placeSearch}
                     renderItem={({ item }) => (
-                        <TouchableOpacity style={{marginRight:30, marginLeft:6}}  onPress={() => onPlaceClick(item)}>
+                        <TouchableOpacity style={{ marginRight: 30, marginLeft: 6 }} onPress={() => onPlaceClick(item)}>
                             <DetailMap place={item} />
                         </TouchableOpacity>
                     )}

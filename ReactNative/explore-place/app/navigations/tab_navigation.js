@@ -1,4 +1,5 @@
 import React from 'react'
+import {Image} from 'react-native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import HomeNavigation from '../navigations/HomeNavigation'
 import AccountNavigation from '../navigations/AccountNavigation'
@@ -22,10 +23,11 @@ export default function Tab_Navigation(){
                 )
             }} />
             <Tab.Screen name='Home' component={HomeNavigation} options={{
-                tabBarLabel: 'Home',
-                tabBarIcon:({color, size})=>(
-                    <Ionicons name="home-outline" size={24} color="black" />
-                )
+                tabBarLabel: '',
+                tabBarIcon: ()=> renderIcon()
+                // tabBarIcon:({color, size})=>(
+                //     <Ionicons name="home-outline" size={24} color="black" />
+                // )
             }}/>
             <Tab.Screen name='Profile' component={AccountNavigation} options={{
                 tabBarLabel: 'Profile',
@@ -34,5 +36,11 @@ export default function Tab_Navigation(){
                 )
             }} />
         </Tab.Navigator>
+    )
+}
+
+function renderIcon (){
+    return(
+        <Image source={require('../../assets/images/logo.png')} style={{width:75, height:75, top:-4, objectFit:'contain'}}/>
     )
 }

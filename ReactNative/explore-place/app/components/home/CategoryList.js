@@ -1,8 +1,8 @@
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import CategoryItem from '../../components/home/CategoryItem'
 
-export default function CategoryList({depureList}) {
+export default function CategoryList({ depureList }) {
   const categoryList = [{
     id: 1,
     name: 'Parques',
@@ -36,7 +36,7 @@ export default function CategoryList({depureList}) {
     name: 'Alcantarillado',
     value: 'coffe',
     icon: require('../../../assets/images/alcantarillaIcon.png'),
-    reportes: 20 
+    reportes: 20
   },
   {
     id: 6,
@@ -46,6 +46,18 @@ export default function CategoryList({depureList}) {
     reportes: 2
   }
   ]
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const handlePress = (category) => {
+    if (selectedCategory === category.id) {
+      setSelectedCategory(null); // Deselecciona el item si es el mismo que el ya seleccionado
+      depureList('')
+    } else {
+      setSelectedCategory(category.id); // Si no, selecciona el nuevo item
+      depureList(category.name)
+    }
+  };
 
 
   return (
@@ -71,9 +83,11 @@ export default function CategoryList({depureList}) {
         showsHorizontalScrollIndicator={false}
         data={categoryList}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => depureList(item.name)}>
-            <CategoryItem category={item} />
-          </TouchableOpacity>
+          // <TouchableOpacity onPress={() => depureList(item.name)}>
+          <CategoryItem category={item} isSelected={item.id === selectedCategory} onPress={() => {
+            handlePress(item)
+          }} />//Ojito en la manera en que CategoryItem usa esta Funcion
+          // </TouchableOpacity>
         )}
 
       />
