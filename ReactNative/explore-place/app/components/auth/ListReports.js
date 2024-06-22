@@ -1,65 +1,71 @@
-import { View, Text, Image } from 'react-native'
-import React from 'react'
+import { View, Text, Image, ScrollView, FlatList,TouchableOpacity } from 'react-native'
+import React,{useState} from 'react'
 import ListReportItem from './ListReportItem'
+import { AntDesign } from '@expo/vector-icons';
+import Report from '../../screens/report'
+import useAuth from '../../hooks/useAuth'
+import {useNavigation} from '@react-navigation/native'
 
 export default function ListReports() {
-    const categoryList = [{
-        id: 1,
-        name: 'Parques',
-        value: 'gas_station',
-        icon: require('../../../assets/images/gas.png'),
-        reportes: 4
-    },
-    {
-        id: 2,
-        name: 'Basureros',
-        value: 'restaurant',
-        icon: require('../../../assets/images/food.png'),
-        reportes: 5
-    },
-    {
-        id: 3,
-        name: 'Calles',
-        value: 'coffe',
-        icon: require('../../../assets/images/cafe.png'),
-        reportes: 10
-    },
-    {
-        id: 4,
-        name: 'Animalito',
-        value: 'coffe',
-        icon: require('../../../assets/images/dogIcon.png'),
-        reportes: 1
-    },
-    {
-        id: 5,
-        name: 'Alcantarillado',
-        value: 'coffe',
-        icon: require('../../../assets/images/alcantarillaIcon.png'),
-        reportes: 20
-    },
-    {
-        id: 6,
-        name: 'Escombros',
-        value: 'coffe',
-        icon: require('../../../assets/images/escombros.png'),
-        reportes: 2
+    const {auth} = useAuth()
+    const [openModal, setOpenModal] = useState(false)
+    const navigator = useNavigation()
+
+  const onPlaceClick = (item) => {
+    navigator.navigate('place-detail', { place: item })
+  }
+    const closeModalTicket = ()=>{
+        setOpenModal(false)
     }
-    ]
+
+    const openModalTicket =()=>{
+        setOpenModal(true)
+    }
 
     return (
         <View style={{ width: '100%', height: '100%', position: 'relative', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ position: 'absolute', top: 0, width: '28%',zIndex:2 }}>
+                <Text style={{ fontSize: 18, fontWeight: 600 }}>Tus Reportes:</Text>
+                <AntDesign name="pluscircle" size={34} color="black" style={{marginTop:20}} onPress={()=>openModalTicket()} />
+            </View>
             <View style={{ width: '25%', height: '75%' }}>
                 {/* <View style={{width:'25%', height:'75%', position:'absolute',left:0, top:'15%'}}> */}
-                <Image source={require('../../../assets/images/list.png')} style={{ width: '100%', height: '100%', objectFit: 'contain', backgroundColor: 'green' }} />
+                <Image source={require('../../../assets/images/list.png')} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </View>
-            <View style={{ width: '75%', height: '100%', backgroundColor: 'white', display: 'flex', justifyContent: 'space-around', alignItems: 'center', position: 'relative' }}>
+            {/* <View style={{ width: '75%', height: '75%', backgroundColor: 'purple' }}>
+                <ScrollView>
+                    <View style={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'space-around', gap:30}}>
+                    {
+                        categoryList.map((category, index) => (
+                            <ListReportItem key={index} category={category} />
+                        ))
+                    }
+                    </View>
+                </ScrollView>
+
+            </View> */}
+            <View style={{ width: '75%', height: '92%'}}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                    <View style={{ flex: 1, justifyContent: 'space-around', gap: 30, alignItems: 'center' }}>
+                        {
+                            auth.reportes? auth.reportes.map((reporte, index) => (
+                                <TouchableOpacity onPress={()=>onPlaceClick(reporte)}>
+                                <ListReportItem key={index} reporte={reporte} />
+                                </TouchableOpacity>
+                            )) : <Text>No hay reportes</Text>
+                        }
+                    </View>
+                </ScrollView>
+            </View>
+
+            {/* <View style={{ width: '75%', height: '100%', backgroundColor: 'blue', display: 'flex', justifyContent: 'space-around', alignItems: 'center', position: 'relative', borderRadius: '50%' }}>
                 {
                     categoryList.map((category, index) => (
                         <ListReportItem key={index} category={category} />
                     ))
                 }
-            </View>
+            </View> */}
+                <Report openModal={false} stateModal={openModal} closeModalTicket={closeModalTicket} />
         </View>
     )
 }

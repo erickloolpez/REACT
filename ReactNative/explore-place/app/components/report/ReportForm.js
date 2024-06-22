@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Image,TouchableWithoutFeedback,Keyboard } from 'react-native'
 import ReportFooter from '../report/ReportFooter'
 import placeholder from '../../../assets/images/choosePicture.png'
 import React,{useState} from 'react'
@@ -20,6 +20,7 @@ export default function ReportForm({ image, setOpenModal, setImage, closeModalTi
     }
 
     return (
+        <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
         <View style={{//Contenedor donde esta el formulario
             width: '90%',
             height: '70%',
@@ -104,6 +105,8 @@ export default function ReportForm({ image, setOpenModal, setImage, closeModalTi
             <ReportFooter dropDown={value} image={image} inputValue={inputValue} setImage={setImage} setInputValue={setInputValue} setDropDown={setValue} triggerModalForm={triggerModalForm} setVerifyAddress={setVerifyAddress} closeModalTicket={closeModalTicket} />
             <ReportModalForm openModalForm={openModalForm} closeModalForm={closeModalForm} verifyAddress={verifyAddress} />
         </View>
+
+        </TouchableWithoutFeedback>
 
     )
 }

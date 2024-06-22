@@ -1,8 +1,10 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import useLocation from '../../hooks/useLocation'
+import useAuth from '../../hooks/useAuth'
 
 export default function ReportFooter({ dropdown, image, inputValue, setImage, setInputValue, setDropDown, triggerModalForm, setVerifyAddress, closeModalTicket }) {
+    const { auth } = useAuth()
     const { location, addPlace, placeList } = useLocation()
 
     const cleanInputs = async (image) => {
@@ -43,7 +45,7 @@ export default function ReportFooter({ dropdown, image, inputValue, setImage, se
             justifyContent: 'space-around',
             alignItems: 'center',
         }}>
-            <TouchableOpacity style={styles.containerButtons} onPress={()=>closeModalTicket()}>
+            <TouchableOpacity style={styles.containerButtons} onPress={() => closeModalTicket()}>
                 <Text>Cancelar</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -61,6 +63,7 @@ export default function ReportFooter({ dropdown, image, inputValue, setImage, se
                         descripcion: `${inputValue}`,
                         tipo: `${dropdown}`
                     }
+
                     cleanInputs()
                     placeList.forEach(place => {
                         const circleCenter = { latitude: place.latitude, longitude: place.longitude }
@@ -76,16 +79,17 @@ export default function ReportFooter({ dropdown, image, inputValue, setImage, se
                             button: 'HECHO',
                         })
                         addPlace(newPlace)
+                        auth.reportes.push(newPlace)
                     } else {
                         console.log('no puedes, ya existen un punto ahi.')
                         setVerifyAddress({
                             value: false,
-                            title : 'OH NO...',
-                            text : 'Algo salio mal, intentalo de nuevo.',
-                            button : 'INTENTAR',
+                            title: 'OH NO...',
+                            text: 'Algo salio mal, intentalo de nuevo.',
+                            button: 'INTENTAR',
                         })
                     }
-                        triggerModalForm()
+                    triggerModalForm()
                 }}
             >
                 <Text>Enviar</Text>

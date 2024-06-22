@@ -61,7 +61,6 @@ export default function Report({ stateModal, closeModalTicket }) {
 
 
     return (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <Modal visible={stateModal} transparent={true}>
                 <View style={{
                     flex: 1,
@@ -119,6 +118,5 @@ export default function Report({ stateModal, closeModalTicket }) {
                 </View>
 
             </Modal>
-        </TouchableWithoutFeedback>
     )
 }

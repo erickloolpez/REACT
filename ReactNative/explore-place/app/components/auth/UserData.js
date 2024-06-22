@@ -22,7 +22,7 @@ export default function UserData() {
         <ItemMenu title="Nombre" text={auth.username} />
         <ItemMenu title="Username" text={auth.username} />
         <ItemMenu title="Email" text={auth.email} />
-        <ItemMenu title="Total de Reportes" text={`0 reportes`} />
+        <ItemMenu title="Total de Reportes" text={`${auth?auth.reportes.length:'0'} reportes`} />
       </View>
 
       <TouchableOpacity

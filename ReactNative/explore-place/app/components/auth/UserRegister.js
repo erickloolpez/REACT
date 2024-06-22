@@ -27,7 +27,8 @@ export default function RegistrationForm(props) {
                 username,
                 email,
                 password,
-                passwordTwo
+                passwordTwo,
+                reportes: []
             }
             let answer = signUp(user)
             if (answer) {
