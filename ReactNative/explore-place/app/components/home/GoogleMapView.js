@@ -4,6 +4,7 @@ import MapView, { Marker, Circle, Callout } from 'react-native-maps'
 import useLocation from '../../hooks/useLocation'
 import * as Location from 'expo-location';
 import { useNavigation } from '@react-navigation/native'
+import { EvilIcons } from '@expo/vector-icons';
 
 export default function GoogleMapView({ placeList }) {
 
@@ -54,9 +55,8 @@ export default function GoogleMapView({ placeList }) {
     setMapRegion({
       latitude: yourLocation.coords.latitude,
       longitude: yourLocation.coords.longitude,
-      latitudeDelta: 0.01450,
-      longitudeDelta: 0.015,
-
+      latitudeDelta: 0.49450,
+      longitudeDelta: 0.050,
     })
   }
 
@@ -71,14 +71,18 @@ export default function GoogleMapView({ placeList }) {
       height: 230,
       marginTop: 20,
     }}>
-      <Text style={{
+      <View style={{
         width: '100%',
         height: '10%',
-        fontSize: 16,
-        fontWeight: 600,
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-between',
       }}>
+        <Text style={{fontSize:16, fontWeight:600}}>
         Reportes en el Mapa
-      </Text>
+        </Text>
+        <EvilIcons name="arrow-right" size={30} color="black" onPress={()=>openMap(mapRegion)} />
+      </View>
       <View style={{
         width: '100%',
         height: '84%',
@@ -93,8 +97,7 @@ export default function GoogleMapView({ placeList }) {
             height: '100%',
           }}
           region={mapRegion}
-          onPress={() => openMap(mapRegion)}
-
+          // onPress={() => openMap(mapRegion)}
         >
           <Marker
             title='You'

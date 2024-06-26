@@ -39,7 +39,6 @@ export default function LoginForm() {
                     setError("El usuario o la contraseña no son correctos");
                 } else {
                     login(usuario)
-                    navigator.navigate('userData')
                 }
             } else {
                 setError("El usuario o la contraseña no son correctos");

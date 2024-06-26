@@ -8,7 +8,7 @@ export default function Exist() {
     const {auth} = useAuth()
   return (
     <View style={{flex:1}}>
-        {auth ? <ListReports/> : <Presentation/>}
+        {auth ? <Presentation/> : <ListReports/>}
     </View>
   )
 }

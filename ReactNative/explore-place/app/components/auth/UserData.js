@@ -28,7 +28,7 @@ export default function UserData() {
       <TouchableOpacity
         style={{width:'100%', height:'24%', display:'flex', alignItems:'center',justifyContent: 'center' }}
         onPress={()=>{
-          navigator.navigate('login')
+          navigator.navigate('existLogin')
           logout()
         }}
       >

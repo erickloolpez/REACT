@@ -32,7 +32,7 @@ export default function RegistrationForm(props) {
             }
             let answer = signUp(user)
             if (answer) {
-                navigator.navigate('userData')
+                navigator.navigate('existLogin')
             } else {
                 setError('Ya existe ese usuario')
             }
