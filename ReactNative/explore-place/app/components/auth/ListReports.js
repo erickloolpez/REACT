@@ -1,4 +1,4 @@
-import { View, Text, Image,TouchableOpacity, } from 'react-native'
+import { View, Text, Image, TouchableOpacity, } from 'react-native'
 import React, { useState } from 'react'
 import ListReportItem from './ListReportItem'
 import { AntDesign } from '@expo/vector-icons';
@@ -11,7 +11,7 @@ import useLocation from '@/app/hooks/useLocation';
 
 export default function ListReports() {
     const { auth } = useAuth()
-    const {placeList} = useLocation()
+    const { placeList } = useLocation()
     const [openModal, setOpenModal] = useState(false)
     const navigator = useNavigation()
     const [radioButton, setRadioButton] = useState(true)
@@ -38,8 +38,8 @@ export default function ListReports() {
     }
 
     return (
-        <View style={{ width: '100%', height: '100%', position: 'relative', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ position: 'absolute', top: 0, width: '100%', zIndex: 2, height: '8%', display: 'flex', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <View style={{ width: '100%', height: '100%', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <View style={{ width: '100%', zIndex: 2, height: '8%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                 <View style={{ width: '75%', display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                     <TouchableOpacity onPress={() => openNews()}>
                         <View style={{ borderWidth: 1, padding: 8, borderRadius: '50%', backgroundColor: radioButton ? '#CAE5E7' : 'white' }}>
@@ -54,13 +54,16 @@ export default function ListReports() {
                 </View>
                 <AntDesign name="pluscircle" size={34} color="black" style={{ marginRight: 4 }} onPress={() => openModalTicket()} />
             </View>
-            <View style={{ width: '20%', height: '75%',}}>
-                {/* <View style={{width:'25%', height:'75%', position:'absolute',left:0, top:'15%'}}> */}
-                <Image source={require('../../../assets/images/list.png')} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+            <View style={{ width: '100%', height: '92%', display: 'flex', flexDirection: 'row' }}>
+                <View style={{ width: '20%', height: '100%' }}>
+                    {/* <View style={{width:'25%', height:'75%', position:'absolute',left:0, top:'15%'}}> */}
+                    <Image source={require('../../../assets/images/list.png')} style={{ width: '100%', height: '100%', objectFit: 'contain', position: 'absolute', left: -20 }} />
+                </View>
+                {
+                    radioButton ? <ListReportNews placeList={placeList} /> : <ListReportAuth auth={auth} />
+                }
+
             </View>
-            {
-                radioButton ? <ListReportNews placeList={placeList} /> : <ListReportAuth auth={auth} />
-            }
             <Report openModal={false} stateModal={openModal} closeModalTicket={closeModalTicket} />
         </View>
     )

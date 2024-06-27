@@ -48,6 +48,7 @@ export default function RegistrationForm(props) {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
+            backgroundColor:'white'
         }}>
             <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss()

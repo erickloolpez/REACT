@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: 20,
+    backgroundColor:'white'
   },
   titleBlock: {
     width: '90%',

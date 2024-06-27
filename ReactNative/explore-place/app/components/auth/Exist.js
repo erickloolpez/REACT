@@ -7,8 +7,8 @@ import Presentation from './Presentation'
 export default function Exist() {
     const {auth} = useAuth()
   return (
-    <View style={{flex:1}}>
-        {auth ? <Presentation/> : <ListReports/>}
+    <View style={{flex:1,backgroundColor:'white'}}>
+        {auth ? <ListReports/> : <Presentation/>}
     </View>
   )
 }

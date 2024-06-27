@@ -32,7 +32,7 @@ export default function LoginForm() {
 
             let usuario = list.find((item) => item.username == username)
 
-            console.log('Valores de Usuario:', usuario)
+            // console.log('Valores de Usuario:', usuario)
 
             if (usuario) {
                 if (usuario.username != username || usuario.password != password) {
@@ -54,6 +54,7 @@ export default function LoginForm() {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
+            backgroundColor:'white'
         }}>
             <TouchableWithoutFeedback onPress={() => {
                 Keyboard.dismiss()

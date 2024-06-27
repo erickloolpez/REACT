@@ -1,11 +1,7 @@
-export const user = {
-    username: 'erickloolpez',
-    password: '12345'
-}
-
-export const userDetails = {
-    username: 'erickloolpez',
-    firstName: 'Erick',
-    lastName: 'Lopez',
-    email: 'erickloolpez@gmail.com'
+export const userClient = {
+    username: 'yusepe',
+    email: 'yusepe@gmail.com',
+    password:'123',
+    passwordTwo:'123',
+    reportes:[]
 }

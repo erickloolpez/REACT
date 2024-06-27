@@ -1,4 +1,6 @@
-import React, { useState, createContext } from 'react'
+import React, { useState, createContext,useEffect } from 'react'
+import {userClient} from '../utils/userDB'
+import {places} from '../utils/places'
 
 export const AuthContext = createContext({
     auth: undefined,
@@ -33,6 +35,16 @@ export function AuthProvider(props) {
             return true
         }
     }
+
+    const firstClient = ()=>{
+        userClient.reportes = places
+        listAuth.push(userClient)
+    }
+
+
+    useEffect(() => {
+        firstClient()
+    }, [])
 
     const valueContext = {
         auth,

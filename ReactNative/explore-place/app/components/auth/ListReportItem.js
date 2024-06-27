@@ -13,14 +13,17 @@ export default function ListReportItem({reporte}) {
       bgColor = '#5ccb5f'
     }
     return (
-        <View style={{ width: 200, height: 100 }}>
-            <View style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', zIndex: 2, backgroundColor: 'white', position: 'absolute', borderWidth: 1, borderRadius: 8 }}>
-                <View style={{ width: '25%', height: '75%' }}>
-                    <Image source={{uri:reporte.imagen}} style={{ width: '100%', height: '100%' }} />
+        <View style={{ width: 300, height: 100 }}>
+            <View style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', zIndex: 2, backgroundColor: 'white', position: 'absolute', borderWidth: 1, borderRadius: 8,justifyContent:'space-around' }}>
+                <View style={{ width: '45%', height: '75%' }}>
+                    <Image source={{uri:reporte.imagen}} style={{ width: '100%', height: '100%',objectFit:'cover', borderRadius:20 }} />
                 </View>
-                <View style={{ display: 'flex', flexDirection: 'column' }}>
+                <View style={{width:'40%', display: 'flex', flexDirection: 'column' }}>
                     <Text>{reporte.nombre}</Text>
-                    <MaterialIcons name="groups" size={18} color="black" />
+                    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                    <MaterialIcons name="groups" size={24} color="black" />
+                    <Text style={{marginLeft:4}}>{reporte.peticiones} personas</Text>
+                    </View>
                 </View>
 
             </View>

@@ -1,12 +1,12 @@
 import { View, Text, Image, Animated, PanResponder, Dimensions } from 'react-native'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function ListReportNews({ placeList }) {
   let position = new Animated.ValueXY()
-  let currentIndex = useRef(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const screenWidth = Dimensions.get('window').width
   const cardWidth = screenWidth * 0.8
@@ -29,42 +29,62 @@ export default function ListReportNews({ placeList }) {
 
   let nextCardOpacity = position.x.interpolate({
     inputRange: [-cardWidth / 2, 0, cardWidth / 2],
-    outputRange: [1,0,1],
+    outputRange: [1, 0, 1],
     extrapolate: 'clamp'
   })
   let nextCardScale = position.x.interpolate({
     inputRange: [-cardWidth / 2, 0, cardWidth / 2],
-    outputRange: [1,0.8,1],
+    outputRange: [1, 0.8, 1],
     extrapolate: 'clamp'
   })
 
   let panRes = PanResponder.create({
     onStartShouldSetPanResponder: (evt, gestureState) => true,
     onPanResponderMove: (evt, gestureState) => {
-      position.setValue({ x: gestureState.dx, y: gestureState.dy, useNativeDriver:false})
+      position.setValue({ x: gestureState.dx, y: gestureState.dy, useNativeDriver: false })
     },
     onPanResponderRelease: (evt, gestureState) => {
-      if(gestureState.dx > 120){
-        Animated.spring(position,{
-          toValue:{x:cardWidth+100,y:gestureState.dy},
-          useNativeDriver:true
-        }).start(()=>{
-          currentIndex.current = currentIndex.current + 1
-          position.setValue({x:0, y:0,useNativeDriver:false})
+      if (gestureState.dx > 120) {
+        Animated.spring(position, {
+          toValue: { x: cardWidth + 100, y: gestureState.dy },
+          useNativeDriver: true
+        }).start(() => {
+          let nextIndex = currentIndex + 1
+
+          // Si nextIndex es igual a la longitud de placeList, restablece currentIndex a 0
+          // De lo contrario, setea currentIndex a nextIndex
+          if (nextIndex == placeList.length) {
+            setCurrentIndex(0)
+          } else {
+            setCurrentIndex(nextIndex)
+          }
+
+          position.setValue({ x: 0, y: 0, useNativeDriver: false })
+          // setCurrentIndex(currentIndex+1)
+          // position.setValue({x:0, y:0,useNativeDriver:false})
         })
-      }else if(gestureState.dx < -120){
-        Animated.spring(position,{
-          toValue:{x:-cardWidth-100,y:gestureState.dy},
-          useNativeDriver:true
-        }).start(()=>{
-          currentIndex.current = currentIndex.current + 1
-          position.setValue({x:0, y:0,useNativeDriver:false})
+      } else if (gestureState.dx < -120) {
+        Animated.spring(position, {
+          toValue: { x: -cardWidth - 100, y: gestureState.dy },
+          useNativeDriver: true
+        }).start(() => {
+          let nextIndex = currentIndex + 1
+
+          if (nextIndex == placeList.length) {
+            setCurrentIndex(0)
+          } else {
+            setCurrentIndex(nextIndex)
+          }
+
+          position.setValue({ x: 0, y: 0, useNativeDriver: false })
+          // setCurrentIndex(currentIndex + 1)
+          // position.setValue({ x: 0, y: 0, useNativeDriver: false })
         })
-      }else{
-        Animated.spring(position,{
-          toValue: {x:0,y:0},
-          friction:4,
-          useNativeDriver:true
+      } else {
+        Animated.spring(position, {
+          toValue: { x: 0, y: 0 },
+          friction: 4,
+          useNativeDriver: true
         }).start()
       }
     }
@@ -72,13 +92,13 @@ export default function ListReportNews({ placeList }) {
   })
 
   return (
-    <View style={{ width: '80%', height: '92%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', position: 'relative', }}>
+    <View style={{ width: '80%', height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', position: 'relative', }}>
       {placeList.map((place, index) => {
-        if (index < currentIndex.current) {
+        if (index < currentIndex) {
           return null
-        } else if (index == currentIndex.current) {
+        } else if (index == currentIndex) {
           return (
-            <Animated.View {...panRes.panHandlers} style={[{ width: '90%', height: '75%', position: 'absolute'}, rotateAndTranslate ]} key={index}>
+            <Animated.View {...panRes.panHandlers} style={[{ width: '90%', height: '85%', position: 'absolute' }, rotateAndTranslate]} key={index}>
               <View style={{ width: '100%', height: '100%', backgroundColor: 'white', borderRadius: 20, borderWidth: 1, display: 'flex', zIndex: 2 }}>
                 <View style={{ width: '100%', height: '14%', borderBottomWidth: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 30 }}>
                   <View style={{ width: '63%', backgroundColor: 'white', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -117,7 +137,7 @@ export default function ListReportNews({ placeList }) {
           )
         } else {
           return (
-            <Animated.View style={[{ width: '90%', height: '75%', position: 'absolute'},{opacity: nextCardOpacity, transform:[{scale:nextCardScale}]}]} key={index}>
+            <Animated.View style={[{ width: '90%', height: '75%', position: 'absolute' }, { opacity: nextCardOpacity, transform: [{ scale: nextCardScale }] }]} key={index}>
               <View style={{ width: '100%', height: '100%', backgroundColor: 'white', borderRadius: 20, borderWidth: 1, display: 'flex', zIndex: 2 }}>
                 <View style={{ width: '100%', height: '14%', borderBottomWidth: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 30 }}>
                   <View style={{ width: '63%', backgroundColor: 'white', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
