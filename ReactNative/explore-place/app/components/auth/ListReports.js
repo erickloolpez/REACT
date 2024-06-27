@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView, FlatList, TouchableOpacity, Touchable } from 'react-native'
+import { View, Text, Image,TouchableOpacity, } from 'react-native'
 import React, { useState } from 'react'
 import ListReportItem from './ListReportItem'
 import { AntDesign } from '@expo/vector-icons';
@@ -7,9 +7,11 @@ import useAuth from '../../hooks/useAuth'
 import { useNavigation } from '@react-navigation/native'
 import ListReportAuth from './ListReportAuth'
 import ListReportNews from './ListReportNews'
+import useLocation from '@/app/hooks/useLocation';
 
 export default function ListReports() {
     const { auth } = useAuth()
+    const {placeList} = useLocation()
     const [openModal, setOpenModal] = useState(false)
     const navigator = useNavigation()
     const [radioButton, setRadioButton] = useState(true)
@@ -52,12 +54,12 @@ export default function ListReports() {
                 </View>
                 <AntDesign name="pluscircle" size={34} color="black" style={{ marginRight: 4 }} onPress={() => openModalTicket()} />
             </View>
-            <View style={{ width: '25%', height: '75%' }}>
+            <View style={{ width: '20%', height: '75%',}}>
                 {/* <View style={{width:'25%', height:'75%', position:'absolute',left:0, top:'15%'}}> */}
                 <Image source={require('../../../assets/images/list.png')} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </View>
             {
-                radioButton ? <ListReportNews /> : <ListReportAuth auth={auth} />
+                radioButton ? <ListReportNews placeList={placeList} /> : <ListReportAuth auth={auth} />
             }
             <Report openModal={false} stateModal={openModal} closeModalTicket={closeModalTicket} />
         </View>
