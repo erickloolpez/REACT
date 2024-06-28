@@ -42,12 +42,12 @@ export default function ListReports() {
             <View style={{ width: '100%', zIndex: 2, height: '8%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                 <View style={{ width: '75%', display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                     <TouchableOpacity onPress={() => openNews()}>
-                        <View style={{ borderWidth: 1, padding: 8, borderRadius: '50%', backgroundColor: radioButton ? '#CAE5E7' : 'white' }}>
+                        <View style={{ borderWidth: 1, padding: 8,  backgroundColor: radioButton ? '#CAE5E7' : 'white',borderRadius:50 }}>
                             <Text style={{ fontSize: 16, fontWeight: 400 }}>Noticias y Mas</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => openListAuth()}>
-                        <View style={{ borderWidth: 1, padding: 8, borderRadius: '50%', backgroundColor: radioButton ? 'white' : '#CAE5E7' }}>
+                        <View style={{ borderWidth: 1, padding: 8,  backgroundColor: radioButton ? 'white' : '#CAE5E7', borderRadius:50 }}>
                             <Text style={{ fontSize: 16, fontWeight: 400 }}>Tus Reportes</Text>
                         </View>
                     </TouchableOpacity>

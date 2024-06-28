@@ -102,7 +102,7 @@ export default function ListReportNews({ placeList }) {
               <View style={{ width: '100%', height: '100%', backgroundColor: 'white', borderRadius: 20, borderWidth: 1, display: 'flex', zIndex: 2 }}>
                 <View style={{ width: '100%', height: '14%', borderBottomWidth: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 30 }}>
                   <View style={{ width: '63%', backgroundColor: 'white', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <View style={{ width: 40, height: 40, borderWidth: 1, borderRadius: '50%' }}>
+                    <View style={{ width: 40, height: 40, borderWidth: 1, borderRadius:50 }}>
                       <Image source={require('./../../../assets/images/avatar.png')} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                     </View>
                     <View style={{ display: 'flex', flexDirection: 'column' }}>
@@ -141,7 +141,7 @@ export default function ListReportNews({ placeList }) {
               <View style={{ width: '100%', height: '100%', backgroundColor: 'white', borderRadius: 20, borderWidth: 1, display: 'flex', zIndex: 2 }}>
                 <View style={{ width: '100%', height: '14%', borderBottomWidth: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 30 }}>
                   <View style={{ width: '63%', backgroundColor: 'white', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <View style={{ width: 40, height: 40, borderWidth: 1, borderRadius: '50%' }}>
+                    <View style={{ width: 40, height: 40, borderWidth: 1,  }}>
                       <Image source={require('./../../../assets/images/avatar.png')} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                     </View>
                     <View style={{ display: 'flex', flexDirection: 'column' }}>
