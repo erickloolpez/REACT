@@ -4,7 +4,7 @@
     "slug": "explore-place",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.png",
+    "icon": "./assets/images/Knox.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -16,13 +16,16 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "es.erickloolpez.explore",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo.png",
+        "foregroundImage": "./assets/images/Knox.png",
         "backgroundColor": "#ffffff",
-        "package": "com.tubeguruji.findplace",
-        "googleMapsApiKey":"AIzaSyCEpHOJ0xav8ZyaYi1aJdVPTCf_ylJoW4E"
-      }
+        "googleMapsApiKey": "AIzaSyCEpHOJ0xav8ZyaYi1aJdVPTCf_ylJoW4E"
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ],
+      "package": "com.erickloolpez.exploreplace"
     },
     "web": {
       "bundler": "metro",
@@ -32,7 +35,7 @@
     "plugins": [
       "expo-router",
       "expo-font",
-         [
+      [
         "expo-location",
         {
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
@@ -41,6 +44,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "388ab465-d41d-47d0-9087-2ff85c5ad408"
+      }
     }
   }
 }
