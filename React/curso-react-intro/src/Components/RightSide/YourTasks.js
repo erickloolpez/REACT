@@ -7,7 +7,7 @@ import {TaskLoading} from './TaskLoading'
 
 function YourTasks() {
   const [searchValue, setSearchValue] = useState('')
-  const { filterTodos, depureTodos, loading, error } = useTodo()
+  const { filterTodos, depureTodos, loading, error, checkTodo, deleteTodo } = useTodo()
 
   const completed = depureTodos.filter((todo) => (todo.completed))
   return (
@@ -37,7 +37,7 @@ function YourTasks() {
         {error && <p>Desesperte, hubo un error</p>}
         {(!loading && depureTodos.length === 0) && <p>!Create your first Task!</p>}
         {(!loading && !error) && depureTodos.map((todo, index) => (
-          <Task key={index} todo={todo} />
+          <Task key={index} todo={todo} checkTodo={checkTodo} deleteTodo={deleteTodo} />
         ))}
 
       </div>
