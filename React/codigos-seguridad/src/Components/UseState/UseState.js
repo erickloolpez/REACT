@@ -11,22 +11,61 @@ function UseState({ name }) {
     confirmed: false,
   });
 
+  const onConfirm = () => {
+    setState((prevState) => ({
+      ...prevState,
+      error: false,
+      loading: false,
+      confirmed: true
+    }));
+  }
+
+  const onError = () => {
+    setState((prevState) => ({
+      ...prevState,
+      error: true,
+      loading: false,
+    }));
+  }
+
+  const onWrite = (event) => {
+    setState((prevState) => ({
+      ...prevState,
+      value: event.target.value
+    }))
+  }
+
+  const onCheck = () => {
+    setState((prevState) => ({
+      ...prevState,
+      error: false,
+      loading: true
+    }));
+  }
+
+  const onDelete = () => {
+    setState((prevState) => ({
+      ...prevState,
+      deleted: true,
+    }))
+  }
+
+  const onReset = () => {
+    setState((prevState) => ({
+      ...prevState,
+      confirmed: false,
+      deleted: false,
+      value: '',
+    }))
+  }
+
   useEffect(() => {
     if (state.loading) {
       const timeout = setTimeout(() => {
         if (state.value !== SECURITY_CODE) {
-          setState((prevState) => ({
-            ...prevState,
-            error: true,
-            loading: false,
-          }));
+          onError()
         } else {
-          setState((prevState) => ({
-            ...prevState,
-            error: false,
-            loading: false,
-            confirmed: true
-          }));
+          onConfirm()
         }
       }, 3000);
 
@@ -34,65 +73,46 @@ function UseState({ name }) {
     }
   }, [state.loading]);
 
-  if(!state.deleted && !state.confirmed){
-  return (
-    <div>
-      <h2>Eliminar {name}</h2>
-      <p>Por favor, escribe el código de seguridad.</p>
-      {(state.error && !state.loading) && (
-        <p>Error: El código es incorrecto</p>
-      )}
-      {state.loading && (
-        <p>Estamos cargando...</p>
-      )}
-      <input
-        placeholder='Código de seguridad'
-        value={state.value}
-        onChange={(event) => setState((prevState) => ({
-          ...prevState,
-          value: event.target.value
-        }))}
-      />
-      <button onClick={() => {
-        setState((prevState) => ({
-          ...prevState,
-          error: false,
-          loading: true
-        }));
-      }}>Comprobar</button>
-    </div>
-  );
-  }else if(!!state.confirmed && !state.deleted){
-    return(
+  if (!state.deleted && !state.confirmed) {
+    return (
+      <div>
+        <h2>Eliminar {name}</h2>
+        <p>Por favor, escribe el código de seguridad.</p>
+        {(state.error && !state.loading) && (
+          <p>Error: El código es incorrecto</p>
+        )}
+        {state.loading && (
+          <p>Estamos cargando...</p>
+        )}
+        <input
+          placeholder='Código de seguridad'
+          value={state.value}
+          onChange={(event) => onWrite(event)}
+        />
+        <button onClick={() => {
+          onCheck()
+        }}>Comprobar</button>
+      </div>
+    );
+  } else if (!!state.confirmed && !state.deleted) {
+    return (
       <>
-      <p>Pedimos Confirmacion. tas segur@?</p>
-      <button onClick={()=>{
-        setState((prevState)=>({
-          ...prevState,
-          deleted: true,
-        }))
-      }}>Si, eliminar</button>
-      <button onClick={()=>{
-        setState((prevState)=>({
-          ...prevState,
-          confirmed:false,
-          value: '',
-        }))
-      }}>No, me arrepenti</button>
+        <p>Pedimos Confirmacion. tas segur@?</p>
+        <button onClick={() => {
+          onDelete()
+        }}>Si, eliminar</button>
+        <button onClick={() => {
+          onReset()
+        }}>No, me arrepenti</button>
       </>
     )
-  }else{
-    return(
+  } else {
+    return (
       <>
-      <p>Eliminado con exito</p>
-      <button onClick={()=>{
-        setState((prevState)=>({
-          ...prevState,
-          confirmed:false,
-          deleted:false,
-          value:'',
-        }))
-      }}>Volver al Menu</button>
+        <p>Eliminado con exito</p>
+        <button onClick={() => {
+          onReset()
+        }}>Volver al Menu</button>
       </>
     )
   }
