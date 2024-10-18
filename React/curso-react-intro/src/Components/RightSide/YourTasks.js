@@ -43,7 +43,6 @@ function YourTasks() {
       </div>
       <div style={{ width: '90%', height: '10%', }}>
       </div>
-
     </div>
   )
 }
