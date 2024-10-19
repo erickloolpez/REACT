@@ -16,6 +16,21 @@ import avatarOne from  "../assets/icons/avatarOne.png"
 import avatarTwo from  "../assets/icons/avatarTwo.png"
 import avatarThree from  "../assets/icons/avatarThree.png"
 import rayita from "../assets/icons/rayita.png"
+import leftArrowOrange from '../assets/icons/lefArrow.png'
+import location from '../assets/icons/ubicacion.png'
+import park from '../assets/icons/bosque.png'
+import rule from '../assets/icons/gobernante.png'
+import flame from '../assets/icons/fuego.png'
+import binoculares from '../assets/icons/binoculares.png'
+import canotaje from '../assets/icons/canotaje.png'
+import camping from '../assets/icons/carpa-para-camping.png'
+import cascada from '../assets/icons/cascada.png'
+import ciclismo from '../assets/icons/ciclismo.png'
+import senderismo from '../assets/icons/senderista.png'
+import volcan from '../assets/icons/volcan.png'
+import buceo from '../assets/icons/gafas-de-buceo.png'
+import camara from '../assets/icons/camara-fotografica.png'
+import pesca from '../assets/icons/pescar.png'
 
 export default {
   play,
@@ -36,4 +51,19 @@ export default {
   avatarTwo,
   avatarThree,
   rayita,
+  leftArrowOrange,
+  location,
+  park,
+  rule,
+  flame,
+  binoculares,
+  canotaje,
+  camping,
+  cascada,
+  ciclismo,
+  senderismo,
+  volcan,
+  buceo,
+  camara,
+  pesca
 };

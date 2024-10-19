@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import React from 'react'
 
 import SearchInput from '../../components/SearchInput'
-import { icons, images } from '../../constants'
+import { icons, images, parks } from '../../constants'
 import FollowingIcon from '../../components/FollowingIcon'
 import DayIcon from '../../components/DayIcon'
 
@@ -24,20 +24,6 @@ const Home = () => {
     { name: 'Vier', day: 5 },
     { name: 'Sab', day: 6 },
     { name: 'Dom', day: 7 },
-  ]
-
-  const parks = [
-    { name: 'Llanganantes', image: images.llanganantes },
-    { name: 'Galapagos', image: images.galapagos },
-    { name: 'Podocarpus', image: images.podocarpus },
-    { name: 'Machalilla', image: images.machalilla },
-    { name: 'El cajas', image: images.cajas },
-    { name: 'Cayambe Coca', image: images.cayambe },
-    { name: 'Sangay', image: images.sangay },
-    { name: 'Sumaco', image: images.sumaco },
-    { name: 'Yasuni', image: images.yasuni },
-    { name: 'Yacuri', image: images.yacuri },
-    { name: 'Cotopaxi', image: images.cotopaxi },
   ]
 
   return (
