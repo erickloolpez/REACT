@@ -15,6 +15,7 @@ import grid from "../assets/icons/grid.png"
 import avatarOne from  "../assets/icons/avatarOne.png"
 import avatarTwo from  "../assets/icons/avatarTwo.png"
 import avatarThree from  "../assets/icons/avatarThree.png"
+import rayita from "../assets/icons/rayita.png"
 
 export default {
   play,
@@ -34,4 +35,5 @@ export default {
   avatarOne,
   avatarTwo,
   avatarThree,
+  rayita,
 };

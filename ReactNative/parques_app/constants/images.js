@@ -9,6 +9,7 @@ import sangay from '../assets/images/sangay.jpeg'
 import podocarpus from '../assets/images/podocarpus.jpeg'
 import empty from "../assets/images/empty.png";
 import cotopaxi from "../assets/images/cotopax.png"
+import coto from "../assets/images/cotopaxi.png"
 import cayambe from '../assets/images/cayambe_coca.jpeg'
 
-export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe};
+export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto};

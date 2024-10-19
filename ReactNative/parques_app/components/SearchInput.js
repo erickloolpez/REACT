@@ -9,18 +9,18 @@ const SearchInput = ({ }) => {
     const animatedStyle = useAnimatedStyle(()=>{
         return{
             width:
-                animation.value == 1 ? withTiming('100%',{duration:500}) :withTiming('20%',{duration:500})
+                animation.value == 1 ? withTiming('100%',{duration:500}) :withTiming('18%',{duration:500})
         }
     })
     const [openSearch, setOpenSearch] = useState(0)
 
     return (
-        <Animated.View className="border-2 absolute right-0 mt-2  border-black-200 w-[90%] h-16 px-4 bg-black-100 rounded-2xl focus:border-secondary items-center flex-row space-x-4" style={animatedStyle}>
+        <Animated.View className={`${openSearch ? 'border-2' : 'border-0'} bg-[#FBEECC]  absolute right-0 mt-2  w-[90%] h-16 px-4  rounded-2xl focus:border-[#CF613C] items-center flex-row space-x-4`} style={animatedStyle}>
             <TextInput
-                className="text-base mt-0.5 text-white flex-1 font-regular bg-red-400"
+                className="text-base mt-0.5 text-[#CF613C] flex-1 font-regular "
                 value={''}
                 placeholder= "Search for a video topic."
-                placeholderTextColor="#cdcde0"
+                placeholderTextColor="#CF613C"
                 onChangeText={(e)=> setQuery(e)}
             />
 

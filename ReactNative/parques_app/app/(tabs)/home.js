@@ -41,27 +41,27 @@ const Home = () => {
   ]
 
   return (
-    <SafeAreaView className="h-full bg-[#fbeecc]">
+    <SafeAreaView edges={['top']} className="h-full bg-[#fbeecc]">
       <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
-        <View className="w-[94%] h-[80px] relative bg-yellow-500">
-          <Text className='absolute bg-red-400 w-[45%] h-16  left-0 mt-2 text-xl font-bold'>
-            Explora los parques con{' '}
-            <Text>Gea</Text>
-          </Text>
+        <View className="w-[94%] h-[80px] relative ">
+          <View className='absolute w-[45%] h-16  left-0 mt-2 items-center justify-center'>
+            <Text className="text-3xl text-[#CF613C] font-bold">Gea</Text>
+          </View>
+          <Image source={icons.rayita} resizeMode="contain" className="w-14 h-[15px] absolute bottom-4 left-14 " />
           <SearchInput />
         </View>
 
-        <View className="w-[94%] h-[20vh] bg-[#B2A1FF] rounded-2xl justify-center overflow-hidden relative">
+        <View className="w-[94%] h-[20vh] bg-[#17301A] rounded-2xl justify-center overflow-hidden relative">
 
-          <View className="w-[60%] h-full overflow-hidden justify-center z-10">
+          <View className="w-[60%] h-full p-2 overflow-hidden justify-around z-10">
 
-            <View className=" bg-blue-600  ">
-              <Text className="text-2xl">Noticia del Dia</Text>
+            <View className="">
+              <Text className="text-2xl text-white font-bold">Noticia del Dia</Text>
             </View>
             <View className="">
-              <Text>Hoy en dia se entregara mas de dos pollitos pio en la entrada del parque.</Text>
+              <Text className="text-white">Hoy en dia se entregara mas de dos pollitos pio en la entrada del parque.</Text>
             </View>
-            <View className="flex-row bg-green-400 relative w-full h-12">
+            <View className="flex-row relative w-full h-12">
               {followers.map((follower, index) => (
                 <FollowingIcon key={index} follower={follower} index={index} />
               ))}
@@ -69,31 +69,31 @@ const Home = () => {
 
           </View>
 
-          <Image source={images.cotopaxi} className="w-[100%] h-full absolute right-[-140px] z-0 " resizeMode="cover" />
+          <Image source={images.coto} className="w-[100%] h-full absolute top-8 right-[-180px] z-0 " resizeMode="cover" />
 
         </View>
 
-        <View className="w-[94%] h-[10vh] bg-orange-400 flex-row items-center justify-around">
+        <View className="w-[94%] h-[10vh] flex-row items-center justify-around">
           {days.map((day, index) => (
             <DayIcon key={index} date={day} />
           ))}
         </View>
 
-        <View className="w-[94%] bg-pink-400">
-          <Text className="text-2xl">Parques</Text>
+        <View className="w-[94%] mb-3 ">
+          <Text className="text-2xl font-bold">Parques</Text>
         </View>
 
-        <View className="w-[94%] bg-green-900 flex-row justify-between">
+        <View className="w-[94%]  flex-row justify-between">
           <View className="w-[48%]">
             {parks.filter((_, index) => index % 2 === 0 && index !== 10).map((park, index) => (
-              <View key={index} className="mb-4 bg-blue-300">
+              <View key={index} className="mb-4 ">
                 <Image source={park.image} className="w-full h-auto rounded-lg" resizeMode="cover" />
               </View>
             ))}
           </View>
           <View className="w-[48%]">
             {parks.filter((_, index) => index % 2 !== 0 || index == 10).map((park, index) => (
-              <View key={index} className="mb-4 bg-blue-300 relative">
+              <View key={index} className="mb-4  relative">
                 <Image source={park.image} className="w-full h-auto rounded-lg" resizeMode="cover" />
                 {/* <View className="w-full bg-green-400 h-full absolute">
 
