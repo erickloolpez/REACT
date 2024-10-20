@@ -1,11 +1,12 @@
-import { View, Text, ScrollView, Image } from 'react-native'
+import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import React from 'react'
+import {useState} from 'react'
 
 import SearchInput from '../../components/SearchInput'
 import { icons, images, parks } from '../../constants'
 import FollowingIcon from '../../components/FollowingIcon'
 import DayIcon from '../../components/DayIcon'
+import { router } from 'expo-router'
 
 
 const Home = () => {
@@ -72,9 +73,11 @@ const Home = () => {
         <View className="w-[94%]  flex-row justify-between">
           <View className="w-[48%]">
             {parks.filter((_, index) => index % 2 === 0 && index !== 10).map((park, index) => (
-              <View key={index} className="mb-4 ">
-                <Image source={park.image} className="w-full h-auto rounded-lg" resizeMode="cover" />
-              </View>
+              <TouchableOpacity key={index} onPress={()=>router.push(`/modals/${park.name}`)}>
+                <View className="mb-4 ">
+                  <Image source={park.image} className="w-full h-auto rounded-lg" resizeMode="cover" />
+                </View>
+              </TouchableOpacity>
             ))}
           </View>
           <View className="w-[48%]">

@@ -7,7 +7,6 @@ import { images, icons, parks } from '../../constants'
 
 const SearchValue = () => {
     const { query } = useLocalSearchParams()
-    const margin = 32
     return (
         <SafeAreaView className="bg-primary h-full">
             <FlatList

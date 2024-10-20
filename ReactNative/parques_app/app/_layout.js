@@ -29,6 +29,7 @@ const _layout = () => {
         <Stack>
             <Stack.Screen name='index' options={{headerShown:false}}  />
             <Stack.Screen name='(tabs)' options={{headerShown:false}}  />
+            <Stack.Screen name ='modals/[query]' options={{headerShown:false, presentation:'modal'}} />
             <Stack.Screen name='search/[query]' options={{headerShown:false}}  />
         </Stack>
     )

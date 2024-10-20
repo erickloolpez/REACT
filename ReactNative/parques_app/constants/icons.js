@@ -31,6 +31,10 @@ import volcan from '../assets/icons/volcan.png'
 import buceo from '../assets/icons/gafas-de-buceo.png'
 import camara from '../assets/icons/camara-fotografica.png'
 import pesca from '../assets/icons/pescar.png'
+import mapa from '../assets/icons/mapa.png'
+import grados from '../assets/icons/alta-temperatura.png'
+import nadar from '../assets/icons/nadando.png'
+import caballo from '../assets/icons/coche-de-caballos.png'
 
 export default {
   play,
@@ -65,5 +69,9 @@ export default {
   volcan,
   buceo,
   camara,
-  pesca
+  pesca,
+  mapa,
+  grados,
+  nadar,
+  caballo
 };
