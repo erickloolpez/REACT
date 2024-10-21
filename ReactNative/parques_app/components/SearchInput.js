@@ -9,6 +9,7 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
     const pathname = usePathname()
     const [query, setQuery] = useState(initialQuery || '')
     const widthLength = widthMeasure || '100%'
+    const [placeholder, setPlaceHolder] = useState('')
 
     const [openSearch, setOpenSearch] = useState(0)
 
@@ -21,11 +22,11 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
     })
 
     return (
-        <Animated.View className={`${openSearch ? 'border-2' : 'border-0'} bg-[#FBEECC]  absolute right-0 mt-2  w-[90%] h-16 px-4  rounded-2xl focus:border-[#CF613C] items-center flex-row space-x-4`} style={animatedStyle}>
+        <Animated.View className={`${openSearch ? 'border-0' : 'border-0'} border-green-800 bg-[#FBEECC]  absolute right-0 mt-2  w-[90%] h-16 px-4  rounded-md focus:border-[#CF613C] items-center flex-row space-x-4`} style={animatedStyle}>
             <TextInput
                 className="text-base mt-0.5 text-[#CF613C] flex-1 font-regular "
                 value={query}
-                placeholder="Search for a video topic."
+                placeholder={placeholder}
                 placeholderTextColor="#CF613C"
                 onChangeText={(e) => setQuery(e)}
                 returnKeyType='intro'
@@ -45,8 +46,10 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
                         animation.value = 0
                         setOpenSearch(0)
                         setQuery('')
+                        setPlaceHolder('')
                     } else {
                         animation.value = 1
+                        setPlaceHolder('Busca tu parque favorito.')
                         setOpenSearch(1)
                     }
 

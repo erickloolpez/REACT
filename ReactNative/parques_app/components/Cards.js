@@ -22,11 +22,11 @@ const zoomOut = {
 const Cards = ({ activeItem, data }) => {
   return (
     <Animatable.View
-      className="w-24 h-[85%] bg-green-400 mr-5 rounded-lg overflow-hidden"
+      className="w-24 h-[80%] bg-green-900 mr-5 rounded-lg overflow-hidden mt-3 items-center justify-center border-2 border-white"
       animation={activeItem === data.name ? zoomIn : zoomOut}
       duration={500}
     >
-      <Image source={data.image} className="w-full h-full" resizeMode="cover" />
+      <Image source={data.image} className="w-[90%] h-[90%]" resizeMode="cover" />
     </Animatable.View>
   )
 }

@@ -1,12 +1,12 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import {useState} from 'react'
+import { useState } from 'react'
 
 import SearchInput from '../../components/SearchInput'
 import { icons, images, parks } from '../../constants'
 import FollowingIcon from '../../components/FollowingIcon'
-import DayIcon from '../../components/DayIcon'
 import { router } from 'expo-router'
+import ActivityIcon from '../../components/ActivityIcon'
 
 
 const Home = () => {
@@ -17,14 +17,14 @@ const Home = () => {
     { icon: "+4", margin: 98 },
   ]
 
-  const days = [
-    { name: 'Lun', day: 1 },
-    { name: 'Mar', day: 2 },
-    { name: 'Mierc', day: 3 },
-    { name: 'Juev', day: 4 },
-    { name: 'Vier', day: 5 },
-    { name: 'Sab', day: 6 },
-    { name: 'Dom', day: 7 },
+  const activities = [
+    { name: 'Senderismo', image: icons.senderismo  },
+    { name: 'Fotografia', image: icons.camara},
+    { name: 'Montar a caballo', image: icons.caballo },
+    { name: 'Buceo', image: icons.buceo },
+    { name: 'Camping', image: icons.camping },
+    { name: 'Ciclismo', image: icons.ciclismo },
+    { name: 'Canotaje', image: icons.canotaje },
   ]
 
   return (
@@ -38,17 +38,17 @@ const Home = () => {
           <SearchInput />
         </View>
 
-        <View className="w-[94%] h-[20vh] bg-[#17301A] rounded-2xl justify-center overflow-hidden relative">
+        <View className="w-[94%] min-h-[25vh] h-[25vh] bg-[#17301A] rounded-2xl justify-around overflow-hidden relative">
 
           <View className="w-[60%] h-full p-2 overflow-hidden justify-around z-10">
 
             <View className="">
-              <Text className="text-2xl text-white font-bold">Noticia del Dia</Text>
+              <Text className="text-2xl text-white font-bold ">Noticia del Dia</Text>
             </View>
             <View className="">
-              <Text className="text-white">Hoy en dia se entregara mas de dos pollitos pio en la entrada del parque.</Text>
+              <Text className=" text-white">Hoy en dia se entregara mas de dos pollitos pio en la entrada del parque.</Text>
             </View>
-            <View className="flex-row relative w-full h-12">
+            <View className="flex-row relative w-full h-14">
               {followers.map((follower, index) => (
                 <FollowingIcon key={index} follower={follower} index={index} />
               ))}
@@ -60,20 +60,20 @@ const Home = () => {
 
         </View>
 
-        <View className="w-[94%] h-[10vh] flex-row items-center justify-around">
-          {days.map((day, index) => (
-            <DayIcon key={index} date={day} />
+        <View className="w-[94%] h-[18vh] flex-wrap flex-row items-center justify-around mt-2  content-center oveflow-hidden">
+          {activities.map((activity, index) => (
+            <ActivityIcon key={index} name={activity.name} image={activity.image} />
           ))}
         </View>
 
         <View className="w-[94%] mb-3 ">
-          <Text className="text-2xl font-bold">Parques</Text>
+          <Text className="text-2xl font-bold text-[#CF613C]">Parques</Text>
         </View>
 
         <View className="w-[94%]  flex-row justify-between">
           <View className="w-[48%]">
             {parks.filter((_, index) => index % 2 === 0 && index !== 10).map((park, index) => (
-              <TouchableOpacity key={index} onPress={()=>router.push(`/modals/${park.name}`)}>
+              <TouchableOpacity key={index} onPress={() => router.push(`/modals/${park.name}`)}>
                 <View className="mb-4 ">
                   <Image source={park.image} className="w-full h-auto rounded-lg" resizeMode="cover" />
                 </View>

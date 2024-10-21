@@ -5,7 +5,7 @@ import Activity from './activity'
 
 const Navbar = ({ activities }) => {
     return (
-        <View className="w-full h-[24vh]  flex-row border-b-2 border-green-800">
+        <View className="w-full min-h-[28vh] h-[28vh]  flex-row border-b-2 border-green-800">
             <View className="w-1/2 h-full border-r-2 border-green-800">
                 <View className="h-[20%] justify-center">
                     <Text className="ml-2 text-xl font-bold text-[#CF613C]">Horarios:</Text>
@@ -38,13 +38,12 @@ const Navbar = ({ activities }) => {
                     <Text className="text-2xl text-[#17301A]">22°C°F</Text>
                 </View>
                 <View className="w-full h-1/2 items-center ">
-                    <View className="w-[80%] h-full flex-wrap flex-row justify-around content-center ">
+                    <View className="w-full h-full flex-wrap flex-row justify-around content-center ">
                         {
                             activities.map((icon, index) => (
                                 <Activity key={index} image={icon} />
                             ))
                         }
-
                     </View>
                 </View>
 
