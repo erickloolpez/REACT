@@ -8,6 +8,7 @@ import { parks } from '../../constants'
 import Body from '../../components/modals/body'
 import Navbar from '../../components/modals/navbar'
 import Description from '../../components/modals/description'
+import Trends from '../../components/modals/trends'
 
 const Place = () => {
     const { query } = useLocalSearchParams()
@@ -18,6 +19,7 @@ const Place = () => {
             <Body >
                  <Navbar activities={place.icons}/>
                  <Description desc ={place.desc} />
+                 <Trends name={place.trend.name} desc={place.trend.text} />
 
             </Body>
         </ScrollView>
