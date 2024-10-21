@@ -1,33 +1,28 @@
-import { Image } from 'react-native'
-import * as Animatable from 'react-native-animatable'
+import { Image, View } from 'react-native'
+import Animated, { Extrapolation, interpolate, useAnimatedStyle, withTiming } from 'react-native-reanimated'
 
-const zoomIn = {
-  0: {
-    scale: 0.9
-  },
-  1: {
-    scale: 1
-  }
-}
+const Cards = ({ data, scrollX, index }) => {
+  const styles = useAnimatedStyle(() => {
+    return {
+      transform: [{
+        scale: interpolate(
+          scrollX.value,
+          [index - 1, index, index + 1],
+          [1.6, 1, 1.6],
+          Extrapolation.CLAMP
+        )
+      }
+      ]
 
-const zoomOut = {
-  0: {
-    scale: 1
-  },
-  1: {
-    scale: 0.9
-  }
-}
+    }
+  })
 
-const Cards = ({ activeItem, data }) => {
   return (
-    <Animatable.View
-      className="w-24 h-[80%] bg-green-900 mr-5 rounded-lg overflow-hidden mt-3 items-center justify-center border-2 border-white"
-      animation={activeItem === data.name ? zoomIn : zoomOut}
-      duration={500}
+    <Animated.View
+      className="w-[160px] h-[85%] bg-green-900 mr-5 rounded-lg overflow-hidden mt-3 items-center justify-center border-2 border-white"
     >
-      <Image source={data.image} className="w-[90%] h-[90%]" resizeMode="cover" />
-    </Animatable.View>
+      <Animated.Image source={data.image} className="w-full h-full" resizeMode="cover" style={styles} />
+    </Animated.View>
   )
 }
 

@@ -15,11 +15,11 @@ const Place = () => {
     const place = parks.find((park) => park.name === query)
     return (
         <ScrollView contentContainerStyle={{ alignItems: 'center', backgroundColor:"#FBEECC" }}>
-            <Header name={place.name} image={place.image} />
+            <Header logo={place.logo} image={place.image} />
             <Body >
                  <Navbar activities={place.icons}/>
                  <Description desc ={place.desc} />
-                 <Trends name={place.trend.name} desc={place.trend.text} />
+                 <Trends name={place.trend.name} desc={place.trend.desc} />
 
             </Body>
         </ScrollView>

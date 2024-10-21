@@ -18,8 +18,8 @@ const Home = () => {
   ]
 
   const activities = [
-    { name: 'Senderismo', image: icons.senderismo  },
-    { name: 'Fotografia', image: icons.camara},
+    { name: 'Senderismo', image: icons.senderismo },
+    { name: 'Fotografia', image: icons.camara },
     { name: 'Montar a caballo', image: icons.caballo },
     { name: 'Buceo', image: icons.buceo },
     { name: 'Camping', image: icons.camping },
@@ -74,20 +74,21 @@ const Home = () => {
           <View className="w-[48%]">
             {parks.filter((_, index) => index % 2 === 0 && index !== 10).map((park, index) => (
               <TouchableOpacity key={index} onPress={() => router.push(`/modals/${park.name}`)}>
-                <View className="mb-4 ">
+                <View className="mb-4 relative ">
                   <Image source={park.image} className="w-full h-auto rounded-lg" resizeMode="cover" />
+                  <Image source={park.logo} className="w-[85%] absolute top-[-45px] left-2" resizeMode="contain" />
                 </View>
               </TouchableOpacity>
             ))}
           </View>
           <View className="w-[48%]">
             {parks.filter((_, index) => index % 2 !== 0 || index == 10).map((park, index) => (
-              <View key={index} className="mb-4  relative">
-                <Image source={park.image} className="w-full h-auto rounded-lg" resizeMode="cover" />
-                {/* <View className="w-full bg-green-400 h-full absolute">
-
-                </View> */}
-              </View>
+              <TouchableOpacity key={index} onPress={() => router.push(`/modals/${park.name}`)}>
+                <View className="mb-4 relative ">
+                  <Image source={park.image} className="w-full h-auto rounded-lg" resizeMode="cover" />
+                  <Image source={park.logo} className="w-[85%] absolute bottom-[-45px] left-2" resizeMode="contain" />
+                </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
