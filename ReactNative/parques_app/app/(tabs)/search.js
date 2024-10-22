@@ -49,8 +49,8 @@ const Search = () => {
           ))
         }
 
-        <View className="w-2/3 h-15 absolute top-8 pl-4 ">
-          <Text className="text-3xl uppercase text-[#CF613C] font-bold">Nueva Especie descubierta </Text>
+        <View className="w-2/3 h-15 absolute top-8 right-0  bg-secondary rounded-l-full items-center ">
+          <Text className="text-2xl uppercase text-white font-bold">Nueva Especie descubierta </Text>
         </View>
 
         <BlurView intensity={100} tint='dark' className="w-2/3 min-h-[38vh] h-[38vh] absolute top-[15vh] justify-around overflow-hidden rounded-xl ml-2 px-1">
