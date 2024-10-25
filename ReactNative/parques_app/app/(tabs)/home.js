@@ -1,15 +1,17 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useState } from 'react'
+import * as Location from 'expo-location'
 
-import SearchInput from '../../components/SearchInput'
+
 import { icons, images, parks } from '../../constants'
-import FollowingIcon from '../../components/FollowingIcon'
 import { router } from 'expo-router'
 import ActivityIcon from '../../components/ActivityIcon'
+import { useEffect } from 'react'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 
 const Home = () => {
+  const {userLocation, setUserLocation} = useGlobalContext()
   const followers = [
     { icon: icons.avatarOne, margin: 0 },
     { icon: icons.avatarTwo, margin: 38 },
@@ -26,6 +28,29 @@ const Home = () => {
     { name: 'Ciclismo', image: icons.ciclismo },
     { name: 'Canotaje', image: icons.canotaje },
   ]
+
+  async function getLocationPermission(){
+    let {status} = await Location.requestForegroundPermissionsAsync()
+
+    if(status !== 'granted'){
+      alert('Permission denied.')
+      return
+    }
+
+    let location = await Location.getCurrentPositionAsync()
+
+    const current = {
+      latitude : location.coords.latitude,
+      longitude: location.coords.longitude
+    }
+
+    setUserLocation(current)
+
+  }
+
+  useEffect(()=>{
+    getLocationPermission()
+  },[])
 
   return (
     <SafeAreaView edges={['top']} className="h-full bg-[#fbeecc]">
@@ -67,7 +92,7 @@ const Home = () => {
           {activities.map((activity, index) => (
             <ActivityIcon key={index} name={activity.name} image={activity.image} />
           ))}
-        </View> 
+        </View>
 
 
         <View className="w-[94%]  flex-row justify-between">

@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
-const Navbar = ({ children }) => {
+const Navbar = ({ children, navBarOptions, setCategory }) => {
     const [dimensions, setDimensions] = useState({ height: 20, width: 100 });
-    const navBarOptions = [{ name: 'General' }, { name: "Mapa" },{name:"Atractivos"}];
-    const [category, setCategory] = useState(navBarOptions[0])
     const [currentIndex, setCurrentIndex] = useState(0)
 
     const translateX = useSharedValue(0);

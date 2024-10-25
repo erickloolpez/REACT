@@ -1,6 +1,7 @@
 import { SplashScreen, Stack } from 'expo-router'
-import {useFonts} from 'expo-font'
+import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
+import GlobalProvider from '../context/GlobalProvider'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -17,21 +18,23 @@ const _layout = () => {
         "Poppins-Thin": require('../assets/fonts/Poppins-Thin.ttf'),
     })
 
-    useEffect(()=>{
-        if(error){
+    useEffect(() => {
+        if (error) {
             throw error
         }
 
-        if(fontsLoaded) SplashScreen.hideAsync()
+        if (fontsLoaded) SplashScreen.hideAsync()
 
-    },[fontsLoaded])
+    }, [fontsLoaded])
     return (
-        <Stack>
-            <Stack.Screen name='index' options={{headerShown:false}}  />
-            <Stack.Screen name='(tabs)' options={{headerShown:false}}  />
-            <Stack.Screen name ='modals/[query]' options={{headerShown:false, presentation:'modal'}} />
-            <Stack.Screen name='search/[query]' options={{headerShown:false}}  />
-        </Stack>
+        <GlobalProvider>
+            <Stack>
+                <Stack.Screen name='index' options={{ headerShown: false }} />
+                <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+                <Stack.Screen name='modals/[query]' options={{ headerShown: false, presentation: 'modal' }} />
+                <Stack.Screen name='search/[query]' options={{ headerShown: false }} />
+            </Stack>
+        </GlobalProvider>
     )
 }
 

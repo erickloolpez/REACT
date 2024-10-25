@@ -21,7 +21,7 @@ const Cards = ({ data, scrollX, index }) => {
 
   return (
     <Animated.View
-      className="w-[390px] h-full mr-2 bg-green-900 rounded-xl overflow-hidden items-center justify-center border-2 border-secondary relative"
+      className="w-[380px] h-full mr-3 bg-green-900 rounded-xl overflow-hidden  border-2 border-secondary relative"
     >
       <View className="w-full h-14  z-10 absolute top-0 flex-row items-center justify-around">
         <View>

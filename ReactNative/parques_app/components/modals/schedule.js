@@ -19,8 +19,8 @@ const Schedule = () => {
             <View className="mt-3 flex-wrap flex-row">
                 {
                     week.map((day, index) => (
-                        <View className="grow p-2 border-2 rounded-md ">
-                            <Text className="text-center text-green-900" key={index}>
+                        <View key={index} className="grow p-2 border-2 rounded-md ">
+                            <Text className="text-center text-green-900">
                                 {day.name} <Text>{day.schedule}</Text>
                             </Text>
                         </View>

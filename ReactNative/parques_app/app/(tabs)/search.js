@@ -7,7 +7,7 @@ import Cards from '../../components/Cards'
 
 const Search = () => {
 
-  const card_width = 400
+  const card_width = 392
   const scrollX = useSharedValue(0)
   const onScroll = useAnimatedScrollHandler((e) => {
     scrollX.value = e.contentOffset.x / card_width
@@ -93,9 +93,9 @@ const Search = () => {
             )}
             horizontal
             showsHorizontalScrollIndicator={false}
-            snapToInterval={400}
+            snapToInterval={392}
             decelerationRate={"fast"}
-            contentContainerStyle={{ paddingHorizontal: 16 }}
+            contentContainerStyle={{ paddingHorizontal: 5 }}
 
             onScroll={onScroll}
             scrollEventThrottle={100 / 60}
