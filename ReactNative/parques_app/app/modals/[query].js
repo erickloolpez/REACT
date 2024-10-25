@@ -10,6 +10,7 @@ import Description from '../../components/modals/description'
 import Trends from '../../components/modals/trends'
 
 import Details from '../../components/modals/details'
+import Schedule from '../../components/modals/schedule'
 
 const Place = () => {
     const { query } = useLocalSearchParams()
@@ -20,7 +21,9 @@ const Place = () => {
             <Body >
                 <Navbar activities={place.icons}>
                     <Description desc={place.desc} />
-                    <Details />
+                    <Details >
+                        <Schedule />
+                    </Details>
                 </Navbar>
             </Body>
         </ScrollView>

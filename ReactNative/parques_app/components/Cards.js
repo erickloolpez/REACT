@@ -1,5 +1,7 @@
 import { Text, TouchableOpacity, View } from 'react-native'
 import Animated, { Extrapolation, interpolate, useAnimatedStyle, withTiming } from 'react-native-reanimated'
+import { MapsGlobal01Icon, MapingIcon } from 'hugeicons-react-native'
+import { CampingTent } from '@vectopus/atlas-icons-react-native'
 
 const Cards = ({ data, scrollX, index }) => {
   const styles = useAnimatedStyle(() => {
@@ -19,13 +21,37 @@ const Cards = ({ data, scrollX, index }) => {
 
   return (
     <Animated.View
-      className="w-[360px] h-full bg-green-900 rounded-tl-full rounded-tr-full overflow-hidden items-center justify-center border-2 border-secondary relative"
+      className="w-[390px] h-full mr-2 bg-green-900 rounded-xl overflow-hidden items-center justify-center border-2 border-secondary relative"
     >
-      <View className="w-full h-28 absolute top-48 z-10 items-center justify-around">
-        <Text className="text-xl font-bold text-white">{data.trend.name}</Text>
-        <TouchableOpacity className="w-28 h-12 bg-secondary rounded-full items-center justify-center">
-          <Text className="text-white">Ver mas</Text>
-        </TouchableOpacity>
+      <View className="w-full h-14  z-10 absolute top-0 flex-row items-center justify-around">
+        <View>
+          <Text className="text-lg font-bold text-white">{data.trend.name}</Text>
+        </View>
+        <View>
+          <MapsGlobal01Icon
+            size={34}
+            color={"#ffffff"}
+            variant={"stroke"}
+          />
+        </View>
+      </View>
+      <View className="w-full h-14  z-10 absolute bottom-0 flex-row items-center justify-between">
+        <View className="ml-4 flex-row items-center">
+          <MapingIcon
+            size={34}
+            color={"#ffffff"}
+            variant={"stroke"}
+          />
+          <View>
+            <Text className="text-lg text-white font-bold"> 2400 m2</Text>
+          </View>
+        </View>
+        <View className="flex-row mr-4">
+          <CampingTent 
+            size={34}
+            color={"#ffffff"}
+          />
+        </View>
       </View>
       <Animated.Image source={data.image} className="w-full h-full" resizeMode="cover" style={styles} />
     </Animated.View>

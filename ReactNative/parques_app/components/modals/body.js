@@ -3,7 +3,7 @@ import React from 'react'
 
 const Body = ({children}) => {
   return (
-    <View className="w-[98%] min-h-[54vh] rounded-xl mt-[-14px] bg-primary  overflow-hidden">
+    <View className="w-[98%] min-h-[78vh] rounded-xl mt-[-14px] bg-primary  overflow-hidden">
         {children}
     </View>
   )

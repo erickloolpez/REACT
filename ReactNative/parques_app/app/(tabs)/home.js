@@ -30,13 +30,13 @@ const Home = () => {
   return (
     <SafeAreaView edges={['top']} className="h-full bg-[#fbeecc]">
       <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
-        <View className="w-[94%] h-[80px] relative ">
+        {/* <View className="w-[94%] h-[80px] relative ">
           <View className='absolute w-[45%] h-16  left-0 mt-2 items-center justify-center'>
             <Text className="text-3xl text-[#CF613C] font-bold">Gea</Text>
           </View>
           <Image source={icons.rayita} resizeMode="contain" className="w-14 h-[15px] absolute bottom-4 left-14 " />
           <SearchInput />
-        </View>
+        </View> */}
 
         {/*
          <View className="w-[94%] min-h-[25vh] h-[25vh] bg-[#17301A] rounded-2xl justify-around overflow-hidden relative">
@@ -63,7 +63,7 @@ const Home = () => {
           <Text className="text-2xl font-bold text-[#CF613C]">Parques</Text>
         </View> 
         */}
-        <View className="w-[94%] h-[18vh] min-h-[18vh] flex-wrap flex-row items-center justify-around mt-2  content-center oveflow-hidden ">
+        <View className="w-[94%] h-[18vh] min-h-[18vh] flex-wrap flex-row items-center justify-around mt-2  content-center oveflow-hidden mb-4 ">
           {activities.map((activity, index) => (
             <ActivityIcon key={index} name={activity.name} image={activity.image} />
           ))}

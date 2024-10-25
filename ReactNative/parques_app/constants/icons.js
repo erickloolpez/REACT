@@ -22,11 +22,11 @@ import senderismo from '../assets/icons/senderista.png'
 import buceo from '../assets/icons/gafas-de-buceo.png'
 import camara from '../assets/icons/camara-fotografica.png'
 import pesca from '../assets/icons/pescar.png'
-import mapa from '../assets/icons/mapa.png'
 import grados from '../assets/icons/alta-temperatura.png'
 import nadar from '../assets/icons/nadando.png'
 import caballo from '../assets/icons/coche-de-caballos.png'
 import condor from '../assets/icons/condor.png'
+import ayaHuma from '../assets/icons/aya-huma.png'
 
 export default {
   play,
@@ -52,9 +52,9 @@ export default {
   buceo,
   camara,
   pesca,
-  mapa,
   grados,
   nadar,
   caballo,
-  condor
+  condor,
+  ayaHuma,
 };
