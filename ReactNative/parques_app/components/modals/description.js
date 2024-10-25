@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { View, Text } from 'react-native'
 
 const Description = ({ desc }) => {
-    const [text, setText] = useState(desc.slice(0,340))
+    const [text, setText] = useState(desc.slice(0,207))
     const [readMore, setReadMore] = useState(false)
     return (
         <View className="w-full">
@@ -18,7 +18,7 @@ const Description = ({ desc }) => {
                             setText(desc)
                             setReadMore(true)
                         } else {
-                            setText(desc.slice(0,340))
+                            setText(desc.slice(0,240))
                             setReadMore(false)
                         }
                     }}>

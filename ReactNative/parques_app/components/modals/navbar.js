@@ -1,55 +1,47 @@
-import { View, Text, Image } from 'react-native'
-import React from 'react'
-import { icons } from '../../constants'
-import Activity from './activity'
+import React, { useState } from 'react';
+import { View, Text, Pressable } from 'react-native';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
-const Navbar = ({ activities }) => {
+const Navbar = ({ children }) => {
+    const [dimensions, setDimensions] = useState({ height: 20, width: 100 });
+    const navBarOptions = [{ name: 'Tab 1' }, { name: "Tab 2" },{name:"Tab 3"}];
+    const [category, setCategory] = useState(navBarOptions[0])
+
+    const translateX = useSharedValue(0);
+
+    const handleTabPress = (index) => {
+        setCategory(navBarOptions[index])
+        const tabWidth = dimensions.width / navBarOptions.length;
+        translateX.value = withTiming(index * tabWidth, { duration: 300 });
+    };
+
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{ translateX: translateX.value }]
+        };
+    });
+
     return (
-        <View className="w-full min-h-[28vh] h-[28vh]  flex-row border-b-2 border-green-800">
-            <View className="w-1/2 h-full border-r-2 border-green-800">
-                <View className="h-[20%] justify-center">
-                    <Text className="ml-2 text-xl font-bold text-[#CF613C]">Horarios:</Text>
-                </View>
-                <View className="w-full h-[80%] flex-row justify-around items-center ">
-                    <View className="gap-1">
-                        <Text className="text-[#17301A] font-bold">Lunes</Text>
-                        <Text className="text-[#17301A] font-bold">Martes</Text>
-                        <Text className="text-[#17301A] font-bold">Miercoles</Text>
-                        <Text className="text-[#17301A] font-bold">Jueves</Text>
-                        <Text className="text-[#17301A] font-bold">Viernes</Text>
-                        <Text className="text-[#17301A] font-bold">Sabado</Text>
-                        <Text className="text-[#17301A] font-bold">Domingo</Text>
-                    </View>
-                    <View className="gap-1">
-                        <Text className="text-[#CF613C]">09:00 a 16:30</Text>
-                        <Text className="text-[#CF613C]" >09:00 a 16:30</Text>
-                        <Text className="text-[#CF613C]">09:00 a 16:30</Text>
-                        <Text className="text-[#CF613C]">09:00 a 16:30</Text>
-                        <Text className="text-[#CF613C]">09:00 a 16:30</Text>
-                        <Text className="text-[#CF613C]">09:00 a 16:30</Text>
-                        <Text className="text-[#CF613C]">09:00 a 16:30</Text>
-                    </View>
-                </View>
+        <View onLayout={(e) => setDimensions({ height: e.nativeEvent.layout.height, width: e.nativeEvent.layout.width })} className="w-full ">
+            <View className="w-full h-12 bg-green-400 flex-row items-center relative">
+                <Animated.View style={[animatedStyle, { width: dimensions.width / navBarOptions.length }]} className="h-[90%] bg-white absolute left-0 rounded-tl-xl rounded-tr-xl" />
+                {navBarOptions.map((nav, index) => {
+                    return (
+                        <Pressable
+                            key={index}
+                            className="flex-1"
+                            onPress={() => handleTabPress(index)}
+                        >
+                            <Text style={{ color: 'black', alignSelf: 'center' }}>{nav.name}</Text>
+                        </Pressable>
+                    );
+                })}
             </View>
-
-            <View className="w-1/2 h-full">
-                <View className="w-full h-1/2  flex-row justify-center items-center border-b-2 border-green-800">
-                    <Image source={icons.grados} resizeMode="contain" className="w-8 h-8 mr-4" />
-                    <Text className="text-2xl text-[#17301A]">22°C°F</Text>
-                </View>
-                <View className="w-full h-1/2 items-center ">
-                    <View className="w-full h-full flex-wrap flex-row justify-around content-center ">
-                        {
-                            activities.map((icon, index) => (
-                                <Activity key={index} image={icon} />
-                            ))
-                        }
-                    </View>
-                </View>
-
-            </View>
+            {
+                children
+            }
         </View>
-    )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;

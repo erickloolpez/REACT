@@ -20,7 +20,8 @@ const FollowingIcon = ({ follower, index, places, margin }) => {
 
     } else {
         return (
-            <View className='w-7 h-7 border-2 rounded-full overflow-hidden absolute' style={{ marginLeft:index === 0? 0 : margin, zIndex: index == 2 ? 10 : 0 }}>
+            // <View className='w-7 h-7 border-2 overflow-hidden absolute' style={{ marginLeft:index === 0? 0 : margin, zIndex: index == 2 ? 10 : 0 }}>
+            <View className="w-7 h-7 grow border-2 border-primary">
                 <Image source={places} className='w-full h-full' resizeMode="contain" />
             </View>
         )

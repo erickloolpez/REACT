@@ -38,10 +38,9 @@ const Home = () => {
           <SearchInput />
         </View>
 
-        <View className="w-[94%] min-h-[25vh] h-[25vh] bg-[#17301A] rounded-2xl justify-around overflow-hidden relative">
-
+        {/*
+         <View className="w-[94%] min-h-[25vh] h-[25vh] bg-[#17301A] rounded-2xl justify-around overflow-hidden relative">
           <View className="w-[60%] h-full p-2 overflow-hidden justify-around z-10">
-
             <View className="">
               <Text className="text-2xl text-white font-bold ">Noticia del Dia</Text>
             </View>
@@ -53,22 +52,23 @@ const Home = () => {
                 <FollowingIcon key={index} follower={follower} index={index} />
               ))}
             </View>
-
           </View>
-
           <Image source={images.coto} className="w-[100%] h-full absolute top-8 right-[-180px] z-0 " resizeMode="cover" />
-
         </View>
+        */}
 
-        <View className="w-[94%] h-[18vh] flex-wrap flex-row items-center justify-around mt-2  content-center oveflow-hidden">
+
+        {/*
+         <View className="w-[94%]  mt-4 ">
+          <Text className="text-2xl font-bold text-[#CF613C]">Parques</Text>
+        </View> 
+        */}
+        <View className="w-[94%] h-[18vh] min-h-[18vh] flex-wrap flex-row items-center justify-around mt-2  content-center oveflow-hidden ">
           {activities.map((activity, index) => (
             <ActivityIcon key={index} name={activity.name} image={activity.image} />
           ))}
-        </View>
+        </View> 
 
-        <View className="w-[94%] mb-3 ">
-          <Text className="text-2xl font-bold text-[#CF613C]">Parques</Text>
-        </View>
 
         <View className="w-[94%]  flex-row justify-between">
           <View className="w-[48%]">

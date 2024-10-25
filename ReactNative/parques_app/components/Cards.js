@@ -1,4 +1,4 @@
-import { Image, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import Animated, { Extrapolation, interpolate, useAnimatedStyle, withTiming } from 'react-native-reanimated'
 
 const Cards = ({ data, scrollX, index }) => {
@@ -19,8 +19,14 @@ const Cards = ({ data, scrollX, index }) => {
 
   return (
     <Animated.View
-      className="w-[160px] h-[85%] bg-green-900 mr-5 rounded-lg overflow-hidden mt-3 items-center justify-center border-2 border-white"
+      className="w-[360px] h-full bg-green-900 rounded-tl-full rounded-tr-full overflow-hidden items-center justify-center border-2 border-secondary relative"
     >
+      <View className="w-full h-28 absolute top-48 z-10 items-center justify-around">
+        <Text className="text-xl font-bold text-white">{data.trend.name}</Text>
+        <TouchableOpacity className="w-28 h-12 bg-secondary rounded-full items-center justify-center">
+          <Text className="text-white">Ver mas</Text>
+        </TouchableOpacity>
+      </View>
       <Animated.Image source={data.image} className="w-full h-full" resizeMode="cover" style={styles} />
     </Animated.View>
   )

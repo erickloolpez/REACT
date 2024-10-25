@@ -1,4 +1,4 @@
-import marco from '../assets/trends/marco.png'
+import marco from '../assets/trends/background.png'
 import marcoTexto from '../assets/trends/marcoTexto.png'
 import llanganateHermoso from '../assets/trends/llanganate/hermoso.png'
 

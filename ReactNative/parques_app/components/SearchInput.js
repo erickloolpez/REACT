@@ -17,20 +17,20 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
     const animatedStyle = useAnimatedStyle(() => {
         return {
             width:
-                animation.value == 1 ? withTiming(widthLength, { duration: 500 }) : withTiming('18%', { duration: 500 })
+                animation.value == 1 ? withTiming(widthLength, { duration: 500 }) : withTiming('20%', { duration: 500 }),
         }
     })
 
     return (
-        <Animated.View className={`${openSearch ? 'border-0' : 'border-0'} border-green-800 bg-[#FBEECC]  absolute right-0 mt-2  w-[90%] h-16 px-4  rounded-md focus:border-[#CF613C] items-center flex-row space-x-4`} style={animatedStyle}>
+        <Animated.View className={`${openSearch ? 'border-2' : 'border-0'} border-green-800 bg-[#FBEECC]  absolute right-0 mt-2  w-[90%] h-16 px-4  rounded-md focus:border-[#CF613C] items-center flex-row space-x-4 `} style={animatedStyle}>
             <TextInput
-                className="text-base mt-0.5 text-[#CF613C] flex-1 font-regular "
+                className="text-base mt-0.5 text-[#CF613C]  font-regular flex-1"
                 value={query}
-                placeholder={placeholder}
+                placeholder={'   Busca tu parque favorito.'}
                 placeholderTextColor="#CF613C"
                 onChangeText={(e) => setQuery(e)}
                 returnKeyType='intro'
-                onSubmitEditing={()=>{
+                onSubmitEditing={() => {
                     if (!query) {
                         return Alert.alert('Missing query', "Please input something to search results across database.")
                     }
@@ -46,10 +46,8 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
                         animation.value = 0
                         setOpenSearch(0)
                         setQuery('')
-                        setPlaceHolder('')
                     } else {
                         animation.value = 1
-                        setPlaceHolder('Busca tu parque favorito.')
                         setOpenSearch(1)
                     }
 
