@@ -11,6 +11,7 @@ import Description from '../../components/modals/description'
 import Details from '../../components/modals/details'
 import Schedule from '../../components/modals/schedule'
 import Map from '../../components/sections/map'
+import Attractives from '../../components/sections/attractives'
 
 const Place = () => {
     const { query } = useLocalSearchParams()
@@ -22,7 +23,7 @@ const Place = () => {
 
     if (category.name === 'General') {
         section =
-            <View>
+            <View className="mb-7">
                 <Description desc={place.desc} />
                 <Details >
                     <Schedule />
@@ -33,8 +34,8 @@ const Place = () => {
         section = <Map place={place} />
     }else{
         section =
-            <View>
-                <Text>Atractivos</Text>
+            <View className="mb-6">
+                <Attractives attractives={place.trend} />
             </View>
     }
     return (

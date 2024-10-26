@@ -1,10 +1,11 @@
 import icons from "./icons"
 import images from "./images"
 import logos from "./logos"
+import trends from "./trends"
 
 const parks = [
   {
-    name: 'Llanganantes', image: images.llanganantes, latitude: '-1.137165089331531', longitude: '-78.24608383727785',
+    name: 'Llanganates', image: images.llanganantes, latitude: '-1.137165089331531', longitude: '-78.24608383727785',
     polygon: [
       { latitude: '-1.308705', longitude: '-78.439756' },
       { latitude: '-1.324328', longitude: '-78.099712' },
@@ -13,22 +14,38 @@ const parks = [
     ],
     path: [
       {
-        name: 'Quito', order: 'A Sunfopamba. Se toma la vía Quito – Ambato (132 km). Desde Ambato se toma la vía a Píllaro para continuar hasta el sector de Dos Acequias, se pasa por San José de Poaló, hasta llegar al refugio/guardianía de Sunfopamba.A Panzarumi. Por la vía Quito – Salcedo (104 km) se continúa hasta la parroquia San Miguel (de Salcedo) y luego al refugio/guardianía de Panzarumi. Desde Salcedo son 24 kilómetros y 45 minutos en vehículo particular o una hora en transporte público.'
+        name: 'Quito', order: 'A Sunfopamba. Se toma la vía Quito – Ambato (132 km). Desde Ambato se toma la vía a Píllaro para continuar hasta el sector de Dos Acequias, se pasa por San José de Poaló, hasta llegar al refugio/guardianía de Sunfopamba.A Panzarumi. Por la vía Quito – Salcedo (104 km) se continúa hasta la parroquia San Miguel (de Salcedo) y luego al refugio/guardianía de Panzarumi. Desde Salcedo son 24 kilómetros y 45 minutos en vehículo particular o una hora en transporte público.',
+        color: { heading: "#173481", background: "#FEC0BC" }
       },
       {
         name: 'Tena', order: 'Se toma la vía Pano – Tálag hasta llegar al poblado  de Tálag, donde se encuentra el puesto de control. Desde ese punto, el parque esta a 4 km',
+        color: { heading: "#F0B847", background: "#086441" }
       },
       {
-        name: 'Mera', order: 'Se toma la vía Mera – Río Anzu hasta llegar al Km 12 donde se encuentra el puesto de control del parque (zona de amortiguamiento). Aquí se encuentra el punto de partida a las cavernas del Río Anzu, ubicadas en la zona de amortiguamiento del parque.'
+        name: 'Mera', order: 'Se toma la vía Mera – Río Anzu hasta llegar al Km 12 donde se encuentra el puesto de control del parque (zona de amortiguamiento). Aquí se encuentra el punto de partida a las cavernas del Río Anzu, ubicadas en la zona de amortiguamiento del parque.',
+        color: { heading: "#2F5285", background: "#9FD6E5" }
       }
     ],
     icons: [icons.senderismo, icons.ciclismo, icons.camara, icons.caballo, icons.camping],
     desc: 'Pocos nombres de lugares en el Ecuador despiertan tantos sentimientos de misterio y aventura como “Llanganates”. Es muy posible que la primera idea que venga a nuestras mentes sea la de esos misteriosos parajes al oriente de Píllaro donde Rumiñahui ordenó se escondiera el tesoro de Atahualpa, tras la captura y muerte del Inca en Cajamarca.\n\nEsto, que se ha convertido en una poderosa leyenda, ha despertado la atracción y ambición de muchos buscadores de tesoros cuyas aventuras, en la mayoría de los casos han terminado en fracaso y muerte.\n\nEs que llegar a la zona del supuesto tesoro conlleva una larga y ardua travesía por bosques y páramos muy húmedos de la Cordillera de los Llanganates.El esfuerzo de la caminata, por lo accidentado de la topografía, se ve compensada por parajes de ensueño que incluyen lagunas, bosques de neblina, hasta un extraño páramo de frailejones.La historia se une a una biodiversidad fantástica, que posiblemente sea el verdadero tesoro de los Llanganates.',
     trend:
-    {
-      name: 'Páramo y laguna de Pisayambo',
-      desc: 'En la parte norte, ingresando por Latacunga se puede visitar el sistema lacustre de Salayambo y por Salcedo el sistema lacustre de Anteojos; en la parte occidental, ingresando por Píllaro se llega a la laguna de Pisayambo, que está represada como parte del proyecto hidroeléctrico homónimo. El embalse tiene tres kilómetros de longitud. Cerca del embalse está la mayoría de las 80 lagunas que hay en el parque; y por el sur, ingresando por Patate se llega a Cerro Púlpito y la Cueva de las Calaveras, en este sector se aprecia un majestuoso paisaje del valle interandino.'
-    },
+      [
+        {
+          name: 'Páramo y laguna de Pisayambo',
+          desc: 'En la parte norte, ingresando por Latacunga se puede visitar el sistema lacustre de Salayambo y por Salcedo el sistema lacustre de Anteojos; en la parte occidental, ingresando por Píllaro se llega a la laguna de Pisayambo, que está represada como parte del proyecto hidroeléctrico homónimo. El embalse tiene tres kilómetros de longitud. Cerca del embalse está la mayoría de las 80 lagunas que hay en el parque; y por el sur, ingresando por Patate se llega a Cerro Púlpito y la Cueva de las Calaveras, en este sector se aprecia un majestuoso paisaje del valle interandino.',
+          image: trends.llanganatePisayambo
+        },
+        {
+          name: 'Cerro Hermoso',
+          desc: 'Es la elevación más alta del parque, llamado así muy posiblemente por la belleza de sus picos. Durante su trayecto se atraviesa por una variedad de ambientes: la zona de frailejones, los bosques de Polylepis y las extensas zonas de zuro o bambú andino.Al pie de este cerro se encuentra la laguna Brunner o El Cable y desde su cumbre se aprecia la Cordillera de los Llanganates y varias lagunas como Angascocha, Pujín y Las Tres Marías.',
+          image: trends.llanganateHermoso
+        },
+        {
+          name: 'Rios y cascadas',
+          desc: 'Del parque descienden innumerables riachuelos y ríos que en su trayecto forman varias cascadas y atractivos naturales como las cuencas de los ríos Jatunyacu, Anzu, Topo, Machay, Piatuas, Verde, Verde Chico y el Yanayacu los cuales han formado hermosos balnearios naturales de agua limpia y cristalina, aptos para la pesca deportiva, rafting y kayak.',
+          image: trends.llanganateRios
+        },
+      ],
     logo: logos.llanganantes
   },
 
