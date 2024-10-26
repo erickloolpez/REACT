@@ -1,18 +1,32 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { useState } from 'react'
 import MapView, { Marker, Polyline, Polygon } from 'react-native-maps'
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Map = ({ place }) => {
     const { userLocation, setUserLocation } = useGlobalContext()
+    const [currentIndex, setCurrentIndex] = useState(null)
     const [origin, setOrigin] = useState({
         latitude: place.latitude,
         longitude: place.longitude,
     })
 
+    const [dimensions, setDimensions] = useState({ height: 20, width: 100 });
+    const animation = useSharedValue(0);
+
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            height:
+                animation.value == 1 ? withTiming(dimensions.height, { duration: 500 }) : withTiming(80, { duration: 500 }),
+        }
+    })
+
+
     if (userLocation) console.log(userLocation)
     return (
-        <View className="w-full bg-green-400">
+        <View className="w-full">
             <View className="mt-3 mb-4">
                 <Text className="text-xl text-terciary">Ubicacion:</Text>
             </View>
@@ -45,7 +59,7 @@ const Map = ({ place }) => {
                     {
                         userLocation && (
                             <Polyline
-                                coordinates={[userLocation, origin] }
+                                coordinates={[userLocation, origin]}
                                 strokColor="yellow"
                                 strokeWidth={2}
                             />
@@ -53,6 +67,38 @@ const Map = ({ place }) => {
 
                     }
                 </MapView>
+
+            </View>
+            <View className="w-full mt-4">
+                <Text className="text-xl text-terciary font-bold">Como llegar?</Text>
+            </View>
+            <View className="w-full h-[48vh]  mt-2 bg-green-400 ">
+                {
+                    place.path.map((place, index) => {
+                        return (
+                            <TouchableOpacity onPress={() => {
+                                setCurrentIndex(index === currentIndex ? null : index)
+                                animation.value = 1
+                            }}
+                                key={index}
+                                className="grow"
+                                activeOpacity={0.9}
+                            >
+                                <View className="bg-red-400 grow justify-center items-center" >
+                                    <Text>{place.name}</Text>
+                                    {
+                                        currentIndex === index && (
+                                            <View>
+                                                <Text>{place.order}</Text>
+                                            </View>
+
+                                        )
+                                    }
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    })
+                }
 
             </View>
 
