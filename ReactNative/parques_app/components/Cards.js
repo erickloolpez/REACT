@@ -25,7 +25,7 @@ const Cards = ({ data, scrollX, index }) => {
     >
       <View className="w-full h-14  z-10 absolute top-0 flex-row items-center justify-around">
         <View>
-          <Text className="text-lg font-bold text-white">{data.trend.name}</Text>
+          <Text className="text-lg font-bold text-white">lol</Text>
         </View>
         <View>
           <MapsGlobal01Icon

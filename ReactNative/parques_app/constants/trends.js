@@ -1,6 +1,6 @@
-import llanganateHermoso from '../assets/trends/llanganate/hermoso.png'
-import llanganatePisayambo from '../assets/trends/llanganate/pisayambo.png'
-import llanganateRios from '../assets/trends/llanganate/rios.png'
+import llanganateHermoso from '../assets/trends/llanganate/hermoso.jpg'
+import llanganatePisayambo from '../assets/trends/llanganate/pisayambo.jpg'
+import llanganateRios from '../assets/trends/llanganate/rios.jpeg'
 
 export default {
     llanganateHermoso,

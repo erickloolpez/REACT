@@ -56,41 +56,12 @@ const Home = () => {
   return (
     <SafeAreaView edges={['top']} className="h-full bg-[#fbeecc]">
       <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
-
-        {/*
-         <View className="w-[94%] min-h-[25vh] h-[25vh] bg-[#17301A] rounded-2xl justify-around overflow-hidden relative">
-          <View className="w-[60%] h-full p-2 overflow-hidden justify-around z-10">
-            <View className="">
-              <Text className="text-2xl text-white font-bold ">Noticia del Dia</Text>
-            </View>
-            <View className="">
-              <Text className=" text-white">Hoy en dia se entregara mas de dos pollitos pio en la entrada del parque.</Text>
-            </View>
-            <View className="flex-row relative w-full h-14">
-              {followers.map((follower, index) => (
-                <FollowingIcon key={index} follower={follower} index={index} />
-              ))}
-            </View>
-          </View>
-          <Image source={images.coto} className="w-[100%] h-full absolute top-8 right-[-180px] z-0 " resizeMode="cover" />
-        </View>
-        */}
-
-
-        {/*
-         <View className="w-[94%]  mt-4 ">
-          <Text className="text-2xl font-bold text-[#CF613C]">Parques</Text>
-        </View> 
-        */}
         <View className="w-full h-[47vh] relative">
           <View className='absolute w-[45%] h-16 top-32  left-0 mt-2 items-center justify-center z-10'>
             <Text style={{ fontFamily: "Pilowlava-Regular" }} className="text-7xl text-white">GEA</Text>
-            {/* <Text className="text-7xl text-yellow-400 font-bold" style={{fontFamily:"Pilowlava-Regular"}}>
-                G<Text className="text-blue-500">E</Text><Text className="text-red-400">A</Text>
-                </Text> */}
           </View>
           <View className='w-[50%]  absolute top-36  right-0  items-center justify-center z-20 bg-secondary border-x-2 border-white '>
-            <Text className="text-white text-lg text-center" style={{fontFamily:"Sail-Regular"}}>"Bienvenido a la grandeza natural de Ecuador.</Text>
+            <Text className="text-white text-lg text-center" style={{ fontFamily: "Sail-Regular" }}>"Bienvenido a la grandeza natural de Ecuador.</Text>
           </View>
           <View className="w-[94%] h-[80px] absolute top-4 z-10  ml-3 ">
             <SearchInput />

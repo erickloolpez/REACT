@@ -12,5 +12,6 @@ import cotopaxi from "../assets/images/cotopax.png"
 import coto from "../assets/images/cotopaxi.png"
 import cayambe from '../assets/images/cayambe_coca.jpeg'
 import marco from '../assets/images/marco.jpg'
+import isotipo from '../assets/images/isotipo.png'
 
-export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto, marco};
+export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto, marco, isotipo};

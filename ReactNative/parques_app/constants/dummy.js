@@ -3,6 +3,24 @@ import images from "./images"
 import logos from "./logos"
 import trends from "./trends"
 
+const allTrends = [
+  {
+    name: 'Páramo y laguna de Pisayambo',
+    desc: 'En la parte norte, ingresando por Latacunga se puede visitar el sistema lacustre de Salayambo y por Salcedo el sistema lacustre de Anteojos; en la parte occidental, ingresando por Píllaro se llega a la laguna de Pisayambo, que está represada como parte del proyecto hidroeléctrico homónimo. El embalse tiene tres kilómetros de longitud. Cerca del embalse está la mayoría de las 80 lagunas que hay en el parque; y por el sur, ingresando por Patate se llega a Cerro Púlpito y la Cueva de las Calaveras, en este sector se aprecia un majestuoso paisaje del valle interandino.',
+    image: trends.llanganatePisayambo
+  },
+  {
+    name: 'Cerro Hermoso',
+    desc: 'Es la elevación más alta del parque, llamado así muy posiblemente por la belleza de sus picos. Durante su trayecto se atraviesa por una variedad de ambientes: la zona de frailejones, los bosques de Polylepis y las extensas zonas de zuro o bambú andino.Al pie de este cerro se encuentra la laguna Brunner o El Cable y desde su cumbre se aprecia la Cordillera de los Llanganates y varias lagunas como Angascocha, Pujín y Las Tres Marías.',
+    image: trends.llanganateHermoso
+  },
+  {
+    name: 'Rios y cascadas',
+    desc: 'Del parque descienden innumerables riachuelos y ríos que en su trayecto forman varias cascadas y atractivos naturales como las cuencas de los ríos Jatunyacu, Anzu, Topo, Machay, Piatuas, Verde, Verde Chico y el Yanayacu los cuales han formado hermosos balnearios naturales de agua limpia y cristalina, aptos para la pesca deportiva, rafting y kayak.',
+    image: trends.llanganateRios
+  },
+]
+
 const parks = [
   {
     name: 'Llanganates', image: images.llanganantes, latitude: '-1.137165089331531', longitude: '-78.24608383727785',
@@ -70,4 +88,4 @@ const parks = [
   { name: 'Cotopaxi', image: images.cotopaxi, icons: [icons.ciclismo, icons.senderismo, icons.camara, icons.camping], desc: 'El volcán Cotopaxi, un cono nevado casi perfecto que se yergue a 5.897 metros de altitud es algo único en el planeta y es quizá, junto a Galápagos, el mayor símbolo de nuestra geografía natural reconocida en el mundo entero.\n\nMillares de montañistas de todas las nacionalidades han logrado su cumbre y otros tantos sueñan con hacerlo. Debido a que se encuentra en el centro del callejón interandino y muy cercano a varias ciudades como Quito y Latacunga, el Parque Nacional Cotopaxi es uno de los más visitados y seguramente donde muchas personas tocan por primera vez la nieve.\n\nEl imponente Cotopaxi, uno de los volcanes activos más altos del mundo, domina todo el paisaje del área protegida, que también incluye otros dos más pequeños, el Morurco (4.880 m), pegado al Cotopaxi, y el Rumiñahui (4.722 m), también muy cercano. El Cotopaxi se encuentra en la zona denominada “Avenida de los Volcanes”, nombre que el naturalista alemán Alexander von Humboldt en 1802 dio al conjunto de volcanes de la Sierra centro y norte del Ecuador. El ecosistema predominante en el parque es el páramo, con su flora y fauna especiales, por lo que la vegetación principal es de pajonal y pequeños arbustos de altura.', trend: { name: 'Volcán Cotopaxi', desc: 'El Cotopaxi también maravilla por su forma perfectamente cónica, su manto de nieves perpetuas y yana – sacha, una enorme pared de roca negra que parece un ojo, visible desde el norte. El cráter mide 800 metros de diámetro y 334 metros de profundidad.Volcán Rumiñahui y laguna de Limpiopungo El volcán Rumiñahui es una montaña llena de picos que le dan una apariencia agreste. Nos recuerda al último guerrero indígena que resistió heroicamente la invasión española y cuyo nombre significa “rostro de piedra”. Los picos son paredes de 800 metros de alto que rodean la caldera que colapsó probablemente por el vaciamiento violento de la cámara donde se alojaba el magma. La laguna de Limpiopungo se encuentra a 3.800 metros de altitud y cubre 200 hectáreas aproximadamente.No tiene un borde claro como otras lagunas sino que el terreno a su alrededor se va haciendo paulatinamente cenagoso. Tiene muchas plantas de totora entre las que anidan los patos; alrededor de la laguna vuelan gaviotas andinas y otras aves.' }, logo: logos.cotopaxi },
 ]
 
-export { parks }
+export { parks, allTrends }

@@ -1,8 +1,8 @@
-import { View, Image , Text } from 'react-native'
+import { View, Image, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Animated, { interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 
-import { icons, parks } from '../../constants'
+import { icons,allTrends } from '../../constants'
 import Cards from '../../components/Cards'
 
 const Search = () => {
@@ -34,7 +34,7 @@ const Search = () => {
 
   }
 
-  function BackDropText({ text, index, scrollX }) {
+  function BackDropText({ text, index, scrollX, name }) {
     const stylez = useAnimatedStyle(() => {
       return {
         opacity: interpolate(
@@ -46,14 +46,16 @@ const Search = () => {
     })
 
     return (
-        <Animated.View className="absolute w-[95%] h-36 top-20 left-2" style={stylez}>
-          <View className="w-full h-full bg-primary absolute border-2 black z-10 rounded-xl p-2 items-center justify-center" >
-            <Text numberOfLines={4} className="text-black">"{text}"</Text>
-          </View>
-          <View className="w-full h-full bg-secondary absolute border-2 border-black rounded-xl top-2" />
-          <Image source={icons.ayaHuma} className="w-8 h-8 absolute bottom-0 left-1 z-20" resizeMode="contain" />
-          <Image source={icons.condor} className="w-8 h-8 absolute bottom-0 right-0 z-20" resizeMode="contain" />
-        </Animated.View>
+      <Animated.View className="absolute w-[95%] h-36 top-20 left-2" style={stylez}>
+        <View className="w-full h-full bg-primary absolute border-2 black z-10 rounded-xl p-2 items-center justify-center" >
+          <Text>{name}</Text>
+          <Text numberOfLines={4} className="text-black">"{text}"</Text>
+        </View>
+
+        <View className="w-full h-full bg-secondary absolute border-2 border-black rounded-xl top-2" />
+        <Image source={icons.ayaHuma} className="w-8 h-8 absolute bottom-0 left-1 z-20" resizeMode="contain" />
+        <Image source={icons.condor} className="w-8 h-8 absolute bottom-0 right-0 z-20" resizeMode="contain" />
+      </Animated.View>
     )
 
   }
@@ -61,7 +63,7 @@ const Search = () => {
     <SafeAreaView edges={['top']} className="h-full bg-[#fbeecc]">
       <View className="w-full h-full relative">
         {
-          parks.map((park, index) => (
+          allTrends.map((park, index) => (
             <BackDropImage
               key={`bg-photo-${park.name}`}
               index={index}
@@ -71,12 +73,13 @@ const Search = () => {
           ))
         }
         {
-          parks.map((park, index) => (
+          allTrends.map((park, index) => (
             <BackDropText
               key={`bg-photo-${park.name}`}
               index={index}
               scrollX={scrollX}
-              text={park.trend.desc}
+              text={park.desc}
+              name={park.name}
             />
           ))
         }
@@ -86,7 +89,7 @@ const Search = () => {
 
         <View className="w-full h-[52vh] absolute bottom-2 left-0 ">
           <Animated.FlatList
-            data={parks}
+            data={allTrends}
             keyExtractor={(item) => item.name}
             renderItem={({ item, index }) => (
               <Cards data={item} scrollX={scrollX} index={index} />
