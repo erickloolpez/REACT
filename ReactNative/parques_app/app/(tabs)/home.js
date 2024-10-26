@@ -1,17 +1,18 @@
-import { View, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { View, ScrollView, Image, TouchableOpacity, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as Location from 'expo-location'
+import { router } from 'expo-router'
+import { useEffect } from 'react'
 
 
 import { icons, images, parks } from '../../constants'
-import { router } from 'expo-router'
 import ActivityIcon from '../../components/ActivityIcon'
-import { useEffect } from 'react'
+import SearchInput from '../../components/SearchInput'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 
 const Home = () => {
-  const {userLocation, setUserLocation} = useGlobalContext()
+  const { userLocation, setUserLocation } = useGlobalContext()
   const followers = [
     { icon: icons.avatarOne, margin: 0 },
     { icon: icons.avatarTwo, margin: 38 },
@@ -20,19 +21,19 @@ const Home = () => {
   ]
 
   const activities = [
-    { name: 'Senderismo', image: icons.senderismo },
     { name: 'Fotografia', image: icons.camara },
-    { name: 'Montar a caballo', image: icons.caballo },
     { name: 'Buceo', image: icons.buceo },
     { name: 'Camping', image: icons.camping },
     { name: 'Ciclismo', image: icons.ciclismo },
     { name: 'Canotaje', image: icons.canotaje },
+    { name: 'Montar a caballo', image: icons.caballo },
+    { name: 'Senderismo', image: icons.senderismo },
   ]
 
-  async function getLocationPermission(){
-    let {status} = await Location.requestForegroundPermissionsAsync()
+  async function getLocationPermission() {
+    let { status } = await Location.requestForegroundPermissionsAsync()
 
-    if(status !== 'granted'){
+    if (status !== 'granted') {
       alert('Permission denied.')
       return
     }
@@ -40,7 +41,7 @@ const Home = () => {
     let location = await Location.getCurrentPositionAsync()
 
     const current = {
-      latitude : location.coords.latitude,
+      latitude: location.coords.latitude,
       longitude: location.coords.longitude
     }
 
@@ -48,20 +49,13 @@ const Home = () => {
 
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getLocationPermission()
-  },[])
+  }, [])
 
   return (
     <SafeAreaView edges={['top']} className="h-full bg-[#fbeecc]">
       <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
-        {/* <View className="w-[94%] h-[80px] relative ">
-          <View className='absolute w-[45%] h-16  left-0 mt-2 items-center justify-center'>
-            <Text className="text-3xl text-[#CF613C] font-bold">Gea</Text>
-          </View>
-          <Image source={icons.rayita} resizeMode="contain" className="w-14 h-[15px] absolute bottom-4 left-14 " />
-          <SearchInput />
-        </View> */}
 
         {/*
          <View className="w-[94%] min-h-[25vh] h-[25vh] bg-[#17301A] rounded-2xl justify-around overflow-hidden relative">
@@ -88,7 +82,24 @@ const Home = () => {
           <Text className="text-2xl font-bold text-[#CF613C]">Parques</Text>
         </View> 
         */}
-        <View className="w-[94%] h-[18vh] min-h-[18vh] flex-wrap flex-row items-center justify-around mt-2  content-center oveflow-hidden mb-4 ">
+        <View className="w-full h-[47vh] relative">
+          <View className='absolute w-[45%] h-16 top-32  left-0 mt-2 items-center justify-center z-10'>
+            <Text style={{ fontFamily: "Pilowlava-Regular" }} className="text-7xl text-white">GEA</Text>
+            {/* <Text className="text-7xl text-yellow-400 font-bold" style={{fontFamily:"Pilowlava-Regular"}}>
+                G<Text className="text-blue-500">E</Text><Text className="text-red-400">A</Text>
+                </Text> */}
+          </View>
+          <View className='w-[50%]  absolute top-36  right-0  items-center justify-center z-20 bg-secondary border-x-2 border-white '>
+            <Text className="text-white text-lg text-center" style={{fontFamily:"Sail-Regular"}}>"Bienvenido a la grandeza natural de Ecuador.</Text>
+          </View>
+          <View className="w-[94%] h-[80px] absolute top-4 z-10  ml-3 ">
+            <SearchInput />
+          </View>
+          <Image source={images.marco} resizeMode='cover' className="w-full h-full" />
+        </View>
+
+
+        <View className="w-full h-[18vh] min-h-[18vh] flex-wrap flex-row items-center justify-around content-center oveflow-hidden mb-4 mt-[-14px]  ">
           {activities.map((activity, index) => (
             <ActivityIcon key={index} name={activity.name} image={activity.image} />
           ))}

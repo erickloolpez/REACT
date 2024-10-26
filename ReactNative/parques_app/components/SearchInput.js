@@ -4,6 +4,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import { usePathname, router } from 'expo-router'
 
 import { icons } from '../constants'
+import { Search01Icon, SearchSquareIcon, ViewOffSlashIcon } from 'hugeicons-react-native'
 
 const SearchInput = ({ initialQuery, widthMeasure }) => {
     const pathname = usePathname()
@@ -21,10 +22,29 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
         }
     })
 
+    let iconToShow
+
+    if (openSearch === 0) {
+        iconToShow =
+            <SearchSquareIcon
+                size={38}
+                color={"#17301A"}
+                variant={"stroke"}
+            />
+    } else {
+        iconToShow =
+            <ViewOffSlashIcon
+                size={24}
+                color={"#cf613c"}
+                variant={"stroke"}
+            />
+    }
+
+
     return (
-        <Animated.View className={`${openSearch ? 'border-2' : 'border-0'} border-green-800 bg-[#FBEECC]  absolute right-0 mt-2  w-[90%] h-16 px-4  rounded-md focus:border-[#CF613C] items-center flex-row space-x-4 `} style={animatedStyle}>
+        <Animated.View className={`${openSearch ? 'border-2 bg-white' : 'border-0'} border-green-800  absolute right-0 mt-2  w-[90%] h-12 px-4  rounded-full focus:border-[#CF613C] items-center flex-row space-x-4 `} style={animatedStyle}>
             <TextInput
-                className="text-base mt-0.5 text-[#CF613C]  font-regular flex-1"
+                className="text-base  text-[#CF613C]  font-regular flex-1"
                 value={query}
                 placeholder={'   Busca tu parque favorito.'}
                 placeholderTextColor="#CF613C"
@@ -53,11 +73,9 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
 
                 }}
             >
-                <Image
-                    source={openSearch == 1 ? icons.eyeHide : icons.search}
-                    className="w-5 h-5 "
-                    resizeMode="contain"
-                />
+                {
+                    iconToShow
+                }
             </TouchableOpacity>
 
 
