@@ -11,6 +11,7 @@ const Navbar = ({ children, navBarOptions, setCategory }) => {
     const handleTabPress = (index) => {
         setCategory(navBarOptions[index])
         setCurrentIndex(index)
+
         const tabWidth = dimensions.width / navBarOptions.length;
         translateX.value = withTiming(index * tabWidth, { duration: 300 });
     };

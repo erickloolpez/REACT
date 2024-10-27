@@ -30,6 +30,7 @@ const parks = [
       { latitude: '-0.974440', longitude: '-78.123070' },
       { latitude: '-0.975787', longitude: '-78.436671' },
     ],
+    suggestions:'Vestimenta. Ropa abrigada, poncho de aguas o chompa impermeable en caso de lluvia o garúa. Calzado apropiado, tipo botines de media caña en caso de caminatas medianas o largas.',
     path: [
       {
         name: 'Quito', order: 'A Sunfopamba. Se toma la vía Quito – Ambato (132 km). Desde Ambato se toma la vía a Píllaro para continuar hasta el sector de Dos Acequias, se pasa por San José de Poaló, hasta llegar al refugio/guardianía de Sunfopamba.A Panzarumi. Por la vía Quito – Salcedo (104 km) se continúa hasta la parroquia San Miguel (de Salcedo) y luego al refugio/guardianía de Panzarumi. Desde Salcedo son 24 kilómetros y 45 minutos en vehículo particular o una hora en transporte público.',

@@ -18,7 +18,7 @@ const Map = ({ place }) => {
             <View className="mt-3 mb-4">
                 <Text className="text-xl text-terciary">Ubicación:</Text>
             </View>
-            <View className="w-full h-[38vh] items-center ">
+            <View className="w-full h-[38vh] items-center border-y-2 border-y-black-200 ">
                 <MapView
                     className="w-full h-full"
                     initialRegion={{
@@ -48,6 +48,7 @@ const Map = ({ place }) => {
                             }}
                             className="grow"
                             activeOpacity={0.9}
+                            key={index}
                         >
                             <View
                              className="grow justify-center items-center"

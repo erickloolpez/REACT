@@ -15,7 +15,7 @@ import Attractives from '../../components/sections/attractives'
 
 const Place = () => {
     const { query } = useLocalSearchParams()
-    const navBarOptions = [{ name: 'General' }, { name: "Mapa" }, { name: "Atractivos" }];
+    const navBarOptions = [{ name: 'General' }, { name: "Mapa" }, { name: "Atractivos" },{name:"Flores"}];
     const [category, setCategory] = useState(navBarOptions[0])
     const place = parks.find((park) => park.name === query)
 
