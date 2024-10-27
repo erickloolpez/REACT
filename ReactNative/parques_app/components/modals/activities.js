@@ -12,11 +12,12 @@ const Activities = ({ place }) => {
                 />
                 <Text className="text-terciary text-xl left-2 font-bold">Actividades</Text>
             </View>
-            <View className="w-full flex-wrap flex-row  content-around gap-2 justify-around bg-red-200">
+            <View className="w-full flex-wrap flex-row  content-around gap-2 justify-around ">
                 {
                     place.icons.map((activity, index) => (
-                        <View key={index} className="bg-green-800 grow basis-20 items-center justify-center rounded-xl">
-                            <Image source={activity.image} resizeMode="contain" className=" w-32 h-16" />
+                        <View key={index} className="bg-green-950 grow basis-20 items-center justify-around rounded-xl">
+                            <Text className="text-white mt-2">{activity.name}</Text>
+                            <Image source={activity.image} resizeMode="contain" className=" w-12 h-16" />
                         </View>
                     ))
                 }

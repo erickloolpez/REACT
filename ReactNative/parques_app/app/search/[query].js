@@ -4,6 +4,7 @@ import { router, useLocalSearchParams } from 'expo-router'
 import SearchInput from '../../components/SearchInput'
 import FollowingIcon from '../../components/FollowingIcon'
 import { images, icons, parks } from '../../constants'
+import { DirectionRight02Icon, MapsIcon } from 'hugeicons-react-native'
 
 const SearchValue = () => {
     const { query } = useLocalSearchParams()
@@ -24,21 +25,28 @@ const SearchValue = () => {
                                     <Text className="font-bold">{item.name}</Text>
                                 </View>
                                 <View className="flex-row gap-1 items-center">
-                                    <Image source={icons.location} className="w-5 h-5" resizeMode="contain" />
+                                    <DirectionRight02Icon
+                                        size={28}
+                                        color={"black"}
+                                        variant={"stroke"}
+                                    />
                                     <Text>Provincia de Pichincha</Text>
                                 </View>
                                 <View className="flex-row gap-1 items-center">
-                                    <Image source={icons.rule} className="w-5 h-5" resizeMode="contain" />
+                                    <MapsIcon
+                                        size={28}
+                                        color={"black"}
+                                        variant={"stroke"}
+                                    />
                                     <Text>121 km²</Text>
                                 </View>
-                                <View className="flex-row justify-between items-center">
-                                    <Image source={icons.flame} className="w-5 h-5" resizeMode="contain" />
-                                    <Text>Provincia de Pichincha</Text>
+                                <View className="flex-row justify-center items-center">
+                                    <Text className="text-terciary font-bold">Actividades</Text>
                                 </View>
                                 <View className="flex-wrap flex-row content-center relative w-full h-12 bg-secondary">
                                     {
                                         item.icons.map((icon, index) => (
-                                            < FollowingIcon key={index} places={icon} index={index} margin={item.margin * (index)} />
+                                            < FollowingIcon key={index} icon={icon.image} />
                                         ))
                                     }
                                 </View>
