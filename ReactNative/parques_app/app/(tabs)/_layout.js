@@ -1,69 +1,73 @@
-import {View, Text, Image} from 'react-native'
-import {Tabs} from 'expo-router'
+import { View, Text } from 'react-native'
+import { Tabs } from 'expo-router'
 
-import {icons} from '../../constants'
+import { Home01Icon, Location04Icon, MenuSquareIcon } from 'hugeicons-react-native'
 
-const TabIcon = ({icon, color, name, focused}) => {
+
+const TabLayout = () => {
     return (
-        <View className="items-center justify-center gap-2">
-            <Image 
-                source = {icon}
-                resizeMode = "contain"
-                tintColor = {color}
-                className="w-6 h-6"
-            />
-
-            <Text className={`${focused ? 'font-psemibold' : 'font-regular'} text-xs`} style={{color: color}}>
-                {name}
-            </Text>
-        </View>
-
-    )
-}
-
-const TabLayout = ()=>{
-    return(
         <>
             <Tabs
-                screenOptions ={{
-                    tabBarShowLabel:false,
+                screenOptions={{
+                    tabBarShowLabel: false,
                     tabBarActiveTintColor: '#cf613c',
                     tabBarInactiveTintColor: '#fbeecc',
-                    tabBarStyle:{
-                        backgroundColor:'#17301A',
-                        borderTopWidth:1,
-                        borderTopColor:'#232533',
+                    tabBarStyle: {
+                        backgroundColor: '#17301A',
+                        borderTopWidth: 1,
+                        borderTopColor: '#232533',
                         height: 84
                     }
                 }}
             >
-                <Tabs.Screen  
+                <Tabs.Screen
                     name="home"
                     options={{
-                        title:'Home',
+                        title: 'Home',
                         headerShown: false,
-                        tabBarIcon: ({color, focused}) =>(
-                            <TabIcon 
-                                icon = {icons.home}
-                                color = {color}
-                                name="Home"
-                                focused={focused}
-                            />
+                        tabBarIcon: ({ color, focused }) => (
+                            <View className="items-center">
+                                <Home01Icon
+                                    size={34}
+                                    color={color}
+                                    variant={"stroke"}
+                                />
+                                <Text style={{ color: color }}>Home</Text>
+                            </View>
                         )
                     }}
                 />
-                <Tabs.Screen  
+                <Tabs.Screen
+                    name="map"
+                    options={{
+                        title: 'Map',
+                        headerShown: false,
+                        tabBarIcon: ({ color, focused }) => (
+                            <View className="items-center">
+                                <Location04Icon
+                                    size={34}
+                                    color={color}
+                                    variant={"stroke"}
+                                />
+                                <Text style={{ color: color }}>Map</Text>
+                            </View>
+                        )
+                    }}
+                />
+                <Tabs.Screen
                     name="search"
                     options={{
-                        title:'Search',
+                        title: 'Search',
                         headerShown: false,
-                        tabBarIcon: ({color, focused}) =>(
-                            <TabIcon 
-                                icon = {icons.grid}
-                                color = {color}
-                                name="Explore"
-                                focused={focused}
-                            />
+                        tabBarIcon: ({ color, focused }) => (
+                            <View className="items-center">
+                                <MenuSquareIcon
+                                    size={34}
+                                    color={color}
+                                    variant={"stroke"}
+                                />
+                                <Text style={{ color: color }}>Explore</Text>
+                            </View>
                         )
                     }}
                 />

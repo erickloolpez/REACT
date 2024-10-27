@@ -3,14 +3,12 @@ import { useState } from 'react'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { usePathname, router } from 'expo-router'
 
-import { icons } from '../constants'
-import { Search01Icon, SearchSquareIcon, ViewOffSlashIcon } from 'hugeicons-react-native'
+import { SearchSquareIcon, ViewOffSlashIcon } from 'hugeicons-react-native'
 
 const SearchInput = ({ initialQuery, widthMeasure }) => {
     const pathname = usePathname()
     const [query, setQuery] = useState(initialQuery || '')
     const widthLength = widthMeasure || '100%'
-    const [placeholder, setPlaceHolder] = useState('')
 
     const [openSearch, setOpenSearch] = useState(0)
 

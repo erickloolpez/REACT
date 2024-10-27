@@ -2,7 +2,7 @@ import { View, ScrollView, Image, TouchableOpacity, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as Location from 'expo-location'
 import { router } from 'expo-router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 
 import { icons, images, parks } from '../../constants'
@@ -13,12 +13,8 @@ import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Home = () => {
   const { userLocation, setUserLocation } = useGlobalContext()
-  const followers = [
-    { icon: icons.avatarOne, margin: 0 },
-    { icon: icons.avatarTwo, margin: 38 },
-    { icon: icons.avatarThree, margin: 68 },
-    { icon: "+4", margin: 98 },
-  ]
+  const [filterParks , setFilterParks] = useState(parks)
+  const [selectedActivity, setSelectedActivity] = useState(null)
 
   const activities = [
     { name: 'Fotografia', image: icons.camara },
@@ -70,16 +66,16 @@ const Home = () => {
         </View>
 
 
-        <View className="w-full h-[18vh] min-h-[18vh] flex-wrap flex-row items-center justify-around content-center oveflow-hidden mb-4 mt-[-14px]  ">
+        <View className="w-full h-[18vh] min-h-[18vh] flex-wrap flex-row items-center justify-around content-center oveflow-hidden mb-4 mt-[-30px]  ">
           {activities.map((activity, index) => (
-            <ActivityIcon key={index} name={activity.name} image={activity.image} />
+            <ActivityIcon key={index} name={activity.name} image={activity.image} parks={parks} setParks={setFilterParks} selectedActivity={selectedActivity} setSelectedActivity={setSelectedActivity} />
           ))}
         </View>
 
 
         <View className="w-[94%]  flex-row justify-between">
           <View className="w-[48%]">
-            {parks.filter((_, index) => index % 2 === 0 && index !== 10).map((park, index) => (
+            {filterParks.filter((_, index) => index % 2 === 0 && index !== 10).map((park, index) => (
               <TouchableOpacity key={index} onPress={() => router.push(`/modals/${park.name}`)}>
                 <View className="mb-4 relative ">
                   <Image source={park.image} className="w-full h-auto rounded-lg" resizeMode="cover" />
@@ -89,7 +85,7 @@ const Home = () => {
             ))}
           </View>
           <View className="w-[48%]">
-            {parks.filter((_, index) => index % 2 !== 0 || index == 10).map((park, index) => (
+            {filterParks.filter((_, index) => index % 2 !== 0 || index == 10).map((park, index) => (
               <TouchableOpacity key={index} onPress={() => router.push(`/modals/${park.name}`)}>
                 <View className="mb-4 relative ">
                   <Image source={park.image} className="w-full h-auto rounded-lg" resizeMode="cover" />

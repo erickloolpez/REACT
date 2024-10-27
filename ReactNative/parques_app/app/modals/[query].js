@@ -16,7 +16,7 @@ import Activities from '../../components/modals/activities'
 
 const Place = () => {
     const { query } = useLocalSearchParams()
-    const navBarOptions = [{ name: 'General' }, { name: "Mapa" }, { name: "Atractivos" },{name:"Flores"}];
+    const navBarOptions = [{ name: 'General' }, { name: "Mapa" }, { name: "Atractivos" }];
     const [category, setCategory] = useState(navBarOptions[0])
     const place = parks.find((park) => park.name === query)
 

@@ -153,7 +153,11 @@ const allTrends = [
 
 const parks = [
   {
-    name: 'Llanganates', image: images.llanganantes, latitude: '-1.137165089331531', longitude: '-78.24608383727785',
+    name: 'Llanganates', image: images.llanganantes,
+    location: {
+      latitude: '-1.137165089331531',
+      longitude: '-78.24608383727785',
+    },
     polygon: [
       { latitude: '-1.308705', longitude: '-78.439756' },
       { latitude: '-1.324328', longitude: '-78.099712' },
@@ -178,7 +182,7 @@ const parks = [
     icons: [
       { name: 'Senderismo', image: icons.senderismo },
       { name: 'Ciclismo', image: icons.ciclismo },
-      { name: 'Camara', image: icons.camara },
+      { name: 'Fotografia', image: icons.camara },
       { name: 'Caballo', image: icons.caballo },
       { name: 'Camping', image: icons.camping }
     ],
@@ -205,7 +209,11 @@ const parks = [
   },
 
   {
-    name: 'Galapagos', image: images.galapagos, latitude: '-0.6141768221188437', longitude: '-90.34521020652402',
+    name: 'Galapagos', image: images.galapagos,
+    location: {
+      latitude: '-0.6141768221188437',
+      longitude: '-90.34521020652402',
+    },
     polygon: [
       { latitude: -0.163, longitude: -90.345 }, // Norte
       { latitude: -0.614, longitude: -89.849 }, // Este
@@ -221,7 +229,7 @@ const parks = [
     ],
     icons: [
       { name: "Ciclismo", image: icons.ciclismo },
-      { name: "Camara", image: icons.camara },
+      { name: "Fotografia", image: icons.camara },
       { name: "Montar a caballo", image: icons.caballo },
       { name: "Camping", image: icons.camping },
     ],
@@ -243,7 +251,11 @@ const parks = [
   },
 
   {
-    name: 'Podocarpus', image: images.podocarpus, latitude: ' -4.296400805573029', longitude: '-78.99381021780579',
+    name: 'Podocarpus', image: images.podocarpus,
+    location: {
+      latitude: ' -4.296400805573029',
+      longitude: '-78.99381021780579',
+    },
     polygon: [
       { latitude: -4.102, longitude: -78.994 }, // Norte
       { latitude: -4.296, longitude: -78.755 }, // Este
@@ -262,12 +274,11 @@ const parks = [
       }
     ],
     icons: [
-      { name: "Camara", image: icons.camara },
+      { name: "Fotografia", image: icons.camara },
       { name: "Senderismo", image: icons.senderismo },
       { name: "Ciclismo", image: icons.ciclismo },
       { name: "Montar a caballo", image: icons.caballo },
       { name: "Camping", image: icons.camping },
-      icons.camara, icons.senderismo, icons.ciclismo, icons.caballo, icons.camping
     ],
     desc: 'El Parque Nacional Podocarpus se encuentra en una zona de gran biodiversidad y endemismo en la región sur del Ecuador. Esto hace que sea un testimonio claro de la influencia de las montañas en tierras tropicales, una de las principales razones de la extraordinaria biodiversidad del Ecuador. Muchos estudios demuestran que la mayor parte de la biodiversidad del país está empacada en estas alturas intermedias, donde el frío no es tan extremo y, en cambio, abundan la humedad, los microclimas y las barreras geográficas. La zona donde se encuentra Podocarpus es considerada un sitio de importancia mundial para la conservación de la biodiversidad.\n\nPor esta razón, junto a otras áreas de la zona como el Parque Nacional Yacuri y la Reserva Biológica Cerro Plateado, desde 2007 forma parte de la Reserva de Biosfera Podocarpus – El Cóndor, un reconocimiento otorgado por la UNESCO. Esta área alberga una gran superficie de páramos, bosques nublados y zonas de matorral, fundamental para la preservación y continuidad de los ecosistemas del sur del Ecuador y norte de Perú.Ficha',
     trend: [
@@ -295,7 +306,11 @@ const parks = [
   },
 
   {
-    name: 'Machalilla', image: images.machalilla, latitude: '-1.4585881977897268', longitude: '-80.76864915621577',
+    name: 'Machalilla', image: images.machalilla,
+    location: {
+      latitude: '-1.4585881977897268',
+      longitude: '-80.76864915621577',
+    },
     polygon: [
       { latitude: -1.318, longitude: -80.769 }, // Norte
       { latitude: -1.459, longitude: -80.598 }, // Este
@@ -314,7 +329,7 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Camara", image: icons.camara },
+      { name: "Fotografia", image: icons.camara },
       { name: "Buceo", image: icons.buceo },
       { name: "Nadar", image: icons.nadar },
       { name: "Canotaje", image: icons.canotaje },
@@ -327,29 +342,33 @@ const parks = [
       {
         name: 'Playa de los Frailes',
         desc: 'Es considerada una de las pocas playas que todavía mantiene sus características naturales. Está ubicada entre los poblados de Machalilla y Puerto López. En este sector existe un sendero que recorre el bosque seco y atraviesa las playas de La Tortuguita y La Playita hasta llegar a Los Frailes.',
-        image: trends.llanganatePisayambo
+        image: trends.machalillaFrailes
       },
       {
         name: 'Isla de la Plata',
         desc: 'Está ubicada a 40 kilómetros de Puerto López. Existen cinco senderos para recorrerla, observar varias especies de aves y contemplar los acantilados de la isla. En los alrededores se puede observar la biodiversidad marina mediante buceo de superficie, principalmente en los arrecifes Palo Santo y El Faro. La visita requiere la compañía de un guía naturalista autorizado por la administración del parque.',
-        image: trends.llanganatePisayambo
+        image: trends.machalillaPlata
       },
       {
         name: 'Comuna Agua Blanca',
         desc: 'Agua Blanca está ubicada a 5 kilómetros al norte de Puerto López; la comuna mantiene un museo arqueológico con piezas de la cultura Manteño – Huancavilca. En esta zona se han encontrado las famosas sillas de piedra o sillas de poder, por lo que los arqueólogos consideran que aquí funcionó uno de sus centros cívico ceremoniales. Sus pobladores, como se puede observar durante los recorridos, están orgullosos de su pasado y su herencia cultural. En la comunidad existe una gran poza de aguas sulfurosas donde se puede tomar un refrescante baño. El lodo del fondo de la poza ofrece también magníficas propiedades relajantes y es una experiencia reconfortante.',
-        image: trends.llanganatePisayambo
+        image: trends.machalillaBlanca
       },
       {
         name: 'Observación de ballenas jorobadas',
         desc: 'Otro atractivo es el avistamiento de las ballenas jorobadas, presentes entre julio y septiembre. Estos mamíferos viajan desde las frías aguas antárticas hasta llegar a nuestras cálidas aguas, en busca de condiciones adecuadas para reproducirse y tener sus crías. Los operadores turísticos que ofrecen los servicios de embarcaciones para observar ballenas, así como los visitantes y turistas deben seguir las normas establecidas.',
-        image: trends.llanganatePisayambo
+        image: trends.machalillaBallena
       },
     ],
     desc: 'Es considerada una de las pocas playas que todavía mantiene sus características naturales. Está ubicada entre los poblados de Machalilla y Puerto López. En este sector existe un sendero que recorre el bosque seco y atraviesa las playas de La Tortuguita y La Playita hasta llegar a Los Frailes.',
     logo: logos.machalilla
   },
   {
-    name: 'El cajas', image: images.cajas, latitude: '-2.846042815518646', longitude: '-79.25541232991348',
+    name: 'El cajas', image: images.cajas,
+    location: {
+      latitude: '-2.846042815518646',
+      longitude: '-79.25541232991348',
+    },
     polygon: [
       { latitude: -2.761, longitude: -79.255 }, // Norte
       { latitude: -2.846, longitude: -79.149 }, // Este
@@ -364,7 +383,7 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Camara", image: icons.camara },
+      { name: "Fotografia", image: icons.camara },
       { name: "Senderismo", image: icons.senderismo },
       { name: "Camping", image: icons.camping },
       { name: "Pesca", image: icons.pesca },
@@ -386,7 +405,11 @@ const parks = [
   },
 
   {
-    name: 'Cayambe Coca', image: images.cayambe, latitude: '-0.07279645221010232', longitude: '-77.83669601816572',
+    name: 'Cayambe Coca', image: images.cayambe,
+    location: {
+      latitude: '-0.07279645221010232',
+      longitude: '-77.83669601816572',
+    },
     polygon: [
       { latitude: 0.251, longitude: -77.837 }, // Norte
       { latitude: -0.073, longitude: -77.432 }, // Este
@@ -402,7 +425,7 @@ const parks = [
     ],
     icons: [
       { name: 'Senderismo', image: icons.senderismo },
-      { name: 'Camara', image: icons.camara },
+      { name: 'Fotografia', image: icons.camara },
       { name: 'Montar a caballo', image: icons.caballo },
       { name: 'Ciclismo', image: icons.ciclismo },
     ],
@@ -433,7 +456,11 @@ const parks = [
   },
 
   {
-    name: 'Sangay', image: images.sangay, latitude: '-2.054084296830765', longitude: '-78.36341582476535',
+    name: 'Sangay', image: images.sangay,
+    location: {
+      latitude: '-2.054084296830765',
+      longitude: '-78.36341582476535',
+    },
     polygon: [
       { latitude: -1.688, longitude: -78.363 }, // Norte
       { latitude: -2.054, longitude: -77.915 }, // Este
@@ -448,7 +475,7 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Camara", image: icons.camara },
+      { name: "Fotografia", image: icons.camara },
       { name: "Camping", image: icons.camping },
       { name: "Canotaje", image: icons.canotaje },
       { name: "Ciclismo", image: icons.ciclismo },
@@ -475,7 +502,10 @@ const parks = [
   },
 
   {
-    name: 'Sumaco', image: images.sumaco, latitude: '-0.3609124187566216', longitude: '-77.46976861934205',
+    name: 'Sumaco', image: images.sumaco, location: {
+      latitude: '-0.3609124187566216',
+      longitude: '-77.46976861934205',
+    },
     polygon: [
       { latitude: -0.131, longitude: -77.470 }, // Norte
       { latitude: -0.361, longitude: -77.194 }, // Este
@@ -491,7 +521,7 @@ const parks = [
     ],
     icons: [
       { name: "Senderismo", image: icons.senderismo },
-      { name: "Camara", image: icons.camara },
+      { name: "Fotografia", image: icons.camara },
       { name: "Camping", image: icons.camping },
       { name: "Montar a caballo", image: icons.caballo },
       { name: "Ciclismo", image: icons.ciclismo },
@@ -514,7 +544,11 @@ const parks = [
   },
 
   {
-    name: 'Yasuni', image: images.yasuni, latitude: '-0.6559593349788924', longitude: '-76.07043497186153',
+    name: 'Yasuni', image: images.yasuni,
+    loctaion: {
+      latitude: '-0.6559593349788924',
+      longitude: '-76.07043497186153',
+    },
     polygon: [
       { latitude: -0.596, longitude: -76.070 }, // Norte
       { latitude: -0.655, longitude: -75.802 }, // Este
@@ -529,7 +563,7 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Camara", image: icons.camara },
+      { name: "Fotografia", image: icons.camara },
       { name: "Senderismo", image: icons.senderismo },
       { name: "Canotaje", image: icons.canotaje },
     ],
@@ -555,7 +589,11 @@ const parks = [
   },
 
   {
-    name: 'Yacuri', image: images.yacuri, latitude: '-4.597169234904428', longitude: '-79.31879143778109',
+    name: 'Yacuri', image: images.yacuri,
+    location: {
+      latitude: '-4.597169234904428',
+      longitude: '-79.31879143778109',
+    },
     polygon: [
       { latitude: -4.492, longitude: -79.319 }, // Norte
       { latitude: -4.597, longitude: -79.211 }, // Este
@@ -574,7 +612,7 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Camara", image: icons.camara },
+      { name: "Fotografia", image: icons.camara },
       { name: "Senderismo", image: icons.senderismo },
       { name: "Ciclismo", image: icons.ciclismo },
       { name: "Montar a caballo", image: icons.caballo },
@@ -597,7 +635,11 @@ const parks = [
   },
 
   {
-    name: 'Cotopaxi', image: images.cotopaxi, latitude: '-0.7005484946862225', longitude: '-78.42977234885215',
+    name: 'Cotopaxi', image: images.cotopaxi,
+    location: {
+      latitude: '-0.7005484946862225',
+      longitude: '-78.42977234885215',
+    },
     polygon: [
       { latitude: -0.619, longitude: -78.429 }, // Norte
       { latitude: -0.700, longitude: -78.338 }, // Este
@@ -614,7 +656,7 @@ const parks = [
     icons: [
       { name: "Ciclismo", image: icons.ciclismo },
       { name: "Senderismo", image: icons.senderismo },
-      { name: "Camara", image: icons.camara },
+      { name: "Fotografia", image: icons.camara },
       { name: "Camping", image: icons.camping },
     ],
     desc: 'El volcán Cotopaxi, un cono nevado casi perfecto que se yergue a 5.897 metros de altitud es algo único en el planeta y es quizá, junto a Galápagos, el mayor símbolo de nuestra geografía natural reconocida en el mundo entero.\n\nMillares de montañistas de todas las nacionalidades han logrado su cumbre y otros tantos sueñan con hacerlo. Debido a que se encuentra en el centro del callejón interandino y muy cercano a varias ciudades como Quito y Latacunga, el Parque Nacional Cotopaxi es uno de los más visitados y seguramente donde muchas personas tocan por primera vez la nieve.\n\nEl imponente Cotopaxi, uno de los volcanes activos más altos del mundo, domina todo el paisaje del área protegida, que también incluye otros dos más pequeños, el Morurco (4.880 m), pegado al Cotopaxi, y el Rumiñahui (4.722 m), también muy cercano. El Cotopaxi se encuentra en la zona denominada “Avenida de los Volcanes”, nombre que el naturalista alemán Alexander von Humboldt en 1802 dio al conjunto de volcanes de la Sierra centro y norte del Ecuador. El ecosistema predominante en el parque es el páramo, con su flora y fauna especiales, por lo que la vegetación principal es de pajonal y pequeños arbustos de altura.',

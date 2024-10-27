@@ -1,5 +1,5 @@
-import llanganateHermoso from '../assets/trends/llanganate/hermoso.jpg'
-import llanganatePisayambo from '../assets/trends/llanganate/pisayambo.jpg'
+import llanganateHermoso from '../assets/trends/llanganate/hermoso.webp'
+import llanganatePisayambo from '../assets/trends/llanganate/pisayambo.webp'
 import llanganateRios from '../assets/trends/llanganate/rios.jpeg'
 
 import galapagosPajaro from '../assets/trends/galapagos/pajaros.jpg'

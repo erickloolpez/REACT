@@ -7,14 +7,11 @@ import { useGlobalContext } from '../../context/GlobalProvider';
 const Map = ({ place }) => {
     const { userLocation } = useGlobalContext();
     const [currentIndex, setCurrentIndex] = useState(null);
-    const [origin] = useState({
-        latitude: place.latitude,
-        longitude: place.longitude,
-    });
+    const [origin] = useState(place.location);
 
 
     return (
-        <View className="w-full">
+        <View className="w-full mb-4">
             <View className="mt-3 mb-4">
                 <Text className="text-xl text-terciary">Ubicación:</Text>
             </View>
@@ -39,7 +36,7 @@ const Map = ({ place }) => {
             <View className="w-full mt-4">
                 <Text className="text-xl text-terciary font-bold">¿Cómo llegar?</Text>
             </View>
-            <View className="w-full h-[48vh] mt-2 bg-green-400">
+            <View className="w-full h-[28vh] mt-2 bg-green-400">
                 {place.path.map((item, index) => {
                     return (
                         <TouchableOpacity
@@ -56,7 +53,7 @@ const Map = ({ place }) => {
                             >
                                 <Text className="text-3xl uppercase font-bold" style={{color: item.color.heading}}>{item.name}</Text>
                                 {currentIndex === index && (
-                                    <View className="mt-2">
+                                    <View className="mt-2 ">
                                         <Text style={{color: item.color.heading}}>{item.order}</Text>
                                     </View>
                                 )}
