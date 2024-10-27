@@ -45,7 +45,28 @@ const parks = [
         color: { heading: "#2F5285", background: "#9FD6E5" }
       }
     ],
-    icons: [icons.senderismo, icons.ciclismo, icons.camara, icons.caballo, icons.camping],
+    icons: [
+      {
+        name: 'Senderismo',
+        image: icons.senderismo
+      },
+      {
+        name: 'Ciclismo',
+        image:icons.ciclismo
+      },
+      {
+        name: 'Camara',
+        image: icons.camara
+      },
+      {
+        name:'Caballo',
+        image: icons.caballo
+      },
+      {
+        name:'Camping',
+        image: icons.camping
+      }
+    ],
     desc: 'Pocos nombres de lugares en el Ecuador despiertan tantos sentimientos de misterio y aventura como “Llanganates”. Es muy posible que la primera idea que venga a nuestras mentes sea la de esos misteriosos parajes al oriente de Píllaro donde Rumiñahui ordenó se escondiera el tesoro de Atahualpa, tras la captura y muerte del Inca en Cajamarca.\n\nEsto, que se ha convertido en una poderosa leyenda, ha despertado la atracción y ambición de muchos buscadores de tesoros cuyas aventuras, en la mayoría de los casos han terminado en fracaso y muerte.\n\nEs que llegar a la zona del supuesto tesoro conlleva una larga y ardua travesía por bosques y páramos muy húmedos de la Cordillera de los Llanganates.El esfuerzo de la caminata, por lo accidentado de la topografía, se ve compensada por parajes de ensueño que incluyen lagunas, bosques de neblina, hasta un extraño páramo de frailejones.La historia se une a una biodiversidad fantástica, que posiblemente sea el verdadero tesoro de los Llanganates.',
     trend:
       [

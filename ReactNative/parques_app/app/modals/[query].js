@@ -12,6 +12,7 @@ import Details from '../../components/modals/details'
 import Schedule from '../../components/modals/schedule'
 import Map from '../../components/sections/map'
 import Attractives from '../../components/sections/attractives'
+import Activities from '../../components/modals/activities'
 
 const Place = () => {
     const { query } = useLocalSearchParams()
@@ -27,6 +28,7 @@ const Place = () => {
                 <Description desc={place.desc} />
                 <Details >
                     <Schedule />
+                    <Activities place={place} />
                 </Details>
             </View>
 
