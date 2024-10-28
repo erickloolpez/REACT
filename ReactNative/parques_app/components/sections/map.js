@@ -1,9 +1,10 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import MapView, { Marker, Polyline, Polygon } from 'react-native-maps';
-import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import {Video, ResizeMode} from 'expo-av'
 
 import { useGlobalContext } from '../../context/GlobalProvider';
+import { images } from '../../constants';
 const Map = ({ place }) => {
     const { userLocation } = useGlobalContext();
     const [currentIndex, setCurrentIndex] = useState(null);
@@ -32,6 +33,17 @@ const Map = ({ place }) => {
                         <Polyline coordinates={[userLocation, origin]} strokeColor="yellow" strokeWidth={2} />
                     )}
                 </MapView>
+            </View>
+            <View className="mt-4">
+                <Text className="text-terciary text-xl font-bold">Ruta</Text>
+                <Video 
+                    source={images.video}
+                    className="w-full h-60 rounded-xl mt-3"
+                    resizeMode={ResizeMode.CONTAIN}
+                    useNativeControls
+                    shouldPlay
+                />
+
             </View>
             <View className="w-full mt-4">
                 <Text className="text-xl text-terciary font-bold">¿Cómo llegar?</Text>
