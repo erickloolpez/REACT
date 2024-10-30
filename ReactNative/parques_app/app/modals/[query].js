@@ -13,10 +13,11 @@ import Schedule from '../../components/modals/schedule'
 import Map from '../../components/sections/map'
 import Attractives from '../../components/sections/attractives'
 import Activities from '../../components/modals/activities'
+import Feedback from '../../components/sections/feedback'
 
 const Place = () => {
     const { query } = useLocalSearchParams()
-    const navBarOptions = [{ name: 'General' }, { name: "Mapa" }, { name: "Atractivos" }];
+    const navBarOptions = [{ name: 'General' }, { name: "Mapa" }, { name: "Atractivos" }, { name: "Reseñas" }];
     const [category, setCategory] = useState(navBarOptions[0])
     const place = parks.find((park) => park.name === query)
 
@@ -32,9 +33,11 @@ const Place = () => {
                 </Details>
             </View>
 
-    } else if(category.name === 'Mapa') {
+    } else if (category.name === 'Mapa') {
         section = <Map place={place} />
-    }else{
+    } else if (category.name === 'Reseñas') {
+        section = <Feedback />
+    }else {
         section =
             <View className="mb-24 ">
                 <Attractives attractives={place.trend} park={place} />

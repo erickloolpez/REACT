@@ -16,5 +16,6 @@ import isotipo from '../assets/images/isotipo.png'
 import video from '../assets/videos/coto.mov'
 import senderismo from '../assets/images/senderismo.jpg'
 import sendero from '../assets/images/sendero.jpg'
+import avatar from '../assets/images/avatar.png'
 
-export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto, marco, isotipo,video,senderismo, sendero};
+export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto, marco, isotipo,video,senderismo, sendero, avatar};
