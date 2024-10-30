@@ -1,59 +1,111 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { useState } from 'react'
 import { useLocalSearchParams, router } from 'expo-router'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { parks } from '../../constants'
 import { ArrowLeft01Icon, Navigation03Icon } from 'hugeicons-react-native'
+import MapView, { Marker, Polyline, Polygon } from 'react-native-maps';
+import { parks } from '../../constants';
 
 const InfoAttractive = () => {
-    const { query } = useLocalSearchParams()
+    const { trend, park, descPark } = useLocalSearchParams()
 
-    const index = parks.findIndex((park) => park.trend.some((trend) => trend.desc === query));
+    const parsedPark = JSON.parse(park)
+    const parsedTrend = JSON.parse(trend)
+    const [origin] = useState(parsedPark.location);
 
-    const trend = parks[index].trend.find((trend) => trend.desc === query)
+    const [readMore, setReadMore] = useState(false)
+    const [text, setText] = useState(parsedTrend.desc.slice(0, 207))
 
     return (
-        <SafeAreaView className="h-full bg-primary" edges={['top']}>
-            <View className="flex-1 px-2 justify-center mb-10  ">
-                <View className="w-full h-24 bg-green-900">
-                    <Image source={parks[index].logo} resizeMode="contain" className="w-[60%] h-full" />
+        <ScrollView contentContainerStyle={{backgroundColor:"#FBEECC"}} showsVerticalScrollIndicator={false}>
+            <View className="w-full h-[30vh] bg-pink-400 relative">
+                <MapView
+                    className="w-full h-full"
+                    initialRegion={{
+                        latitude: origin.latitude,
+                        longitude: origin.longitude,
+                        latitudeDelta: 0.4,
+                        longitudeDelta: 0.1,
+                    }}
+                >
+                    <Marker coordinate={origin} title={parsedPark.name} />
+                </MapView>
+                <View className="absolute bottom-[-42px] w-32 h-32 bg-red-400 rounded-full left-32 overflow-hidden border-2 border-white">
+                    <Image source={parsedTrend.image} className="w-full h-full" resizeMode="cover" />
                 </View>
+            </View>
+
+            <View className="w-full mt-12 px-2 ">
                 <View>
-                    <View className="mt-4">
-                        <Text className="mb-3 text-xl text-terciary font-bold">{trend.name}</Text>
-                        <Text>{query}</Text>
+                    <Text className="text-xl font-bold text-terciary">{parsedTrend.name}</Text>
+                </View>
+                <View className="w-full mt-4">
+                    <Text className="text-green-800">
+                        {text}
+                        {!readMore && '...'}
+                        <Text className="text-[#CF613C]" onPress={() => {
+                            if (!readMore) {
+                                setText(parsedTrend.desc)
+                                setReadMore(true)
+                            } else {
+                                setText(parsedTrend.desc.slice(0, 240))
+                                setReadMore(false)
+                            }
+                        }}>
+                            {readMore ? ' Mostrar menos' : ' Mostrar mas'}
+                        </Text>
+                    </Text>
+                </View>
+            </View>
+
+            <View className="w-full flex-row mt-4 px-2">
+                <View className="w-1/2 h-44 ">
+                    <Image source={parks[0].image} resizeMode="cover" className="w-[95%] h-full rounded-xl" />
+                </View>
+                <View className="w-1/2 h-44">
+                    <View className="w-full h-1/2 ">
+                        <Image source={parks[2].image} resizeMode="cover" className="w-full h-[95%] rounded-xl" />
                     </View>
-                    <View className="w-full h-[30vh] mt-4  rounded-xl">
-                        <Image source={trend.image} resizeMode="contain" className="w-full h-full" />
+                    <View className="w-full h-1/2 flex-row">
+                        <View className="w-1/2 h-full ">
+                            <Image source={parks[1].image} resizeMode="cover" className="w-[94%] h-full rounded-xl" />
+                        </View>
+                        <View className="w-1/2 h-full ">
+                            <Image source={parks[4].image} resizeMode="cover" className="w-[94%] h-full self-end rounded-xl" />
+                        </View>
+
                     </View>
                 </View>
-                <View className="flex-row w-full mt-8 justify-between">
+            </View>
+
+            <View className="flex-row w-full mt-14 mb-20 justify-between">
+                <TouchableOpacity
+                    className="w-32 h-16 flex-row items-center justify-center rounded-tr-full rounded-br-full bg-green-800"
+                    onPress={() => router.back()}
+                >
+                    <ArrowLeft01Icon
+                        size={48}
+                        color={"#ffffff"}
+                        variant={"stroke"}
+                    />
+                    <Text className="text-white ml-1">Volver</Text>
+                </TouchableOpacity>
+                {
+                    descPark !== 'true' &&
                     <TouchableOpacity
-                        className="w-32 h-16 flex-row items-center justify-center rounded-full bg-green-800"
-                        onPress={() => router.back()}
-                    >
-                        <ArrowLeft01Icon
-                            size={34}
-                            color={"#ffffff"}
-                            variant={"stroke"}
-                        />
-                        <Text className="text-white ml-2">Volver</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        className="w-32 h-16 flex-row items-center justify-evenly rounded-full bg-green-800"
-                        onPress={() => router.push(`/modals/${parks[index].name}`)}
+                        className="w-32 h-16 flex-row items-center justify-center rounded-tl-full rounded-bl-full bg-green-800"
+                        onPress={() => router.push(`/modals/${parsedPark.name}`)}
                     >
                         <Navigation03Icon
                             size={34}
                             color={"#ffffff"}
                             variant={"stroke"}
                         />
-                        <Text className="text-white">Ver parque</Text>
+                        <Text className="text-white ml-1">Ver parque</Text>
                     </TouchableOpacity>
+                }
 
-                </View>
             </View>
-        </SafeAreaView>
+        </ScrollView >
     )
 }
 

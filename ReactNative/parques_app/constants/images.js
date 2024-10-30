@@ -14,5 +14,7 @@ import cayambe from '../assets/images/cayambe_coca.jpeg'
 import marco from '../assets/images/marco.jpg'
 import isotipo from '../assets/images/isotipo.png'
 import video from '../assets/videos/coto.mov'
+import senderismo from '../assets/images/senderismo.jpg'
+import sendero from '../assets/images/sendero.jpg'
 
-export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto, marco, isotipo,video};
+export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto, marco, isotipo,video,senderismo, sendero};

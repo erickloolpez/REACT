@@ -3,7 +3,7 @@ import { Calendar03Icon, Location06Icon, CloudIcon, Dollar01Icon, DirectionLeft0
 
 const Details = ({children}) => {
     return (
-        <View className="w-full">
+        <View className="w-full px-2">
             <View className="w-full mt-3">
                 <Text className="text-xl text-terciary font-bold">Detalles del parque:</Text>
             </View>
@@ -18,7 +18,7 @@ const Details = ({children}) => {
                     </View>
                     <View className="w-[60%]">
                         <Text className="text-terciary">Region</Text>
-                        <Text className="text-xl text-green-900">Costa</Text>
+                        <Text className="text-xl text-green-800">Costa</Text>
                     </View>
                 </View>
                 <View className="w-1/2 flex-row items-center  justify-around  ">
@@ -31,7 +31,7 @@ const Details = ({children}) => {
                     </View>
                     <View className="w-[60%]">
                         <Text className="text-terciary">Provincia</Text>
-                        <Text className="text-xl text-green-900">Pichincha</Text>
+                        <Text className="text-xl text-green-800">Pichincha</Text>
                     </View>
                 </View>
                 <View className="w-1/2 flex-row items-center  justify-around  ">
@@ -44,7 +44,7 @@ const Details = ({children}) => {
                     </View>
                     <View className="w-[60%]">
                         <Text className="text-terciary">Clima</Text>
-                        <Text className="text-xl text-green-900">28 grados</Text>
+                        <Text className="text-xl text-green-800">28 grados</Text>
                     </View>
                 </View>
                 <View className="w-1/2 flex-row items-center  justify-around  ">
@@ -57,7 +57,7 @@ const Details = ({children}) => {
                     </View>
                     <View className="w-[60%]">
                         <Text className="text-terciary">Tarifa</Text>
-                        <Text className="text-xl text-green-900">Ninguna</Text>
+                        <Text className="text-xl text-green-800">Ninguna</Text>
                     </View>
                 </View>
             </View>

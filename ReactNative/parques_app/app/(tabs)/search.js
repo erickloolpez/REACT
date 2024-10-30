@@ -2,7 +2,7 @@ import { View, Image, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Animated, { interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 
-import { icons, allTrends } from '../../constants'
+import { icons, parks } from '../../constants'
 import Cards from '../../components/Cards'
 
 const Search = () => {
@@ -12,6 +12,7 @@ const Search = () => {
   const onScroll = useAnimatedScrollHandler((e) => {
     scrollX.value = e.contentOffset.x / card_width
   })
+  const allTrends = parks.flatMap((park)=> park.trend)
 
   function BackDropImage({ image, index, scrollX }) {
     const stylez = useAnimatedStyle(() => {
@@ -59,6 +60,14 @@ const Search = () => {
     )
 
   }
+
+  const TrendList = ({ trends, park, scrollX, index }) => {
+    return trends.map((trend) => (
+      <Cards key={trend.name} trend={trend} park={park} scrollX={scrollX} index={index} />
+    ));
+  };
+
+
   return (
     <SafeAreaView edges={['top']} className="h-full bg-[#fbeecc]">
       <View className="w-full h-full relative">
@@ -92,11 +101,12 @@ const Search = () => {
 
         <View className="w-full h-[52vh] absolute bottom-2 left-0 ">
           <Animated.FlatList
-            data={allTrends}
-            keyExtractor={(item) => item.name}
-            renderItem={({ item, index }) => (
-              <Cards data={item} scrollX={scrollX} index={index} />
-            )}
+            data={parks}
+            keyExtractor={(park) => park.name}
+            renderItem={({ item:park, index }) => (
+               <TrendList trends={park.trend} park={park} scrollX={scrollX} index={index} />
+            )
+            }
             horizontal
             showsHorizontalScrollIndicator={false}
             snapToInterval={392}

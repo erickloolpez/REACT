@@ -36,8 +36,8 @@ const Place = () => {
         section = <Map place={place} />
     }else{
         section =
-            <View className="mb-6">
-                <Attractives attractives={place.trend} />
+            <View className="mb-24 ">
+                <Attractives attractives={place.trend} park={place} />
             </View>
     }
     return (

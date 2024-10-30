@@ -4,7 +4,7 @@ import { MapsGlobal01Icon, MapingIcon, CelsiusIcon } from 'hugeicons-react-nativ
 import { CampingTent } from '@vectopus/atlas-icons-react-native'
 import { router } from 'expo-router'
 
-const Cards = ({ data, scrollX, index }) => {
+const Cards = ({ trend, park, scrollX, index }) => {
   const styles = useAnimatedStyle(() => {
     return {
       transform: [{
@@ -22,12 +22,17 @@ const Cards = ({ data, scrollX, index }) => {
 
 
   return (
-    <TouchableOpacity onPress={() => router.push(`/attractive/${data.desc}`)}>
+    <TouchableOpacity onPress={() => {
+      router.push({
+        pathname: `/attractive/${trend.name}`,
+        params: { descPark: false, park:JSON.stringify(park), trend:JSON.stringify(trend) }
+      })
+    }}>
       <Animated.View
         className="w-[380px] h-full mr-3 rounded-xl overflow-hidden  relative"
       >
         <View className='w-48 h-16 absolute top-0 z-10'>
-          <Image source={data.logo} resizeMode="contain" className="w-full h-full" />
+          <Image source={park.logo} resizeMode="contain" className="w-full h-full" />
         </View>
 
         <View className="w-full h-14  z-10 absolute top-0 flex-row items-center justify-end">
@@ -69,7 +74,7 @@ const Cards = ({ data, scrollX, index }) => {
             />
           </View>
         </View>
-        <Animated.Image source={data.image} className="w-full h-full" resizeMode="cover" style={styles} />
+        <Animated.Image source={trend?.image ? trend.image : null } className="w-full h-full" resizeMode="cover" style={styles} />
       </Animated.View>
 
     </TouchableOpacity>

@@ -31,7 +31,7 @@ const Schedule = () => {
                             <Text className="text-terciary text-xl">{item.name}</Text>
                         </View>
                         <View className="w-full">
-                            <Text className="text-2xl font-bold text-green-700">{item.schedule}</Text>
+                            <Text className="text-2xl font-bold text-green-800">{item.schedule}</Text>
                         </View>
                     </View>
                 )}

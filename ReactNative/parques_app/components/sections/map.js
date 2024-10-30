@@ -1,14 +1,16 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import MapView, { Marker, Polyline, Polygon } from 'react-native-maps';
-import {Video, ResizeMode} from 'expo-av'
+import { Video, ResizeMode } from 'expo-av'
 
 import { useGlobalContext } from '../../context/GlobalProvider';
 import { images } from '../../constants';
 const Map = ({ place }) => {
     const { userLocation } = useGlobalContext();
-    const [currentIndex, setCurrentIndex] = useState(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [origin] = useState(place.location);
+
+    const [text, setText] = useState(place.path[0].order.slice(0, 100))
 
 
     return (
@@ -16,14 +18,14 @@ const Map = ({ place }) => {
             <View className="mt-3 mb-4">
                 <Text className="text-xl text-terciary">Ubicación:</Text>
             </View>
-            <View className="w-full h-[38vh] items-center border-y-2 border-y-black-200 ">
+            <View className="w-full h-[54vh] items-center border-y-2 border-y-black-200 relative ">
                 <MapView
                     className="w-full h-full"
                     initialRegion={{
                         latitude: origin.latitude,
                         longitude: origin.longitude,
                         latitudeDelta: userLocation ? 5 : 0.4,
-                        longitudeDelta: userLocation ? 0.4 : 0.1,
+                        longitudeDelta: userLocation ? 0.7 : 0.1,
                     }}
                 >
                     <Polygon coordinates={place.polygon} fillColor={'rgba(100,100,200,0.3)'} strokeWidth={1} />
@@ -33,22 +35,57 @@ const Map = ({ place }) => {
                         <Polyline coordinates={[userLocation, origin]} strokeColor="yellow" strokeWidth={2} />
                     )}
                 </MapView>
+                <View className="w-[40%] h-full  bg-green-400 absolute left-0">
+                    <View
+                        className="grow"
+                        activeOpacity={0.9}
+                    >
+                        <View
+                            className="grow justify-center items-center"
+                            style={{ backgroundColor: place.path[0].color.background }}
+                        >
+                            <Text className="text-3xl uppercase font-bold" style={{ color: place.path[0].color.heading }}>Como llegar?</Text>
+                            <View className="mt-2 px-2 ">
+                                <Text style={{ color: place.path[0].color.heading }}>{text}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View
+                        className="grow"
+                        activeOpacity={0.9}
+                    >
+                        <View
+                            className="grow justify-center items-center"
+                            style={{ backgroundColor: '#086441' }}
+                        >
+                            <Text className="text-3xl uppercase font-bold" style={{ color: '#F0B847' }}>Ruta</Text>
+                            <View className="mt-2 ">
+                                <Video
+                                    source={images.video}
+                                    className="w-32 h-48 rounded-xl mt-3"
+                                    resizeMode={ResizeMode.CONTAIN}
+                                    useNativeControls
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </View>
             </View>
-            <View className="mt-4">
+
+            {/* <View className="mt-4">
                 <Text className="text-terciary text-xl font-bold">Ruta</Text>
                 <Video 
                     source={images.video}
                     className="w-full h-60 rounded-xl mt-3"
                     resizeMode={ResizeMode.CONTAIN}
                     useNativeControls
-                    shouldPlay
                 />
+            </View> */}
 
-            </View>
-            <View className="w-full mt-4">
+            {/* <View className="w-full mt-4">
                 <Text className="text-xl text-terciary font-bold">¿Cómo llegar?</Text>
             </View>
-            <View className="w-full h-[28vh] mt-2 bg-green-400">
+            <View className="w-full h-[10vh] mt-2 bg-green-400">
                 {place.path.map((item, index) => {
                     return (
                         <TouchableOpacity
@@ -73,7 +110,7 @@ const Map = ({ place }) => {
                         </TouchableOpacity>
                     );
                 })}
-            </View>
+            </View> */}
         </View>
     );
 };
