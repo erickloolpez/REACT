@@ -3,87 +3,6 @@ import images from "./images"
 import logos from "./logos"
 import trends from "./trends"
 
-const allTrends = [
-  {
-    name: 'Páramo y laguna de Pisayambo',
-    logo: logos.llanganantes,
-    desc: 'En la parte norte, ingresando por Latacunga se puede visitar el sistema lacustre de Salayambo y por Salcedo el sistema lacustre de Anteojos; en la parte occidental, ingresando por Píllaro se llega a la laguna de Pisayambo, que está represada como parte del proyecto hidroeléctrico homónimo. El embalse tiene tres kilómetros de longitud. Cerca del embalse está la mayoría de las 80 lagunas que hay en el parque; y por el sur, ingresando por Patate se llega a Cerro Púlpito y la Cueva de las Calaveras, en este sector se aprecia un majestuoso paisaje del valle interandino.',
-    image: trends.llanganatePisayambo
-  },
-  {
-    name: 'Cerro Hermoso',
-    logo: logos.llanganantes,
-    desc: 'Es la elevación más alta del parque, llamado así muy posiblemente por la belleza de sus picos. Durante su trayecto se atraviesa por una variedad de ambientes: la zona de frailejones, los bosques de Polylepis y las extensas zonas de zuro o bambú andino.Al pie de este cerro se encuentra la laguna Brunner o El Cable y desde su cumbre se aprecia la Cordillera de los Llanganates y varias lagunas como Angascocha, Pujín y Las Tres Marías.',
-    image: trends.llanganateHermoso
-  },
-  {
-    name: 'Rios y cascadas',
-    logo: logos.llanganantes,
-    desc: 'Del parque descienden innumerables riachuelos y ríos que en su trayecto forman varias cascadas y atractivos naturales como las cuencas de los ríos Jatunyacu, Anzu, Topo, Machay, Piatuas, Verde, Verde Chico y el Yanayacu los cuales han formado hermosos balnearios naturales de agua limpia y cristalina, aptos para la pesca deportiva, rafting y kayak.',
-    image: trends.llanganateRios
-  },
-  {
-    name: 'Colonias de aves marinas',
-    logo: logos.galapagos,
-    desc: 'Las colonias de aves marinas, en especial de fragatas, piqueros patas azules, pelicanos, piqueros enmascarados y albatros (estos últimos solamente en Española),constituyen uno de los principales atractivos. En todos los sitios de visita que ofrecen la observación de estas aves existen senderos debidamente señalizados para facilitar el recorrido.',
-    image: trends.galapagosPajaro
-  },
-  {
-    name: 'Fenómenos geológicos',
-    logo: logos.galapagos,
-    desc: 'Existen algunos sitios de visita donde el principal atractivo son los paisajes volcánicos o las sorprendentes formaciones geológicas como cráteres, túneles y flujos de lava. En bahía Urbina (Isabela), por ejemplo, se puede observar un arrecife de coral que quedó fuera del agua a causa de un levantamiento geológico ocurrido en 1954. El volcán Sierra Negra presenta una de las calderas más grandes del mundo, además de una exhibición de todo tipo de formaciones volcánicas, como conos, tubos, salpicaduras, fumarolas y depósitos de azufre.',
-    image: trends.galapagosFenomeno
-  },
-  {
-    name: 'Lagunas del Compadre',
-    logo: logos.podocarpus,
-    desc: 'Constituyen uno de los principales atractivos turísticos del parque. Es un sitio muy recomendado para los que gustan de la pesca deportiva y la aventura. La mejor época para visitar este sector es el mes de noviembre, cuando se puede acampar en sus orillas y recorrer los alrededores. Con algo de suerte es posible observar algunas especies relativamente comunes del sector, como el tapir de montaña o el lobo de páramo.',
-    image: trends.podocarpusCompadre
-  },
-  {
-    name: 'Cajanuma',
-    logo: logos.podocarpus,
-    desc: 'En el sector de Cajanuma hay un centro de recepción para visitantes con información sobre el parque. Además, es el punto de entrada principal hacia el sendero que conduce a las Lagunas del Compadre. Posee algunos senderos autoguiados e interpretativos donde es posible apreciar la flora representativa del sector, especialmente del bosque nublado y, más arriba, del páramo arbustivo muy propio del parque. Es un sitio de gran importancia para la observación de algunas especies de aves y mamíferos de las zonas altoandinas.',
-    image: trends.podocarpusCajanuma
-  },
-  {
-    name: 'Bombuscaro y Romerillos',
-    logo: logos.podocarpus,
-    desc: 'Son dos zonas situadas en el sector oriental del parque. En Bombuscaro existen un centro de interpretación ambiental y un salón de uso múltiple para actividades de educación. En este sitio se han establecido algunos senderos autoguiados para observar especies de flora y fauna típicas del sector. Un atractivo principal son las cascadas naturales que se originan en las zonas altoandinas del parque. Es un sito muy recomendado para la fotografía y la observación de aves',
-    image: trends.podocarpusBombuscaro
-  },
-  {
-    name: 'Cerro Toledo',
-    logo: logos.podocarpus,
-    desc: 'Situado en el extremo sur del parque, a 12 kilómetros de la vía Yangana – Valladolid, el cerro Toledo constituye un importante mirador natural desde donde es posible apreciar el bosque y la topografía típica de los Andes sureños del país. Además, constituye un sitio estratégico para la observación de aves y algunas especies de mamíferos.',
-    image: trends.podocarpusToledo
-  },
-  {
-    name: 'Playa de los Frailes',
-    logo: logos.machalilla,
-    desc: 'Es considerada una de las pocas playas que todavía mantiene sus características naturales. Está ubicada entre los poblados de Machalilla y Puerto López. En este sector existe un sendero que recorre el bosque seco y atraviesa las playas de La Tortuguita y La Playita hasta llegar a Los Frailes.',
-    image: trends.machalillaFrailes
-  },
-  {
-    name: 'Isla de la Plata',
-    logo: logos.machalilla,
-    desc: 'Está ubicada a 40 kilómetros de Puerto López. Existen cinco senderos para recorrerla, observar varias especies de aves y contemplar los acantilados de la isla. En los alrededores se puede observar la biodiversidad marina mediante buceo de superficie, principalmente en los arrecifes Palo Santo y El Faro. La visita requiere la compañía de un guía naturalista autorizado por la administración del parque.',
-    image: trends.machalillaPlata
-  },
-  {
-    name: 'Comuna Agua Blanca',
-    logo: logos.machalilla,
-    desc: 'Agua Blanca está ubicada a 5 kilómetros al norte de Puerto López; la comuna mantiene un museo arqueológico con piezas de la cultura Manteño – Huancavilca. En esta zona se han encontrado las famosas sillas de piedra o sillas de poder, por lo que los arqueólogos consideran que aquí funcionó uno de sus centros cívico ceremoniales. Sus pobladores, como se puede observar durante los recorridos, están orgullosos de su pasado y su herencia cultural. En la comunidad existe una gran poza de aguas sulfurosas donde se puede tomar un refrescante baño. El lodo del fondo de la poza ofrece también magníficas propiedades relajantes y es una experiencia reconfortante.',
-    image: trends.machalillaBlanca
-  },
-  {
-    name: 'Observación de ballenas jorobadas',
-    logo: logos.machalilla,
-    desc: 'Otro atractivo es el avistamiento de las ballenas jorobadas, presentes entre julio y septiembre. Estos mamíferos viajan desde las frías aguas antárticas hasta llegar a nuestras cálidas aguas, en busca de condiciones adecuadas para reproducirse y tener sus crías. Los operadores turísticos que ofrecen los servicios de embarcaciones para observar ballenas, así como los visitantes y turistas deben seguir las normas establecidas.',
-    image: trends.machalillaBallena
-  },
-]
-
 const parks = [
   {
     name: 'Llanganates', image: images.llanganantes,
@@ -478,7 +397,7 @@ const parks = [
 
   {
     name: 'Yasuni', image: images.yasuni,
-    loctaion: {
+    location: {
       latitude: '-0.6559593349788924',
       longitude: '-76.07043497186153',
     },
@@ -609,4 +528,4 @@ const parks = [
   },
 ]
 
-export { parks, allTrends }
+export { parks }

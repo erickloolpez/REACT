@@ -3,20 +3,24 @@ import { useState } from 'react'
 import { useLocalSearchParams, router } from 'expo-router'
 import { ArrowLeft01Icon, Navigation03Icon } from 'hugeicons-react-native'
 import MapView, { Marker, Polyline, Polygon } from 'react-native-maps';
+
 import { parks } from '../../constants';
+import { allTrends } from '../../constants';
 
 const InfoAttractive = () => {
-    const { trend, park, descPark } = useLocalSearchParams()
+    const { trendName, modalPark } = useLocalSearchParams()
 
-    const parsedPark = JSON.parse(park)
-    const parsedTrend = JSON.parse(trend)
-    const [origin] = useState(parsedPark.location);
+    const trend = allTrends.find((trend) => trend.name === trendName)
+    const [origin] = useState({
+        latitude: trend.latitude,
+        longitude : trend.longitude
+    });
 
     const [readMore, setReadMore] = useState(false)
-    const [text, setText] = useState(parsedTrend.desc.slice(0, 207))
-
+    const [text, setText] = useState(trend.desc.slice(0, 207))
+    
     return (
-        <ScrollView contentContainerStyle={{backgroundColor:"#FBEECC"}} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={{ backgroundColor: "#FBEECC" }} showsVerticalScrollIndicator={false}>
             <View className="w-full h-[30vh] bg-pink-400 relative">
                 <MapView
                     className="w-full h-full"
@@ -27,16 +31,16 @@ const InfoAttractive = () => {
                         longitudeDelta: 0.1,
                     }}
                 >
-                    <Marker coordinate={origin} title={parsedPark.name} />
+                    <Marker coordinate={origin} title={trend.park} />
                 </MapView>
                 <View className="absolute bottom-[-42px] w-32 h-32 bg-red-400 rounded-full left-32 overflow-hidden border-2 border-white">
-                    <Image source={parsedTrend.image} className="w-full h-full" resizeMode="cover" />
+                    <Image source={trend.image} className="w-full h-full" resizeMode="cover" />
                 </View>
             </View>
 
             <View className="w-full mt-12 px-2 ">
                 <View>
-                    <Text className="text-xl font-bold text-terciary">{parsedTrend.name}</Text>
+                    <Text className="text-xl font-bold text-terciary">{trend.name}</Text>
                 </View>
                 <View className="w-full mt-4">
                     <Text className="text-green-800">
@@ -44,10 +48,10 @@ const InfoAttractive = () => {
                         {!readMore && '...'}
                         <Text className="text-[#CF613C]" onPress={() => {
                             if (!readMore) {
-                                setText(parsedTrend.desc)
+                                setText(trend.desc)
                                 setReadMore(true)
                             } else {
-                                setText(parsedTrend.desc.slice(0, 240))
+                                setText(trend.desc.slice(0, 240))
                                 setReadMore(false)
                             }
                         }}>
@@ -90,10 +94,10 @@ const InfoAttractive = () => {
                     <Text className="text-white ml-1">Volver</Text>
                 </TouchableOpacity>
                 {
-                    descPark !== 'true' &&
+                    modalPark !== 'true' &&
                     <TouchableOpacity
                         className="w-32 h-16 flex-row items-center justify-center rounded-tl-full rounded-bl-full bg-green-800"
-                        onPress={() => router.push(`/modals/${parsedPark.name}`)}
+                        onPress={() => router.push(`/modals/${trend.park}`)}
                     >
                         <Navigation03Icon
                             size={34}

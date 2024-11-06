@@ -1,18 +1,24 @@
-import { View, Image, Text } from 'react-native'
+import { View, Image, Text, Dimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Animated, { interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 
 import { icons, parks } from '../../constants'
 import Cards from '../../components/Cards'
+import { allTrends } from '../../constants'
 
 const Search = () => {
 
-  const card_width = 392
+  const { width } = Dimensions.get('window')
+  const _slideWidth = width * 0.65
+  const _slideHeight = _slideWidth * 1.37
+  const _spacing = 18
+
   const scrollX = useSharedValue(0)
   const onScroll = useAnimatedScrollHandler((e) => {
-    scrollX.value = e.contentOffset.x / card_width
+    scrollX.value = e.contentOffset.x / (_slideWidth + _spacing)
   })
-  const allTrends = parks.flatMap((park)=> park.trend)
+
+
 
   function BackDropImage({ image, index, scrollX }) {
     const stylez = useAnimatedStyle(() => {
@@ -30,6 +36,7 @@ const Search = () => {
         source={image}
         className="w-full h-full absolute"
         style={stylez}
+        blurRadius={20}
       />
     )
 
@@ -61,27 +68,20 @@ const Search = () => {
 
   }
 
-  const TrendList = ({ trends, park, scrollX, index }) => {
-    return trends.map((trend) => (
-      <Cards key={trend.name} trend={trend} park={park} scrollX={scrollX} index={index} />
-    ));
-  };
-
-
   return (
     <SafeAreaView edges={['top']} className="h-full bg-[#fbeecc]">
       <View className="w-full h-full relative">
         {
-          allTrends.map((park, index) => (
+          allTrends.map((trend, index) => (
             <BackDropImage
-              key={`bg-photo-${park.name}`}
+              key={`bg-photo-${trend.name}`}
               index={index}
               scrollX={scrollX}
-              image={park.image}
+              image={trend.image}
             />
           ))
         }
-        {
+        {/* {
           allTrends.map((park, index) => (
             <BackDropText
               key={`bg-photo-${park.name}`}
@@ -91,7 +91,8 @@ const Search = () => {
               name={park.name}
             />
           ))
-        }
+        } */}
+
         <View className="w-2/3 h-15 absolute top-4 right-0  bg-secondary rounded-l-full">
           <View className="w-full h-full bg-secondary  rounded-l-full z-20 items-center">
             <Text className="text-2xl uppercase text-white font-bold">Atractivos</Text>
@@ -99,19 +100,24 @@ const Search = () => {
           <View className="w-full h-full absolute  bottom-1 bg-blue-500 rounded-l-full border-2" />
         </View>
 
-        <View className="w-full h-[52vh] absolute bottom-2 left-0 ">
+        <View className="w-full h-[52vh] absolute bottom-2  ">
           <Animated.FlatList
-            data={parks}
-            keyExtractor={(park) => park.name}
-            renderItem={({ item:park, index }) => (
-               <TrendList trends={park.trend} park={park} scrollX={scrollX} index={index} />
+            data={allTrends}
+            keyExtractor={(trend) => trend.name}
+            renderItem={({ item: trend, index }) => (
+              //  <TrendList trends={park.trend} park={park} scrollX={scrollX} index={index} />
+              <Cards key={trend.name} trend={trend} scrollX={scrollX} index={index} width={_slideWidth} height={_slideHeight} />
             )
             }
             horizontal
             showsHorizontalScrollIndicator={false}
-            snapToInterval={392}
+            snapToInterval={_slideWidth + _spacing}
             decelerationRate={"fast"}
-            contentContainerStyle={{ paddingHorizontal: 5 }}
+            contentContainerStyle={{
+              gap: _spacing,
+              paddingHorizontal: (width - _slideWidth) / 2,
+              alignItems:'center'
+            }}
 
             onScroll={onScroll}
             scrollEventThrottle={100 / 60}
