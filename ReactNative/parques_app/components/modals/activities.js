@@ -22,11 +22,11 @@ const Activities = ({ place }) => {
                             </View>
 
                             <View className="w-[90%] h-[90%] border-b-4 border-secondary self-end  ">
-                                <View className="w-full h-1/2  flex-row ">
+                                <View className="w-full h-full  flex-row ">
                                     <View className="w-1/2 h-full">
                                         <View className="w-full h-1/2 flex-row items-center rounded-lg">
                                             <View className="w-full h-[95%] bg-secondary rounded-lg flex-row items-center">
-                                                <Text className="text-white">{activity.name}</Text>
+                                                <Text className="text-white ml-2">{activity.name}</Text>
                                             </View>
                                         </View>
                                         <View className="w-full h-1/2 flex-row items-center rounded-lg">
@@ -35,8 +35,9 @@ const Activities = ({ place }) => {
                                                     size={20}
                                                     color={"#ffffff"}
                                                     variant={"stroke"}
+                                                    className="ml-2"
                                                 />
-                                                <Text className="text-primary">1:30hr</Text>
+                                                <Text className="text-primary ml-1">1:30hr</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -46,9 +47,9 @@ const Activities = ({ place }) => {
 
                                 </View>
 
-                                <View className="w-full h-1/2 justify-center">
+                                {/* <View className="w-full h-1/2 justify-center">
                                     <Image source={images.senderismo} resizeMode="cover" className="w-full h-[95%] rounded-lg" />
-                                </View>
+                                </View> */}
                             </View>
                         </View>
                     ))

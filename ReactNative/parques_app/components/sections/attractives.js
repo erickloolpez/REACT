@@ -9,7 +9,7 @@ const Attractives = ({ attractives, park }) => {
                     <TouchableOpacity key={index} onPress={() => {
                         router.push({
                             pathname: `/attractive/${attractive.desc}`,
-                            params: {descPark:true, trend: JSON.stringify(attractive), park:JSON.stringify(park) }
+                            params: {modalPark:true, trend: JSON.stringify(attractive), park:JSON.stringify(park) }
                         })
                     }}>
                         <View className="flex-row w-full h-36 mt-4 bg-secondary rounded-xl">

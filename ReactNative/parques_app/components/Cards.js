@@ -1,7 +1,6 @@
 import { Text, TouchableOpacity, View, Image } from 'react-native'
 import Animated, { Extrapolation, interpolate, useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { MapsGlobal01Icon, MapingIcon, CelsiusIcon } from 'hugeicons-react-native'
-import { CampingTent } from '@vectopus/atlas-icons-react-native'
 import { router } from 'expo-router'
 
 const Cards = ({ park, scrollX, index, width, height }) => {
@@ -49,10 +48,11 @@ const Cards = ({ park, scrollX, index, width, height }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        router.push({
-          pathname: `/attractive/${park.name}`,
-          params: { modalPark: false, trendName: park.name }
-        })
+        router.push(`/modals/${park.name}`)
+        // router.push({
+        //   pathname: `/attractive/${park.name}`,
+        //   params: { modalPark: false, parkName: park.name }
+        // })
       }}
     >
       <Animated.View
@@ -73,7 +73,7 @@ const Cards = ({ park, scrollX, index, width, height }) => {
             height: height,
           }}
         >
-          <View className='w-48 h-16 absolute top-0 z-10'>
+          <View className={`w-36 h-16 absolute ${index % 2 !== 0 ? 'top-0' : 'bottom-0'} z-10`}>
             <Image source={park.logo} resizeMode="contain" className="w-full h-full" />
           </View>
 
