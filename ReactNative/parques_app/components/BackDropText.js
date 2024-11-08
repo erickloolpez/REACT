@@ -51,7 +51,7 @@ const BackDropText = ({ index, scrollX, park }) => {
                 </View>
 
                 <View className="w-[40%] h-full justify-between">
-                    <View className="w-full h-[48%] ">
+                    <View className="w-full h-[48%] bg-green-400 ">
                         <TouchableOpacity className="w-full h-full" onPress={() => console.log(park.trend[0].name)}>
                             <Image source={park.trend[0].image} resizeMode="cover" className="w-full h-full rounded-xl" />
                         </TouchableOpacity>
@@ -68,10 +68,10 @@ const BackDropText = ({ index, scrollX, park }) => {
                 <View className="w-full h-[90%]  rounded-2xl items-center justify-center">
 
                     <View className="w-[98%] h-[80%] bg-primary flex-row items-center justify-around  rounded-xl shadow-sm">
-                        <View className="w-16 h-16 ">
-                            <Image source={images.avatar} resizeMode="cover" className="w-full h-full rounded-full" />
+                        <View className="w-[20%] h-full items-center justify-center">
+                            <Image source={images.avatar} resizeMode="cover" className="w-16 h-16 rounded-full" />
                         </View>
-                        <View className="w-72 h-full justify-center ml-2">
+                        <View className="w-[65%] h-full justify-center">
                             <View className="flex-row">
                                 <Text className="font-bold">Laura Martinez</Text>
                                 <Text className="text-gray-400 ml-3">15 feb 2018</Text>
@@ -79,9 +79,8 @@ const BackDropText = ({ index, scrollX, park }) => {
                             <Text numberOfLines={4}>
                                 Visitarlo es como entrar en otro mundo, con la oportunidad de ver especies que no se encuentran en ningún otro lugar. Es perfecto para quienes aman la naturaleza y buscan una experiencia inolvidable.
                             </Text>
-
                         </View>
-                        <View className="flex-row items-center">
+                        <View className="w-[10%] h-full flex-row items-center">
                             <StarIcon
                                 size={24}
                                 color={"black"}

@@ -32,7 +32,7 @@ const InfoAttractive = () => {
                     <Marker coordinate={origin} title={parsedPark.name} />
                 </MapView>
                 <View className="absolute bottom-[-42px] w-32 h-32 bg-red-400 rounded-full left-32 overflow-hidden border-2 border-white">
-                    <Image source={parsedPark.image} className="w-full h-full" resizeMode="cover" />
+                    <Image source={parsedTrend.image} className="w-full h-full" resizeMode="cover" />
                 </View>
             </View>
 

@@ -1,4 +1,4 @@
-import { TextInput, TouchableOpacity, Image, Alert } from 'react-native'
+import { TextInput, TouchableOpacity, Image, Alert, View } from 'react-native'
 import { useState } from 'react'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { usePathname, router } from 'expo-router'
@@ -8,7 +8,7 @@ import { SearchSquareIcon, ViewOffSlashIcon } from 'hugeicons-react-native'
 const SearchInput = ({ initialQuery, widthMeasure }) => {
     const pathname = usePathname()
     const [query, setQuery] = useState(initialQuery || '')
-    const widthLength = widthMeasure || '100%'
+    const widthLength = widthMeasure || '90%'
 
     const [openSearch, setOpenSearch] = useState(0)
 
@@ -16,33 +16,14 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
     const animatedStyle = useAnimatedStyle(() => {
         return {
             width:
-                animation.value == 1 ? withTiming(widthLength, { duration: 500 }) : withTiming('20%', { duration: 500 }),
+                animation.value == 1 ? withTiming(widthLength, { duration: 500 }) : withTiming('14%', { duration: 500 }),
         }
     })
 
-    let iconToShow
-
-    if (openSearch === 0) {
-        iconToShow =
-            <SearchSquareIcon
-                size={38}
-                color={"#17301A"}
-                variant={"stroke"}
-            />
-    } else {
-        iconToShow =
-            <ViewOffSlashIcon
-                size={24}
-                color={"#cf613c"}
-                variant={"stroke"}
-            />
-    }
-
-
     return (
-        <Animated.View className={`${openSearch ? 'border-2 bg-white' : 'border-0'} border-green-800  absolute right-0 mt-2  w-[90%] h-12 px-4  rounded-full focus:border-[#CF613C] items-center flex-row space-x-4 `} style={animatedStyle}>
+        <Animated.View className={`border-green-800 bg-white  absolute right-0 mt-2 h-12 px-4  rounded-full focus:border-[#CF613C] items-center flex-row space-x-4 `} style={animatedStyle}>
             <TextInput
-                className="text-base  text-[#CF613C]  font-regular flex-1"
+                className="text-base h-full text-[#CF613C] flex-1  font-regular "
                 value={query}
                 placeholder={'   Busca tu parque favorito.'}
                 placeholderTextColor="#CF613C"
@@ -59,6 +40,7 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
             />
 
             <TouchableOpacity
+                className="w-12 h-10 absolute right-0"
                 onPress={() => {
                     if (animation.value == 1) {
                         animation.value = 0
@@ -72,7 +54,26 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
                 }}
             >
                 {
-                    iconToShow
+                    openSearch === 1 && (
+                        <View className="w-full h-full bg-white items-center justify-center rounded-full">
+                            <ViewOffSlashIcon
+                                size={32}
+                                color={"#17301A"}
+                                variant={"stroke"}
+                            />
+                        </View>
+                    )
+                }
+                {
+                    openSearch === 0 && (
+                        <View className="w-full h-full bg-white items-center justify-center rounded-full ">
+                            <SearchSquareIcon
+                                size={38}
+                                color={"#17301A"}
+                                variant={"stroke"}
+                            />
+                        </View>
+                    )
                 }
             </TouchableOpacity>
 
