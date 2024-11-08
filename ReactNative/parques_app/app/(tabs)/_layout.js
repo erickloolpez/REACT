@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import { Tabs } from 'expo-router'
 
-import { Home01Icon, Location04Icon, MenuSquareIcon } from 'hugeicons-react-native'
+import { ChampionIcon, Home01Icon, Location04Icon, MenuSquareIcon, UserIcon } from 'hugeicons-react-native'
 
 
 const TabLayout = () => {
@@ -21,7 +21,7 @@ const TabLayout = () => {
                 }}
             >
                 <Tabs.Screen
-                    name="home"
+                    name="search"
                     options={{
                         title: 'Home',
                         headerShown: false,
@@ -55,7 +55,24 @@ const TabLayout = () => {
                     }}
                 />
                 <Tabs.Screen
-                    name="search"
+                    name="game"
+                    options={{
+                        title: 'Game',
+                        headerShown: false,
+                        tabBarIcon: ({ color, focused }) => (
+                            <View className="items-center">
+                                <ChampionIcon
+                                    size={34}
+                                    color={color}
+                                    variant={"stroke"}
+                                />
+                                <Text style={{ color: color }}>Prizes</Text>
+                            </View>
+                        )
+                    }}
+                />
+                <Tabs.Screen
+                    name="home"
                     options={{
                         title: 'Search',
                         headerShown: false,
@@ -66,7 +83,24 @@ const TabLayout = () => {
                                     color={color}
                                     variant={"stroke"}
                                 />
-                                <Text style={{ color: color }}>Explore</Text>
+                                <Text style={{ color: color }}>Explorer</Text>
+                            </View>
+                        )
+                    }}
+                />
+                <Tabs.Screen
+                    name="profile"
+                    options={{
+                        title: 'Profile',
+                        headerShown: false,
+                        tabBarIcon: ({ color, focused }) => (
+                            <View className="items-center">
+                                <UserIcon
+                                    size={34}
+                                    color={color}
+                                    variant={"stroke"}
+                                />
+                                <Text style={{ color: color }}>Profile</Text>
                             </View>
                         )
                     }}
