@@ -17,5 +17,8 @@ import video from '../assets/videos/coto.mov'
 import senderismo from '../assets/images/senderismo.jpg'
 import sendero from '../assets/images/sendero.jpg'
 import avatar from '../assets/images/avatar.png'
+import cards from '../assets/images/cards.png'
+import logo from '../assets/images/logo.png'
+import path from '../assets/images/path.png'
 
-export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto, marco, isotipo,video,senderismo, sendero, avatar};
+export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto, marco, isotipo,video,senderismo, sendero, avatar,cards, logo, path};

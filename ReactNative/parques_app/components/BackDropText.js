@@ -51,7 +51,7 @@ const BackDropText = ({ index, scrollX, park }) => {
                 </View>
 
                 <View className="w-[40%] h-full justify-between">
-                    <View className="w-full h-[48%] bg-green-400 ">
+                    <View className="w-full h-[48%]">
                         <TouchableOpacity className="w-full h-full" onPress={() => console.log(park.trend[0].name)}>
                             <Image source={park.trend[0].image} resizeMode="cover" className="w-full h-full rounded-xl" />
                         </TouchableOpacity>

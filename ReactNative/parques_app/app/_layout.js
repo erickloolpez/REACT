@@ -32,8 +32,9 @@ const _layout = () => {
         <GlobalProvider>
             <Stack>
                 <Stack.Screen name='index' options={{ headerShown: false }} />
+                <Stack.Screen name='(auth)' options={{ headerShown: false }} />
                 <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-                <Stack.Screen name='attractive/[query]' options={{ headerShown: false, presentation:'modal'}} />
+                <Stack.Screen name='attractive/[query]' options={{ headerShown: false, presentation: 'modal' }} />
                 <Stack.Screen name='modals/[query]' options={{ headerShown: false, presentation: 'modal' }} />
                 <Stack.Screen name='search/[query]' options={{ headerShown: false }} />
 
