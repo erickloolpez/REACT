@@ -21,35 +21,36 @@ const Place = () => {
     const [category, setCategory] = useState(navBarOptions[0])
     const place = parks.find((park) => park.name === query)
 
-    let section
-
-    if (category.name === 'General') {
-        section =
-            <View className="mb-7">
-                <Description desc={place.desc} />
-                <Details >
-                    <Schedule />
-                    <Activities place={place} />
-                </Details>
-            </View>
-
-    } else if (category.name === 'Mapa') {
-        section = <Map place={place} />
-    } else if (category.name === 'Reseñas') {
-        section = <Feedback />
-    }else {
-        section =
-            <View className="mb-24 ">
-                <Attractives attractives={place.trend} park={place} />
-            </View>
-    }
     return (
         <ScrollView contentContainerStyle={{ alignItems: 'center', backgroundColor: "#FBEECC" }} showsVerticalScrollIndicator={false}>
             <Header logo={place.logo} image={place.image} />
             <Body >
                 <Navbar navBarOptions={navBarOptions} setCategory={setCategory}>
                     {
-                        section
+                        category.name === 'General' && (
+                            <View className="mb-7">
+                                <Description desc={place.desc} />
+                                <Details >
+                                    <Schedule />
+                                    <Activities place={place} />
+                                </Details>
+                            </View>
+                        )
+                    }
+                    {
+                        category.name === "Mapa" && (
+                            <Map place={place} />
+                        )
+                    }
+                    {
+                        category.name === "Reseñas" && (
+                            <Feedback />
+                        )
+                    }
+                    {
+                        category.name === "Atractivos" && (
+                            <Attractives attractives={place.trend} park={place} />
+                        )
                     }
                 </Navbar>
             </Body>

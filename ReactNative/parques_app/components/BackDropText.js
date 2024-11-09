@@ -5,6 +5,7 @@ import { StarIcon } from 'hugeicons-react-native'
 
 import { images } from '../constants';
 import { useGlobalContext } from '../context/GlobalProvider';
+import Review from './Comment';
 
 
 const BackDropText = ({ index, scrollX, park }) => {
@@ -25,7 +26,7 @@ const BackDropText = ({ index, scrollX, park }) => {
     })
 
     return (
-        <Animated.View className="w-full h-full absolute" style={[{}, stylez]}>
+        <Animated.View className="w-full h-full absolute" style={stylez}>
             <View className="w-full h-[65%]  flex-row">
                 <View className="w-[60%] h-full ">
                     <View className="w-[98%] h-full rounded-2xl overflow-hidden relative"  >
@@ -66,31 +67,7 @@ const BackDropText = ({ index, scrollX, park }) => {
             </View>
             <View className="w-full h-[35%]  justify-end">
                 <View className="w-full h-[90%]  rounded-2xl items-center justify-center">
-
-                    <View className="w-[98%] h-[80%] bg-primary flex-row items-center justify-around  rounded-xl shadow-sm">
-                        <View className="w-[20%] h-full items-center justify-center">
-                            <Image source={images.avatar} resizeMode="cover" className="w-16 h-16 rounded-full" />
-                        </View>
-                        <View className="w-[65%] h-full justify-center">
-                            <View className="flex-row">
-                                <Text className="font-bold">Laura Martinez</Text>
-                                <Text className="text-gray-400 ml-3">15 feb 2018</Text>
-                            </View>
-                            <Text numberOfLines={4}>
-                                Visitarlo es como entrar en otro mundo, con la oportunidad de ver especies que no se encuentran en ningún otro lugar. Es perfecto para quienes aman la naturaleza y buscan una experiencia inolvidable.
-                            </Text>
-                        </View>
-                        <View className="w-[10%] h-full flex-row items-center">
-                            <StarIcon
-                                size={24}
-                                color={"black"}
-                                variant={"stroke"}
-                            />
-                            <Text className="mr-2 ml-1">5</Text>
-                        </View>
-
-                    </View>
-
+                    <Review width={'95%'} />
                 </View>
             </View>
         </Animated.View>

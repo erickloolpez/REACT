@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 
 const Attractives = ({ attractives, park }) => {
     return (
-        <View className="w-full px-2">
+        <View className="w-full min-h-[50vh] px-2">
             {
                 attractives.map((attractive, index) => (
                     <TouchableOpacity key={index} onPress={() => {
