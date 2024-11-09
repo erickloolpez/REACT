@@ -7,6 +7,8 @@ import { parks } from '../../constants'
 import Cards from '../../components/Cards'
 import { allTrends } from '../../constants'
 import BackDropText from '../../components/BackDropText';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faMountainSun } from '@fortawesome/free-solid-svg-icons'
 
 const Search = () => {
 
@@ -56,12 +58,13 @@ const Search = () => {
           ))
         }
 
-        <View className="w-full h-[7vh] justify-end items-center  relative">
-          <View className="w-[90%] h-[80%]  bg-secondary rounded-xl">
-            <View className="w-full h-full bg-secondary rounded-xl z-20 items-center">
-              <Text style={{ fontFamily: "Pilowlava-Regular" }} className="text-4xl text-white">GEA</Text>
+        <View className="w-36 h-[7vh] justify-end items-center  relative">
+          <View className="w-[90%] h-[80%]  bg-secondary rounded-lg">
+            <View className="w-full h-full bg-secondary rounded-lg z-20 items-center flex-row justify-around">
+              <Text style={{ fontFamily: "Pilowlava-Regular" }} className="text-2xl text-white">GEA</Text>
+              <FontAwesomeIcon icon={faMountainSun} color='white' size={32} />
             </View>
-            <View className="w-full h-full absolute  bottom-1 bg-white rounded-xl border-2" />
+            <View className="w-full h-full absolute  top-1 right-1 bg-white rounded-lg border-2" />
           </View>
         </View>
 

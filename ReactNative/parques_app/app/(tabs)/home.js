@@ -57,7 +57,7 @@ const Home = () => {
             <Text style={{ fontFamily: "Pilowlava-Regular" }} className="text-7xl text-white">GEA</Text>
           </View>
           <View className='w-[50%]  absolute top-36  right-0  items-center justify-center z-20 bg-secondary border-x-2 border-white '>
-            <Text className="text-white text-lg text-center" style={{ fontFamily: "Sail-Regular" }}>"Bienvenido a la grandeza natural de Ecuador.</Text>
+            <Text className="text-white text-lg text-center">"Conoce la grandeza natural de Ecuador."</Text>
           </View>
           <View className="w-[94%] h-[80px] absolute top-4 z-10  ml-3 ">
             <SearchInput />
