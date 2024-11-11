@@ -4,6 +4,8 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import { usePathname, router } from 'expo-router'
 
 import { SearchSquareIcon, ViewOffSlashIcon } from 'hugeicons-react-native'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 const SearchInput = ({ initialQuery, widthMeasure }) => {
     const pathname = usePathname()
@@ -21,7 +23,7 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
     })
 
     return (
-        <Animated.View className={`border-green-800 bg-white  absolute right-0 mt-2 h-12 px-4  rounded-full focus:border-[#CF613C] items-center flex-row space-x-4 `} style={animatedStyle}>
+        <Animated.View className={`border-green-800 bg-white absolute right-0 mt-2 h-12 px-4  rounded-full focus:border-[#CF613C] items-center flex-row space-x-4 `} style={animatedStyle}>
             <TextInput
                 className="text-base h-full text-[#CF613C] flex-1  font-regular "
                 value={query}
@@ -66,12 +68,8 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
                 }
                 {
                     openSearch === 0 && (
-                        <View className="w-full h-full bg-white items-center justify-center rounded-full ">
-                            <SearchSquareIcon
-                                size={38}
-                                color={"#17301A"}
-                                variant={"stroke"}
-                            />
+                        <View className="w-full h-full bg-white  items-center justify-center rounded-full ">
+                            <FontAwesomeIcon icon={faMagnifyingGlass} color='black' size={28} />
                         </View>
                     )
                 }

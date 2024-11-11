@@ -35,7 +35,7 @@ const Map = ({ place }) => {
                         <Polyline coordinates={[userLocation, origin]} strokeColor="yellow" strokeWidth={2} />
                     )}
                 </MapView>
-                <View className="w-[40%] h-full  bg-green-400 absolute left-0">
+                <View className="w-[40%] h-full absolute left-0">
                     <View
                         className="grow"
                         activeOpacity={0.9}
@@ -50,67 +50,8 @@ const Map = ({ place }) => {
                             </View>
                         </View>
                     </View>
-                    <View
-                        className="grow"
-                        activeOpacity={0.9}
-                    >
-                        <View
-                            className="grow justify-center items-center"
-                            style={{ backgroundColor: '#086441' }}
-                        >
-                            <Text className="text-3xl uppercase font-bold" style={{ color: '#F0B847' }}>Ruta</Text>
-                            <View className="mt-2 ">
-                                <Video
-                                    source={images.video}
-                                    className="w-32 h-48 rounded-xl mt-3"
-                                    resizeMode={ResizeMode.CONTAIN}
-                                    useNativeControls
-                                />
-                            </View>
-                        </View>
-                    </View>
                 </View>
             </View>
-
-            {/* <View className="mt-4">
-                <Text className="text-terciary text-xl font-bold">Ruta</Text>
-                <Video 
-                    source={images.video}
-                    className="w-full h-60 rounded-xl mt-3"
-                    resizeMode={ResizeMode.CONTAIN}
-                    useNativeControls
-                />
-            </View> */}
-
-            {/* <View className="w-full mt-4">
-                <Text className="text-xl text-terciary font-bold">¿Cómo llegar?</Text>
-            </View>
-            <View className="w-full h-[10vh] mt-2 bg-green-400">
-                {place.path.map((item, index) => {
-                    return (
-                        <TouchableOpacity
-                            onPress={() => {
-                                setCurrentIndex(index === currentIndex ? null : index);
-                            }}
-                            className="grow"
-                            activeOpacity={0.9}
-                            key={index}
-                        >
-                            <View
-                             className="grow justify-center items-center"
-                             style={{backgroundColor: item.color.background}}
-                            >
-                                <Text className="text-3xl uppercase font-bold" style={{color: item.color.heading}}>{item.name}</Text>
-                                {currentIndex === index && (
-                                    <View className="mt-2 ">
-                                        <Text style={{color: item.color.heading}}>{item.order}</Text>
-                                    </View>
-                                )}
-                            </View>
-                        </TouchableOpacity>
-                    );
-                })}
-            </View> */}
         </View>
     );
 };
