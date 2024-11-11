@@ -17,6 +17,12 @@ const Search = () => {
   const _slideHeight = _slideWidth * 1.70
   const _spacing = 18
 
+  const [visibleParks, setVisibleParks] = useState(5); // Número inicial de parques visibles
+
+  const loadMoreParks = () => {
+    setVisibleParks(prevCount => prevCount + 6); // Incrementa la cantidad de elementos visibles en 5
+  };
+
   const scrollX = useSharedValue(0)
   const onScroll = useAnimatedScrollHandler((e) => {
     scrollX.value = e.contentOffset.x / (_slideWidth + _spacing)
@@ -48,12 +54,12 @@ const Search = () => {
     <SafeAreaView edges={['top']} className="h-full bg-[#fbeecc]">
       <ScrollView>
         {
-          allTrends.map((trend, index) => (
+          parks.slice(0, visibleParks).map((park, index) => (
             <BackDropImage
-              key={`bg-photo-${trend.name}`}
+              key={`bg-photo-${park.name}`}
               index={index}
               scrollX={scrollX}
-              image={trend.image}
+              image={park.image}
             />
           ))
         }
@@ -70,7 +76,7 @@ const Search = () => {
 
         <View className="w-full h-[50vh]">
           <Animated.FlatList
-            data={parks}
+            data={parks.slice(0, visibleParks)}
             keyExtractor={(park) => park.name}
             renderItem={({ item: park, index }) => (
               <Cards key={park.name} park={park} scrollX={scrollX} index={index} width={_slideWidth} height={_slideHeight} />
@@ -88,12 +94,15 @@ const Search = () => {
 
             onScroll={onScroll}
             scrollEventThrottle={100 / 60}
+
+            onEndReached={loadMoreParks}
+            onEndReachedThreshold={0.5}
           />
         </View>
 
         <View className="w-full h-[60vh] mt-2">
           {
-            parks.map((park, index) => (
+            parks.slice(0, visibleParks).map((park, index) => (
               <BackDropText
                 key={`bg-photo-${park.name}`}
                 index={index}

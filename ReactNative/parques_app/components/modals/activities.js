@@ -46,10 +46,6 @@ const Activities = ({ place }) => {
                                     </View>
 
                                 </View>
-
-                                {/* <View className="w-full h-1/2 justify-center">
-                                    <Image source={images.senderismo} resizeMode="cover" className="w-full h-[95%] rounded-lg" />
-                                </View> */}
                             </View>
                         </View>
                     ))

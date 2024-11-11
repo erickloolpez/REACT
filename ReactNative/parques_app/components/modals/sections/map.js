@@ -3,8 +3,8 @@ import { useState } from 'react';
 import MapView, { Marker, Polyline, Polygon } from 'react-native-maps';
 import { Video, ResizeMode } from 'expo-av'
 
-import { useGlobalContext } from '../../context/GlobalProvider';
-import { images } from '../../constants';
+import { useGlobalContext } from '../../../context/GlobalProvider';
+import { images } from '../../../constants';
 const Map = ({ place }) => {
     const { userLocation } = useGlobalContext();
     const [currentIndex, setCurrentIndex] = useState(0);
