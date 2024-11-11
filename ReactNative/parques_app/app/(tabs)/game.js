@@ -1,7 +1,9 @@
-import { View, Text, ScrollView, Image } from 'react-native'
+import { View, Text, ScrollView, Image, Button } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants'
 import Animated, { FadeInRight, interpolate, interpolateColor, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withDelay, withSpring } from 'react-native-reanimated'
+import { MotiView } from 'moti'
+import { useState } from 'react'
 
 //consts
 const _avatarSize = 40//because it's the same like h-10
@@ -31,9 +33,9 @@ function Place({ user, index, onFinish, anim }) {
     }
   })
 
-  const textStylez = useAnimatedStyle(()=>{
+  const textStylez = useAnimatedStyle(() => {
     return {
-      opacity : interpolate(_anim.value, [0,0.2,1], [0,0,1])
+      opacity: interpolate(_anim.value, [0, 0.2, 1], [0, 0, 1])
     }
   })
 
@@ -57,7 +59,44 @@ function Place({ user, index, onFinish, anim }) {
   )
 }
 
+const numberToNice = [...Array(10).keys()] //[0,1,2,3,4,5,6,7,8,9]
+const fontSize = 50
+const _staggerCounter = 50
+
+function Tick({ children, ...rest }) {
+  return (
+    <Text {...rest}>
+      {children}
+    </Text>
+  )
+}
+
+function TickerList({ number,index }) {
+  return (
+    <View style={{ height: fontSize, backgroundColor: 'red', overflow:'hidden' }}>
+      <MotiView
+        style={{ backgroundColor: "rgba(0,255,0,.5)" }}
+        animate={{
+          translateY: -fontSize * 1.1 * number
+        }}
+        transition={{
+          delay: index * _staggerCounter,
+          damping: 80,
+          stiffness: 200
+        }}
+      >
+        {
+          numberToNice.map((num, index) => {
+            return <Tick key={`number-${num}-${index}`} style={{ fontSize: fontSize, lineHeight: fontSize * 1.1, fontVariant: ['tabular-nums'] }}>{num}</Tick>
+          })
+        }
+      </MotiView>
+    </View>
+  )
+}
+
 const Game = () => {
+  const [value, setValue] = useState(12351)
   const _anim = useSharedValue(0)
   const users = [
     { name: "Maria", score: 12 },
@@ -68,10 +107,11 @@ const Game = () => {
     { name: "Pedro", score: 62 },
     { name: "Jonh", score: 36 },
   ]
+  const splittedValue = value.toString().split('')
   return (
     <SafeAreaView edges={['top']} className="h-full bg-primary">
       <ScrollView>
-        <View className="w-full h-[50vh] flex-row justify-center items-end mt-10 border-2 border-blue-400" style={{ gap: _spacing }}>
+        <View className="w-full h-[30vh] flex-row justify-center items-end mt-10 border-2 border-blue-400" style={{ gap: _spacing }}>
           {
             users.map((user, index) => (
               <Place
@@ -90,6 +130,19 @@ const Game = () => {
             ))
           }
         </View>
+
+        <View className="w-full h-[30vh] justify-center items-center flex-row  bg-green-400">
+          {
+            splittedValue.map((number, index) => {
+              return <TickerList key={index} number={number} index={index}/>
+            })
+          }
+        </View>
+        <Button
+          title="Random Value"
+          onPress={() => setValue(Math.floor(Math.random() * 100000))}
+        />
+
       </ScrollView>
     </SafeAreaView>
   )
