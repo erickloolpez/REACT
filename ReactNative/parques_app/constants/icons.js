@@ -17,6 +17,7 @@ import nadar from '../assets/icons/nadando.png'
 import caballo from '../assets/icons/coche-de-caballos.png'
 import condor from '../assets/icons/condor.png'
 import ayaHuma from '../assets/icons/aya-huma.png'
+import marco from '../assets/icons/marcos.png'
 
 export default {
   play,
@@ -37,4 +38,5 @@ export default {
   caballo,
   condor,
   ayaHuma,
+  marco
 };

@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated'
 import MapView, { Marker, Polyline } from 'react-native-maps';
-import { StarIcon } from 'hugeicons-react-native'
+import { router } from 'expo-router';
 
 import { images } from '../constants';
 import { useGlobalContext } from '../context/GlobalProvider';
@@ -53,13 +53,31 @@ const BackDropText = ({ index, scrollX, park }) => {
 
                 <View className="w-[40%] h-full justify-between">
                     <View className="w-full h-[48%]">
-                        <TouchableOpacity className="w-full h-full" onPress={() => console.log(park.trend[0].name)}>
+                        <TouchableOpacity className="w-full h-full relative" onPress={() => {
+                            console.log(park.trend[0].name)
+                            router.push({
+                                pathname: `/attractive/${park.trend[0].desc}`,
+                                params: { modalPark: false, trend: JSON.stringify(park.trend[0]), park: JSON.stringify(park) }
+                            })
+                        }}>
                             <Image source={park.trend[0].image} resizeMode="cover" className="w-full h-full rounded-xl" />
+                            <View className="  rounded-lg absolute bottom-4 left-2 bg-secondary items-center justify-center p-2" >
+                                <Text className="text-white font-bold">{park.trend[0].name}</Text>
+                            </View>
                         </TouchableOpacity>
                     </View>
                     <View className="w-full h-[48%] ">
-                        <TouchableOpacity className="w-full h-full" onPress={() => console.log(park.trend[1].name)}>
+                        <TouchableOpacity className="w-full h-full relative" onPress={() => {
+                            console.log(park.trend[1].name)
+                            router.push({
+                                pathname: `/attractive/${park.trend[1].desc}`,
+                                params: { modalPark: false, trend: JSON.stringify(park.trend[1]), park: JSON.stringify(park) }
+                            })
+                        }}>
                             <Image source={park.trend[1].image} resizeMode="cover" className="w-full h-full rounded-xl" />
+                            <View className=" rounded-lg absolute bottom-4 left-2 bg-secondary items-center justify-center p-2" >
+                                <Text className="text-white font-bold">{park.trend[1].name}</Text>
+                            </View>
                         </TouchableOpacity>
                     </View>
 

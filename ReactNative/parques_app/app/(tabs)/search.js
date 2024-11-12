@@ -1,14 +1,15 @@
-import { View, Text, Dimensions, ScrollView } from 'react-native'
+import { View, Text, Dimensions, ScrollView, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Animated, { interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import { useState } from 'react'
 
 import { parks } from '../../constants'
 import Cards from '../../components/Cards'
-import { allTrends } from '../../constants'
 import BackDropText from '../../components/BackDropText';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faMountainSun } from '@fortawesome/free-solid-svg-icons'
+import HumaComponent from '../../assets/svgs/huma'
+import CondorComponent from '../../assets/svgs/condor'
 
 const Search = () => {
 
@@ -42,7 +43,7 @@ const Search = () => {
     return (
       <Animated.Image
         source={image}
-        className="w-full h-[120vh] absolute"
+        className="w-full h-[130vh] absolute"
         style={stylez}
         blurRadius={2}
       />
@@ -72,6 +73,15 @@ const Search = () => {
             </View>
             <View className="w-full h-full absolute  top-1 right-1 bg-white rounded-lg border-2" />
           </View>
+        </View>
+
+        <View className="w-full h-[10vh] relative bg-secondary justify-around border-white border-t-2 border-b-2 items-center mt-3 flex-row">
+          <HumaComponent />
+          <View>
+            <Text className="text-xl font-bold uppercase text-white">LLanganates</Text>
+          </View>
+          <CondorComponent/>
+
         </View>
 
         <View className="w-full h-[50vh]">
@@ -118,5 +128,6 @@ const Search = () => {
 
   )
 }
+
 
 export default Search

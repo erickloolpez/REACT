@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { MoreHorizontalCircle01Icon } from 'hugeicons-react-native'
+import { Logout03Icon, MoreHorizontalCircle01Icon } from 'hugeicons-react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCrown, faTree } from '@fortawesome/free-solid-svg-icons'
 import CountryFlag from 'react-native-country-flag'
@@ -15,10 +15,10 @@ const Profile = () => {
     <SafeAreaView className="h-full bg-primary" edges={['top']}>
       <View className="w-full h-full items-center">
         <View className="w-full h-[10%] items-end justify-center ">
-          <MoreHorizontalCircle01Icon
+          <Logout03Icon
             className="mr-4"
             size={32}
-            color={"#17301A"}
+            color={"#ef4444"}
             variant={"stroke"}
           />
         </View>

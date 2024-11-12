@@ -35,11 +35,11 @@ export default function App() {
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView contentContainerStyle={{ height: '100%' }}>
         <View className="w-full justify-center items-center min-h-[85vh] px-4">
-          <Image
-            source={images.logo}
-            className="w-[130px] h-[84px]"
-            resizeMode="contain"
-          />
+          <View
+            className="w-[130px] h-[84px]  items-center justify-center"
+          >
+            <Text style={{ fontFamily: 'Pilowlava-Regular' }} className="text-5xl text-green-900 ">GEA</Text>
+          </View>
 
           <Image
             source={images.cards}

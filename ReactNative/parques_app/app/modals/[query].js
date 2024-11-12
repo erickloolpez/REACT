@@ -10,10 +10,10 @@ import Description from '../../components/modals/description'
 
 import Details from '../../components/modals/details'
 import Schedule from '../../components/modals/schedule'
-import Map from '../../components/sections/map'
-import Attractives from '../../components/sections/attractives'
+import Map from '../../components/modals/sections/map'
+import Attractives from '../../components/modals/sections/attractives'
 import Activities from '../../components/modals/activities'
-import Feedback from '../../components/sections/feedback'
+import Feedback from '../../components/modals/sections/feedback'
 
 const Place = () => {
     const { query } = useLocalSearchParams()

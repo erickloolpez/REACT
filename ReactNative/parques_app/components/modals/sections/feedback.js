@@ -1,5 +1,5 @@
 import { View, Text, Image } from 'react-native'
-import Review from '../Comment'
+import Review from '../../Comment'
 
 const Feedback = () => {
     return (
