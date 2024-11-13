@@ -49,7 +49,7 @@ const SignUp = () => {
                         <Text style={{ fontFamily: 'Pilowlava-Regular' }} className="text-4xl text-green-900 ">GEA</Text>
                     </View>
 
-                    <Text className="text-2xl text-terciary text-semibold mt-10 font-psemibold">Sign Up to Aora</Text>
+                    <Text className="text-2xl text-terciary text-semibold mt-10 font-psemibold">Sign Up to Gea</Text>
 
                     <FormField
                         title="Username"

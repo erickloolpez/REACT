@@ -38,7 +38,7 @@ export default function App() {
           <View
             className="w-[130px] h-[84px]  items-center justify-center"
           >
-            <Text style={{ fontFamily: 'Pilowlava-Regular' }} className="text-5xl text-green-900 ">GEA</Text>
+            <Text style={{ fontFamily:"Pilowlava-Regular" }} className="text-5xl text-green-900 ">GEA</Text>
           </View>
 
           <Image
@@ -49,8 +49,8 @@ export default function App() {
 
           <View className="relative mt-5">
             <Text className="text-3xl text-terciary font-bold text-center">
-              Discover Endless Possibilities with: {' '}
-              <Text className="text-secondary-200">Aora</Text>
+              Descubre todas las posibilidades con {' '}
+              <Text className="text-secondary-200">Gea</Text>
             </Text>
 
             <Image
@@ -62,8 +62,8 @@ export default function App() {
           </View>
 
           <Text
-            className="text-sm font-pregular text-gray-100 mt-7 text-center"
-          >Where creativity meets innovation: embark on a journey of limitless exploration with Aora
+            className="text-sm font-pregular  mt-7 text-center"
+          >Cuando la creatividad conoce la innovacion: embarcate a un viaje sin limites con Gea 
           </Text>
 
           <CustomButton
