@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Logout03Icon, MoreHorizontalCircle01Icon } from 'hugeicons-react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCrown, faTree } from '@fortawesome/free-solid-svg-icons'
+import { faCrown, faGem, faTree } from '@fortawesome/free-solid-svg-icons'
 import CountryFlag from 'react-native-country-flag'
 
 import { images } from '../../constants'
@@ -40,7 +40,7 @@ const Profile = () => {
 
         <View className="w-[90%] h-[10%] border-t-2 border-b-2 flex-row items-center">
           <View className="w-1/2 h-[80%] flex-row items-center justify-center border-r-2">
-            <FontAwesomeIcon icon={faCrown} color='#eab308' size={32} />
+            <FontAwesomeIcon icon={faGem} color='#93c5fd' size={32} />
             <Text className="ml-2">120 puntos</Text>
           </View>
           <View className="w-1/2 h-full flex-row items-center justify-center ">

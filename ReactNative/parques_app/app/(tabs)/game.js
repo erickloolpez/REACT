@@ -1,14 +1,17 @@
-import { View, Text, ScrollView, Image, Button } from 'react-native'
+import { View, Text, ScrollView, Image, Button, Modal, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants'
 import Animated, { FadeInRight, interpolate, interpolateColor, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withDelay, withSpring } from 'react-native-reanimated'
 import { MotiView } from 'moti'
 import { useState } from 'react'
+import { PuzzleIcon } from 'hugeicons-react-native'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faCircleXmark, faGem, faTrophy } from '@fortawesome/free-solid-svg-icons'
 
 //consts
 const _avatarSize = 40//because it's the same like h-10
 const _spacing = 4
-const _stagger = 200
+const _stagger = 150
 
 function Place({ user, index, onFinish, anim }) {
 
@@ -60,7 +63,7 @@ function Place({ user, index, onFinish, anim }) {
 }
 
 const numberToNice = [...Array(10).keys()] //[0,1,2,3,4,5,6,7,8,9]
-const fontSize = 50
+const fontSize = 40
 const _staggerCounter = 50
 
 function Tick({ children, ...rest }) {
@@ -71,11 +74,10 @@ function Tick({ children, ...rest }) {
   )
 }
 
-function TickerList({ number,index }) {
+function TickerList({ number, index }) {
   return (
-    <View style={{ height: fontSize, backgroundColor: 'red', overflow:'hidden' }}>
+    <View style={{ height: fontSize, overflow: 'hidden' }}>
       <MotiView
-        style={{ backgroundColor: "rgba(0,255,0,.5)" }}
         animate={{
           translateY: -fontSize * 1.1 * number
         }}
@@ -96,6 +98,7 @@ function TickerList({ number,index }) {
 }
 
 const Game = () => {
+  const [openModal, setOpenModal] = useState(false)
   const [value, setValue] = useState(12351)
   const _anim = useSharedValue(0)
   const users = [
@@ -108,10 +111,45 @@ const Game = () => {
     { name: "Jonh", score: 36 },
   ]
   const splittedValue = value.toString().split('')
+
+  function renderModal() {
+    return (
+      <Modal visible={openModal} animationType='slide' transparent={true}>
+        <View className="flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <View className="bg-white w-[90%] h-[70%] rounded-lg relative p-2 justify-center ">
+            <TouchableOpacity onPress={() => setOpenModal(false)} className="absolute top-3 right-2 bg-white rounded-full z-10">
+              <FontAwesomeIcon icon={faCircleXmark} color='red' size={32} />
+            </TouchableOpacity>
+            <View className="w-full h-[15vh] bg-green-200">
+              <Text className="text-3xl">Explorando Ecuador: ¿Listo para la pregunta?</Text>
+            </View>
+            <View>
+              <Text>* Cual es el parque nacional mas grande del Ecuador?</Text>
+            </View>
+          </View>
+        </View>
+
+      </Modal>
+    )
+  }
+
   return (
     <SafeAreaView edges={['top']} className="h-full bg-primary">
       <ScrollView>
-        <View className="w-full h-[30vh] flex-row justify-center items-end mt-10 border-2 border-blue-400" style={{ gap: _spacing }}>
+        <View className="w-full h-[10vh] items-center justify-between flex-row">
+          <View className="flex-row">
+            <Text className="text-2xl font-bold text-terciary">Premios y Campeones</Text>
+            <View className="items-center ml-2 rotate-12 ">
+              <FontAwesomeIcon icon={faTrophy} color='#eab308' size={28} />
+            </View>
+          </View>
+          <View className="flex-row bg-white items-center justify-around border-2 rounded-full p-2 mr-1">
+            <FontAwesomeIcon icon={faGem} color='#93c5fd' size={28} />
+            <Text className="ml-2">120</Text>
+          </View>
+        </View>
+
+        <View className="w-full h-[30vh] flex-row justify-center items-end" style={{ gap: _spacing }}>
           {
             users.map((user, index) => (
               <Place
@@ -131,17 +169,46 @@ const Game = () => {
           }
         </View>
 
-        <View className="w-full h-[30vh] justify-center items-center flex-row  bg-green-400">
-          {
-            splittedValue.map((number, index) => {
-              return <TickerList key={index} number={number} index={index}/>
-            })
-          }
+        <View className="w-full h-[25vh] mt-10 items-center flex-row border-b-2">
+          <View className="w-1/2 h-full justify-around pl-2 border-r-2">
+            <Text className="text-xl text-green-900 font-medium">Miercoles</Text>
+            <Text className="text-7xl font-bold text-green-900">25</Text>
+            <Text className="text-5xl font-light text-green-900">ENERO</Text>
+          </View>
+          <View className="w-1/2 h-full  items-center justify-around">
+            <View>
+              <Text className="text-green-900">¿Que tanto conoces los parques nacionales?</Text>
+            </View>
+            <View className="flex-row">
+              {
+                splittedValue.map((number, index) => {
+                  if (index === 2) {
+                    return <Text className="text-4xl">:</Text>
+                  } else {
+                    return <TickerList key={index} number={number} index={index} />
+                  }
+                })
+              }
+            </View>
+            <TouchableOpacity onPress={()=> setOpenModal(true)}>
+              <View className="w-32 h-10 bg-green-900 rounded-xl flex-row items-center justify-center">
+                <PuzzleIcon
+                  size={32}
+                  color={"#fff"}
+                  variant={"stroke"}
+                />
+                <Text className="text-xl ml-3 text-white">Jugar</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
         <Button
           title="Random Value"
           onPress={() => setValue(Math.floor(Math.random() * 100000))}
         />
+        {
+          renderModal()
+        }
 
       </ScrollView>
     </SafeAreaView>
