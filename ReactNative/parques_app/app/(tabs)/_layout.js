@@ -26,7 +26,7 @@ const TabLayout = () => {
                         title: 'Home',
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
-                            <View className="items-center">
+                            <View className="items-center mt-3 w-14">
                                 <Home01Icon
                                     size={34}
                                     color={color}
@@ -43,7 +43,7 @@ const TabLayout = () => {
                         title: 'Map',
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
-                            <View className="items-center">
+                            <View className="items-center mt-3 w-14">
                                 <Location04Icon
                                     size={34}
                                     color={color}
@@ -60,7 +60,7 @@ const TabLayout = () => {
                         title: 'Game',
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
-                            <View className="items-center">
+                            <View className="items-center mt-3 w-14">
                                 <ChampionIcon
                                     size={34}
                                     color={color}
@@ -77,7 +77,7 @@ const TabLayout = () => {
                         title: 'Search',
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
-                            <View className="items-center">
+                            <View className="items-center w-14 mt-3">
                                 <MenuSquareIcon
                                     size={34}
                                     color={color}
@@ -94,7 +94,7 @@ const TabLayout = () => {
                         title: 'Profile',
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
-                            <View className="items-center">
+                            <View className="items-center mt-3 w-14">
                                 <UserIcon
                                     size={34}
                                     color={color}

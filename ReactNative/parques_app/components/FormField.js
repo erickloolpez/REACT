@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { icons } from '../constants'
 
-const FormField = ({ title, value, placeholder, handleChangeText, otherStyles, ...props }) => {
+const FormField = ({ title, value, placeholder, handleChangeText, otherStyles }) => {
     const [showPassword, setShowPassword] = useState(false)
     return (
         <View className={`space-y-2 ${otherStyles}`}>

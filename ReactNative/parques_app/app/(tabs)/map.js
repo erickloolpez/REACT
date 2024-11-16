@@ -46,7 +46,7 @@ const Map = () => {
                         }}
                     >
                         {parks.map((park, index) => (
-                            <React.Fragment key={index}>
+                            <React.Fragment key={`park-${index}`}>
                                 <Polygon coordinates={park.polygon} fillColor={'rgba(100,100,200,0.3)'} strokeWidth={1} />
                                 <Marker coordinate={park.location} title={park.name} >
                                     <Callout>
@@ -55,7 +55,7 @@ const Map = () => {
                                                 <Text>{park.name}</Text>
                                             </View>
                                             <View className="w-full h-1/2">
-                                                <Image source={park.image} resizMode="contain" className="w-full h-full" />
+                                                <Image source={park.image} resizeMode="contain" className="w-full h-full" />
                                             </View>
                                             <TouchableOpacity
                                                 className=" w-24 h-8 bg-green-800 rounded-full flex-row items-center justify-around "

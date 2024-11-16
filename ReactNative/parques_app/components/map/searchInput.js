@@ -17,7 +17,6 @@ const SearchInput = () => {
                     className="flex-1 h-full text-base "
                     placeholder=' Encuentra tu parque favorito'
                     onChangeText={(e) => setQuery(e)}
-                    returnKeyType='intro'
                     onSubmitEditing={() => {
                         if (!query) {
                             return Alert.alert('Missing query', "Please input something to search results across database.")

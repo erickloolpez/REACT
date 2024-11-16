@@ -1,16 +1,16 @@
-import { TextInput, TouchableOpacity, Image, Alert, View } from 'react-native'
+import { TextInput, TouchableOpacity, Alert, View } from 'react-native'
 import { useState } from 'react'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { usePathname, router } from 'expo-router'
 
-import { SearchSquareIcon, ViewOffSlashIcon } from 'hugeicons-react-native'
+import { ViewOffSlashIcon } from 'hugeicons-react-native'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
-const SearchInput = ({ initialQuery, widthMeasure }) => {
+const SearchInput = () => {
     const pathname = usePathname()
-    const [query, setQuery] = useState(initialQuery || '')
-    const widthLength = widthMeasure || '90%'
+    const [query, setQuery] = useState('')
+    const widthLength =  '90%'
 
     const [openSearch, setOpenSearch] = useState(0)
 
@@ -30,7 +30,7 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
                 placeholder={'   Busca tu parque favorito.'}
                 placeholderTextColor="#CF613C"
                 onChangeText={(e) => setQuery(e)}
-                returnKeyType='intro'
+                // returnKeyType='intro'
                 onSubmitEditing={() => {
                     if (!query) {
                         return Alert.alert('Missing query', "Please input something to search results across database.")
@@ -40,7 +40,7 @@ const SearchInput = ({ initialQuery, widthMeasure }) => {
                     else router.push(`/search/${query}`)
                 }}
             />
-
+            
             <TouchableOpacity
                 className="w-12 h-10 absolute right-0"
                 onPress={() => {

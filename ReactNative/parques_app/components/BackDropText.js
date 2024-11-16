@@ -17,11 +17,11 @@ const BackDropText = ({ index, scrollX, park }) => {
                 [index - 1, index, index + 1],
                 [0, 1, 0]
             ),
-            zIndex: interpolate(
-                scrollX.value,
-                [index - 1, index, index + 1],
-                [0, 10, 0] // El valor central (10) es el más alto cuando el índice coincide
-            ),
+            // zIndex: interpolate(
+            //     scrollX.value,
+            //     [index - 1, index, index + 1],
+            //     [0, 10, 0] // El valor central (10) es el más alto cuando el índice coincide
+            // ),
         }
     })
 
@@ -54,14 +54,13 @@ const BackDropText = ({ index, scrollX, park }) => {
                 <View className="w-[40%] h-full justify-between">
                     <View className="w-full h-[48%]">
                         <TouchableOpacity className="w-full h-full relative" onPress={() => {
-                            console.log(park.trend[0].name)
                             router.push({
                                 pathname: `/attractive/${park.trend[0].desc}`,
                                 params: { modalPark: false, trend: JSON.stringify(park.trend[0]), park: JSON.stringify(park) }
                             })
                         }}>
                             <Image source={park.trend[0].image} resizeMode="cover" className="w-full h-full rounded-xl" />
-                            <View className="  rounded-lg absolute bottom-4 left-2 bg-secondary items-center justify-center p-2" >
+                            <View className="rounded-lg absolute bottom-4 left-2 bg-secondary items-center justify-center p-2" >
                                 <Text className="text-white font-bold">{park.trend[0].name}</Text>
                             </View>
                         </TouchableOpacity>
@@ -83,6 +82,7 @@ const BackDropText = ({ index, scrollX, park }) => {
 
                 </View>
             </View>
+
             <View className="w-full h-[35%]  justify-end">
                 <View className="w-full h-[90%]  rounded-2xl items-center justify-center">
                     <Review width={'95%'} />

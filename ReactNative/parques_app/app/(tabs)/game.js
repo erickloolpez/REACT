@@ -69,9 +69,9 @@ const numberToNice = [...Array(10).keys()] //[0,1,2,3,4,5,6,7,8,9]
 const fontSize = 40
 const _staggerCounter = 50
 
-function Tick({ children, ...rest }) {
+function Tick({ children }) {
   return (
-    <Text {...rest}>
+    <Text style={{ fontSize: fontSize, lineHeight: fontSize * 1.1, fontVariant: ['tabular-nums'] }}>
       {children}
     </Text>
   )
@@ -92,7 +92,7 @@ function TickerList({ number, index }) {
       >
         {
           numberToNice.map((num, index) => {
-            return <Tick key={`number-${num}-${index}`} style={{ fontSize: fontSize, lineHeight: fontSize * 1.1, fontVariant: ['tabular-nums'] }}>{num}</Tick>
+            return <Tick key={`number-${num}-${index}`} >{num}</Tick>
           })
         }
       </MotiView>
@@ -230,7 +230,7 @@ const Game = () => {
               {
                 splittedValue.map((number, index) => {
                   if (index === 2) {
-                    return <Text className="text-4xl">:</Text>
+                    return <Text key={index} className="text-4xl">:</Text>
                   } else {
                     return <TickerList key={index} number={number} index={index} />
                   }

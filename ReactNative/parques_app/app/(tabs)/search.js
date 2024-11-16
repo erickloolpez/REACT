@@ -8,8 +8,8 @@ import Cards from '../../components/Cards'
 import BackDropText from '../../components/BackDropText';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faMountainSun } from '@fortawesome/free-solid-svg-icons'
-import HumaComponent from '../../assets/svgs/huma'
-import CondorComponent from '../../assets/svgs/condor'
+// import HumaComponent from '../../assets/svgs/huma'
+// import CondorComponent from '../../assets/svgs/condor'
 
 const Search = () => {
 
@@ -76,11 +76,11 @@ const Search = () => {
         </View>
 
         <View className="w-full h-[10vh] relative bg-secondary justify-around border-white border-t-2 border-b-2 items-center mt-3 flex-row">
-          <HumaComponent />
+          {/* <HumaComponent /> */}
           <View>
             <Text className="text-xl font-bold uppercase text-white">LLanganates</Text>
           </View>
-          <CondorComponent/>
+          {/* <CondorComponent /> */}
 
         </View>
 
@@ -89,7 +89,7 @@ const Search = () => {
             data={parks.slice(0, visibleParks)}
             keyExtractor={(park) => park.name}
             renderItem={({ item: park, index }) => (
-              <Cards key={park.name} park={park} scrollX={scrollX} index={index} width={_slideWidth} height={_slideHeight} />
+              <Cards key={`park-name${park.name}-${index}`} park={park} scrollX={scrollX} index={index} width={_slideWidth} height={_slideHeight} />
             )
             }
             horizontal
@@ -109,19 +109,18 @@ const Search = () => {
             onEndReachedThreshold={0.5}
           />
         </View>
-
-        <View className="w-full h-[60vh] mt-2">
+        
+        <View className="w-full h-[60vh] mt-2 ">
           {
             parks.slice(0, visibleParks).map((park, index) => (
               <BackDropText
-                key={`bg-photo-${park.name}`}
+                key={`bg-text-${park.name}`}
                 index={index}
                 scrollX={scrollX}
                 park={park}
               />
             ))
           }
-
         </View>
       </ScrollView>
     </SafeAreaView>
