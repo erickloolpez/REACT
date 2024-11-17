@@ -3,9 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Animated, { FadeInRight, interpolate, interpolateColor, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withDelay, withSpring } from 'react-native-reanimated'
 import { MotiView } from 'moti'
 import { useState } from 'react'
-import { PuzzleIcon, TriangleIcon } from 'hugeicons-react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCircle, faCircleXmark, faGem, faPlay, faSquare, faTrophy } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faCircleXmark, faGem, faPlay, faPuzzlePiece, faSquare, faTrophy } from '@fortawesome/free-solid-svg-icons'
 
 
 import { images } from '../../constants'
@@ -239,11 +238,7 @@ const Game = () => {
             </View>
             <TouchableOpacity onPress={() => setOpenModal(true)}>
               <View className="w-32 h-10 bg-green-900 rounded-xl flex-row items-center justify-center">
-                <PuzzleIcon
-                  size={32}
-                  color={"#fff"}
-                  variant={"stroke"}
-                />
+                <FontAwesomeIcon icon={faPuzzlePiece} color='#fff' size={32} />
                 <Text className="text-xl ml-3 text-white">Jugar</Text>
               </View>
             </TouchableOpacity>

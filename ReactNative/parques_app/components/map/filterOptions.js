@@ -1,19 +1,14 @@
 import { View, Text, Pressable } from 'react-native'
 import Animated, { FadeInDown, FadeOutUp, LinearTransition } from 'react-native-reanimated'
-import { useState } from 'react'
 import { MotiView } from 'moti';
-import { Bicycle01Icon, Camera02Icon, CampfireIcon, SailboatOffshoreIcon, SwimmingCapIcon, WorkoutRunIcon } from 'hugeicons-react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBicycle, faCamera, faCampground, faPersonHiking, faPersonSwimming, faSailboat } from '@fortawesome/free-solid-svg-icons';
 
-const options = [Camera02Icon, SwimmingCapIcon, CampfireIcon, Bicycle01Icon, SailboatOffshoreIcon, WorkoutRunIcon]
+const options = [faCamera, faPersonSwimming, faCampground, faBicycle, faSailboat, faPersonHiking]
 
 function Icon({ index }) {
-    const IconComponent = options[index]
-    return <IconComponent
-        size={40}
-        color={"#ffffff"}
-        variant={"stroke"}
-    />
-
+    const activity = options[index]
+    return <FontAwesomeIcon icon={activity} color='white' size={32} />
 }
 
 const FilterOptions = ({ animation, selectedIndex, setSelectedIndex }) => {
@@ -27,7 +22,7 @@ const FilterOptions = ({ animation, selectedIndex, setSelectedIndex }) => {
 
     return (
         <Animated.View
-            className="absolute w-36  h-[52vh] gap-2 justify-around items-start  top-32 left-3 rounded-sm"
+            className="absolute w-36 h-[52vh] gap-2 justify-around items-start  top-32 left-3 rounded-sm"
             style={animation}
         >
             {

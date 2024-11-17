@@ -1,16 +1,13 @@
-import { Flag02Icon, TicTacToeIcon, Timer01Icon } from 'hugeicons-react-native'
 import { View, Image, Text } from 'react-native'
 import { images } from '../../constants'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faClock, faHeartPulse } from '@fortawesome/free-solid-svg-icons'
 
 const Activities = ({ place }) => {
     return (
         <View>
             <View className="flex-row mb-8 items-center ml-1">
-                <TicTacToeIcon
-                    size={34}
-                    color={"#cf613c"}
-                    variant={"stroke"}
-                />
+                <FontAwesomeIcon icon={faHeartPulse} color='#cf613c' size={32} />
                 <Text className="text-terciary text-xl left-2 font-bold">Actividades</Text>
             </View>
             <View className="w-full px-2 items-center ">
@@ -31,12 +28,7 @@ const Activities = ({ place }) => {
                                         </View>
                                         <View className="w-full h-1/2 flex-row items-center rounded-lg">
                                             <View className="w-full h-[95%] bg-terciary rounded-lg flex-row items-center">
-                                                <Timer01Icon
-                                                    size={20}
-                                                    color={"#ffffff"}
-                                                    variant={"stroke"}
-                                                    className="ml-2"
-                                                />
+                                                <FontAwesomeIcon icon={faClock} color='#fff' size={32} />
                                                 <Text className="text-primary ml-1">1:30hr</Text>
                                             </View>
                                         </View>

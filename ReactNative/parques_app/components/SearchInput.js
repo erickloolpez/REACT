@@ -3,14 +3,14 @@ import { useState } from 'react'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { usePathname, router } from 'expo-router'
 
-import { ViewOffSlashIcon } from 'hugeicons-react-native'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 
 const SearchInput = () => {
     const pathname = usePathname()
     const [query, setQuery] = useState('')
-    const widthLength =  '90%'
+    const widthLength = '90%'
 
     const [openSearch, setOpenSearch] = useState(0)
 
@@ -36,11 +36,10 @@ const SearchInput = () => {
                         return Alert.alert('Missing query', "Please input something to search results across database.")
                     }
 
-                    if (pathname.startsWith('/search')) router.setParams({ query })
-                    else router.push(`/search/${query}`)
+                    router.push(`/search/${query}`)
                 }}
             />
-            
+
             <TouchableOpacity
                 className="w-12 h-10 absolute right-0"
                 onPress={() => {
@@ -58,11 +57,7 @@ const SearchInput = () => {
                 {
                     openSearch === 1 && (
                         <View className="w-full h-full bg-white items-center justify-center rounded-full">
-                            <ViewOffSlashIcon
-                                size={32}
-                                color={"#17301A"}
-                                variant={"stroke"}
-                            />
+                            <FontAwesomeIcon icon={faEyeSlash} color='black' size={28} />
                         </View>
                     )
                 }

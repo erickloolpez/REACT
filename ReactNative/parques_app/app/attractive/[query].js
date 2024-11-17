@@ -1,10 +1,11 @@
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import { useState } from 'react'
 import { useLocalSearchParams, router } from 'expo-router'
-import { ArrowLeft01Icon, Navigation03Icon } from 'hugeicons-react-native'
 import MapView, { Marker, Polyline, Polygon } from 'react-native-maps';
 
 import { parks } from '../../constants';
+import { faAngleLeft, faLocationArrow } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 const InfoAttractive = () => {
     const { modalPark, trend, park } = useLocalSearchParams()
@@ -84,11 +85,7 @@ const InfoAttractive = () => {
                     className="w-32 h-16 flex-row items-center justify-center rounded-tr-full rounded-br-full bg-green-800"
                     onPress={() => router.back()}
                 >
-                    <ArrowLeft01Icon
-                        size={48}
-                        color={"#ffffff"}
-                        variant={"stroke"}
-                    />
+                    <FontAwesomeIcon icon={faAngleLeft} color='white' size={32} />
                     <Text className="text-white ml-1">Volver</Text>
                 </TouchableOpacity>
                 {
@@ -97,11 +94,7 @@ const InfoAttractive = () => {
                         className="w-32 h-16 flex-row items-center justify-center rounded-tl-full rounded-bl-full bg-green-800"
                         onPress={() => router.push(`/modals/${parsedPark.name}`)}
                     >
-                        <Navigation03Icon
-                            size={34}
-                            color={"#ffffff"}
-                            variant={"stroke"}
-                        />
+                        <FontAwesomeIcon icon={faLocationArrow} color='white' size={32} />
                         <Text className="text-white ml-1">Ver parque</Text>
                     </TouchableOpacity>
                 }

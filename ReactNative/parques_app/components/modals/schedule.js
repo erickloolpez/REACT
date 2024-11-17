@@ -1,6 +1,7 @@
 import { View, Text, FlatList } from 'react-native'
 import React from 'react'
-import { Calendar01Icon } from 'hugeicons-react-native'
+import { faCalendar } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 const Schedule = () => {
     const week = [
@@ -15,11 +16,7 @@ const Schedule = () => {
     return (
         <View className=" w-full h-[18vh]">
             <View className="flex-row mb-4 items-center">
-                <Calendar01Icon
-                    size={34}
-                    color={"#cf613c"}
-                    variant={"stroke"}
-                />
+                <FontAwesomeIcon icon={faCalendar} color='#cf613c' size={32} />
                 <Text className="text-xl text-terciary ml-2 font-bold">Horarios</Text>
             </View>
             <FlatList
@@ -39,21 +36,6 @@ const Schedule = () => {
                 contentContainerStyle={{ paddingHorizontal: 5 }}
                 showsHorizontalScrollIndicator={false}
             />
-
-            {/* <View>
-                <Text className="text-xl text-terciary font-bold">Horarios:</Text>
-            </View>
-            <View className="mt-3 flex-wrap flex-row">
-                {
-                    week.map((day, index) => (
-                        <View key={index} className="grow p-2 border-2 rounded-md border-terciary ">
-                            <Text className="text-center text-green-900">
-                                {day.name} <Text>{day.schedule}</Text>
-                            </Text>
-                        </View>
-                    ))
-                }
-            </View> */}
         </View>
     )
 }

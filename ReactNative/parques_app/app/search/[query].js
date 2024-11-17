@@ -5,7 +5,8 @@ import SearchInput from '../../components/SearchInput'
 import FollowingIcon from '../../components/FollowingIcon'
 import EmptyState from '../../components/EmptyState'
 import { images, icons, parks } from '../../constants'
-import { ArrowLeft01Icon, DirectionRight02Icon, MapsIcon } from 'hugeicons-react-native'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faAngleLeft, faMap, faRoute } from '@fortawesome/free-solid-svg-icons'
 
 const SearchValue = () => {
     const { query } = useLocalSearchParams()
@@ -18,7 +19,7 @@ const SearchValue = () => {
                 keyExtractor={(item) => item.name}
                 renderItem={({ item }) => (
                     <TouchableOpacity
-                        onPress = {()=>router.push(`/modals/${item.name}`)}
+                        onPress={() => router.push(`/modals/${item.name}`)}
                     >
                         <View className="w-[98%] min-h-[24vh] h-[24vh]  mb-5 relative">
                             <View className="w-full h-full flex-row absolute bg-primary border-2 rounded-xl  z-20">
@@ -30,19 +31,11 @@ const SearchValue = () => {
                                         <Text className="font-bold">{item.name}</Text>
                                     </View>
                                     <View className="flex-row gap-1 items-center">
-                                        <DirectionRight02Icon
-                                            size={28}
-                                            color={"black"}
-                                            variant={"stroke"}
-                                        />
+                                        <FontAwesomeIcon icon={faMap} color='black' size={32} />
                                         <Text>Provincia de Pichincha</Text>
                                     </View>
                                     <View className="flex-row gap-1 items-center">
-                                        <MapsIcon
-                                            size={28}
-                                            color={"black"}
-                                            variant={"stroke"}
-                                        />
+                                        <FontAwesomeIcon icon={faRoute} color='black' size={32} />
                                         <Text>121 km²</Text>
                                     </View>
                                     <View className="flex-row justify-center items-center">
@@ -67,11 +60,7 @@ const SearchValue = () => {
                         <View className="w-[94%] h-[80px] relative ">
                             <View className="w-[10%] h-16 mt-4 absolute ">
                                 <TouchableOpacity onPress={() => router.back()}>
-                                    <ArrowLeft01Icon
-                                        size={42}
-                                        color={"#cf613c"}
-                                        variant={"stroke"}
-                                    />
+                                    <FontAwesomeIcon icon={faAngleLeft} color='#cf613c' size={32} />
                                 </TouchableOpacity>
                             </View>
                             <View className='absolute w-[65%]   h-16  left-12 mt-2 items-center justify-center'>

@@ -1,9 +1,8 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Logout03Icon, MoreHorizontalCircle01Icon } from 'hugeicons-react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCrown, faGem, faTree } from '@fortawesome/free-solid-svg-icons'
+import { faCrown, faGem, faRightFromBracket, faTree } from '@fortawesome/free-solid-svg-icons'
 import CountryFlag from 'react-native-country-flag'
 
 import { images } from '../../constants'
@@ -15,12 +14,7 @@ const Profile = () => {
     <SafeAreaView className="h-full bg-primary" edges={['top']}>
       <View className="w-full h-full items-center">
         <View className="w-full h-[10%] items-end justify-center ">
-          <Logout03Icon
-            className="mr-4"
-            size={32}
-            color={"#ef4444"}
-            variant={"stroke"}
-          />
+          <FontAwesomeIcon icon={faRightFromBracket} color='#ef4444' size={32} />
         </View>
 
         <View className="w-full h-[40%] items-center justify-around">
@@ -54,7 +48,7 @@ const Profile = () => {
             <Text className="font-semibold text-lg ml-2 text-terciary">Tus reseñas</Text>
           </View>
           <View className="w-full h-[80%] items-center justify-center">
-          <Review />
+            <Review />
           </View>
         </View>
 

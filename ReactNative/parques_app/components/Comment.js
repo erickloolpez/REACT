@@ -1,6 +1,5 @@
 import { View, Text, Image } from 'react-native'
 import { images } from '../constants'
-import { StarIcon } from 'hugeicons-react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 

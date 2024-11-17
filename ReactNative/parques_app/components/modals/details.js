@@ -1,7 +1,8 @@
 import { View, Text } from 'react-native'
-import { Calendar03Icon, Location06Icon, CloudIcon, Dollar01Icon, DirectionLeft01Icon } from 'hugeicons-react-native'
+import { faCloudSun, faLocationDot, faMap, faMoneyBill } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
-const Details = ({children}) => {
+const Details = ({ children }) => {
     return (
         <View className="w-full px-2">
             <View className="w-full mt-3">
@@ -10,11 +11,7 @@ const Details = ({children}) => {
             <View className="w-full h-[18vh]  mb-4 flex-wrap flex-row content-around">
                 <View className="w-1/2 flex-row items-center  justify-around  ">
                     <View className="w-[30%] items-center">
-                        <DirectionLeft01Icon
-                            size={34}
-                            color={"#eab308"}
-                            variant={"stroke"}
-                        />
+                        <FontAwesomeIcon icon={faMap} color='#eab308' size={32} />
                     </View>
                     <View className="w-[60%]">
                         <Text className="text-terciary">Region</Text>
@@ -23,11 +20,7 @@ const Details = ({children}) => {
                 </View>
                 <View className="w-1/2 flex-row items-center  justify-around  ">
                     <View className="w-[30%] items-center">
-                        <Location06Icon
-                            size={34}
-                            color={"#f87171"}
-                            variant={"stroke"}
-                        />
+                        <FontAwesomeIcon icon={faLocationDot} color='#ef4444' size={32} />
                     </View>
                     <View className="w-[60%]">
                         <Text className="text-terciary">Provincia</Text>
@@ -36,11 +29,7 @@ const Details = ({children}) => {
                 </View>
                 <View className="w-1/2 flex-row items-center  justify-around  ">
                     <View className="w-[30%] items-center">
-                        <CloudIcon
-                            size={34}
-                            color={"#3b82f6"}
-                            variant={"stroke"}
-                        />
+                        <FontAwesomeIcon icon={faCloudSun} color='#3b82f6' size={32} />
                     </View>
                     <View className="w-[60%]">
                         <Text className="text-terciary">Clima</Text>
@@ -49,11 +38,7 @@ const Details = ({children}) => {
                 </View>
                 <View className="w-1/2 flex-row items-center  justify-around  ">
                     <View className="w-[30%] items-center">
-                        <Dollar01Icon
-                            size={34}
-                            color={"green"}
-                            variant={"stroke"}
-                        />
+                        <FontAwesomeIcon icon={faMoneyBill} color='green' size={32} />
                     </View>
                     <View className="w-[60%]">
                         <Text className="text-terciary">Tarifa</Text>

@@ -1,8 +1,17 @@
 import { View, Text } from 'react-native'
 import { Tabs } from 'expo-router'
 
-import { ChampionIcon, Home01Icon, Location04Icon, MenuSquareIcon, UserIcon } from 'hugeicons-react-native'
+import { faHouse, faMagnifyingGlass, faMapLocationDot, faTrophy, faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
+const TabIcon = ({ icon, color, name }) => {
+    return (
+        <View className="items-center mt-3 w-14">
+            <FontAwesomeIcon icon={icon} color={color} size={28} />
+            <Text style={{ color: color }}>{name}</Text>
+        </View>
+    );
+};
 
 const TabLayout = () => {
     return (
@@ -21,19 +30,12 @@ const TabLayout = () => {
                 }}
             >
                 <Tabs.Screen
-                    name="search"
+                    name="home"
                     options={{
                         title: 'Home',
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
-                            <View className="items-center mt-3 w-14">
-                                <Home01Icon
-                                    size={34}
-                                    color={color}
-                                    variant={"stroke"}
-                                />
-                                <Text style={{ color: color }}>Home</Text>
-                            </View>
+                            <TabIcon icon={faHouse} name={'Home'} color={color} />
                         )
                     }}
                 />
@@ -43,14 +45,7 @@ const TabLayout = () => {
                         title: 'Map',
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
-                            <View className="items-center mt-3 w-14">
-                                <Location04Icon
-                                    size={34}
-                                    color={color}
-                                    variant={"stroke"}
-                                />
-                                <Text style={{ color: color }}>Map</Text>
-                            </View>
+                            <TabIcon icon={faMapLocationDot} name={'Map'} color={color} />
                         )
                     }}
                 />
@@ -60,31 +55,17 @@ const TabLayout = () => {
                         title: 'Game',
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
-                            <View className="items-center mt-3 w-14">
-                                <ChampionIcon
-                                    size={34}
-                                    color={color}
-                                    variant={"stroke"}
-                                />
-                                <Text style={{ color: color }}>Prizes</Text>
-                            </View>
+                            <TabIcon icon={faTrophy} name={'Prizes'} color={color} />
                         )
                     }}
                 />
                 <Tabs.Screen
-                    name="home"
+                    name="search"
                     options={{
                         title: 'Search',
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
-                            <View className="items-center w-14 mt-3">
-                                <MenuSquareIcon
-                                    size={34}
-                                    color={color}
-                                    variant={"stroke"}
-                                />
-                                <Text style={{ color: color }}>Explorer</Text>
-                            </View>
+                            <TabIcon icon={faMagnifyingGlass} name={'Search'} color={color} />
                         )
                     }}
                 />
@@ -94,14 +75,7 @@ const TabLayout = () => {
                         title: 'Profile',
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
-                            <View className="items-center mt-3 w-14">
-                                <UserIcon
-                                    size={34}
-                                    color={color}
-                                    variant={"stroke"}
-                                />
-                                <Text style={{ color: color }}>Profile</Text>
-                            </View>
+                            <TabIcon icon={faUser} name={'Profile'} color={color} />
                         )
                     }}
                 />

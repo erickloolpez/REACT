@@ -1,132 +1,103 @@
-import { View, Text, Dimensions, ScrollView, Image } from 'react-native'
+import { View, ScrollView, Image, TouchableOpacity, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Animated, { interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
-import { useState } from 'react'
+import * as Location from 'expo-location'
+import { router } from 'expo-router'
+import { useEffect, useState } from 'react'
 
-import { parks } from '../../constants'
-import Cards from '../../components/Cards'
-import BackDropText from '../../components/BackDropText';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faMountainSun } from '@fortawesome/free-solid-svg-icons'
-// import HumaComponent from '../../assets/svgs/huma'
-// import CondorComponent from '../../assets/svgs/condor'
+
+import { icons, images, parks } from '../../constants'
+import ActivityIcon from '../../components/ActivityIcon'
+import SearchInput from '../../components/SearchInput'
+import { useGlobalContext } from '../../context/GlobalProvider'
+
 
 const Search = () => {
+  const { userLocation, setUserLocation } = useGlobalContext()
+  const [filterParks , setFilterParks] = useState(parks)
+  const [selectedActivity, setSelectedActivity] = useState(null)
 
-  const { width } = Dimensions.get('window')
-  const _slideWidth = width * 0.45
-  const _slideHeight = _slideWidth * 1.70
-  const _spacing = 18
+  const activities = [
+    { name: 'Fotografia', image: icons.camara },
+    { name: 'Buceo', image: icons.buceo },
+    { name: 'Camping', image: icons.camping },
+    { name: 'Ciclismo', image: icons.ciclismo },
+    { name: 'Canotaje', image: icons.canotaje },
+    { name: 'Montar a caballo', image: icons.caballo },
+    { name: 'Senderismo', image: icons.senderismo },
+  ]
 
-  const [visibleParks, setVisibleParks] = useState(5); // Número inicial de parques visibles
+  async function getLocationPermission() {
+    let { status } = await Location.requestForegroundPermissionsAsync()
 
-  const loadMoreParks = () => {
-    setVisibleParks(prevCount => prevCount + 6); // Incrementa la cantidad de elementos visibles en 5
-  };
+    if (status !== 'granted') {
+      alert('Permission denied.')
+      return
+    }
 
-  const scrollX = useSharedValue(0)
-  const onScroll = useAnimatedScrollHandler((e) => {
-    scrollX.value = e.contentOffset.x / (_slideWidth + _spacing)
-  })
+    let location = await Location.getCurrentPositionAsync()
 
-  function BackDropImage({ image, index, scrollX }) {
-    const stylez = useAnimatedStyle(() => {
-      return {
-        opacity: interpolate(
-          scrollX.value,
-          [index - 1, index, index + 1],
-          [0, 1, 0]
-        )
-      }
-    })
+    const current = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude
+    }
 
-    return (
-      <Animated.Image
-        source={image}
-        className="w-full h-[130vh] absolute"
-        style={stylez}
-        blurRadius={2}
-      />
-    )
+    setUserLocation(current)
 
   }
 
+  useEffect(() => {
+    getLocationPermission()
+  }, [])
+
   return (
     <SafeAreaView edges={['top']} className="h-full bg-[#fbeecc]">
-      <ScrollView>
-        {
-          parks.slice(0, visibleParks).map((park, index) => (
-            <BackDropImage
-              key={`bg-photo-${park.name}`}
-              index={index}
-              scrollX={scrollX}
-              image={park.image}
-            />
-          ))
-        }
-
-        <View className="w-36 h-[7vh] justify-end items-center  relative">
-          <View className="w-[90%] h-[80%]  bg-secondary rounded-lg">
-            <View className="w-full h-full bg-secondary rounded-lg z-20 items-center flex-row justify-around">
-              <Text style={{ fontFamily: "Pilowlava-Regular" }} className="text-2xl text-white">GEA</Text>
-              <FontAwesomeIcon icon={faMountainSun} color='white' size={32} />
-            </View>
-            <View className="w-full h-full absolute  top-1 right-1 bg-white rounded-lg border-2" />
+      <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+        <View className="w-full h-[47vh] relative">
+          <View className='absolute h-16 top-32 left-0 mt-2 items-center justify-center z-10'>
+            <Text style={{ fontFamily: "Pilowlava-Regular" }} className="text-7xl text-white">GEA</Text>
           </View>
-        </View>
-
-        <View className="w-full h-[10vh] relative bg-secondary justify-around border-white border-t-2 border-b-2 items-center mt-3 flex-row">
-          {/* <HumaComponent /> */}
-          <View>
-            <Text className="text-xl font-bold uppercase text-white">LLanganates</Text>
+          <View className='w-[50%]  absolute top-36  right-0  items-center justify-center z-20 bg-secondary border-x-2 border-white '>
+            <Text className="text-white text-lg text-center">"Conoce la grandeza natural de Ecuador."</Text>
           </View>
-          {/* <CondorComponent /> */}
-
+          <View className="w-[94%] h-20 absolute top-4 z-10  ml-3 ">
+            <SearchInput />
+          </View>
+          <Image source={images.marco} resizeMode='cover' className="w-full h-full" />
         </View>
 
-        <View className="w-full h-[50vh]">
-          <Animated.FlatList
-            data={parks.slice(0, visibleParks)}
-            keyExtractor={(park) => park.name}
-            renderItem={({ item: park, index }) => (
-              <Cards key={`park-name${park.name}-${index}`} park={park} scrollX={scrollX} index={index} width={_slideWidth} height={_slideHeight} />
-            )
-            }
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            snapToInterval={_slideWidth + _spacing}
-            decelerationRate={"fast"}
-            contentContainerStyle={{
-              gap: _spacing,
-              paddingHorizontal: (width - _slideWidth) / 2,
-              alignItems: 'center'
-            }}
 
-            onScroll={onScroll}
-            scrollEventThrottle={100 / 60}
-
-            onEndReached={loadMoreParks}
-            onEndReachedThreshold={0.5}
-          />
+        <View className="w-full h-[18vh] min-h-[18vh] flex-wrap flex-row items-center justify-around content-center oveflow-hidden mb-4 mt-[-30px]  ">
+          {activities.map((activity, index) => (
+            <ActivityIcon key={`activity-${index}`} name={activity.name} image={activity.image} parks={parks} setParks={setFilterParks} selectedActivity={selectedActivity} setSelectedActivity={setSelectedActivity} />
+          ))}
         </View>
-        
-        <View className="w-full h-[60vh] mt-2 ">
-          {
-            parks.slice(0, visibleParks).map((park, index) => (
-              <BackDropText
-                key={`bg-text-${park.name}`}
-                index={index}
-                scrollX={scrollX}
-                park={park}
-              />
-            ))
-          }
+
+
+        <View className="w-[94%]  flex-row justify-between">
+          <View className="w-[48%]">
+            {filterParks.filter((_, index) => index % 2 === 0 && index !== 10).map((park, index) => (
+              <TouchableOpacity key={`even-${index}`} onPress={() => router.push(`/modals/${park.name}`)}>
+                <View className="mb-4 relative ">
+                  <Image source={park.image} className="w-full h-auto rounded-lg" resizeMode="cover" />
+                  <Image source={park.logo} className="w-[85%] absolute top-[-45px] left-2" resizeMode="contain" />
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <View className="w-[48%]">
+            {filterParks.filter((_, index) => index % 2 !== 0 || index == 10).map((park, index) => (
+              <TouchableOpacity key={`odd-${index}`} onPress={() => router.push(`/modals/${park.name}`)}>
+                <View className="mb-4 relative ">
+                  <Image source={park.image} className="w-full h-auto rounded-lg" resizeMode="cover" />
+                  <Image source={park.logo} className="w-[85%] absolute bottom-[-45px] left-2" resizeMode="contain" />
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
-
   )
 }
-
 
 export default Search

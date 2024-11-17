@@ -1,8 +1,6 @@
 import { View, Image, Text, TouchableOpacity, Modal } from 'react-native'
 import { useState } from 'react'
 
-import { logos } from '../../constants'
-import { XingIcon } from 'hugeicons-react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 

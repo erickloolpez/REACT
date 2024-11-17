@@ -4,12 +4,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import MapView, { Marker, Polygon, Callout } from 'react-native-maps';
 import { router } from 'expo-router'
 import { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import { ArrowRight01Icon, FilterIcon } from 'hugeicons-react-native';
 
 import { useGlobalContext } from '../../context/GlobalProvider';
 import { parks } from '../../constants/dummy';
 import FilterOptions from '../../components/map/filterOptions';
 import SearchInput from '../../components/map/searchInput';
+import { faArrowRight, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 const Map = () => {
     const { userLocation } = useGlobalContext();
@@ -46,10 +47,10 @@ const Map = () => {
                         }}
                     >
                         {parks.map((park, index) => (
-                            <React.Fragment key={`park-${index}`}>
+                            <React.Fragment key={`park-map-${index}`}>
                                 <Polygon coordinates={park.polygon} fillColor={'rgba(100,100,200,0.3)'} strokeWidth={1} />
                                 <Marker coordinate={park.location} title={park.name} >
-                                    <Callout>
+                                    <Callout >
                                         <View className="w-36 h-36 items-center justify-around ">
                                             <View>
                                                 <Text>{park.name}</Text>
@@ -62,11 +63,8 @@ const Map = () => {
                                                 onPress={() => router.push(`/modals/${park.name}`)}
                                             >
                                                 <Text className="text-white">Ver mas</Text>
-                                                <ArrowRight01Icon
-                                                    size={32}
-                                                    color={"#ffffff"}
-                                                    variant={"stroke"}
-                                                />
+                                                <FontAwesomeIcon icon={faArrowRight} color='#fff' size={32} />
+
                                             </TouchableOpacity>
                                         </View>
                                     </Callout>
@@ -90,11 +88,7 @@ const Map = () => {
                             }
                         }}
                     >
-                        <FilterIcon
-                            size={32}
-                            color={"#17301A"}
-                            variant={"stroke"}
-                        />
+                        <FontAwesomeIcon icon={faFilter} color='black' size={32} />
                     </TouchableOpacity>
                     <FilterOptions animation={menuStylez} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
                     <SearchInput />
