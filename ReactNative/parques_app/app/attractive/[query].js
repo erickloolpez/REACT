@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView, Touchable } from 'react-native'
 import { useState } from 'react'
 import { useLocalSearchParams, router } from 'expo-router'
 import MapView, { Marker, Polyline, Polygon } from 'react-native-maps';
@@ -6,100 +6,103 @@ import MapView, { Marker, Polyline, Polygon } from 'react-native-maps';
 import { parks } from '../../constants';
 import { faAngleLeft, faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const InfoAttractive = () => {
     const { modalPark, trend, park } = useLocalSearchParams()
+    const [section, setSection] = useState('Ubicacion')
+
+    const { userLocation } = useGlobalContext();
+    const [origin] = useState({
+        latitude: '-0.209028110783209',
+        longitude: '-78.49107901848447'
+    });
 
     const parsedTrend = JSON.parse(trend)
-    const parsedPark = JSON.parse(park)
-
-    const [origin] = useState(parsedPark.location);
-
-    const [readMore, setReadMore] = useState(false)
-    const [text, setText] = useState(parsedTrend.desc.slice(0, 207))
 
     return (
         <ScrollView contentContainerStyle={{ backgroundColor: "#FBEECC" }} showsVerticalScrollIndicator={false}>
-            <View className="w-full h-[30vh] bg-pink-400 relative">
-                <MapView
-                    className="w-full h-full"
-                    initialRegion={{
-                        latitude: origin.latitude,
-                        longitude: origin.longitude,
-                        latitudeDelta: 0.4,
-                        longitudeDelta: 0.1,
-                    }}
-                >
-                    <Marker coordinate={origin} title={parsedPark.name} />
-                </MapView>
-                <View className="absolute bottom-[-42px] w-32 h-32 bg-red-400 rounded-full left-32 overflow-hidden border-2 border-white">
-                    <Image source={parsedTrend.image} className="w-full h-full" resizeMode="cover" />
-                </View>
+            <View className="w-[84%] h-[14vh] items-start justify-center">
+                <Text className="text-3xl font-semibold uppercase">{parsedTrend.name}</Text>
             </View>
 
-            <View className="w-full mt-12 px-2 ">
-                <View>
-                    <Text className="text-xl font-bold text-terciary">{parsedTrend.name}</Text>
-                </View>
-                <View className="w-full mt-4">
-                    <Text className="text-green-800">
-                        {text}
-                        {!readMore && '...'}
-                        <Text className="text-[#CF613C]" onPress={() => {
-                            if (!readMore) {
-                                setText(parsedTrend.desc)
-                                setReadMore(true)
-                            } else {
-                                setText(parsedTrend.desc.slice(0, 240))
-                                setReadMore(false)
-                            }
-                        }}>
-                            {readMore ? ' Mostrar menos' : ' Mostrar mas'}
-                        </Text>
-                    </Text>
-                </View>
+            <View className="w-full h-[30vh]">
+                <Image source={parsedTrend.image} resizeMode="cover" className="w-full h-full" />
             </View>
 
-            <View className="w-full flex-row mt-4 px-2">
-                <View className="w-1/2 h-44 ">
-                    <Image source={parks[0].image} resizeMode="cover" className="w-[95%] h-full rounded-xl" />
-                </View>
-                <View className="w-1/2 h-44">
-                    <View className="w-full h-1/2 ">
-                        <Image source={parks[2].image} resizeMode="cover" className="w-full h-[95%] rounded-xl" />
+            <View className="w-full h-[10vh] items-start justify-center ">
+                <View className="w-[40%] ml-3">
+                    <View>
+                        <Text>{parsedTrend.name}</Text>
                     </View>
-                    <View className="w-full h-1/2 flex-row">
-                        <View className="w-1/2 h-full ">
-                            <Image source={parks[1].image} resizeMode="cover" className="w-[94%] h-full rounded-xl" />
+                    <View className="flex-row justify-between mt-2">
+                        <View className="">
+                            <Text className="font-bold">12 km</Text>
                         </View>
-                        <View className="w-1/2 h-full ">
-                            <Image source={parks[4].image} resizeMode="cover" className="w-[94%] h-full self-end rounded-xl" />
+                        <View className="">
+                            <Text className="font-bold">~2h10</Text>
                         </View>
-
                     </View>
                 </View>
+
             </View>
 
-            <View className="flex-row w-full mt-14 mb-20 justify-between">
-                <TouchableOpacity
-                    className="w-32 h-16 flex-row items-center justify-center rounded-tr-full rounded-br-full bg-green-800"
-                    onPress={() => router.back()}
-                >
-                    <FontAwesomeIcon icon={faAngleLeft} color='white' size={32} />
-                    <Text className="text-white ml-1">Volver</Text>
+            <View className="w-full mb-10 items-center justify-center">
+                <View className="w-[90%]">
+                    <Text>{parsedTrend.desc}</Text>
+                </View>
+            </View>
+
+            <View className="w-full h-[10vh]  flex-row justify-around items-center border-t-2 border-b-2">
+                <TouchableOpacity onPress={() => setSection('Ubicacion')}>
+                    <Text className={`text-lg ${section === 'Ubicacion' ? 'font-bold':''}`}>Ubicacion</Text>
                 </TouchableOpacity>
-                {
-                    modalPark !== 'true' &&
-                    <TouchableOpacity
-                        className="w-32 h-16 flex-row items-center justify-center rounded-tl-full rounded-bl-full bg-green-800"
-                        onPress={() => router.push(`/modals/${parsedPark.name}`)}
-                    >
-                        <FontAwesomeIcon icon={faLocationArrow} color='white' size={32} />
-                        <Text className="text-white ml-1">Ver parque</Text>
-                    </TouchableOpacity>
-                }
-
+                <TouchableOpacity onPress={() => setSection('Fotos')}>
+                    <Text className={`text-lg ${section === 'Fotos' ? 'font-bold': ''}`}>Fotos</Text>
+                </TouchableOpacity>
             </View>
+
+            <View className="w-full h-[50vh] ">
+                {
+                    section === 'Ubicacion' && (
+                        <MapView
+                            className="w-full h-full"
+                            initialRegion={{
+                                latitude: origin.latitude,
+                                longitude: origin.longitude,
+                                latitudeDelta: userLocation ? 5 : 0.4,
+                                longitudeDelta: userLocation ? 0.4 : 0.1,
+                            }}
+                        >
+                            <Marker coordinate={parsedTrend.location} title={parsedTrend.name} />
+                            {userLocation && <Marker coordinate={userLocation} title={'Tú'} />}
+                        </MapView>
+
+                    )
+                }
+                {
+                    section === 'Fotos' && (
+                        <View className="w-full h-full">
+                            <View className="justify-end h-[10%] ">
+                                <Text className="uppercase ml-3 text-lg font-semibold">Lo que encontraras</Text>
+                            </View>
+                            <View className="w-full h-[90%] items-center justify-around flex-row">
+                                <View className="w-32 h-72 rounded-xl overflow-hidden ">
+                                    <Image source={parsedTrend.image} resizeMode="cover" className="w-full h-full" />
+                                </View>
+                                <View className="w-32 h-72 rounded-xl overflow-hidden ">
+                                    <Image source={parsedTrend.image} resizeMode="cover" className="w-full h-full" />
+                                </View>
+                                <View className="w-32 h-72 rounded-xl overflow-hidden ">
+                                    <Image source={parsedTrend.image} resizeMode="cover" className="w-full h-full" />
+                                </View>
+                            </View>
+                        </View>
+                    )
+                }
+            </View>
+
+            <View className="w-full h-[8vh]" />
         </ScrollView >
     )
 }

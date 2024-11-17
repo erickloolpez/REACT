@@ -7,25 +7,14 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 
-const SearchInput = () => {
+const SearchInput = ({animation, animatedStyle, setOpenSearch, openSearch}) => {
     const pathname = usePathname()
     const [query, setQuery] = useState('')
-    const widthLength = '90%'
-
-    const [openSearch, setOpenSearch] = useState(0)
-
-    const animation = useSharedValue(0)
-    const animatedStyle = useAnimatedStyle(() => {
-        return {
-            width:
-                animation.value == 1 ? withTiming(widthLength, { duration: 500 }) : withTiming('14%', { duration: 500 }),
-        }
-    })
 
     return (
-        <Animated.View className={`border-green-800 bg-white absolute right-0 mt-2 h-12 px-4  rounded-full focus:border-[#CF613C] items-center flex-row space-x-4 `} style={animatedStyle}>
+        <Animated.View className={`border-green-800  absolute right-0 h-14 px-4  rounded-full focus:border-[#CF613C] items-center flex-row bg-white `} style={animatedStyle}>
             <TextInput
-                className="text-base h-full text-[#CF613C] flex-1  font-regular "
+                className="text-base h-10 text-[#CF613C] flex-1  font-regular "
                 value={query}
                 placeholder={'   Busca tu parque favorito.'}
                 placeholderTextColor="#CF613C"
@@ -41,7 +30,7 @@ const SearchInput = () => {
             />
 
             <TouchableOpacity
-                className="w-12 h-10 absolute right-0"
+                className="w-12 h-12 absolute right-0 "
                 onPress={() => {
                     if (animation.value == 1) {
                         animation.value = 0

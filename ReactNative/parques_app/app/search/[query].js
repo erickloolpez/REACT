@@ -1,85 +1,139 @@
-import { View, Text, SafeAreaView, FlatList, Image, TouchableOpacity } from 'react-native'
-import { router, useLocalSearchParams } from 'expo-router'
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, TouchableOpacity, SafeAreaView, TextInput, Pressable } from 'react-native';
+import MasonryList from '@react-native-seoul/masonry-list';
+import { router, useLocalSearchParams } from 'expo-router';
+import { MotiView } from 'moti';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import Animated, { FadeInDown, FadeOutUp, LinearTransition } from 'react-native-reanimated'
+import { faBicycle, faCamera, faCampground, faPersonHiking, faPersonSwimming, faSailboat } from '@fortawesome/free-solid-svg-icons';
 
-import SearchInput from '../../components/SearchInput'
-import FollowingIcon from '../../components/FollowingIcon'
-import EmptyState from '../../components/EmptyState'
-import { images, icons, parks } from '../../constants'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faAngleLeft, faMap, faRoute } from '@fortawesome/free-solid-svg-icons'
+import EmptyState from '../../components/EmptyState';
+import { parks } from '../../constants';
 
 const SearchValue = () => {
-    const { query } = useLocalSearchParams()
-    const results = parks.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()))
+    const { query } = useLocalSearchParams();
+    const [data, setData] = useState([]);
+
+    const attractives = parks.flatMap((park) => park.trend);
+
+    useEffect(() => {
+        if (query === "Parks") {
+            setData(parks);
+        } else {
+            setData(attractives);
+        }
+    }, []);
+
+    const parksID = ['Fotografia', 'Buceo', 'Camping', 'Ciclismo', 'Canotaje', 'Senderismo']
+    const [selectedIndex, setSelectedIndex] = useState(null)
+    const activeColor = "#fff"
+    const inactiveColor = "#ggg"
+    const activeBackgroundColor = "#cf613c"
+    const inactiveBackgroundColor = "#17301a"
+    const options = [faCamera, faPersonSwimming, faCampground, faBicycle, faSailboat, faPersonHiking]
+
+    function Icon({ index }) {
+        const activity = options[index]
+        return <FontAwesomeIcon icon={activity} color='white' size={32} />
+    }
     return (
-        <SafeAreaView className="bg-primary h-full">
-            <FlatList
-                className="pl-2"
-                data={results}
-                keyExtractor={(item) => item.name}
-                renderItem={({ item }) => (
-                    <TouchableOpacity
-                        onPress={() => router.push(`/modals/${item.name}`)}
-                    >
-                        <View className="w-[98%] min-h-[24vh] h-[24vh]  mb-5 relative">
-                            <View className="w-full h-full flex-row absolute bg-primary border-2 rounded-xl  z-20">
-                                <View className="w-1/2 h-[97%]" >
-                                    <Image source={item.image} className="w-full h-full rounded-tl-xl rounded-bl-xl " resizeMode="cover" />
-                                </View>
-                                <View className="w-1/2 px-1 justify-around ">
-                                    <View className="w-full items-center justify-center">
-                                        <Text className="font-bold">{item.name}</Text>
-                                    </View>
-                                    <View className="flex-row gap-1 items-center">
-                                        <FontAwesomeIcon icon={faMap} color='black' size={32} />
-                                        <Text>Provincia de Pichincha</Text>
-                                    </View>
-                                    <View className="flex-row gap-1 items-center">
-                                        <FontAwesomeIcon icon={faRoute} color='black' size={32} />
-                                        <Text>121 km²</Text>
-                                    </View>
-                                    <View className="flex-row justify-center items-center">
-                                        <Text className="text-terciary font-bold">Actividades</Text>
-                                    </View>
-                                    <View className="flex-wrap flex-row content-center relative w-full h-12 bg-secondary">
-                                        {
-                                            item.icons.map((icon, index) => (
-                                                < FollowingIcon key={index} icon={icon.image} />
-                                            ))
-                                        }
-                                    </View>
-                                </View>
-                            </View>
-                            <View className="w-full h-full rounded-xl bg-secondary z-10 absolute top-2"></View>
-                        </View>
+        <SafeAreaView className="bg-primary w-full h-full">
+            <View className="w-full h-[8vh] flex-row justify-around items-center ">
+                <FontAwesomeIcon icon={faAngleLeft} color='black' size={32} />
+                <TextInput
+                    className="w-[84%] h-10 bg-white rounded-full"
+                />
+            </View>
+            <Animated.View className="w-full h-12 flex-row justify-around mb-2">
+                {
+                    parksID.map((park, index) => {
+                        const isSelected = selectedIndex === index
+                        return (
+                            <MotiView
+                                key={index}
+                                className=""
+                                layout={LinearTransition.springify().damping(80).stiffness(200)}
+                                animate={{
+                                    backgroundColor: isSelected ? activeBackgroundColor : inactiveBackgroundColor,
+                                    borderRadius: 8,
+                                    overflow: 'hidden'
+                                }}
+                            >
+                                <Pressable onPress={() => {
+                                    selectedIndex !== index ? setSelectedIndex(index) : setSelectedIndex(null)
+                                    let filterPark = parks.filter((park) =>
+                                        park.icons.some((activity) => activity.name === parksID[index])
+                                    );
+                                    setData(filterPark)
+                                }
 
-                    </TouchableOpacity>
-                )}
-                ListHeaderComponent={() => (
-                    <View className="w-full items-center">
-                        <View className="w-[94%] h-[80px] relative ">
-                            <View className="w-[10%] h-16 mt-4 absolute ">
-                                <TouchableOpacity onPress={() => router.back()}>
-                                    <FontAwesomeIcon icon={faAngleLeft} color='#cf613c' size={32} />
-                                </TouchableOpacity>
-                            </View>
-                            <View className='absolute w-[65%]   h-16  left-12 mt-2 items-center justify-center'>
-                                <Text className="text-2xl text-[#CF613C] font-bold">{query}</Text>
-                            </View>
-                            <SearchInput widthMeasure={"90%"} />
-                        </View>
-                    </View>
-                )}
-                ListEmptyComponent={() => (
-                    <EmptyState
-                        title="Ningun parque encontrado."
-                        subtitle="Recuerda usar el nombre del parque."
-                    />
-                )}
-                showsVerticalScrollIndicator={false}
-            />
+                                } style={{
+                                }}
+                                    className="flex-row items-center p-2 "
+                                >
+
+                                    <Icon
+                                        index={index}
+                                    />
+                                    {
+                                        isSelected &&
+                                        <Animated.Text
+                                            className=" justify-center p-2"
+                                            entering={FadeInDown.springify().damping(80).stiffness(200)}
+                                            exiting={FadeOutUp.springify().damping(80).stiffness(200)}
+                                        >
+                                            <Text style={{ color: isSelected ? activeColor : inactiveColor }}>{park}</Text>
+                                        </Animated.Text>
+                                    }
+                                </Pressable>
+
+                            </MotiView>
+                        )
+                    })
+                }
+            </Animated.View>
+            {data.length > 0 ? (
+                <MasonryList
+                    data={data}
+                    keyExtractor={(item) => item.name}
+                    numColumns={2} // Puedes ajustar este valor según el diseño
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            onPress={() => {
+                                if (query === "Parks") {
+                                    router.push(`/modals/${item.name}`)
+
+                                } else {
+                                    let parkTrend = parks.find((park) =>
+                                        park.trend.some((trend) => trend.name === item.name)
+                                    );
+
+                                    router.push({
+                                        pathname: `/attractive/${item.desc}`,
+                                        params: { modalPark: true, trend: JSON.stringify(item), park: JSON.stringify(parkTrend) }
+                                    })
+                                }
+                            }}
+                            style={{width:'100%', margin: 5, overflow: 'hidden' }}
+                        >
+                            <Image
+                                source={item.image}
+                                resizeMode="cover"
+                                style={{ width: '96%', height: Math.random() * 150 + 100, borderRadius: 10 }} // Altura aleatoria para diseño estilo Pinterest
+                            />
+                            <Text className="text-terciary font-semibold">{item.name}</Text>
+                        </TouchableOpacity>
+                    )}
+                />
+            ) : (
+                <EmptyState
+                    title="Ningun parque encontrado."
+                    subtitle="Recuerda usar el nombre del parque."
+                />
+            )}
         </SafeAreaView>
-    )
-}
+    );
+};
 
-export default SearchValue 
+export default SearchValue;

@@ -53,7 +53,6 @@ const Home = () => {
 
   return (
     <SafeAreaView edges={['top']} className="h-full bg-[#fbeecc]">
-      <ScrollView>
         {
           parks.slice(0, visibleParks).map((park, index) => (
             <BackDropImage
@@ -65,7 +64,7 @@ const Home = () => {
           ))
         }
 
-        <View className="w-36 h-[7vh] justify-end items-center  relative">
+        {/* <View className="w-36 h-[7vh] justify-end items-center  relative">
           <View className="w-[90%] h-[80%]  bg-secondary rounded-lg">
             <View className="w-full h-full bg-secondary rounded-lg z-20 items-center flex-row justify-around">
               <Text style={{ fontFamily: "Pilowlava-Regular" }} className="text-2xl text-white">GEA</Text>
@@ -73,9 +72,9 @@ const Home = () => {
             </View>
             <View className="w-full h-full absolute  top-1 right-1 bg-white rounded-lg border-2" />
           </View>
-        </View>
+        </View> */}
 
-        <View className="w-full h-[10vh] relative bg-secondary justify-around border-white border-t-2 border-b-2 items-center mt-3 flex-row">
+        <View className="w-full h-[12%] relative bg-secondary justify-around border-white border-t-2 border-b-2 items-center mt-3 flex-row">
           <HumaComponent />
           <View>
             <Text className="text-xl font-bold uppercase text-white">LLanganates</Text>
@@ -84,7 +83,7 @@ const Home = () => {
 
         </View>
 
-        <View className="w-full h-[50vh]">
+        <View className="w-full h-[50%] ">
           <Animated.FlatList
             data={parks.slice(0, visibleParks)}
             keyExtractor={(park) => park.name}
@@ -110,7 +109,7 @@ const Home = () => {
           />
         </View>
         
-        <View className="w-full h-[60vh] mt-2 ">
+        <View className="w-full h-[38%]  mt-2 items-center ">
           {
             parks.slice(0, visibleParks).map((park, index) => (
               <BackDropText
@@ -122,7 +121,6 @@ const Home = () => {
             ))
           }
         </View>
-      </ScrollView>
     </SafeAreaView>
 
   )

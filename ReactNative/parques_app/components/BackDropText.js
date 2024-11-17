@@ -26,8 +26,8 @@ const BackDropText = ({ index, scrollX, park }) => {
     })
 
     return (
-        <Animated.View className="w-full h-full absolute" style={stylez}>
-            <View className="w-full h-[65%]  flex-row">
+        <Animated.View className="w-full h-full items-center absolute" style={stylez}>
+            <View className="w-[97%] h-[90%]  flex-row">
                 <View className="w-[60%] h-full ">
                     <View className="w-[98%] h-full rounded-2xl overflow-hidden relative"  >
                         <MapView
@@ -83,11 +83,11 @@ const BackDropText = ({ index, scrollX, park }) => {
                 </View>
             </View>
 
-            <View className="w-full h-[35%]  justify-end">
+            {/* <View className="w-full h-[35%]  justify-end">
                 <View className="w-full h-[90%]  rounded-2xl items-center justify-center">
                     <Review width={'95%'} />
                 </View>
-            </View>
+            </View> */}
         </Animated.View>
     )
 }

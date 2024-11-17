@@ -11,7 +11,7 @@ import empty from "../assets/images/empty.png";
 import cotopaxi from "../assets/images/cotopax.jpg"
 import coto from "../assets/images/cotopaxi.png"
 import cayambe from '../assets/images/cayambe_coca.jpg'
-import marco from '../assets/images/marco.jpg'
+import marco from '../assets/images/marco.png'
 import isotipo from '../assets/images/isotipo.png'
 import video from '../assets/videos/coto.mov'
 import senderismo from '../assets/images/senderismo.jpg'
