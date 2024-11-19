@@ -10,6 +10,7 @@ import { faBicycle, faCamera, faCampground, faPersonHiking, faPersonSwimming, fa
 
 import EmptyState from '../../components/EmptyState';
 import { parks } from '../../constants';
+import Nav from '../../components/search/nav';
 
 const SearchValue = () => {
     const { query } = useLocalSearchParams();
@@ -45,54 +46,7 @@ const SearchValue = () => {
                     className="w-[84%] h-10 bg-white rounded-full"
                 />
             </View>
-            <Animated.View className="w-full h-12 flex-row justify-around mb-2">
-                {
-                    parksID.map((park, index) => {
-                        const isSelected = selectedIndex === index
-                        return (
-                            <MotiView
-                                key={index}
-                                className=""
-                                layout={LinearTransition.springify().damping(80).stiffness(200)}
-                                animate={{
-                                    backgroundColor: isSelected ? activeBackgroundColor : inactiveBackgroundColor,
-                                    borderRadius: 8,
-                                    overflow: 'hidden'
-                                }}
-                            >
-                                <Pressable onPress={() => {
-                                    selectedIndex !== index ? setSelectedIndex(index) : setSelectedIndex(null)
-                                    let filterPark = parks.filter((park) =>
-                                        park.icons.some((activity) => activity.name === parksID[index])
-                                    );
-                                    setData(filterPark)
-                                }
-
-                                } style={{
-                                }}
-                                    className="flex-row items-center p-2 "
-                                >
-
-                                    <Icon
-                                        index={index}
-                                    />
-                                    {
-                                        isSelected &&
-                                        <Animated.Text
-                                            className=" justify-center p-2"
-                                            entering={FadeInDown.springify().damping(80).stiffness(200)}
-                                            exiting={FadeOutUp.springify().damping(80).stiffness(200)}
-                                        >
-                                            <Text style={{ color: isSelected ? activeColor : inactiveColor }}>{park}</Text>
-                                        </Animated.Text>
-                                    }
-                                </Pressable>
-
-                            </MotiView>
-                        )
-                    })
-                }
-            </Animated.View>
+            <Nav setData={setData}/>
             {data.length > 0 ? (
                 <MasonryList
                     data={data}
