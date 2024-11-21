@@ -76,7 +76,7 @@ const Search = () => {
           <Image source={images.marco} resizeMode='cover' className="w-full h-full" />
         </View>
 
-        <View className="w-full h-[30vh] px-1">
+        <View className="w-full h-[30vh] px-1">{/*Posible componente*/}
           <View className="w-full h-[20%] flex-row items-center justify-between">
             <Text className="text-2xl">Parques Nacionales</Text>
             <FontAwesomeIcon icon={faAngleRight} color='black' size={28} />
