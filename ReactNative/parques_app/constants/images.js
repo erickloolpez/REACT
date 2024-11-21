@@ -20,5 +20,8 @@ import avatar from '../assets/images/avatar.png'
 import cards from '../assets/images/cards.png'
 import logo from '../assets/images/logo.png'
 import path from '../assets/images/path.png'
+import ruins from '../assets/images/Ruins 1.png'
+import dots from '../assets/images/dots.png'
+import background from '../assets/images/background.png'
 
-export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto, marco, isotipo,video,senderismo, sendero, avatar,cards, logo, path};
+export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto, marco, isotipo,video,senderismo, sendero, avatar,cards, logo, path,ruins,dots, background};
