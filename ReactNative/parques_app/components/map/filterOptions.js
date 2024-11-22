@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from 'react-native'
-import Animated, { FadeInDown, FadeOutUp, LinearTransition } from 'react-native-reanimated'
+import Animated, { FadeInDown, FadeInLeft, FadeInRight, FadeOutLeft, FadeOutRight, FadeOutUp, LinearTransition } from 'react-native-reanimated'
 import { MotiView } from 'moti';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBicycle, faCamera, faCampground, faPersonHiking, faPersonSwimming, faSailboat } from '@fortawesome/free-solid-svg-icons';
@@ -51,8 +51,8 @@ const FilterOptions = ({ animation, selectedIndex, setSelectedIndex }) => {
                                     isSelected &&
                                     <Animated.Text
                                         className=" justify-center p-2"
-                                        entering={FadeInDown.springify().damping(80).stiffness(200)}
-                                        exiting={FadeOutUp.springify().damping(80).stiffness(200)}
+                                        entering={FadeInLeft.springify().damping(80).stiffness(200)}
+                                        exiting={FadeOutRight.springify().damping(80).stiffness(200)}
                                     >
                                         <Text style={{ color: isSelected ? activeColor : inactiveColor }}>{park}</Text>
                                     </Animated.Text>

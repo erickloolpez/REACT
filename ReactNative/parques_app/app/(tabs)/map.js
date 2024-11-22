@@ -11,6 +11,7 @@ import FilterOptions from '../../components/map/filterOptions';
 import SearchInput from '../../components/map/searchInput';
 import { faArrowRight, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import MapCards from '../../components/map/mapcards';
 
 const Map = () => {
     const { userLocation } = useGlobalContext();
@@ -24,6 +25,7 @@ const Map = () => {
     const height = useSharedValue(0)
     const yValue = useSharedValue(60)
     const opacitiy = useSharedValue(0)
+    let _mapView
 
     const menuStylez = useAnimatedStyle(() => {
         return {
@@ -38,6 +40,7 @@ const Map = () => {
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <View className="flex-1 relative ">
                     <MapView
+                        ref={(mapView) => { _mapView = mapView; }}
                         className="w-full h-full"
                         initialRegion={{
                             latitude: origin.latitude,
@@ -49,25 +52,12 @@ const Map = () => {
                         {parks.map((park, index) => (
                             <React.Fragment key={`park-map-${index}`}>
                                 <Polygon coordinates={park.polygon} fillColor={'rgba(100,100,200,0.3)'} strokeWidth={1} />
-                                <Marker coordinate={park.location} title={park.name} >
-                                    <Callout >
-                                        <View className="w-36 h-36 items-center justify-around ">
-                                            <View>
-                                                <Text>{park.name}</Text>
-                                            </View>
-                                            <View className="w-full h-1/2">
-                                                <Image source={park.image} resizeMode="contain" className="w-full h-full" />
-                                            </View>
-                                            <TouchableOpacity
-                                                className=" w-24 h-8 bg-green-800 rounded-full flex-row items-center justify-around "
-                                                onPress={() => router.push(`/modals/${park.name}`)}
-                                            >
-                                                <Text className="text-white">Ver mas</Text>
-                                                <FontAwesomeIcon icon={faArrowRight} color='#fff' size={32} />
-
-                                            </TouchableOpacity>
-                                        </View>
-                                    </Callout>
+                                <Marker coordinate={park.location} title={park.name} onPress={() => {
+                                    _mapView.animateToRegion({
+                                        latitude: park.location.latitude,
+                                        longitude: park.location.longitude,
+                                    }, 1000)
+                                }} >
                                 </Marker>
                             </React.Fragment>
                         ))}
@@ -92,6 +82,8 @@ const Map = () => {
                     </TouchableOpacity>
                     <FilterOptions animation={menuStylez} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
                     <SearchInput />
+                    <MapCards mapView={_mapView} />
+
                 </View>
 
             </TouchableWithoutFeedback>
