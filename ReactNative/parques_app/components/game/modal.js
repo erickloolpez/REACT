@@ -6,19 +6,19 @@ import AnimatedLottieView from 'lottie-react-native'
 const ModalGame = ({openModal, setOpenModal}) => {
     return (
         <Modal visible={openModal} animationType='slide' transparent={true}>
-            <View className="flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                <View className="bg-white w-[90%] h-[70%] rounded-lg relative p-2 justify-center ">
+            <View className="flex-1  justify-center items-center" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                <View className="bg-[#d5ceae] w-[90%] h-[70%] rounded-lg relative p-2 justify-center ">
                     <TouchableOpacity onPress={() => setOpenModal(false)} className="absolute top-3 right-2 bg-white rounded-full z-10">
                         <FontAwesomeIcon icon={faCircleXmark} color='red' size={32} />
                     </TouchableOpacity>
-                    <View className="w-full h-[15vh] ">
-                        <Text className="text-3xl">Explorando Ecuador: ¿Listo para la pregunta?</Text>
+                    <View className="w-full h-[10vh] ">
+                        <Text className="text-3xl text-[#cf613c] font-bold">Explorando Ecuador: ¿Listo para la pregunta?</Text>
                     </View>
                     <View>
-                        <Text className="text-lg">* Cual es el parque nacional mas grande del Ecuador?</Text>
+                        <Text className="text-xl text-[#363820]">-Cual es el parque nacional mas grande del Ecuador?</Text>
                     </View>
                     <View className="items-center">
-                        <AnimatedLottieView style={{ width: 100, height: 100 }} source={require('../../assets/robot.json')} autoPlay loop />
+                        <AnimatedLottieView style={{ width: 200, height: 200 }} source={require('../../assets/robot.json')} autoPlay loop />
                     </View>
                     <View className="w-full h-[20vh] bg-blue-400 flex-wrap flex-row">
                         <View className="w-1/2 h-1/2 bg-red-500 flex-row items-center ">

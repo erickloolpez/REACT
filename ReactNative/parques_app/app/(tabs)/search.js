@@ -62,7 +62,7 @@ const Search = () => {
   const attractivesCover = [trends.cayambeVolcan, trends.llanganatePisayambo, trends.yacuriBosque, trends.podocarpusCajanuma]
 
   return (
-    <SafeAreaView edges={['top']} className="h-full bg-[#fbeecc]">
+    <SafeAreaView edges={['top']} className="h-full bg-[#afaf91]">
       <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
         <View className="w-full h-[37vh] relative">
           <View className="w-[94%] h-20 absolute top-32 z-10 ml-3  justify-center ">
@@ -78,8 +78,8 @@ const Search = () => {
 
         <View className="w-full h-[30vh] px-1">{/*Posible componente*/}
           <View className="w-full h-[20%] flex-row items-center justify-between">
-            <Text className="text-2xl">Parques Nacionales</Text>
-            <FontAwesomeIcon icon={faAngleRight} color='black' size={28} />
+            <Text className="text-2xl text-[#fff] font-bold">Parques Nacionales</Text>
+            <FontAwesomeIcon icon={faAngleRight} color='white' size={28} />
           </View>
           <TouchableOpacity
             onPress={() => {
@@ -99,8 +99,8 @@ const Search = () => {
 
         <View className="w-full h-[30vh] px-1 mt-4 mb-4">
           <View className="w-full h-[20%] flex-row items-center justify-between">
-            <Text className="text-2xl">Atractivos</Text>
-            <FontAwesomeIcon icon={faAngleRight} color='black' size={28} />
+            <Text className="text-2xl text-white font-bold">Atractivos</Text>
+            <FontAwesomeIcon icon={faAngleRight} color='white' size={28} />
           </View>
           <TouchableOpacity
             onPress={() => {

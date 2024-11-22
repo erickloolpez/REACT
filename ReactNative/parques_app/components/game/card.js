@@ -1,8 +1,9 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons'
+import { faFire, faPuzzlePiece, faTrophy } from '@fortawesome/free-solid-svg-icons'
 import { MotiView } from 'moti'
+import { images } from '../../constants'
 
 const numberToNice = [...Array(10).keys()] //[0,1,2,3,4,5,6,7,8,9]
 const fontSize = 40
@@ -39,25 +40,20 @@ function TickerList({ number, index }) {
     )
 }
 
-const CardCounter = ({setOpenModal}) => {
+const GameCards = ({ setOpenModal }) => {
     const [value, setValue] = useState(12351)
     const splittedValue = value.toString().split('')
     return (
-        <View className="w-full h-[25vh] mt-10 items-center flex-row border-b-2">
-            <View className="w-1/2 h-full justify-around pl-2 border-r-2">
-                <Text className="text-xl text-green-900 font-medium">Miercoles</Text>
-                <Text className="text-7xl font-bold text-green-900">25</Text>
-                <Text className="text-5xl font-light text-green-900">ENERO</Text>
-            </View>
-            <View className="w-1/2 h-full  items-center justify-around">
+        <View className="w-full h-[30%] mt-4 items-center flex-row justify-around">
+            <View className="w-[45%] h-full  items-center justify-around bg-[#cf613c] rounded-2xl">
                 <View>
-                    <Text className="text-green-900">¿Que tanto conoces los parques nacionales?</Text>
+                    <Text className="text-[#fbeecc] font-bold">¿Que tanto conoces los parques nacionales?</Text>
                 </View>
                 <View className="flex-row">
                     {
                         splittedValue.map((number, index) => {
                             if (index === 2) {
-                                return <Text key={index} className="text-4xl">:</Text>
+                                return <Text key={index} className="text-4xl text-green-900">:</Text>
                             } else {
                                 return <TickerList key={index} number={number} index={index} />
                             }
@@ -71,9 +67,20 @@ const CardCounter = ({setOpenModal}) => {
                     </View>
                 </TouchableOpacity>
             </View>
+            <View className="w-[45%] h-full justify-center pl-2 items-center bg-[#fbeecc] rounded-2xl relative">
+                <View className="absolute">
+                    <FontAwesomeIcon icon={faTrophy} color='#eab308' size={120} />
+                </View>
+                <View className="flex-row absolute top-2 items-center ">
+                    <Text className="text-[#925131] font-bold mr-1 ">500</Text>
+                    <FontAwesomeIcon icon={faFire} color='#f97316' size={15} />
+                </View>
+                <Image source={images.avatar} resizeMode={'cover'} className="w-10 h-10 rounded-2xl mr-1 absolute top-12" />
+                <Text className="text-[#925131] font-bold absolute bottom-3 ">Monica Perez</Text>
+            </View>
         </View>
 
     )
 }
 
-export default CardCounter
+export default GameCards

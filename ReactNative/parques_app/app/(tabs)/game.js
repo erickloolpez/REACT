@@ -2,13 +2,14 @@ import { View, Text, ScrollView, Image, Button, Modal, TouchableOpacity } from '
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Animated, { FadeInRight, interpolate, interpolateColor, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withDelay, withSpring } from 'react-native-reanimated'
 import { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faGem, faTrophy } from '@fortawesome/free-solid-svg-icons'
 
 
 import { images } from '../../constants'
 import ModalGame from '../../components/game/modal'
 import CardCounter from '../../components/game/card'
+import GameHeader from '../../components/game/header'
+import GameCalendar from '../../components/game/calendar'
+import GameCards from '../../components/game/card'
 
 //consts
 const _avatarSize = 40//because it's the same like h-10
@@ -32,9 +33,9 @@ function Place({ user, index, onFinish, anim }) {
         interpolateColor(
           _anim.value,
           [0, 1],
-          ["rgba(0,0,0,0.1)", "gold"]
+          ["#17301a","#cf613c"]
         )
-        : "rgba(0,0,0,0.1)"
+        : "#fbeecc"
     }
   })
 
@@ -87,51 +88,43 @@ const Game = () => {
   }
 
   return (
-    <SafeAreaView edges={['top']} className="h-full bg-primary">
-      <ScrollView>
-        <View className="w-full h-[10vh] items-center justify-between flex-row">
-          <View className="flex-row">
-            <Text className="text-2xl font-bold text-terciary">Premios y Campeones</Text>
-            <View className="items-center ml-2 rotate-12 ">
-              <FontAwesomeIcon icon={faTrophy} color='#eab308' size={28} />
-            </View>
-          </View>
-          <View className="flex-row bg-white items-center justify-around border-2 rounded-full p-2 mr-1">
-            <FontAwesomeIcon icon={faGem} color='#93c5fd' size={28} />
-            <Text className="ml-2">120</Text>
-          </View>
-        </View>
+    <SafeAreaView edges={['top']} className="h-full bg-[#afaf91]">
+      <GameHeader />
 
-        <View className="w-full h-[30vh] flex-row justify-center items-end" style={{ gap: _spacing }}>
-          {
-            users.map((user, index) => (
-              <Place
-                key={index}
-                user={user}
-                index={index}
-                anim={_anim}
-                onFinish={
-                  index === users.length - 1 ?
-                    () => {
-                      _anim.value = 1
-                      console.log('has finished', index)
-                    }
-                    : null}
-              />
-            ))
-          }
-        </View>
+      <GameCalendar />
 
-        <CardCounter setOpenModal={setOpenModal} />
-        <Button
+      <GameCards setOpenModal={setOpenModal} />
+
+
+      <View className="w-full h-[40%] mt-[-20px] flex-row justify-center items-end " style={{ gap: _spacing }}>
+        {
+          users.map((user, index) => (
+            <Place
+              key={index}
+              user={user}
+              index={index}
+              anim={_anim}
+              onFinish={
+                index === users.length - 1 ?
+                  () => {
+                    _anim.value = 1
+                    console.log('has finished', index)
+                  }
+                  : null}
+            />
+          ))
+        }
+      </View>
+
+      {/* <CardCounter setOpenModal={setOpenModal} /> */}
+      {/* <Button
           title="Random Value"
           onPress={() => setValue(Math.floor(Math.random() * 100000))}
-        />
-        {
-          renderModal()
-        }
+        /> */}
+      {
+        renderModal()
+      }
 
-      </ScrollView>
     </SafeAreaView>
   )
 }
