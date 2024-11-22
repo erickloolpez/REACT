@@ -1,14 +1,14 @@
 import { View, Text, ScrollView, Image, Button, Modal, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Animated, { FadeInRight, interpolate, interpolateColor, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withDelay, withSpring } from 'react-native-reanimated'
-import { MotiView } from 'moti'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCircle, faCircleXmark, faGem, faPlay, faPuzzlePiece, faSquare, faTrophy } from '@fortawesome/free-solid-svg-icons'
+import { faGem, faTrophy } from '@fortawesome/free-solid-svg-icons'
 
 
 import { images } from '../../constants'
-import AnimatedLottieView from 'lottie-react-native'
+import ModalGame from '../../components/game/modal'
+import CardCounter from '../../components/game/card'
 
 //consts
 const _avatarSize = 40//because it's the same like h-10
@@ -64,40 +64,7 @@ function Place({ user, index, onFinish, anim }) {
   )
 }
 
-const numberToNice = [...Array(10).keys()] //[0,1,2,3,4,5,6,7,8,9]
-const fontSize = 40
-const _staggerCounter = 50
 
-function Tick({ children }) {
-  return (
-    <Text style={{ fontSize: fontSize, lineHeight: fontSize * 1.1, fontVariant: ['tabular-nums'] }}>
-      {children}
-    </Text>
-  )
-}
-
-function TickerList({ number, index }) {
-  return (
-    <View style={{ height: fontSize, overflow: 'hidden' }}>
-      <MotiView
-        animate={{
-          translateY: -fontSize * 1.1 * number
-        }}
-        transition={{
-          delay: index * _staggerCounter,
-          damping: 80,
-          stiffness: 200
-        }}
-      >
-        {
-          numberToNice.map((num, index) => {
-            return <Tick key={`number-${num}-${index}`} >{num}</Tick>
-          })
-        }
-      </MotiView>
-    </View>
-  )
-}
 
 const Game = () => {
   const [openModal, setOpenModal] = useState(false)
@@ -112,70 +79,10 @@ const Game = () => {
     { name: "Pedro", score: 62 },
     { name: "Jonh", score: 36 },
   ]
-  const splittedValue = value.toString().split('')
 
   function renderModal() {
     return (
-      <Modal visible={openModal} animationType='slide' transparent={true}>
-        <View className="flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <View className="bg-white w-[90%] h-[70%] rounded-lg relative p-2 justify-center ">
-            <TouchableOpacity onPress={() => setOpenModal(false)} className="absolute top-3 right-2 bg-white rounded-full z-10">
-              <FontAwesomeIcon icon={faCircleXmark} color='red' size={32} />
-            </TouchableOpacity>
-            <View className="w-full h-[15vh] ">
-              <Text className="text-3xl">Explorando Ecuador: ¿Listo para la pregunta?</Text>
-            </View>
-            <View>
-              <Text className="text-lg">* Cual es el parque nacional mas grande del Ecuador?</Text>
-            </View>
-            <View className="items-center">
-              <AnimatedLottieView style={{ width: 100, height: 100 }} source={require('../../assets/robot.json')} autoPlay loop />
-            </View>
-            <View className="w-full h-[20vh] bg-blue-400 flex-wrap flex-row">
-              <View className="w-1/2 h-1/2 bg-red-500 flex-row items-center ">
-                <View className="w-8 h-8  rotate-90">
-                  <View className="rotate-180">
-                    <FontAwesomeIcon icon={faPlay} color='white' size={32} />
-                  </View>
-                </View>
-                <View>
-                  <Text className="text-white text-lg ml-3">Yasuni</Text>
-                </View>
-
-              </View>
-
-              <View className="w-1/2 h-1/2 bg-blue-500 flex-row items-center">
-                <View className="w-8 h-8 rotate-45">
-                  <FontAwesomeIcon icon={faSquare} color='white' size={32} />
-                </View>
-                <View>
-                  <Text className="text-white text-lg ml-3">Cayambe</Text>
-                </View>
-
-              </View>
-              <View className="w-1/2 h-1/2 bg-yellow-500 flex-row items-center">
-                <View className="w-8 h-8 rotate-45">
-                  <FontAwesomeIcon icon={faCircle} color='white' size={32} />
-                </View>
-                <View>
-                  <Text className="text-white text-lg ml-3">Galapagos</Text>
-                </View>
-              </View>
-
-              <View className="w-1/2 h-1/2 bg-green-500 flex-row items-center">
-                <View className="w-8 h-8">
-                  <FontAwesomeIcon icon={faSquare} color='white' size={32} />
-                </View>
-                <View>
-                  <Text className="text-white text-lg ml-3">Cajas</Text>
-                </View>
-              </View>
-
-            </View>
-          </View>
-        </View>
-
-      </Modal>
+      <ModalGame openModal={openModal} setOpenModal={setOpenModal} />
     )
   }
 
@@ -215,35 +122,7 @@ const Game = () => {
           }
         </View>
 
-        <View className="w-full h-[25vh] mt-10 items-center flex-row border-b-2">
-          <View className="w-1/2 h-full justify-around pl-2 border-r-2">
-            <Text className="text-xl text-green-900 font-medium">Miercoles</Text>
-            <Text className="text-7xl font-bold text-green-900">25</Text>
-            <Text className="text-5xl font-light text-green-900">ENERO</Text>
-          </View>
-          <View className="w-1/2 h-full  items-center justify-around">
-            <View>
-              <Text className="text-green-900">¿Que tanto conoces los parques nacionales?</Text>
-            </View>
-            <View className="flex-row">
-              {
-                splittedValue.map((number, index) => {
-                  if (index === 2) {
-                    return <Text key={index} className="text-4xl">:</Text>
-                  } else {
-                    return <TickerList key={index} number={number} index={index} />
-                  }
-                })
-              }
-            </View>
-            <TouchableOpacity onPress={() => setOpenModal(true)}>
-              <View className="w-32 h-10 bg-green-900 rounded-xl flex-row items-center justify-center">
-                <FontAwesomeIcon icon={faPuzzlePiece} color='#fff' size={32} />
-                <Text className="text-xl ml-3 text-white">Jugar</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <CardCounter setOpenModal={setOpenModal} />
         <Button
           title="Random Value"
           onPress={() => setValue(Math.floor(Math.random() * 100000))}

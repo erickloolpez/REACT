@@ -15,8 +15,8 @@ const Profile = () => {
       <View className="w-full h-[60%] items-center">
         <Image source={images.ruins} resizeMode="cover" className="absolute w-full h-full" />
         <View className="w-full h-[10%] items-end justify-center ">
-          <View className=" mr-2 rounded-full items-center justify-center ">
-            <FontAwesomeIcon icon={faRightFromBracket} color='#ea580c' size={32} />
+          <View className=" w-10 h-10 bg-white mr-2 rounded-lg items-center justify-center ">
+            <FontAwesomeIcon icon={faRightFromBracket} color='#ef4444' size={32} />
           </View>
         </View>
 
