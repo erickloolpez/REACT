@@ -11,7 +11,7 @@ const _staggerCounter = 50
 
 function Tick({ children }) {
     return (
-        <Text style={{ fontSize: fontSize, lineHeight: fontSize * 1.1, fontVariant: ['tabular-nums'] }}>
+        <Text style={{ fontSize: fontSize, lineHeight: fontSize * 1.1, fontVariant: ['tabular-nums'], color:'white' }}>
             {children}
         </Text>
     )
@@ -53,7 +53,7 @@ const GameCards = ({ setOpenModal }) => {
                     {
                         splittedValue.map((number, index) => {
                             if (index === 2) {
-                                return <Text key={index} className="text-4xl text-green-900">:</Text>
+                                return <Text key={index} className="text-4xl text-white">:</Text>
                             } else {
                                 return <TickerList key={index} number={number} index={index} />
                             }

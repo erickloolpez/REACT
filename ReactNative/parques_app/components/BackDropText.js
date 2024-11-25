@@ -40,10 +40,6 @@ const BackDropText = ({ index, scrollX, park }) => {
                             }}
                         >
                             <Marker coordinate={park.location} title={park.name} />
-                            {userLocation && <Marker coordinate={userLocation} title={'Tú'} />}
-                            {userLocation && (
-                                <Polyline coordinates={[userLocation, park.location]} strokeColor="#cf613c" strokeWidth={2} />
-                            )}
                         </MapView>
                         <View className=" h-8  rounded-lg absolute top-4 left-2 bg-secondary items-center justify-center p-2" >
                             <Text className="text-white font-bold">Ubicacion</Text>

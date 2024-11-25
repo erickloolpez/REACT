@@ -2,47 +2,61 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCrown, faGem, faRightFromBracket, faTree } from '@fortawesome/free-solid-svg-icons'
+import { faComment, faCrown, faGem, faRightFromBracket, faTree } from '@fortawesome/free-solid-svg-icons'
 import CountryFlag from 'react-native-country-flag'
+import { LinearGradient } from 'expo-linear-gradient'
 
 import { images } from '../../constants'
 import Review from '../../components/Comment'
+import { faCommentAlt } from '@fortawesome/free-regular-svg-icons'
 
 const Profile = () => {
 
   return (
     <SafeAreaView className="h-full bg-primary" edges={['top']}>
-      <View className="w-full h-[60%] items-center">
-        <Image source={images.ruins} resizeMode="cover" className="absolute w-full h-full" />
+      <View className="w-full h-[60%] items-center py-2 relative">
+        <LinearGradient className="absolute w-full h-[90%] rounded-xl" colors={['#093028', '#237A57']}/>
+        {/* <Image source={images.ruins} resizeMode="cover" className="absolute w-full h-full" /> */}
         <View className="w-full h-[10%] items-end justify-center ">
-          <View className=" w-10 h-10 bg-white mr-2 rounded-lg items-center justify-center ">
+          <View className=" w-10 h-10 mr-2 rounded-lg items-center justify-center ">
             <FontAwesomeIcon icon={faRightFromBracket} color='#ef4444' size={32} />
           </View>
         </View>
 
-        <View className="w-full h-[70%] items-center justify-around ">
-          <View className="w-36 h-36  rounded-full overflow-hidden ">
+        <View className="w-full h-[50%] items-center justify-around ">
+          <View className="w-32 h-32  rounded-full overflow-hidden ">
             <Image source={images.avatar} resizeMode="cover" className="w-full h-full" />
           </View>
 
-          <View className="w-32 h-10 rounded-lg items-center justify-center bg-white">
-            <Text>Monica Perez</Text>
-          </View>
+          <View className="items-center">
+            <View className="h-10 rounded-lg items-center justify-center">
+              <Text className="text-white font-semibold text-2xl">Monica Perez</Text>
+            </View>
 
-          <View className=" w-36 h-10 flex-row items-center justify-center rounded-lg bg-white">
-            <CountryFlag isoCode="de" size={25} />
-            <Text className="ml-2">Alemania</Text>
+            <View className="">
+              <Text className="text-blue-400">monica@gmail.com</Text>
+            </View>
           </View>
         </View>
 
-        <View className="w-[90%] h-[20%] border-t-2 border-b-2 flex-row items-center bg-white ">
-          <View className="w-1/2 h-[80%] flex-row items-center justify-center border-r-2">
+        <View className="w-[90%] h-[15%] flex-row items-center bg-white rounded-t-xl mt-7 ">
+          <View className="w-1/2 h-full flex-row items-center justify-center ">
             <FontAwesomeIcon icon={faGem} color='#93c5fd' size={32} />
             <Text className="ml-2">120 puntos</Text>
           </View>
           <View className="w-1/2 h-full flex-row items-center justify-center ">
             <FontAwesomeIcon icon={faTree} color='#22c55e' size={32} />
             <Text className="ml-2">Visitados: 3</Text>
+          </View>
+        </View>
+        <View className="w-[90%] h-[15%] flex-row items-center bg-white rounded-b-xl">
+          <View className="w-1/2 h-full flex-row items-center justify-center">
+            <CountryFlag isoCode="de" size={25} />
+            <Text className="ml-2">Alemania</Text>
+          </View>
+          <View className="w-1/2 h-full flex-row items-center justify-center ">
+            <FontAwesomeIcon icon={faCommentAlt} color='black' size={32} />
+            <Text className="ml-2">Reseñas: 3</Text>
           </View>
         </View>
 

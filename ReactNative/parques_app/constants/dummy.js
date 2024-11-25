@@ -71,56 +71,6 @@ const parks = [
       ],
     logo: logos.llanganantes
   },
-
-  {
-    name: 'Galapagos', image: images.galapagos,
-    location: {
-      latitude: '-0.6141768221188437',
-      longitude: '-90.34521020652402',
-    },
-    polygon: [
-      { latitude: -0.163, longitude: -90.345 }, // Norte
-      { latitude: -0.614, longitude: -89.849 }, // Este
-      { latitude: -1.065, longitude: -90.345 }, // Sur
-      { latitude: -0.614, longitude: -90.841 }, // Oeste
-    ],
-    suggestions: 'La principal amenaza para Galápagos son las especies introducidas desde el continente. Tenga especial cuidado con lo que lleva a Galápagos, entre islas, e incluso a la hora deacamp ar. Consulte con la DPNG y la Agencia de Bioseguridad para Galápagos (ABG).\n\nTenga en cuenta que el clima de las islas es marcadamente estacional, de manera que la observación de algunas especies y eventos naturales depende de la época.',
-    path: [
-      {
-        name: 'Quito y Guayaquil', order: 'A Sunfopamba. Se toma la vía Quito – Ambato (132 km). Desde Ambato se toma la vía a Píllaro para continuar hasta el sector de Dos Acequias, se pasa por San José de Poaló, hasta llegar al refugio/guardianía de Sunfopamba.A Panzarumi. Por la vía Quito – Salcedo (104 km) se continúa hasta la parroquia San Miguel (de Salcedo) y luego al refugio/guardianía de Panzarumi. Desde Salcedo son 24 kilómetros y 45 minutos en vehículo particular o una hora en transporte público.',
-        color: { heading: "#173481", background: "#FEC0BC" }
-      },
-    ],
-    icons: [
-      { name: "Ciclismo", image: icons.ciclismo },
-      { name: "Fotografia", image: icons.camara },
-      { name: "Camping", image: icons.camping },
-    ],
-    desc: 'La flora y fauna extraordinarias, sus rasgos geológicos y la gran cantidad de especies únicas han convertido a este parque en un importante centro mundial de investigación científica y turismo de naturaleza.\n\nComo reconocimiento a sus valores naturales fue declarado Patrimonio de la Humanidad por la UNESCO en 1978. A pesar de todos los problemas que ha enfrentado, especialmente por los organismos introducidos desde el continente, constituye uno de los archipiélagos mejor conservados y un referente mundial de manejo de ecosistemas frágiles.\n\nGalápagos incluye dos áreas protegidas: el Parque Nacional Galápagos, que abarca el 97% de la superficie terrestre del archipiélago, y la Reserva Marina Galápagos, que protege los ambientes marinos a su alrededor.\n\nEl aspecto más llamativo de una visita a Galápagos es experimentar de primera mano cómo sus animales han evolucionado en este mundo paralelo, olvidando el miedo a los humanos. No todo el parque está abierto al turismo, pero cuenta con una extensa red de sitios de visita diseñada especialmente para ofrecer un encuentro cercano con este “laboratorio natural” y, al mismo tiempo, reducir al máximo los impactos.',
-    trend:
-      [
-        {
-          name: 'Colonias de aves marinas',
-          desc: 'Las colonias de aves marinas, en especial de fragatas, piqueros patas azules, pelicanos, piqueros enmascarados y albatros (estos últimos solamente en Española),constituyen uno de los principales atractivos. En todos los sitios de visita que ofrecen la observación de estas aves existen senderos debidamente señalizados para facilitar el recorrido.',
-          image: trends.galapagosPajaro,
-          location: {
-            latitude: -1.382131,
-            longitude: -90.446710,
-          }
-        },
-        {
-          name: 'Fenómenos geológicos',
-          desc: 'Existen algunos sitios de visita donde el principal atractivo son los paisajes volcánicos o las sorprendentes formaciones geológicas como cráteres, túneles y flujos de lava. En bahía Urbina (Isabela), por ejemplo, se puede observar un arrecife de coral que quedó fuera del agua a causa de un levantamiento geológico ocurrido en 1954. El volcán Sierra Negra presenta una de las calderas más grandes del mundo, además de una exhibición de todo tipo de formaciones volcánicas, como conos, tubos, salpicaduras, fumarolas y depósitos de azufre.',
-          image: trends.galapagosFenomeno,
-          location: {
-            latitude: -0.833333,
-            longitude: -91.116667,
-          }
-        },
-      ],
-    logo: logos.galapagos
-  },
-
   {
     name: 'Podocarpus', image: images.podocarpus,
     location: {
@@ -189,6 +139,56 @@ const parks = [
         }
       },
     ], logo: logos.podocarpus
+  },
+
+
+  {
+    name: 'Galapagos', image: images.galapagos,
+    location: {
+      latitude: '-0.6141768221188437',
+      longitude: '-90.34521020652402',
+    },
+    polygon: [
+      { latitude: -0.163, longitude: -90.345 }, // Norte
+      { latitude: -0.614, longitude: -89.849 }, // Este
+      { latitude: -1.065, longitude: -90.345 }, // Sur
+      { latitude: -0.614, longitude: -90.841 }, // Oeste
+    ],
+    suggestions: 'La principal amenaza para Galápagos son las especies introducidas desde el continente. Tenga especial cuidado con lo que lleva a Galápagos, entre islas, e incluso a la hora deacamp ar. Consulte con la DPNG y la Agencia de Bioseguridad para Galápagos (ABG).\n\nTenga en cuenta que el clima de las islas es marcadamente estacional, de manera que la observación de algunas especies y eventos naturales depende de la época.',
+    path: [
+      {
+        name: 'Quito y Guayaquil', order: 'A Sunfopamba. Se toma la vía Quito – Ambato (132 km). Desde Ambato se toma la vía a Píllaro para continuar hasta el sector de Dos Acequias, se pasa por San José de Poaló, hasta llegar al refugio/guardianía de Sunfopamba.A Panzarumi. Por la vía Quito – Salcedo (104 km) se continúa hasta la parroquia San Miguel (de Salcedo) y luego al refugio/guardianía de Panzarumi. Desde Salcedo son 24 kilómetros y 45 minutos en vehículo particular o una hora en transporte público.',
+        color: { heading: "#173481", background: "#FEC0BC" }
+      },
+    ],
+    icons: [
+      { name: "Ciclismo", image: icons.ciclismo },
+      { name: "Fotografia", image: icons.camara },
+      { name: "Camping", image: icons.camping },
+    ],
+    desc: 'La flora y fauna extraordinarias, sus rasgos geológicos y la gran cantidad de especies únicas han convertido a este parque en un importante centro mundial de investigación científica y turismo de naturaleza.\n\nComo reconocimiento a sus valores naturales fue declarado Patrimonio de la Humanidad por la UNESCO en 1978. A pesar de todos los problemas que ha enfrentado, especialmente por los organismos introducidos desde el continente, constituye uno de los archipiélagos mejor conservados y un referente mundial de manejo de ecosistemas frágiles.\n\nGalápagos incluye dos áreas protegidas: el Parque Nacional Galápagos, que abarca el 97% de la superficie terrestre del archipiélago, y la Reserva Marina Galápagos, que protege los ambientes marinos a su alrededor.\n\nEl aspecto más llamativo de una visita a Galápagos es experimentar de primera mano cómo sus animales han evolucionado en este mundo paralelo, olvidando el miedo a los humanos. No todo el parque está abierto al turismo, pero cuenta con una extensa red de sitios de visita diseñada especialmente para ofrecer un encuentro cercano con este “laboratorio natural” y, al mismo tiempo, reducir al máximo los impactos.',
+    trend:
+      [
+        {
+          name: 'Colonias de aves marinas',
+          desc: 'Las colonias de aves marinas, en especial de fragatas, piqueros patas azules, pelicanos, piqueros enmascarados y albatros (estos últimos solamente en Española),constituyen uno de los principales atractivos. En todos los sitios de visita que ofrecen la observación de estas aves existen senderos debidamente señalizados para facilitar el recorrido.',
+          image: trends.galapagosPajaro,
+          location: {
+            latitude: -1.382131,
+            longitude: -90.446710,
+          }
+        },
+        {
+          name: 'Fenómenos geológicos',
+          desc: 'Existen algunos sitios de visita donde el principal atractivo son los paisajes volcánicos o las sorprendentes formaciones geológicas como cráteres, túneles y flujos de lava. En bahía Urbina (Isabela), por ejemplo, se puede observar un arrecife de coral que quedó fuera del agua a causa de un levantamiento geológico ocurrido en 1954. El volcán Sierra Negra presenta una de las calderas más grandes del mundo, además de una exhibición de todo tipo de formaciones volcánicas, como conos, tubos, salpicaduras, fumarolas y depósitos de azufre.',
+          image: trends.galapagosFenomeno,
+          location: {
+            latitude: -0.833333,
+            longitude: -91.116667,
+          }
+        },
+      ],
+    logo: logos.galapagos
   },
 
   {

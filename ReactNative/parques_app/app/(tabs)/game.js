@@ -10,6 +10,7 @@ import CardCounter from '../../components/game/card'
 import GameHeader from '../../components/game/header'
 import GameCalendar from '../../components/game/calendar'
 import GameCards from '../../components/game/card'
+import { LinearGradient } from 'expo-linear-gradient'
 
 //consts
 const _avatarSize = 40//because it's the same like h-10
@@ -33,7 +34,7 @@ function Place({ user, index, onFinish, anim }) {
         interpolateColor(
           _anim.value,
           [0, 1],
-          ["#17301a","#cf613c"]
+          ["#17301a", "#cf613c"]
         )
         : "#fbeecc"
     }
@@ -88,42 +89,46 @@ const Game = () => {
   }
 
   return (
-    <SafeAreaView edges={['top']} className="h-full bg-[#afaf91]">
-      <GameHeader />
+    <SafeAreaView edges={['top']} className="h-full">
+      <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
+        <GameHeader />
 
-      <GameCalendar />
+        <GameCalendar />
 
-      <GameCards setOpenModal={setOpenModal} />
+        <GameCards setOpenModal={setOpenModal} />
 
 
-      <View className="w-full h-[40%] mt-[-20px] flex-row justify-center items-end " style={{ gap: _spacing }}>
-        {
-          users.map((user, index) => (
-            <Place
-              key={index}
-              user={user}
-              index={index}
-              anim={_anim}
-              onFinish={
-                index === users.length - 1 ?
-                  () => {
-                    _anim.value = 1
-                    console.log('has finished', index)
-                  }
-                  : null}
-            />
-          ))
-        }
-      </View>
+        <View className="w-full h-[40%] mt-[-20px] flex-row justify-center items-end " style={{ gap: _spacing }}>
+          {
+            users.map((user, index) => (
+              <Place
+                key={index}
+                user={user}
+                index={index}
+                anim={_anim}
+                onFinish={
+                  index === users.length - 1 ?
+                    () => {
+                      _anim.value = 1
+                      console.log('has finished', index)
+                    }
+                    : null}
+              />
+            ))
+          }
+        </View>
 
-      {/* <CardCounter setOpenModal={setOpenModal} /> */}
-      {/* <Button
+        {/* <CardCounter setOpenModal={setOpenModal} /> */}
+        {/* <Button
           title="Random Value"
           onPress={() => setValue(Math.floor(Math.random() * 100000))}
         /> */}
-      {
-        renderModal()
-      }
+        {
+          renderModal()
+        }
+
+
+      </LinearGradient>
 
     </SafeAreaView>
   )

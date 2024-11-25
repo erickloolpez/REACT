@@ -45,7 +45,7 @@ const Home = () => {
         source={image}
         className="w-full h-[130vh] absolute"
         style={stylez}
-        blurRadius={2}
+        blurRadius={10}
       />
     )
 
