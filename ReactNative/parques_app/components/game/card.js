@@ -75,7 +75,7 @@ const GameCards = ({ setOpenModal }) => {
                     <Text className="text-[#925131] font-bold mr-1 ">500</Text>
                     <FontAwesomeIcon icon={faFire} color='#f97316' size={15} />
                 </View>
-                <Image source={images.avatar} resizeMode={'cover'} className="w-10 h-10 rounded-2xl mr-1 absolute top-12" />
+                <Image source={images.avatar} resizeMode={'cover'} className="w-10 h-10 rounded-2xl mr-1 mb-10 " />
                 <Text className="text-[#925131] font-bold absolute bottom-3 ">Monica Perez</Text>
             </View>
         </View>

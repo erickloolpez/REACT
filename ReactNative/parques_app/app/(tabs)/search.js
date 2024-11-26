@@ -10,7 +10,7 @@ import { icons, images, parks, trends } from '../../constants'
 import ActivityIcon from '../../components/ActivityIcon'
 import SearchInput from '../../components/SearchInput'
 import { useGlobalContext } from '../../context/GlobalProvider'
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faFireFlameCurved } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { LinearGradient } from 'expo-linear-gradient'
 
@@ -63,22 +63,22 @@ const Search = () => {
   const attractivesCover = [trends.cayambeVolcan, trends.llanganatePisayambo, trends.yacuriBosque, trends.podocarpusCajanuma]
 
   return (
-    <SafeAreaView edges={['top']} className="h-full ">
-      <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
+    <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
+      <SafeAreaView edges={['top']} className="h-full ">
         <ScrollView contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
-          <View className="w-full h-[37vh] relative">
-            <View className="w-[94%] h-20 absolute top-32 z-10 ml-3  justify-center ">
+          <View className="w-full h-[12vh] relative">
+            <View className="w-[94%] h-20 absolute top-4 z-10 ml-3  justify-center ">
               <SearchInput animatedStyle={animatedStyle} setOpenSearch={setOpenSearch} animation={animation} openSearch={openSearch} />
             </View>
 
-            <Animated.View className='absolute h-16 top-32 left-0 mt-2 items-center justify-center z-10' style={stylez}>
-              <Text style={{ fontFamily: "Pilowlava-Regular" }} className="text-7xl text-white">GEA</Text>
+            <Animated.View className='absolute h-16 top-4 left-0 mt-2 items-center justify-center z-10' style={stylez}>
+              <Text style={{ fontFamily: "Pilowlava-Regular" }} className="text-5xl text-white">GEA</Text>
             </Animated.View>
 
             <Image source={images.marco} resizeMode='cover' className="w-full h-full rounded-b-3xl" />
           </View>
 
-          <View className="w-full h-[30vh] px-1 mt-8">{/*Posible componente*/}
+          <View className="w-full h-[30vh] px-1 mt-2">{/*Posible componente*/}
             <View className="w-full h-[20%] flex-row items-center justify-between">
               <Text className="text-xl text-[#fff] font-semibold">Parques Nacionales</Text>
               <FontAwesomeIcon icon={faAngleRight} color='white' size={28} />
@@ -107,6 +107,31 @@ const Search = () => {
                 })
               }
             </TouchableOpacity>
+          </View>
+
+          <View className="w-full h-[48vh] mt-4">
+            <View className="flex-row items-center h-[10%] justify-between px-1 ">
+              <View className="flex-row items-center">
+                <FontAwesomeIcon icon={faFireFlameCurved} color='#f97313' size={28} />
+                <Text className="text-white text-xl font-semibold ml-1">Populares</Text>
+              </View>
+              <FontAwesomeIcon icon={faAngleRight} color='white' size={28} />
+            </View>
+            <View className="w-full h-[90%] flex-row flex-wrap justify-around ">
+              <View className="w-[48%] h-[48%] bg-white rounded-lg overflow-hidden">
+                <Image source={trends.galapagosFenomeno} resizeMode="cover" className="w-full h-full" />
+              </View>
+              <View className="w-[48%] h-[48%] bg-white rounded-lg overflow-hidden">
+                <Image source={trends.sangayAltar} resizeMode="cover" className="w-full h-full" />
+              </View>
+              <View className="w-[48%] h-[48%] bg-white rounded-lg overflow-hidden mt-3">
+                <Image source={trends.sangayTun} resizeMode="cover" className="w-full h-full" />
+              </View>
+              <View className="w-[48%] h-[48%] bg-white rounded-lg overflow-hidden mt-3">
+                <Image source={trends.yasuniComunidad} resizeMode="cover" className="w-full h-full" />
+              </View>
+            </View>
+
           </View>
 
           <View className="w-full h-[30vh] px-1 mt-4 mb-4">
@@ -141,8 +166,8 @@ const Search = () => {
           </View>
         </ScrollView>
 
-      </LinearGradient>
-    </SafeAreaView>
+      </SafeAreaView>
+    </LinearGradient>
   )
 }
 

@@ -89,8 +89,8 @@ const Game = () => {
   }
 
   return (
-    <SafeAreaView edges={['top']} className="h-full">
-      <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
+    <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
+      <SafeAreaView edges={['top']} className="h-full">
         <GameHeader />
 
         <GameCalendar />
@@ -128,9 +128,9 @@ const Game = () => {
         }
 
 
-      </LinearGradient>
 
-    </SafeAreaView>
+      </SafeAreaView>
+    </LinearGradient>
   )
 }
 

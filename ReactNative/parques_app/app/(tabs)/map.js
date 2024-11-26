@@ -12,6 +12,7 @@ import SearchInput from '../../components/map/searchInput';
 import { faArrowRight, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import MapCards from '../../components/map/mapcards';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Map = () => {
     const { userLocation } = useGlobalContext();
@@ -36,7 +37,7 @@ const Map = () => {
     })
 
     return (
-        <SafeAreaView className="h-full" edges={['top']}>
+        <SafeAreaView className="h-full bg-secondary" edges={['top']}>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <View className="flex-1 relative ">
                     <MapView

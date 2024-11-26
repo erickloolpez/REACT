@@ -29,8 +29,8 @@ const SearchValue = () => {
     }, []);
 
     return (
-        <SafeAreaView className=" w-full h-full">
-            <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
+        <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
+            <SafeAreaView edges={['top']} className="h-full">
                 <View className="w-full h-[8vh] flex-row justify-around items-center ">
                     <FontAwesomeIcon icon={faAngleLeft} color='black' size={32} />
                     <TextInput
@@ -91,8 +91,8 @@ const SearchValue = () => {
                     />
                 )}
 
-            </LinearGradient>
-        </SafeAreaView>
+            </SafeAreaView >
+        </LinearGradient>
     );
 };
 
