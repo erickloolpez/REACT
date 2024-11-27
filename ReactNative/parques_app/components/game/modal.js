@@ -22,9 +22,9 @@ const ModalGame = ({openModal, setOpenModal}) => {
                     </View>
                     <View className="w-full h-[20vh] bg-blue-400 flex-wrap flex-row">
                         <View className="w-1/2 h-1/2 bg-red-500 flex-row items-center ">
-                            <View className="w-8 h-8  rotate-90">
+                            <View className="ml-2 w-8 h-8 items-center justify-center  rotate-90">
                                 <View className="rotate-180">
-                                    <FontAwesomeIcon icon={faPlay} color='white' size={32} />
+                                    <FontAwesomeIcon icon={faPlay} color='white' size={28} />
                                 </View>
                             </View>
                             <View>
@@ -34,8 +34,8 @@ const ModalGame = ({openModal, setOpenModal}) => {
                         </View>
 
                         <View className="w-1/2 h-1/2 bg-blue-500 flex-row items-center">
-                            <View className="w-8 h-8 rotate-45">
-                                <FontAwesomeIcon icon={faSquare} color='white' size={32} />
+                            <View className="ml-2 w-8 h-8 items-center justify-center rotate-45">
+                                <FontAwesomeIcon icon={faSquare} color='white' size={28} />
                             </View>
                             <View>
                                 <Text className="text-white text-lg ml-3">Cayambe</Text>
@@ -43,8 +43,8 @@ const ModalGame = ({openModal, setOpenModal}) => {
 
                         </View>
                         <View className="w-1/2 h-1/2 bg-yellow-500 flex-row items-center">
-                            <View className="w-8 h-8 rotate-45">
-                                <FontAwesomeIcon icon={faCircle} color='white' size={32} />
+                            <View className="ml-2 w-8 h-8 rotate-45 items-center justify-center">
+                                <FontAwesomeIcon icon={faCircle} color='white' size={28} />
                             </View>
                             <View>
                                 <Text className="text-white text-lg ml-3">Galapagos</Text>
@@ -52,8 +52,8 @@ const ModalGame = ({openModal, setOpenModal}) => {
                         </View>
 
                         <View className="w-1/2 h-1/2 bg-green-500 flex-row items-center">
-                            <View className="w-8 h-8">
-                                <FontAwesomeIcon icon={faSquare} color='white' size={32} />
+                            <View className="ml-2 w-8 h-8 justify-center items-center">
+                                <FontAwesomeIcon icon={faSquare} color='white' size={28} />
                             </View>
                             <View>
                                 <Text className="text-white text-lg ml-3">Cajas</Text>

@@ -75,7 +75,7 @@ const Search = () => {
               <Text style={{ fontFamily: "Pilowlava-Regular" }} className="text-5xl text-white">GEA</Text>
             </Animated.View>
 
-            <Image source={images.marco} resizeMode='cover' className="w-full h-full rounded-b-3xl" />
+            {/* <Image source={images.marco} resizeMode='cover' className="w-full h-full rounded-b-3xl" /> */}
           </View>
 
           <View className="w-full h-[30vh] px-1 mt-2">{/*Posible componente*/}
