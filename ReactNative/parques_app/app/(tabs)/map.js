@@ -53,12 +53,16 @@ const Map = () => {
                         {parks.map((park, index) => (
                             <React.Fragment key={`park-map-${index}`}>
                                 <Polygon coordinates={park.polygon} fillColor={'rgba(100,100,200,0.3)'} strokeWidth={1} />
-                                <Marker coordinate={park.location} title={park.name} onPress={() => {
-                                    _mapView.animateToRegion({
-                                        latitude: park.location.latitude,
-                                        longitude: park.location.longitude,
-                                    }, 1000)
-                                }} >
+                                <Marker
+                                    image={park.icon ? park.icon : null}
+                                    coordinate={park.location}
+                                    title={park.name}
+                                    onPress={() => {
+                                        _mapView.animateToRegion({
+                                            latitude: park.location.latitude,
+                                            longitude: park.location.longitude,
+                                        }, 1000)
+                                    }} >
                                 </Marker>
                             </React.Fragment>
                         ))}

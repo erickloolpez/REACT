@@ -30,7 +30,7 @@ const Home = () => {
     scrollX.value = e.contentOffset.x / (_slideWidth + _spacing)
   })
 
-  function BackDropImage({ image, index, scrollX }) {
+  function BackDropImage({ name, index, scrollX }) {
     const stylez = useAnimatedStyle(() => {
       return {
         opacity: interpolate(
@@ -42,38 +42,39 @@ const Home = () => {
     })
 
     return (
-      <Animated.Image
-        source={image}
-        className="w-full h-[130vh] absolute"
+      <Animated.View
+        className="absolute right-0 left-0 m-8  items-center justify-center"
         style={stylez}
-        blurRadius={10}
-      />
+      >
+        <Text className="text-xl font-bold uppercase text-white">{name}</Text>
+      </Animated.View>
+      // <Animated.Image
+      //   source={image}
+      //   className="w-full h-[130vh] absolute"
+      //   style={stylez}
+      //   blurRadius={10}
+      // />
     )
 
   }
 
   return (
     <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
-      <SafeAreaView edges={['top']} className="h-full">
-
-        {/* {
-        parks.slice(0, visibleParks).map((park, index) => (
-          <BackDropImage
-            key={`bg-photo-${park.name}`}
-            index={index}
-            scrollX={scrollX}
-            image={park.image}
-          />
-        ))
-      } */}
-
-        <View className="w-full h-[12%] relative bg-secondary justify-around border-white border-t-2 border-b-2 items-center mt-3 flex-row">
+      <SafeAreaView edges={['top']} className="h-full ">
+        <View className="w-full h-[12%] relative bg-secondary justify-between px-8 border-white border-t-2 border-b-2 items-center mt-3 flex-row">
           <HumaComponent />
-          <View>
-            <Text className="text-xl font-bold uppercase text-white">LLanganates</Text>
-          </View>
+          {
+            parks.slice(0, visibleParks).map((park, index) => (
+              <BackDropImage
+                key={`bg-photo-${park.name}`}
+                index={index}
+                scrollX={scrollX}
+                name={park.name}
+              // image={park.image}
+              />
+            ))
+          }
           <CondorComponent />
-
         </View>
 
         <View className="w-full h-[50%] ">

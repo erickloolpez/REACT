@@ -82,7 +82,7 @@ const GameCards = ({ setOpenModal }) => {
                 <View>
                     <Text className="text-[#fbeecc] font-bold">¿Que tanto conoces los parques nacionales?</Text>
                 </View>
-                <View className="flex-row items-center">
+                <View className="flex-row items-center justify-center w-32 h-12">
                     {
                         splittedValueMin.map((number, index) => (
                             <TickerList key={index} number={number} index={index} />

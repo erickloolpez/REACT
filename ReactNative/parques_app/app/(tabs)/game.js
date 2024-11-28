@@ -15,7 +15,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 //consts
 const _avatarSize = 40//because it's the same like h-10
 const _spacing = 4
-const _stagger = 150
+const _stagger = 100
 
 function Place({ user, index, onFinish, anim }) {
 

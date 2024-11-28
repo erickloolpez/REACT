@@ -6,6 +6,8 @@ import { router } from 'expo-router';
 import { images } from '../constants';
 import { useGlobalContext } from '../context/GlobalProvider';
 import Review from './Comment';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faFlagCheckered } from '@fortawesome/free-solid-svg-icons';
 
 
 const BackDropText = ({ index, scrollX, park }) => {
@@ -27,6 +29,10 @@ const BackDropText = ({ index, scrollX, park }) => {
 
     return (
         <Animated.View className="w-full h-full items-center absolute" style={stylez}>
+            {/* <View className="flex-row items-center justify-around absolute right-1 top-[-30px] w-[40%] h-10 z-20 bg-secondary rounded-t-full">
+                <Text className="text-primary font-semibold">Atractivos</Text>
+                <FontAwesomeIcon icon={faFlagCheckered} color='#fbeecc' size={32} />
+            </View> */}
             <View className="w-[97%] h-[90%]  flex-row">
                 <View className="w-[60%] h-full ">
                     <View className="w-[98%] h-full rounded-2xl overflow-hidden relative"  >
@@ -39,7 +45,11 @@ const BackDropText = ({ index, scrollX, park }) => {
                                 longitudeDelta: userLocation ? 0.7 : 0.1,
                             }}
                         >
-                            <Marker coordinate={park.location} title={park.name} />
+                            <Marker
+                                coordinate={park.location}
+                                title={park.name}
+                                image={park.icon ? park.icon : null}
+                            />
                         </MapView>
                         <View className=" h-8  rounded-lg absolute top-4 left-2 bg-secondary items-center justify-center p-2" >
                             <Text className="text-white font-bold">Ubicacion</Text>
@@ -56,7 +66,7 @@ const BackDropText = ({ index, scrollX, park }) => {
                             })
                         }}>
                             <Image source={park.trend[0].image} resizeMode="cover" className="w-full h-full rounded-xl" />
-                            <View className="rounded-lg absolute bottom-4 left-2 bg-secondary items-center justify-center p-2" >
+                            <View className=" rounded-lg absolute bottom-1 left-0 bg-secondary items-start justify-center p-2" >
                                 <Text className="text-white font-bold">{park.trend[0].name}</Text>
                             </View>
                         </TouchableOpacity>
@@ -70,7 +80,7 @@ const BackDropText = ({ index, scrollX, park }) => {
                             })
                         }}>
                             <Image source={park.trend[1].image} resizeMode="cover" className="w-full h-full rounded-xl" />
-                            <View className=" rounded-lg absolute bottom-4 left-2 bg-secondary items-center justify-center p-2" >
+                            <View className=" rounded-lg absolute bottom-1 right-0 bg-secondary items-end justify-center p-2" >
                                 <Text className="text-white font-bold">{park.trend[1].name}</Text>
                             </View>
                         </TouchableOpacity>

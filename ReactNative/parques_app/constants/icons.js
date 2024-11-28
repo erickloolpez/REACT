@@ -19,6 +19,18 @@ import condor from '../assets/icons/condor.png'
 import ayaHuma from '../assets/icons/aya-huma.png'
 import marco from '../assets/icons/marcos.png'
 
+import iconLlanganates from '../assets/icons/marker_parques.png'
+import iconCotopaxi from '../assets/icons/iconCotopaxi.png'
+import iconGalapagos from '../assets/icons/iconGalapagos.png'
+import iconSangay from '../assets/icons/iconSangay.png'
+import iconCajas  from '../assets/icons/iconCajas.png'
+import iconMachalilla from '../assets/icons/iconMachalilla.png'
+import iconYacuri from '../assets/icons/iconYacuri.png'
+import iconPodocarpus from '../assets/icons/iconPodocarpus.png'
+import iconCayambe from '../assets/icons/iconCayambe.png'
+import iconSumaco from '../assets/icons/iconSumaco.png'
+import iconYasuni from '../assets/icons/iconYasuni.png'
+
 export default {
   play,
   home,
@@ -38,5 +50,16 @@ export default {
   caballo,
   condor,
   ayaHuma,
-  marco
+  marco,
+  iconLlanganates,
+  iconCotopaxi,
+  iconGalapagos,
+  iconSangay,
+  iconCajas,
+  iconMachalilla,
+  iconYacuri,
+  iconPodocarpus,
+  iconCayambe,
+  iconSumaco,
+  iconYasuni
 };
