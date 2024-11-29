@@ -10,4 +10,4 @@ import cayambe from '../assets/isotipo/cayambe.png'
 import podocarpus from '../assets/isotipo/podocarpus.png'
 import machalilla from '../assets/isotipo/machalilla.png'
 
-export default {cajas, yacuri, yasuni, cotopaxi, sumaco, sangay, galapagos, cayambe, podocarpus, machalilla}
+export default {cajas, yacuri, yasuni, cotopaxi, sumaco, sangay, galapagos, cayambe, podocarpus, machalilla, llanganates}
