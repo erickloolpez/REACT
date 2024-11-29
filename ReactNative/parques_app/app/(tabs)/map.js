@@ -1,9 +1,10 @@
 import { View, Text, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useMemo } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MapView, { Marker, Polygon, Callout } from 'react-native-maps';
 import { router } from 'expo-router'
 import { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
 
 import { useGlobalContext } from '../../context/GlobalProvider';
 import { parks } from '../../constants/dummy';
@@ -20,6 +21,8 @@ const Map = () => {
         latitude: '-0.209028110783209',
         longitude: '-78.49107901848447'
     });
+
+    const snapPoints = useMemo(()=> ['25%','50%','75%'])
 
     const [selectedIndex, setSelectedIndex] = useState(null)
 
@@ -87,7 +90,12 @@ const Map = () => {
                     </TouchableOpacity>
                     <FilterOptions animation={menuStylez} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
                     <SearchInput />
-                    <MapCards mapView={_mapView} />
+                    {/* <MapCards mapView={_mapView} /> */}
+                    <BottomSheet index={1} snapPoints={snapPoints}>
+                        <BottomSheetView>
+                            <Text>Awesome</Text>
+                        </BottomSheetView>
+                    </BottomSheet>
 
                 </View>
 

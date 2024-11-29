@@ -1,7 +1,8 @@
 import { View, Text, Dimensions } from 'react-native'
 import Animated, { interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { parks } from '../../constants'
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
 
 const Card = ({ _slideWidth, _slideHeight, park, }) => {
     return (
@@ -12,42 +13,21 @@ const Card = ({ _slideWidth, _slideHeight, park, }) => {
 }
 
 const MapCards = ({ mapView }) => {
-    const { width } = Dimensions.get('window')
-    const _slideWidth = width * 0.4
-    const _slideHeight = _slideWidth * 0.9
-    const _spacing = 18
 
-    const [visibleParks, setVisibleParks] = useState(5); // Número inicial de parques visibles
 
     const loadMoreParks = () => {
         setVisibleParks(prevCount => prevCount + 6); // Incrementa la cantidad de elementos visibles en 5
     };
 
+    const snapPoints = useMemo(()=> ['25%','50%','75%'])
+
     return (
-        <View className="w-full h-[14vh] bg-blue-200 absolute bottom-4 z-10">
-            <Animated.FlatList
-                data={parks.slice(0, visibleParks)}
-                keyExtractor={(park) => park.name}
-                renderItem={({ item: park, index }) => (
-                    <Card _slideHeight={_slideHeight} _slideWidth={_slideWidth} park={park} />
-                )
-                }
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                snapToInterval={_slideWidth + _spacing}
-                decelerationRate={"fast"}
-                contentContainerStyle={{
-                    gap: _spacing,
-                    paddingHorizontal: (width - _slideWidth) / 2,
-                    paddingVertical: 20,
-                    alignItems: 'center'
-                }}
-
-                scrollEventThrottle={16}
-
-                onEndReached={loadMoreParks}
-            />
-
+        <View className="w-full h-[20vh] bg-blue-200 absolute bottom-0 z-10">
+            <BottomSheet index={1} snapPoints={snapPoints}>
+                <BottomSheetView>
+                    <Text>Awesome</Text>
+                </BottomSheetView>
+            </BottomSheet>
         </View>
     )
 }

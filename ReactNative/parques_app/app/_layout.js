@@ -2,6 +2,7 @@ import { SplashScreen, Stack } from 'expo-router'
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
 import GlobalProvider from '../context/GlobalProvider'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -29,17 +30,20 @@ const _layout = () => {
 
     }, [fontsLoaded])
     return (
-        <GlobalProvider>
-            <Stack>
-                <Stack.Screen name='index' options={{ headerShown: false }} />
-                <Stack.Screen name='(auth)' options={{ headerShown: false }} />
-                <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-                <Stack.Screen name='attractive/[query]' options={{ headerShown: false, presentation: 'modal' }} />
-                <Stack.Screen name='modals/[query]' options={{ headerShown: false, presentation: 'modal' }} />
-                <Stack.Screen name='search/[query]' options={{ headerShown: false }} />
+        <GestureHandlerRootView>
+            <GlobalProvider>
+                <Stack>
+                    <Stack.Screen name='index' options={{ headerShown: false }} />
+                    <Stack.Screen name='(auth)' options={{ headerShown: false }} />
+                    <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+                    <Stack.Screen name='attractive/[query]' options={{ headerShown: false, presentation: 'modal' }} />
+                    <Stack.Screen name='modals/[query]' options={{ headerShown: false, presentation: 'modal' }} />
+                    <Stack.Screen name='search/[query]' options={{ headerShown: false }} />
 
-            </Stack>
-        </GlobalProvider>
+                </Stack>
+            </GlobalProvider>
+
+        </GestureHandlerRootView>
     )
 }
 
