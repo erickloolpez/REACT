@@ -3,6 +3,7 @@ import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
 import GlobalProvider from '../context/GlobalProvider'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -31,18 +32,19 @@ const _layout = () => {
     }, [fontsLoaded])
     return (
         <GestureHandlerRootView>
-            <GlobalProvider>
-                <Stack>
-                    <Stack.Screen name='index' options={{ headerShown: false }} />
-                    <Stack.Screen name='(auth)' options={{ headerShown: false }} />
-                    <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-                    <Stack.Screen name='attractive/[query]' options={{ headerShown: false, presentation: 'modal' }} />
-                    <Stack.Screen name='modals/[query]' options={{ headerShown: false, presentation: 'modal' }} />
-                    <Stack.Screen name='search/[query]' options={{ headerShown: false }} />
+            <BottomSheetModalProvider>
+                <GlobalProvider>
+                    <Stack>
+                        <Stack.Screen name='index' options={{ headerShown: false }} />
+                        <Stack.Screen name='(auth)' options={{ headerShown: false }} />
+                        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+                        <Stack.Screen name='attractive/[query]' options={{ headerShown: false, presentation: 'modal' }} />
+                        <Stack.Screen name='modals/[query]' options={{ headerShown: false }} />
+                        <Stack.Screen name='search/[query]' options={{ headerShown: false }} />
 
-                </Stack>
-            </GlobalProvider>
-
+                    </Stack>
+                </GlobalProvider>
+            </BottomSheetModalProvider>
         </GestureHandlerRootView>
     )
 }
