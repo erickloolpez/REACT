@@ -1,50 +1,134 @@
-import { View, Image, Text } from 'react-native'
-import { images } from '../../constants'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faClock, faHeartPulse } from '@fortawesome/free-solid-svg-icons'
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Image, Text, Pressable, FlatList, Dimensions, TouchableOpacity } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCircleLeft, faHeartPulse } from '@fortawesome/free-solid-svg-icons';
+import MasonryList from '@react-native-seoul/masonry-list';
+
+import { images, parks } from '../../constants';
 
 const Activities = ({ place }) => {
+    const { width } = Dimensions.get("window");
+    const _slideWidth = width * 0.42;
+    const _spacing = 18;
+
+    const [expandedIndex, setExpandedIndex] = useState(null);
+    const viewabilityConfig = { viewAreaCoveragePercentThreshold: 50 };
+    const viewableItemsChanged = useRef(({ viewableItems }) => {
+        if (viewableItems.length > 0) {
+            const nextIndex = viewableItems[0].index; // Índice del primer ítem visible
+            setExpandedIndex(nextIndex);
+        }
+    }).current;
+
     return (
-        <View>
+        <View className="mt-4">
             <View className="flex-row mb-8 items-center ml-1">
-                <FontAwesomeIcon icon={faHeartPulse} color='#cf613c' size={32} />
+                <FontAwesomeIcon icon={faHeartPulse} color="#cf613c" size={32} />
                 <Text className="text-terciary text-xl left-2 font-bold">Actividades</Text>
             </View>
-            <View className="w-full px-2 items-center ">
-                {
-                    place.icons.map((activity, index) => (
-                        <View key={index} className="w-[90%] h-44 relative  border-l-2 border-secondary ">
-                            <View className="absolute left-[-20px] top-0 w-10 h-10 overflow-hidden border-2 rounded-full bg-secondary">
-                                <Image source={activity.image} resizeMode="contain" className="w-full h-full left-0 top-0" />
-                            </View>
+            <FlatList
+                data={place.icons}
+                keyExtractor={(activity) => activity.name}
+                renderItem={({ item: activity, index }) => (
+                    <CardPop
+                        activity={activity}
+                        images={parks.slice(0, 3)}
+                        isExpanded={expandedIndex === index}
+                        onPressExpand={() => setExpandedIndex(expandedIndex === index ? null : index)}
+                    />
+                )}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                snapToInterval={_slideWidth + _spacing}
+                decelerationRate={"fast"}
+                contentContainerStyle={{
+                    gap: _spacing,
+                    paddingHorizontal: (width - _slideWidth) / 2,
+                    alignItems: "center",
+                }}
+                onViewableItemsChanged={viewableItemsChanged}
+                viewabilityConfig={viewabilityConfig}
+                scrollEventThrottle={16}
+            />
+        </View>
+    );
+};
 
-                            <View className="w-[90%] h-[90%] border-b-4 border-secondary self-end  ">
-                                <View className="w-full h-full  flex-row ">
-                                    <View className="w-1/2 h-full">
-                                        <View className="w-full h-1/2 flex-row items-center rounded-lg">
-                                            <View className="w-full h-[95%] bg-secondary rounded-lg flex-row items-center">
-                                                <Text className="text-white ml-2">{activity.name}</Text>
-                                            </View>
-                                        </View>
-                                        <View className="w-full h-1/2 flex-row items-center rounded-lg">
-                                            <View className="w-full h-[95%] bg-terciary rounded-lg flex-row items-center">
-                                                <FontAwesomeIcon icon={faClock} color='#fff' size={32} />
-                                                <Text className="text-primary ml-1">1:30hr</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                    <View className="w-1/2 h-full  ">
-                                        <Image source={images.sendero} resizeMode="cover" className="w-[95%] h-full self-end rounded-xl" />
-                                    </View>
+const CardPop = ({ images, activity, isExpanded, onPressExpand }) => {
+    const width = useSharedValue(0);
+    const yValue = useSharedValue(90);
+    const opacitiy = useSharedValue(0);
+    const xPosition = useSharedValue(180);
 
-                                </View>
-                            </View>
-                        </View>
-                    ))
-                }
-            </View>
-        </View >
-    )
-}
+    const menuStylez = useAnimatedStyle(() => ({
+        width: width.value,
+        transform: [{ translateY: yValue.value }],
+        opacity: opacitiy.value,
+    }));
 
-export default Activities
+    const rotateStylez = useAnimatedStyle(() => ({
+        transform: [{ rotateZ: `${xPosition.value}deg` }],
+    }));
+
+    useEffect(() => {
+        if (isExpanded) {
+            width.value = withTiming(350, { duration: 300 });
+            yValue.value = withTiming(-8, { duration: 300 });
+            opacitiy.value = withTiming(1, { duration: 300 });
+            xPosition.value = withTiming(90, { duration: 300 });
+        } else {
+            width.value = withTiming(0, { duration: 300 });
+            yValue.value = withTiming(90, { duration: 300 });
+            opacitiy.value = withTiming(0, { duration: 260 });
+            xPosition.value = withTiming(180, { duration: 300 });
+        }
+    }, [isExpanded]);
+
+    return (
+        <View className="w-40 px-2 items-center">
+            <Animated.View className="h-28 bg-orange-500" style={menuStylez}>
+                <MasonryList
+                    data={images}
+                    keyExtractor={(item) => item.name}
+                    numColumns={3}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            style={{
+                                width: 110,
+                                height: 90,
+                                overflow: "hidden",
+                                marginTop: 10,
+                                marginLeft: 4,
+                            }}
+                        >
+                            <Image
+                                source={item.image}
+                                resizeMode="cover"
+                                style={{ width: "100%", height: "100%", borderRadius: 10 }}
+                            />
+                        </TouchableOpacity>
+                    )}
+                />
+            </Animated.View>
+            <Pressable
+                className="w-28 h-32 bg-yellow-500 mt-8 mr-3 rounded-3xl items-center"
+                onPress={onPressExpand}
+            >
+                <View className="w-20 h-10 bg-blue-500 relative">
+                    <View className="w-20 h-20 bg-red-500 absolute rounded-full top-[-30px] overflow-hidden">
+                        <Image source={activity.image} resizeMode="contain" className="w-full h-full" />
+                    </View>
+                </View>
+                <View className="mt-4">
+                    <Text className="text-lg">{activity.name}</Text>
+                </View>
+                <Animated.View className="mt-3" style={rotateStylez}>
+                    <FontAwesomeIcon icon={faCircleLeft} color="black" size={25} />
+                </Animated.View>
+            </Pressable>
+        </View>
+    );
+};
+
+export default Activities;

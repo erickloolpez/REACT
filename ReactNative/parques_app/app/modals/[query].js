@@ -32,7 +32,7 @@ const Place = () => {
                                 <Description desc={place.desc} />
                                 <Details >
                                     <Schedule />
-                                    {/* <Activities place={place} /> */}
+                                    <Activities place={place} />
                                 </Details>
                             </View>
                         )

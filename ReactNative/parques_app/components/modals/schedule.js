@@ -103,6 +103,9 @@ const Schedule = () => {
 
     return (
         <View className="w-full justify-around">
+            <View className="w-full mb-4">
+                <Text className="text-xl font-bold">Horario de mayor concurrencia</Text>
+            </View>
             <View onLayout={(e) => setDimensions({ height: e.nativeEvent.layout.height, width: e.nativeEvent.layout.width })} className="w-full flex-row bg-black-200 relative">
                 <Animated.View style={[animatedStyle, { width: dimensions.width / days.length }]} className="h-1 bg-primary absolute bottom-0" />
                 {days.map((day, index) => {
