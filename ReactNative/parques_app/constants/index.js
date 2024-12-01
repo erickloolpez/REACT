@@ -4,5 +4,5 @@ import { parks } from "./dummy"
 import logos from "./logos";
 import trends from "./trends";
 import isotipos from "./isotipos";
-
-export { icons, images, parks, logos, trends, isotipos };
+import weekDay from './day'
+export { icons, images, parks, logos, trends, isotipos, weekDay };

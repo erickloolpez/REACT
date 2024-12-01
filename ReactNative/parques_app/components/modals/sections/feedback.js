@@ -1,7 +1,7 @@
 import { View, Text, Image, Pressable } from 'react-native'
 import Review from '../../Comment'
 import { useRef, useCallback, useMemo, useState, useEffect } from 'react'
-import { faArrowRight, faCircleXmark } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight, faCircleXmark, faPenToSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { BottomSheetModal, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet'
 
@@ -28,12 +28,10 @@ const Feedback = () => {
     }, [isEditing]);
 
     return (
-        <View className="w-full h-[54vh] min-h-[50vh] items-center mt-4 relative">
-            <Review height={144} />
-
+        <View className="w-full h-[56vh] min-h-[50vh] items-center  relative">
             <Pressable
                 onPress={handlePresentModalPress}
-                className=" flex-row absolute bottom-5 bg-white w-full h-20 rounded-b-3xl overflow-hidden">
+                className=" flex-row bottom-0 absolute bg-white w-full h-20 rounded-b-3xl overflow-hidden">
                 <View className="w-[80%] items-start px-3 justify-center">
                     <Text>Escribe tu comentario ...</Text>
                 </View>
@@ -41,6 +39,8 @@ const Feedback = () => {
                     <FontAwesomeIcon icon={faArrowRight} color='black' size={32} />
                 </View>
             </Pressable>
+
+            <Review height={144} />
 
             <BottomSheetModal
                 ref={bottomSheetModalRef}
@@ -75,10 +75,20 @@ const Feedback = () => {
                             placeholder='Escribe tu comentario ....'
                             onSubmitEditing={handleEnterPress}
                         />
-                        <Pressable onPress={toggleEditMode}>
-                            <Text>hola</Text>
-                        </Pressable>
-
+                        <View className="mt-4 w-full h-12 flex-row justify-around">
+                            <Pressable
+                                className="flex-row items-center justify-center w-24 h-full  border-2  rounded-lg"
+                                onPress={toggleEditMode}>
+                                <FontAwesomeIcon icon={faPenToSquare} color='black' size={25} />
+                                <Text className="ml-2">Editar</Text>
+                            </Pressable>
+                            <Pressable
+                                className="flex-row items-center justify-center w-24 h-full  border-2  rounded-lg"
+                                onPress={toggleEditMode}>
+                                <FontAwesomeIcon icon={faSquareCheck} color='black' size={25} />
+                                <Text className="ml-2">Editar</Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </BottomSheetView>
             </BottomSheetModal>

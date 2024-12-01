@@ -1,43 +1,156 @@
-import { View, Text, FlatList } from 'react-native'
-import React from 'react'
-import { faCalendar } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import React, { useState, useEffect } from 'react';
+import { View, Text, Pressable } from 'react-native';
+import { BarChart } from 'react-native-gifted-charts';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { weekDay } from '../../constants';
 
 const Schedule = () => {
-    const week = [
-        { name: 'Lunes', schedule: '8 a.m.- 7 p.m.' },
-        { name: 'Martes', schedule: '8 a.m.- 7 p.m.' },
-        { name: 'Miercoles', schedule: '8 a.m.- 7 p.m.' },
-        { name: 'Jueves', schedule: '8 a.m.- 7 p.m.' },
-        { name: 'Viernes', schedule: '8 a.m.- 7 p.m.' },
-        { name: 'Sabado', schedule: '8 a.m.- 7 p.m.' },
-        { name: 'Domingo', schedule: '8 a.m.- 7 p.m.' },
-    ]
-    return (
-        <View className=" w-full h-[18vh]">
-            <View className="flex-row mb-4 items-center">
-                <FontAwesomeIcon icon={faCalendar} color='#cf613c' size={32} />
-                <Text className="text-xl text-terciary ml-2 font-bold">Horarios</Text>
-            </View>
-            <FlatList
-                data={week}
-                keyExtractor={(item) => item.name}
-                renderItem={({ item, index }) => (
-                    <View key={index} className="w-40 min-h-16 h-16 mr-4 border-r-2 border-b-2 border-gray-300">
-                        <View className="w-full">
-                            <Text className="text-terciary text-xl">{item.name}</Text>
-                        </View>
-                        <View className="w-full">
-                            <Text className="text-2xl font-bold text-green-800">{item.schedule}</Text>
-                        </View>
-                    </View>
-                )}
-                horizontal
-                contentContainerStyle={{ paddingHorizontal: 5 }}
-                showsHorizontalScrollIndicator={false}
-            />
-        </View>
-    )
-}
+    const [selectedBarIndex, setSelectedBarIndex] = useState(null);
 
-export default Schedule
+    const days = [
+        { acronym: "LUN" },
+        { acronym: "MAR" },
+        { acronym: "MIE" },
+        { acronym: "JUE" },
+        { acronym: "VIE" },
+        { acronym: "SAB" },
+        { acronym: "DOM" },
+    ];
+
+    const [day, setDay] = useState(weekDay.monday);
+
+    // Las etiquetas visibles
+    const visibleLabels = ['6 a.m.', '9 a.m.', '12 p.m.', '3 p.m.', '6 p.m.', '9 p.m.', '12 a.m.', '3 a.m.'];
+
+    // Recálculo de formattedData cuando cambia el estado 'day'
+    const [formattedData, setFormattedData] = useState([]);
+
+    useEffect(() => {
+        const updatedData = day.map((bar) => ({
+            ...bar,
+            label: visibleLabels.includes(bar.label) ? bar.label : '', // Dejar vacío si no es visible
+        }));
+        setFormattedData(updatedData);
+    }, [day]);
+
+    const handleBarPress = (index) => {
+        setSelectedBarIndex(index === selectedBarIndex ? null : index);
+    };
+
+    //Animación
+    const [dimensions, setDimensions] = useState({ height: 20, width: 100 });
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const translateX = useSharedValue(0);
+
+    const handleTabPress = (index) => {
+        let selectedDay;
+        switch (index) {
+            case 0:
+                selectedDay = weekDay.monday;
+                break;
+            case 1:
+                selectedDay = weekDay.tuesday;
+                break;
+            case 2:
+                selectedDay = weekDay.wednesday;
+                break;
+            case 3:
+                selectedDay = weekDay.thursday;
+                break;
+            case 4:
+                selectedDay = weekDay.friday;
+                break;
+            case 5:
+                selectedDay = weekDay.saturday;
+                break;
+            case 6:
+                selectedDay = weekDay.sunday;
+                break;
+        }
+        setDay(selectedDay);
+        setCurrentIndex(index);
+
+        const tabWidth = dimensions.width / days.length;
+        translateX.value = withTiming(index * tabWidth, { duration: 300 });
+    };
+
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{ translateX: translateX.value }],
+        };
+    });
+
+    //-----FUNCTION TO RETURN THE TEXT ------
+    const getBarDetails = () => {
+        if (selectedBarIndex === null) {
+            return 'Presiona una barra para ver los detalles';
+        }
+
+        const selectedBar = formattedData[selectedBarIndex];
+        if (selectedBar.value < 1000) {
+            return 'Por lo general, esta menos concurrido'
+        } else if (selectedBar.value < 1400 && selectedBar.value >= 1000) {
+            return 'Por lo general no esta ton concurrido'
+        } else if (selectedBar.value < 2000 && selectedBar.value >= 1400) {
+            return 'Por lo general, esta un poco concurrido'
+        } else if (selectedBar.value < 3000 && selectedBar.value >= 2000) {
+            return 'Por lo general, es cuando esta mas concurrido'
+        }
+
+    };
+
+
+    return (
+        <View className="w-full justify-around">
+            <View onLayout={(e) => setDimensions({ height: e.nativeEvent.layout.height, width: e.nativeEvent.layout.width })} className="w-full flex-row bg-black-200 relative">
+                <Animated.View style={[animatedStyle, { width: dimensions.width / days.length }]} className="h-1 bg-primary absolute bottom-0" />
+                {days.map((day, index) => {
+                    let color = currentIndex === index ? '#fff' : 'red';
+                    return (
+                        <Pressable
+                            key={`day-${day.acronym}`}
+                            className="w-[14.28%] h-10 items-center justify-center"
+                            onPress={() => handleTabPress(index)}
+                        >
+                            <Text style={{ color: color }}>{day.acronym}</Text>
+                        </Pressable>
+                    );
+                })}
+            </View>
+
+            <View style={{ alignItems: 'center', marginBottom: 16 }}>
+                <Text style={{ color: 'gray' }}>{getBarDetails()}</Text>
+            </View>
+
+            <View className="w-full bg-red-400">
+                <BarChart
+                    data={formattedData.map((bar, index) => ({
+                        ...bar,
+                        frontColor: index === selectedBarIndex ? '#F29C6E' : '#006DFF',
+                        gradientColor: index === selectedBarIndex ? '#FFBEA3' : '#009FFF',
+                        onPress: () => handleBarPress(index),
+                    }))}
+                    barWidth={16}
+                    initialSpacing={10}
+                    spacing={3}
+                    barBorderRadius={8}
+                    yAxisThickness={0}
+                    xAxisType={'dashed'}
+                    xAxisColor={'lightgray'}
+                    yAxisTextStyle={{ color: 'lightgray' }}
+                    stepValue={1000}
+                    maxValue={3000}
+                    noOfSections={3}
+                    yAxisLabelTexts={[' ', ' ', ' ', ' ']}
+                    labelWidth={44}
+                    xAxisLabelTextStyle={{ color: 'lightgray', textAlign: 'start' }}
+                    isAnimated={true}
+                    height={100}
+                />
+            </View>
+        </View>
+    );
+};
+
+export default Schedule;

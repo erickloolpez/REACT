@@ -1,33 +1,33 @@
 import { router } from 'expo-router'
+import MasonryList from '@react-native-seoul/masonry-list';
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 
 const Attractives = ({ attractives, park }) => {
     return (
-        <View className="w-full min-h-[50vh] px-2">
-            {
-                attractives.map((attractive, index) => (
-                    <TouchableOpacity key={index} onPress={() => {
-                        router.push({
-                            pathname: `/attractive/${attractive.desc}`,
-                            params: {modalPark:true, trend: JSON.stringify(attractive), park:JSON.stringify(park) }
-                        })
-                    }}>
-                        <View className="flex-row w-full h-36 mt-4 bg-secondary rounded-xl">
-                            <View className="w-[60%] justify-around p-3">
-                                <View>
-                                    <Text className="text-white font-bold">{attractive.name}</Text>
-                                </View>
-                                <View className="mt-2">
-                                    <Text className="text-white" numberOfLines={4}>{attractive.desc}</Text>
-                                </View>
-                            </View>
-                            <View className="w-[40%] h-full items-center justify-center ">
-                                <Image source={attractive.image} resizeMode="cover" className="w-32 h-32  rounded-full border-2 border-white" />
-                            </View>
-                        </View>
+        <View className="w-full min-h-[56vh] px-2 pt-4">
+            <MasonryList
+                data={attractives}
+                keyExtractor={(item) => item.name}
+                numColumns={2} // Puedes ajustar este valor según el diseño
+                renderItem={({ item }) => (
+                    <TouchableOpacity
+                        onPress={() => {
+                            router.push({
+                                pathname: `/attractive/${item.desc}`,
+                                params: { modalPark: true, trend: JSON.stringify(item), park: JSON.stringify(park) }
+                            })
+                        }}
+                        style={{ width: '100%', margin: 5, overflow: 'hidden' }}
+                    >
+                        <Image
+                            source={item.image}
+                            resizeMode="cover"
+                            style={{ width: '96%', height: Math.random() * 150 + 100, borderRadius: 10 }} // Altura aleatoria para diseño estilo Pinterest
+                        />
+                        <Text className="text-black font-semibold">{item.name}</Text>
                     </TouchableOpacity>
-                ))
-            }
+                )}
+            />
         </View>
     )
 }

@@ -5,7 +5,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 const Review = ({width='90%', height = '144px'}) => {
     return (
-        <View className="bg-white  flex-row items-center justify-around  rounded-xl shadow-sm mb-4" style={{width: width, height: height}}>
+        <View className="bg-white mt-4  flex-row items-center justify-around  rounded-xl shadow-sm mb-4" style={{width: width, height: height}}>
             <View className="w-[20%] h-full items-center justify-center">
                 <Image source={images.avatar} resizeMode="cover" className="w-16 h-16 rounded-full" />
             </View>
