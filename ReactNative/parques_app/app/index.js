@@ -1,37 +1,41 @@
 import { router } from 'expo-router';
 import { Text, View, Animated, Image, SafeAreaView, ScrollView, StatusBar } from 'react-native';
 import { useEffect, useRef } from 'react';
+import * as Location from 'expo-location'
 
 import images from '../constants/images';
 import CustomButton from '../components/CustomButton';
+import { useGlobalContext } from '../context/GlobalProvider';
 
 
 export default function App() {
   const animation = useRef(new Animated.Value(0)).current
 
-  const startAnimation = () => {
-    Animated.timing(animation, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: true,
-    }).start()
-  }
+  const { userLocation, setUserLocation } = useGlobalContext()
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     startAnimation()
-  //   }, 2000)
-  //   setTimeout(() => {
-  //     router.replace('/home')
-  //   }, 2500)
-  // }, [])
+  useEffect(() => {
+    const getLocationPermission = async() => {
+      let { status } = await Location.requestForegroundPermissionsAsync()
+
+      if (status !== 'granted') {
+        console.log('Permission denied.')
+        return
+      }
+
+      let location = await Location.getCurrentPositionAsync({})
+
+      const current = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      }
+
+      setUserLocation(current)
+
+    }
+    getLocationPermission()
+  }, [])
 
   return (
-    // <View className="flex-1 items-center justify-center bg-primary">
-    //   <Animated.View className="w-28 h-48" style={{ transform: [{ scale: animation.interpolate({ inputRange: [0, 1], outputRange: [1, 20] }) }] }}>
-    //     <Image source={images.isotipo} className="w-full h-full" />
-    //   </Animated.View>
-    // </View>
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView contentContainerStyle={{ height: '100%' }}>
         <View className="w-full justify-center items-center min-h-[85vh] px-4">

@@ -23,7 +23,7 @@ const Map = () => {
         longitude: '-78.49107901848447'
     });
 
-    const snapPoints = useMemo(() => ['5%','50%','75%'])
+    const snapPoints = useMemo(() => ['5%', '50%', '75%'])
 
     const [selectedIndex, setSelectedIndex] = useState(null)
 
@@ -47,16 +47,18 @@ const Map = () => {
                     <MapView
                         ref={(mapView) => { _mapView = mapView; }}
                         className="w-full h-full"
+                        style={{ width: '100%', height: '100%' }}
                         initialRegion={{
-                            latitude: origin.latitude,
-                            longitude: origin.longitude,
-                            latitudeDelta: userLocation ? 5 : 0.4,
-                            longitudeDelta: userLocation ? 0.4 : 0.1,
+                            latitude: -0.209028110783209,
+                            longitude: -78.49107901848447,
+                            latitudeDelta: 5.0,
+                            longitudeDelta: 5.0,
+
                         }}
                     >
                         {parks.map((park, index) => (
                             <React.Fragment key={`park-map-${index}`}>
-                                <Polygon coordinates={park.polygon} fillColor={'rgba(100,100,200,0.3)'} strokeWidth={1} />
+                                {/* <Polygon coordinates={park.polygon} fillColor={'rgba(100,100,200,0.3)'} strokeWidth={1} /> */}
                                 <Marker
                                     image={park.icon ? park.icon : null}
                                     coordinate={park.location}
@@ -70,7 +72,7 @@ const Map = () => {
                                 </Marker>
                             </React.Fragment>
                         ))}
-                        {userLocation && <Marker coordinate={userLocation} title={'Tú'} />}
+                        {/* {userLocation && <Marker coordinate={userLocation} title={'Tú'} />} */}
                     </MapView>
                     <TouchableOpacity
                         className=" w-14 h-14 absolute top-20 left-3 bg-white rounded-full items-center justify-center"
@@ -93,9 +95,9 @@ const Map = () => {
                     <SearchInput />
                     {/* <MapCards mapView={_mapView} /> */}
                     <BottomSheet
-                     index={1} 
-                      snapPoints={snapPoints}
-                      backgroundStyle={{backgroundColor:'#fbeecc'}}
+                        index={1}
+                        snapPoints={snapPoints}
+                        backgroundStyle={{ backgroundColor: '#fbeecc' }}
                     >
                         <BottomSheetView >
                             <View className="w-96 h-48 rounded-xl mt-2 overflow-hidden">

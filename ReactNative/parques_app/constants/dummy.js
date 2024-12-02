@@ -8,8 +8,8 @@ const parks = [
     name: 'Llanganates', image: images.llanganantes,
     icon: icons.iconLlanganates,
     location: {
-      latitude: '-1.137165089331531',
-      longitude: '-78.24608383727785',
+      latitude: -1.137165089331531,
+      longitude: -78.24608383727785,
     },
     polygon: [
       { latitude: '-1.308705', longitude: '-78.439756' },
@@ -76,8 +76,8 @@ const parks = [
     name: 'Podocarpus', image: images.podocarpus,
     icon: icons.iconPodocarpus,
     location: {
-      latitude: ' -4.296400805573029',
-      longitude: '-78.99381021780579',
+      latitude: -4.296400805573029,
+      longitude: -78.99381021780579,
     },
     polygon: [
       { latitude: -4.102, longitude: -78.994 }, // Norte
@@ -148,8 +148,8 @@ const parks = [
     name: 'Galapagos', image: images.galapagos,
     icon: icons.iconGalapagos,
     location: {
-      latitude: '-0.6141768221188437',
-      longitude: '-90.34521020652402',
+      latitude: -0.6141768221188437,
+      longitude: -90.34521020652402,
     },
     polygon: [
       { latitude: -0.163, longitude: -90.345 }, // Norte
@@ -198,8 +198,8 @@ const parks = [
     name: 'Machalilla', image: images.machalilla,
     icon: icons.iconMachalilla,
     location: {
-      latitude: '-1.4585881977897268',
-      longitude: '-80.76864915621577',
+      latitude: -1.4585881977897268,
+      longitude: -80.76864915621577,
     },
     polygon: [
       { latitude: -1.318, longitude: -80.769 }, // Norte
@@ -273,8 +273,8 @@ const parks = [
     name: 'El cajas', image: images.cajas,
     icon: icons.iconCajas,
     location: {
-      latitude: '-2.846042815518646',
-      longitude: '-79.25541232991348',
+      latitude: -2.846042815518646,
+      longitude: -79.25541232991348,
     },
     polygon: [
       { latitude: -2.761, longitude: -79.255 }, // Norte
@@ -323,8 +323,8 @@ const parks = [
     name: 'Cayambe Coca', image: images.cayambe,
     icon: icons.iconCayambe,
     location: {
-      latitude: '-0.07279645221010232',
-      longitude: '-77.83669601816572',
+      latitude: -0.07279645221010232,
+      longitude: -77.83669601816572,
     },
     polygon: [
       { latitude: 0.251, longitude: -77.837 }, // Norte
@@ -390,8 +390,8 @@ const parks = [
     name: 'Sangay', image: images.sangay,
     icon: icons.iconSangay,
     location: {
-      latitude: '-2.054084296830765',
-      longitude: '-78.36341582476535',
+      latitude: -2.054084296830765,
+      longitude: -78.36341582476535,
     },
     polygon: [
       { latitude: -1.688, longitude: -78.363 }, // Norte
@@ -449,8 +449,8 @@ const parks = [
     name: 'Sumaco', image: images.sumaco,
     icon: icons.iconSumaco,
     location: {
-      latitude: '-0.3609124187566216',
-      longitude: '-77.46976861934205',
+      latitude: -0.3609124187566216,
+      longitude: -77.46976861934205,
     },
     polygon: [
       { latitude: -0.131, longitude: -77.470 }, // Norte
@@ -500,8 +500,8 @@ const parks = [
     name: 'Yasuni', image: images.yasuni,
     icon: icons.iconYasuni,
     location: {
-      latitude: '-0.6559593349788924',
-      longitude: '-76.07043497186153',
+      latitude: -0.6559593349788924,
+      longitude: -76.07043497186153,
     },
     polygon: [
       { latitude: -0.596, longitude: -76.070 }, // Norte
@@ -558,8 +558,8 @@ const parks = [
     name: 'Yacuri', image: images.yacuri,
     icon: icons.iconYacuri,
     location: {
-      latitude: '-4.597169234904428',
-      longitude: '-79.31879143778109',
+      latitude: -4.597169234904428,
+      longitude: -79.31879143778109,
     },
     polygon: [
       { latitude: -4.492, longitude: -79.319 }, // Norte
@@ -612,8 +612,8 @@ const parks = [
     name: 'Cotopaxi', image: images.cotopaxi,
     icon: icons.iconCotopaxi,
     location: {
-      latitude: '-0.7005484946862225',
-      longitude: '-78.42977234885215',
+      latitude: -0.7005484946862225,
+      longitude: -78.42977234885215,
     },
     polygon: [
       { latitude: -0.619, longitude: -78.429 }, // Norte

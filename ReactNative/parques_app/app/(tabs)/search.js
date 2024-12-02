@@ -16,30 +16,6 @@ import { LinearGradient } from 'expo-linear-gradient'
 
 
 const Search = () => {
-  const { userLocation, setUserLocation } = useGlobalContext()
-  async function getLocationPermission() {
-    let { status } = await Location.requestForegroundPermissionsAsync()
-
-    if (status !== 'granted') {
-      alert('Permission denied.')
-      return
-    }
-
-    let location = await Location.getCurrentPositionAsync()
-
-    const current = {
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude
-    }
-
-    setUserLocation(current)
-
-  }
-
-  useEffect(() => {
-    getLocationPermission()
-  }, [])
-
   const widthLength = '100%'
 
   const [openSearch, setOpenSearch] = useState(0)

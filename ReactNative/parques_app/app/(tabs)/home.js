@@ -1,7 +1,7 @@
 import { View, Text, Dimensions, ScrollView, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Animated, { interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { parks } from '../../constants'
 import Cards from '../../components/Cards'
@@ -11,9 +11,9 @@ import { faMountainSun } from '@fortawesome/free-solid-svg-icons'
 import CondorComponent from '../../assets/svgs/condor'
 import HumaComponent from '../../assets/svgs/huma'
 import { LinearGradient } from 'expo-linear-gradient'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Home = () => {
-
   const { width } = Dimensions.get('window')
   const _slideWidth = width * 0.45
   const _slideHeight = _slideWidth * 1.70
@@ -60,7 +60,7 @@ const Home = () => {
 
   return (
     <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
-      <SafeAreaView edges={['top']} className="h-full ">
+      {/* <SafeAreaView edges={['top']} className="h-full ">
         <View className="w-full h-[12%] relative bg-secondary justify-between px-8 border-white border-t-2 border-b-2 items-center mt-3 flex-row">
           <HumaComponent />
           {
@@ -115,7 +115,7 @@ const Home = () => {
             ))
           }
         </View>
-      </SafeAreaView>
+      </SafeAreaView> */}
     </LinearGradient>
 
   )
