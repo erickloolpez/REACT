@@ -23,9 +23,8 @@ const Activities = ({ place }) => {
 
     return (
         <View className="mt-4">
-            <View className="flex-row mb-8 items-center ml-1">
-                <FontAwesomeIcon icon={faHeartPulse} color="#cf613c" size={32} />
-                <Text className="text-terciary text-xl left-2 font-bold">Actividades</Text>
+            <View className="flex-row mb-8 items-center ">
+                <Text className="text-primary text-xl  font-bold">Actividades</Text>
             </View>
             <FlatList
                 data={place.icons}
@@ -87,7 +86,7 @@ const CardPop = ({ images, activity, isExpanded, onPressExpand }) => {
 
     return (
         <View className="w-40 px-2 items-center">
-            <Animated.View className="h-28 bg-orange-500" style={menuStylez}>
+            <Animated.View className="h-28 " style={menuStylez}>
                 <MasonryList
                     data={images}
                     keyExtractor={(item) => item.name}
@@ -112,16 +111,16 @@ const CardPop = ({ images, activity, isExpanded, onPressExpand }) => {
                 />
             </Animated.View>
             <Pressable
-                className="w-28 h-32 bg-yellow-500 mt-8 mr-3 rounded-3xl items-center"
+                className="w-28 h-32 bg-terciary mt-8 mr-3 rounded-3xl items-center"
                 onPress={onPressExpand}
             >
-                <View className="w-20 h-10 bg-blue-500 relative">
-                    <View className="w-20 h-20 bg-red-500 absolute rounded-full top-[-30px] overflow-hidden">
+                <View className="w-20 h-10  relative">
+                    <View className="w-20 h-20 bg-yellow-500 absolute rounded-full top-[-30px] overflow-hidden">
                         <Image source={activity.image} resizeMode="contain" className="w-full h-full" />
                     </View>
                 </View>
                 <View className="mt-4">
-                    <Text className="text-lg">{activity.name}</Text>
+                    <Text className="text-lg font-semibold text-primary">{activity.name}</Text>
                 </View>
                 <Animated.View className="mt-3" style={rotateStylez}>
                     <FontAwesomeIcon icon={faCircleLeft} color="black" size={25} />

@@ -24,7 +24,7 @@ const Attractives = ({ attractives, park }) => {
                             resizeMode="cover"
                             style={{ width: '96%', height: Math.random() * 150 + 100, borderRadius: 10 }} // Altura aleatoria para diseño estilo Pinterest
                         />
-                        <Text className="text-black font-semibold">{item.name}</Text>
+                        <Text className="text-primary font-semibold">{item.name}</Text>
                     </TouchableOpacity>
                 )}
             />

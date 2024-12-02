@@ -4,6 +4,8 @@ import { useRef, useCallback, useMemo, useState, useEffect } from 'react'
 import { faArrowRight, faCircleXmark, faPenToSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { BottomSheetModal, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet'
+import { images } from '../../../constants'
+import { faFaceLaughBeam } from '@fortawesome/free-regular-svg-icons'
 
 const Feedback = () => {
     const bottomSheetModalRef = useRef(null)
@@ -31,12 +33,17 @@ const Feedback = () => {
         <View className="w-full h-[56vh] min-h-[50vh] items-center  relative">
             <Pressable
                 onPress={handlePresentModalPress}
-                className=" flex-row bottom-0 absolute bg-white w-full h-20 rounded-b-3xl overflow-hidden">
-                <View className="w-[80%] items-start px-3 justify-center">
-                    <Text>Escribe tu comentario ...</Text>
+                className=" flex-row bottom-8 absolute  w-full h-11 px-1 overflow-hidden">
+                <View className="w-[15%] items-center justify-center">
+                    <View>
+                        <Image source={images.avatar} resizeMode="cover" className="w-10 h-10 rounded-full" />
+                    </View>
                 </View>
-                <View className="w-[20%] items-center justify-center bg-blue-400">
-                    <FontAwesomeIcon icon={faArrowRight} color='black' size={32} />
+                <View className="w-[85%] bg-gray-500 items-start px-3 justify-center relative rounded-full">
+                    <Text className="text-primary">Añadir comentario...</Text>
+                    <View className="absolute right-0 mr-5">
+                        <FontAwesomeIcon icon={faFaceLaughBeam} color='white' size={25} />
+                    </View>
                 </View>
             </Pressable>
 

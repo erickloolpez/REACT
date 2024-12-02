@@ -7,18 +7,39 @@ import { useGlobalContext } from '../../../context/GlobalProvider';
 import { images } from '../../../constants';
 const Map = ({ place }) => {
     const { userLocation } = useGlobalContext();
-    const [currentIndex, setCurrentIndex] = useState(0);
     const [origin] = useState(place.location);
 
-    const [text, setText] = useState(place.path[0].order.slice(0, 100))
 
 
     return (
         <View className="w-full mb-4">
             <View className="mt-3 mb-4">
-                <Text className="text-xl text-terciary">Ubicación:</Text>
+                <Text className="text-xl font-bold text-primary">Ubicación:</Text>
             </View>
-            <View className="w-full h-[54vh] items-center border-y-2 border-y-black-200 relative ">
+            {
+                place.path.map((option) => {
+                    let _height
+                    if (option.order.length > 200) {
+                        _height = option.order.length - 110
+                    } else {
+                        _height = 100
+                    }
+                    return (
+                        <View key={`route-${option.name}`} className="w-full  flex-row" style={{ height: _height }}>
+                            <View className="w-[25%] h-full items-center justify-center  relative border-r-2">
+                                <Text className="text-lg text-primary font-semibold">{option.name}</Text>
+                                <View className="w-4 h-4 rounded-full absolute bg-terciary top-0 right-[-8px] z-10" />
+                            </View>
+                            <View className="w-[75%] h-full  p-2 items-center justify-center">
+                                <Text className="text-primary">{option.order}</Text>
+                            </View>
+                        </View>
+
+                    )
+                })
+
+            }
+            <View className="w-full h-[34vh] items-center border-y-2 border-y-white relative ">
                 <MapView
                     className="w-full h-full"
                     initialRegion={{
@@ -35,22 +56,6 @@ const Map = ({ place }) => {
                         <Polyline coordinates={[userLocation, origin]} strokeColor="yellow" strokeWidth={2} />
                     )}
                 </MapView>
-                <View className="w-[40%] h-full absolute left-0">
-                    <View
-                        className="grow"
-                        activeOpacity={0.9}
-                    >
-                        <View
-                            className="grow justify-center items-center"
-                            style={{ backgroundColor: place.path[0].color.background }}
-                        >
-                            <Text className="text-3xl uppercase font-bold" style={{ color: place.path[0].color.heading }}>Como llegar?</Text>
-                            <View className="mt-2 px-2 ">
-                                <Text style={{ color: place.path[0].color.heading }}>{text}</Text>
-                            </View>
-                        </View>
-                    </View>
-                </View>
             </View>
         </View>
     );

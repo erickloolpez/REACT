@@ -16,7 +16,7 @@ const Profile = () => {
       <SafeAreaView className="h-full " edges={['top']}>
         <ScrollView>
           <View className="w-full h-[38vh] items-center justify-around py-2 relative ">
-            <LinearGradient className="absolute w-full h-[40%] rounded-lg " colors={['#CCCCB2', '#757519']} />
+            {/* <LinearGradient className="absolute w-full h-[40%] rounded-lg " colors={['#CCCCB2', '#757519']} /> */}
             <View className="w-full h-[10%] items-end justify-center ">
               <View className=" w-10 h-10 mr-2 rounded-lg items-center justify-center ">
                 <FontAwesomeIcon icon={faRightFromBracket} color='#ef4444' size={32} />

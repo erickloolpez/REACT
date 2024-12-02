@@ -3,6 +3,8 @@ import { View, Text, Pressable } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { weekDay } from '../../constants';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faUserGroup } from '@fortawesome/free-solid-svg-icons';
 
 const Schedule = () => {
     const [selectedBarIndex, setSelectedBarIndex] = useState(null);
@@ -42,6 +44,7 @@ const Schedule = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const translateX = useSharedValue(0);
+    const tabWidth = dimensions.width / days.length;
 
     const handleTabPress = (index) => {
         let selectedDay;
@@ -71,7 +74,6 @@ const Schedule = () => {
         setDay(selectedDay);
         setCurrentIndex(index);
 
-        const tabWidth = dimensions.width / days.length;
         translateX.value = withTiming(index * tabWidth, { duration: 300 });
     };
 
@@ -87,15 +89,15 @@ const Schedule = () => {
             return 'Presiona una barra para ver los detalles';
         }
 
-        const selectedBar = formattedData[selectedBarIndex];
+        const selectedBar = day[selectedBarIndex];
         if (selectedBar.value < 1000) {
-            return 'Por lo general, esta menos concurrido'
+            return `${selectedBar.label}:Por lo general, esta menos concurrido`
         } else if (selectedBar.value < 1400 && selectedBar.value >= 1000) {
-            return 'Por lo general no esta ton concurrido'
+            return `${selectedBar.label}:Por lo general no esta ton concurrido`
         } else if (selectedBar.value < 2000 && selectedBar.value >= 1400) {
-            return 'Por lo general, esta un poco concurrido'
+            return `${selectedBar.label}:Por lo general, esta un poco concurrido`
         } else if (selectedBar.value < 3000 && selectedBar.value >= 2000) {
-            return 'Por lo general, es cuando esta mas concurrido'
+            return `${selectedBar.label}:Por lo general, es cuando esta mas concurrido`
         }
 
     };
@@ -103,30 +105,31 @@ const Schedule = () => {
 
     return (
         <View className="w-full justify-around">
-            <View className="w-full mb-4">
-                <Text className="text-xl font-bold">Horario de mayor concurrencia</Text>
+            <View className="w-full mb-4 flex-row">
+                <Text className="text-xl font-bold text-primary">Horario de mayor concurrencia</Text>
             </View>
-            <View onLayout={(e) => setDimensions({ height: e.nativeEvent.layout.height, width: e.nativeEvent.layout.width })} className="w-full flex-row bg-black-200 relative">
+            <View onLayout={(e) => setDimensions({ height: e.nativeEvent.layout.height, width: e.nativeEvent.layout.width })} className="w-full flex-row  relative">
                 <Animated.View style={[animatedStyle, { width: dimensions.width / days.length }]} className="h-1 bg-primary absolute bottom-0" />
                 {days.map((day, index) => {
-                    let color = currentIndex === index ? '#fff' : 'red';
+                    let color = currentIndex === index ? '#fff' : '#cf613c';
                     return (
                         <Pressable
                             key={`day-${day.acronym}`}
                             className="w-[14.28%] h-10 items-center justify-center"
                             onPress={() => handleTabPress(index)}
                         >
-                            <Text style={{ color: color }}>{day.acronym}</Text>
+                            <Text style={{ color: color,fontWeight:'500' }}>{day.acronym}</Text>
                         </Pressable>
                     );
                 })}
             </View>
 
-            <View style={{ alignItems: 'center', marginBottom: 16 }}>
-                <Text style={{ color: 'gray' }}>{getBarDetails()}</Text>
+            <View style={{ alignItems: 'center', marginBottom: 30 }} className="flex-row justify-center mt-4">
+                <FontAwesomeIcon icon={faUserGroup} color='white' size={22} />
+                <Text style={{ color: '#fbeecc', marginLeft: 10 }}>{getBarDetails()}</Text>
             </View>
 
-            <View className="w-full bg-red-400">
+            <View className="w-full">
                 <BarChart
                     data={formattedData.map((bar, index) => ({
                         ...bar,
