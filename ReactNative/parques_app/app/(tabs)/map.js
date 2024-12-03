@@ -25,7 +25,7 @@ const Map = () => {
         setSheetIndex(index);
     }, [isHorizontal]);
 
-    const snapPoints = useMemo(() => ['35%', '100%'])
+    const snapPoints = useMemo(() => ['35%', '80%'])
 
     const [selectedIndex, setSelectedIndex] = useState(null)
 
@@ -62,7 +62,7 @@ const Map = () => {
                             <React.Fragment key={`park-map-${index}`}>
                                 {/* <Polygon coordinates={park.polygon} fillColor={'rgba(100,100,200,0.3)'} strokeWidth={1} /> */}
                                 <Marker
-                                    image={park.icon ? park.icon : null}
+                                    image={park.isotipo ? park.isotipo : null}
                                     coordinate={park.location}
                                     title={park.name}
                                     onPress={() => {
@@ -110,8 +110,14 @@ const Map = () => {
                             data={parks}
                             keyExtractor={(park) => park.name}
                             renderItem={({ item: park, index }) => (
-                                <ButtonSheet key={`park-bottom-${index}`} name={park.name} isotipo={park.isotipo} />
+                                <ButtonSheet key={`park-bottom-${index}`} name={park.name} isotipo={park.isotipo} width={isHorizontal ? 320 : 400} />
                             )}
+                            contentContainerStyle={{
+                                paddingHorizontal:8,
+                                gap:8,
+                                marginTop:20,
+                                alignItems: isHorizontal? '' : 'center'
+                            }}
                             horizontal={isHorizontal}
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}

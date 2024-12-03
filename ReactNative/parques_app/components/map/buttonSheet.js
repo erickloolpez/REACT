@@ -4,9 +4,9 @@ import { isotipos } from '../../constants'
 import { faClockRotateLeft, faCloud, faLocationDot, faStar, faTree } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
-const ButtonSheet = ({name, isotipo }) => {
+const ButtonSheet = ({name, isotipo, width }) => {
     return (
-        <View className="w-96 h-48 rounded-xl overflow-hidden mb-3 ml-1  ">
+        <View style={{width:width}} className="h-36 rounded-xl overflow-hidden mb-3 ml-1  ">
             <View className=" w-full h-[70%] rounded-t-lg bg-[#327042]">
                 <View className="w-full h-[70%] flex-row ">
                     <View className="w-[20%] h-full items-center justify-center">
