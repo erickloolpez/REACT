@@ -14,9 +14,9 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Home = () => {
-  const { width } = Dimensions.get('window')
-  const _slideWidth = width * 0.45
-  const _slideHeight = _slideWidth * 1.70
+  const { width, height } = Dimensions.get('window')
+  const _slideWidth = width * 0.58
+  const _slideHeight = height * 0.47
   const _spacing = 18
 
   const [visibleParks, setVisibleParks] = useState(5); // Número inicial de parques visibles
@@ -60,8 +60,8 @@ const Home = () => {
 
   return (
     <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
-      {/* <SafeAreaView edges={['top']} className="h-full ">
-        <View className="w-full h-[12%] relative bg-secondary justify-between px-8 border-white border-t-2 border-b-2 items-center mt-3 flex-row">
+      <SafeAreaView edges={['top']} className="h-full ">
+        <View className="w-full h-[12%] relative bg-secondary justify-between px-8 border-white border-t-2 border-b-2 items-center  flex-row">
           <HumaComponent />
           {
             parks.slice(0, visibleParks).map((park, index) => (
@@ -77,7 +77,20 @@ const Home = () => {
           <CondorComponent />
         </View>
 
-        <View className="w-full h-[50%] ">
+        <View className="w-full h-[30%]  mt-2 items-center ">
+          {
+            parks.slice(0, visibleParks).map((park, index) => (
+              <BackDropText
+                key={`bg-text-${park.name}`}
+                index={index}
+                scrollX={scrollX}
+                park={park}
+              />
+            ))
+          }
+        </View>
+
+        <View className="w-full h-[60%] ">
           <Animated.FlatList
             data={parks.slice(0, visibleParks)}
             keyExtractor={(park) => park.name}
@@ -90,8 +103,8 @@ const Home = () => {
             snapToInterval={_slideWidth + _spacing}
             decelerationRate={"fast"}
             contentContainerStyle={{
-              gap: _spacing,
               paddingHorizontal: (width - _slideWidth) / 2,
+              gap: _spacing,
               alignItems: 'center'
             }}
 
@@ -103,19 +116,7 @@ const Home = () => {
           />
         </View>
 
-        <View className="w-full h-[38%]  mt-2 items-center ">
-          {
-            parks.slice(0, visibleParks).map((park, index) => (
-              <BackDropText
-                key={`bg-text-${park.name}`}
-                index={index}
-                scrollX={scrollX}
-                park={park}
-              />
-            ))
-          }
-        </View>
-      </SafeAreaView> */}
+      </SafeAreaView>
     </LinearGradient>
 
   )

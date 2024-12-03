@@ -1,29 +1,31 @@
 import { View, Text, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef, useCallback } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import MapView, { Marker, Polygon, Callout } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { router } from 'expo-router'
 import { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
+import BottomSheet, { BottomSheetFlatList, BottomSheetView } from '@gorhom/bottom-sheet'
 
 import { useGlobalContext } from '../../context/GlobalProvider';
 import { parks } from '../../constants/dummy';
 import FilterOptions from '../../components/map/filterOptions';
 import SearchInput from '../../components/map/searchInput';
-import { faArrowRight, faClockRotateLeft, faCloud, faFilter, faLocationDot, faStar, faTree } from '@fortawesome/free-solid-svg-icons';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import MapCards from '../../components/map/mapcards';
-import { LinearGradient } from 'expo-linear-gradient';
-import { isotipos } from '../../constants';
+import ButtonSheet from '../../components/map/buttonSheet';
 
 const Map = () => {
     const { userLocation } = useGlobalContext();
-    const [origin] = useState({
-        latitude: '-0.209028110783209',
-        longitude: '-78.49107901848447'
-    });
 
-    const snapPoints = useMemo(() => ['5%', '50%', '75%'])
+    const [sheetIndex, setSheetIndex] = useState(0);
+    const [isHorizontal, setIsHorizontal] = useState(true)
+    const sheetRef = useRef(null)
+    const handleSheetChange = useCallback((index) => {
+        setIsHorizontal(index === 0);
+        setSheetIndex(index);
+    }, [isHorizontal]);
+
+    const snapPoints = useMemo(() => ['35%', '100%'])
 
     const [selectedIndex, setSelectedIndex] = useState(null)
 
@@ -75,7 +77,7 @@ const Map = () => {
                         {/* {userLocation && <Marker coordinate={userLocation} title={'Tú'} />} */}
                     </MapView>
                     <TouchableOpacity
-                        className=" w-14 h-14 absolute top-20 left-3 bg-white rounded-full items-center justify-center"
+                        className=" w-12 h-12 absolute top-20 left-3 bg-green-900 rounded-full items-center justify-center"
                         onPress={() => {
                             if (height.value === 0) {
                                 height.value = withTiming(350, { duration: 300 })
@@ -89,60 +91,31 @@ const Map = () => {
                             }
                         }}
                     >
-                        <FontAwesomeIcon icon={faFilter} color='black' size={32} />
+                        <FontAwesomeIcon icon={faFilter} color='#fbeecc' size={22} />
                     </TouchableOpacity>
                     <FilterOptions animation={menuStylez} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
                     <SearchInput />
                     {/* <MapCards mapView={_mapView} /> */}
                     <BottomSheet
-                        index={1}
+                        ref={sheetRef}
+                        index={0}
                         snapPoints={snapPoints}
-                        backgroundStyle={{ backgroundColor: '#fbeecc' }}
+                        backgroundStyle={{ backgroundColor: '#fff' }}
+                        enableContentPanningGesture={false}
+                        enableOverDrag
+                        onChange={handleSheetChange}
+                        enableDynamicSizing={false}
                     >
-                        <BottomSheetView >
-                            <View className="w-96 h-48 rounded-xl mt-2 overflow-hidden">
-                                <View className=" w-full h-[70%] bg-blue-300">
-                                    <View className="w-full h-[70%] flex-row ">
-                                        <View className="w-[20%] h-full items-center justify-center">
-                                            <View className="w-14 h-14  bg-white rounded-lg">
-                                                <Image source={isotipos.llanganates} resizeMode="cover" className="w-full h-full" />
-                                            </View>
-                                        </View>
-                                        <View className="w-[60%] h-full px-2 justify-center">
-                                            <Text className="text-xl">Parque Nacional: Llanganates</Text>
-                                        </View>
-                                    </View>
-                                    <View className="w-full h-[30%] p-1 flex-row justify-around">
-                                        <View className="w-24  flex-row items-center justify-center rounded-lg bg-white h-full">
-                                            <FontAwesomeIcon icon={faLocationDot} color='black' size={22} />
-                                            <Text className="ml-2">Sierra</Text>
-                                        </View>
-                                        <View className="w-24  flex-row items-center justify-center bg-white h-full rounded-lg">
-                                            <FontAwesomeIcon icon={faCloud} color='black' size={22} />
-                                            <Text className="ml-2">Nublado</Text>
-                                        </View>
-                                        <View className="w-24  flex-row items-center justify-center bg-white h-full rounded-lg">
-                                            <FontAwesomeIcon icon={faTree} color='black' size={22} />
-                                            <Text className="ml-2">22km</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                <View className=" w-full h-[30%] bg-white p-3 flex-row justify-between">
-                                    <View className="flex-row items-center">
-                                        <FontAwesomeIcon icon={faClockRotateLeft} color='black' size={16} />
-                                        <Text className="ml-1">Ultima reseña hace 1 dia </Text>
-                                    </View>
-
-                                    <View className="w-32 h-full bg-green-400 flex-row items-center justify-center ">
-                                        <FontAwesomeIcon icon={faStar} color='yellow' size={22} />
-                                        <FontAwesomeIcon icon={faStar} color='yellow' size={22} />
-                                        <FontAwesomeIcon icon={faStar} color='yellow' size={22} />
-                                        <FontAwesomeIcon icon={faStar} color='yellow' size={22} />
-                                        <FontAwesomeIcon icon={faStar} color='yellow' size={22} />
-                                    </View>
-                                </View>
-                            </View>
-                        </BottomSheetView>
+                        <BottomSheetFlatList
+                            data={parks}
+                            keyExtractor={(park) => park.name}
+                            renderItem={({ item: park, index }) => (
+                                <ButtonSheet key={`park-bottom-${index}`} name={park.name} isotipo={park.isotipo} />
+                            )}
+                            horizontal={isHorizontal}
+                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
+                        />
                     </BottomSheet>
                 </View>
 

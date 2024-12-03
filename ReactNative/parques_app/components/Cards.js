@@ -49,6 +49,7 @@ const Cards = ({ park, scrollX, index, width, height }) => {
       onPress={() => {
         router.push(`/modals/${park.name}`)
       }}
+      className="mb-5"
     >
       <Animated.View
         style={[{

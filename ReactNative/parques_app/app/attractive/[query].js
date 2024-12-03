@@ -55,10 +55,10 @@ const InfoAttractive = () => {
 
             <View className="w-full h-[10vh]  flex-row justify-around items-center border-t-2 border-b-2">
                 <TouchableOpacity onPress={() => setSection('Ubicacion')}>
-                    <Text className={`text-lg ${section === 'Ubicacion' ? 'font-bold':''}`}>Ubicacion</Text>
+                    <Text className={`text-lg ${section === 'Ubicacion' ? 'font-bold' : ''}`}>Ubicacion</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => setSection('Fotos')}>
-                    <Text className={`text-lg ${section === 'Fotos' ? 'font-bold': ''}`}>Fotos</Text>
+                    <Text className={`text-lg ${section === 'Fotos' ? 'font-bold' : ''}`}>Fotos</Text>
                 </TouchableOpacity>
             </View>
 
@@ -68,14 +68,14 @@ const InfoAttractive = () => {
                         <MapView
                             className="w-full h-full"
                             initialRegion={{
-                                latitude: origin.latitude,
-                                longitude: origin.longitude,
-                                latitudeDelta: userLocation ? 5 : 0.4,
-                                longitudeDelta: userLocation ? 0.4 : 0.1,
+                                latitude: -0.209028110783209,
+                                longitude: -78.49107901848447,
+                                latitudeDelta: 5.0,
+                                longitudeDelta: 5.0,
                             }}
                         >
                             <Marker coordinate={parsedTrend.location} title={parsedTrend.name} />
-                            {userLocation && <Marker coordinate={userLocation} title={'Tú'} />}
+                            {/* {userLocation && <Marker coordinate={userLocation} title={'Tú'} />} */}
                         </MapView>
 
                     )
