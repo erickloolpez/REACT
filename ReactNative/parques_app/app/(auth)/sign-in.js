@@ -5,41 +5,44 @@ import { Link, router } from 'expo-router'
 
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
+import { getCurrentUser, signIn } from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalProvider'
 // import { getCurrentUser, signIn } from '../../lib/appwrite'
 // import { useGlobalContext } from '../../context/GlobalProvider'
 import { images } from '../../constants'
 
+
 const SignIn = () => {
-    // const {setUser, setIsLogged} = useGlobalContext()
+    const {setUser, setIsLogged} = useGlobalContext()
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [form, setForm] = useState({
         email: '',
         password: ''
     })
 
-    // const submit = async()=>{
-    //     if( form.email === "" || form.password === ""){
-    //         Alert.alert('Error','Please fill in all the fields')
-    //     }
+    const submit = async()=>{
+        if( form.email === "" || form.password === ""){
+            Alert.alert('Error','Please fill in all the fields')
+        }
 
-    //     setIsSubmitting(true)
+        setIsSubmitting(true)
 
-    //     try{
-    //         await signIn(form.email, form.password)
-    //         const result = await getCurrentUser()
-    //         setUser(result)
-    //         setIsLogged(true)
+        try{
+            await signIn(form.email, form.password)
+            const result = await getCurrentUser()
+            setUser(result)
+            setIsLogged(true)
 
-    //         Alert.alert('Success','User signed in successfully')
-    //         router.replace('/home')
+            Alert.alert('Success','User signed in successfully')
+            router.replace('/home')
 
-    //     }catch(error){
-    //         Alert.alert('Error',error.message)
-    //     }finally{
-    //         setIsSubmitting(false)
-    //     }
+        }catch(error){
+            Alert.alert('Error',error.message)
+        }finally{
+            setIsSubmitting(false)
+        }
 
-    // }
+    }
 
     return (
         <SafeAreaView className="bg-primary h-full">
@@ -71,8 +74,8 @@ const SignIn = () => {
 
                     <CustomButton
                         title="Sign In"
-                        // handlePress={submit}
-                        handlePress={() => router.replace('/home')}
+                        handlePress={submit}
+                        // handlePress={() => router.replace('/home')}
                         containerStyles="mt-7"
                         isLoading={isSubmitting}
                     />

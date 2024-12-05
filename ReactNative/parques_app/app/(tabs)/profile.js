@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView, Pressable } from 'react-native'
 import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -8,8 +8,20 @@ import { LinearGradient } from 'expo-linear-gradient'
 import MasonryList from '@react-native-seoul/masonry-list';
 
 import { images, parks } from '../../constants'
+import { signOut } from '../../lib/appwrite'
+import { router } from 'expo-router'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Profile = () => {
+  const { setUser, setIsLogged } = useGlobalContext()
+
+  const logout = async () => {
+    await signOut()
+    setUser(null)
+    setIsLogged(false)
+
+    router.replace('/sign-in')
+  }
 
   return (
     <LinearGradient className="absolute w-full h-full" colors={['#5A3F37', '#2C7744']}>
@@ -17,11 +29,14 @@ const Profile = () => {
         <ScrollView>
           <View className="w-full h-[50vh] items-center justify-around py-2 relative ">
             {/* <LinearGradient className="absolute w-full h-[40%] rounded-lg " colors={['#CCCCB2', '#757519']} /> */}
-            <View className="w-full h-[10%] items-end justify-center ">
+            <Pressable
+              className="w-full h-[10%] items-end justify-center "
+              onPress={logout}
+            >
               <View className=" w-10 h-10 mr-2 rounded-lg items-center justify-center ">
                 <FontAwesomeIcon icon={faRightFromBracket} color='#ef4444' size={32} />
               </View>
-            </View>
+            </Pressable>
 
             <View className="w-full h-[60%] items-center justify-center">
               <View className="w-28 h-28  rounded-full overflow-hidden ">
@@ -65,7 +80,7 @@ const Profile = () => {
               </View>
               <View className="flex-row items-center justify-center bg-terciary rounded-lg p-2">
                 <FontAwesomeIcon icon={faComments} color='#fbeecc' size={32} />
-                <Text className="ml-2 text-primary">Favoritos</Text>
+                <Text className="ml-2 text-primary">Comentarios</Text>
               </View>
             </View>
 

@@ -1,14 +1,46 @@
-import {createContext, useContext, useState, useEffect} from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
+import { getCurrentUser } from '../lib/appwrite'
 
 const GlobalContext = createContext()
 
-export const useGlobalContext = ()=> useContext(GlobalContext)
+export const useGlobalContext = () => useContext(GlobalContext)
 
-const GlobalProvider = ({children})=>{
-    const [userLocation, setUserLocation] =useState({}) 
+const GlobalProvider = ({ children }) => {
+    const [userLocation, setUserLocation] = useState({})
+    const [isLogged, setIsLogged] = useState(false)
+    const [user, setUser] = useState(null)
+    const [loading, setLoading] = useState(true)
 
-    return(
-        <GlobalContext.Provider value={{userLocation, setUserLocation}}>
+    useEffect(() => {
+        getCurrentUser()
+            .then((res) => {
+                if (res) {
+                    setIsLogged(true)
+                    setUser(res)
+                } else {
+                    setIsLogged(false)
+                    setUser(null)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+
+    }, [])
+
+    return (
+        <GlobalContext.Provider value={{
+            userLocation,
+            setUserLocation,
+            isLogged,
+            setIsLogged,
+            user,
+            setUser,
+            loading
+        }}>
             {children}
         </GlobalContext.Provider>
     )

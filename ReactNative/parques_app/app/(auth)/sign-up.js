@@ -6,11 +6,12 @@ import { Link, router } from 'expo-router'
 import { images } from '../../constants'
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
-// import { createUser } from '../../lib/appwrite'
+import { createUser } from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalProvider'
 // import { useGlobalContext } from '../../context/GlobalProvider'
 
 const SignUp = () => {
-    // const {setUser, setIsLogged} = useGlobalContext()
+    const {setUser, setIsLogged} = useGlobalContext()
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [form, setForm] = useState({
         username: '',
@@ -18,26 +19,26 @@ const SignUp = () => {
         password: ''
     })
 
-    // const submit = async()=>{
-    //     if(form.username ==="" || form.email === "" || form.password === ""){
-    //         Alert.alert('Error','Please fill in all the fields')
-    //     }
+    const submit = async()=>{
+        if(form.username ==="" || form.email === "" || form.password === ""){
+            Alert.alert('Error','Please fill in all the fields')
+        }
 
-    //     setIsSubmitting(true)
+        setIsSubmitting(true)
 
-    //     try{
-    //         const result = await createUser(form.email,form.password, form.username)
-    //         setUser(result)
-    //         setIsLogged(true)
+        try{
+            const result = await createUser(form.email,form.password, form.username)
+            setUser(result)
+            setIsLogged(true)
 
-    //         router.replace('/home')
+            router.replace('/home')
 
-    //     }catch(error){
-    //         Alert.alert('Error',error.message)
-    //     }finally{
-    //         setIsSubmitting(false)
-    //     }
-    // }
+        }catch(error){
+            Alert.alert('Error',error.message)
+        }finally{
+            setIsSubmitting(false)
+        }
+    }
 
     return (
         <SafeAreaView className="bg-primary h-full">
@@ -78,7 +79,7 @@ const SignUp = () => {
 
                     <CustomButton
                         title="Sign Up"
-                        // handlePress={submit}
+                        handlePress={submit}
                         containerStyles="mt-7"
                         isLoading={isSubmitting}
                     />

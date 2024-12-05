@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import { Text, View, Animated, Image, SafeAreaView, ScrollView, StatusBar } from 'react-native';
 import { useEffect, useRef } from 'react';
 import * as Location from 'expo-location'
+import { signOut } from '../lib/appwrite';
 
 import images from '../constants/images';
 import CustomButton from '../components/CustomButton';
@@ -14,7 +15,7 @@ export default function App() {
   const { userLocation, setUserLocation } = useGlobalContext()
 
   useEffect(() => {
-    const getLocationPermission = async() => {
+    const getLocationPermission = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync()
 
       if (status !== 'granted') {
@@ -34,6 +35,17 @@ export default function App() {
     }
     getLocationPermission()
   }, [])
+
+  // const logout = async () => {
+  //   await signOut()
+  //   setUser(null)
+  //   setIsLogged(false)
+
+  //   router.replace('/sign-in')
+  // }
+
+  // logout()
+
 
   return (
     <SafeAreaView className='bg-primary h-full'>
