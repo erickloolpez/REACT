@@ -12,9 +12,9 @@ const SearchInput = ({animation, animatedStyle, setOpenSearch, openSearch}) => {
     const [query, setQuery] = useState('')
 
     return (
-        <Animated.View className={`border-green-800  absolute right-0 h-14 px-4  rounded-full focus:border-[#CF613C] items-center flex-row bg-white `} style={animatedStyle}>
+        <Animated.View className={`border-green-800  absolute right-0 h-14 px-4  rounded-full items-center flex-row bg-white `} style={animatedStyle}>
             <TextInput
-                className="text-base h-10 text-[#CF613C] flex-1  font-regular "
+                className=" h-10 px-2 text-[#CF613C] flex-1  "
                 value={query}
                 placeholder={'   Busca tu parque favorito.'}
                 placeholderTextColor="#CF613C"
@@ -22,7 +22,7 @@ const SearchInput = ({animation, animatedStyle, setOpenSearch, openSearch}) => {
                 // returnKeyType='intro'
                 onSubmitEditing={() => {
                     if (!query) {
-                        return Alert.alert('Missing query', "Please input something to search results across database.")
+                        return Alert.alert('Valor Faltante', "Por favor ingresa algo para buscarlo en la base de datos.")
                     }
 
                     router.push(`/search/${query}`)

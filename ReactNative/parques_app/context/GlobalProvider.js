@@ -11,7 +11,8 @@ const GlobalProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
 
-    const [isPlayable, setIsPlayable] = useState(false)
+    const [isPlayable, setIsPlayable] = useState(true)
+    const [score, setScore] = useState(120)
 
     useEffect(() => {
         getCurrentUser()
@@ -44,6 +45,8 @@ const GlobalProvider = ({ children }) => {
             loading,
             isPlayable,
             setIsPlayable,
+            score,
+            setScore
         }}>
             {children}
         </GlobalContext.Provider>

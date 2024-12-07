@@ -1,15 +1,12 @@
 import { View, ScrollView, Image, TouchableOpacity, Text, Touchable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import * as Location from 'expo-location'
 import { router } from 'expo-router'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 
-import { icons, images, parks, trends } from '../../constants'
-import ActivityIcon from '../../components/ActivityIcon'
+import { images, trends } from '../../constants'
 import SearchInput from '../../components/SearchInput'
-import { useGlobalContext } from '../../context/GlobalProvider'
 import { faAngleRight, faFireFlameCurved } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { LinearGradient } from 'expo-linear-gradient'

@@ -46,7 +46,7 @@ const GameCards = ({ setOpenModal }) => {
 
     const [value, setValue] = useState(10)//seconds
     const splittedValue = value.toString().split('')
-    const [min, setMin] = useState(1)//min
+    const [min, setMin] = useState(10)//min
     const splittedValueMin = min.toString().split('')
     const minRef = useRef(min);
 
@@ -116,7 +116,7 @@ const GameCards = ({ setOpenModal }) => {
                                     <TickerList key={index} number={number} index={index} />
                                 ))
                             }
-                            <Text style={{ fontSize: fontSize, marginBottom: 8 }}>:</Text>
+                            <Text style={{ fontSize: fontSize, marginBottom: 10, color:'white' }}>:</Text>
                             {
                                 splittedValue.map((number, index) => (
                                     <TickerList key={index} number={number} index={index} />

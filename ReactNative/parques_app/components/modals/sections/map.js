@@ -39,23 +39,26 @@ const Map = ({ place }) => {
                 })
 
             }
-            <View className="w-full h-[34vh] items-center border-y-2 border-y-white relative ">
-                <MapView
-                    className="w-full h-full"
-                    initialRegion={{
-                        latitude: origin.latitude,
-                        longitude: origin.longitude,
-                        latitudeDelta: userLocation ? 5 : 0.4,
-                        longitudeDelta: userLocation ? 0.7 : 0.1,
-                    }}
-                >
-                    <Polygon coordinates={place.polygon} fillColor={'rgba(100,100,200,0.3)'} strokeWidth={1} />
-                    <Marker coordinate={origin} title={place.name} />
-                    {userLocation && <Marker coordinate={userLocation} title={'Tú'} />}
-                    {userLocation && (
+            <View className="w-full h-[35vh] items-center  relative  mt-8 ">
+                <View className="w-72 h-72 rounded-full overflow-hidden">
+                    <MapView
+                        className="w-full h-full"
+                        initialRegion={{
+                            latitude: origin.latitude,
+                            longitude: origin.longitude,
+                            latitudeDelta: 20.0,
+                            longitudeDelta: 15.0,
+                        }}
+                    >
+                        {/* <Polygon coordinates={place.polygon} fillColor={'rgba(100,100,200,0.3)'} strokeWidth={1} /> */}
+                        <Marker coordinate={origin} title={place.name} />
+                        {/* {userLocation && <Marker coordinate={userLocation} title={'Tú'} />} */}
+                        {/* {userLocation && (
                         <Polyline coordinates={[userLocation, origin]} strokeColor="yellow" strokeWidth={2} />
-                    )}
-                </MapView>
+                    )} */}
+                    </MapView>
+
+                </View>
             </View>
         </View>
     );

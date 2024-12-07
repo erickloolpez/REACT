@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, SafeAreaView, TextInput, Alert } from 'react-native';
+import { View, Text, Image, TouchableOpacity, SafeAreaView, TextInput, Alert, Pressable } from 'react-native';
 import MasonryList from '@react-native-seoul/masonry-list';
 import { router, useLocalSearchParams } from 'expo-router';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -22,8 +22,11 @@ const SearchValue = () => {
             setData(parks);
         } else if (query === "Attractives") {
             setData(attractives);
+        } else if (query === "Popular") {
+            const results = attractives.slice(0, 10)
+            setData(results)
         } else {
-            const results = attractives.slice(0,10)
+            const results = parks.filter((park) => park.name.toLowerCase().includes(query.toLowerCase()))
             setData(results)
         }
     }, []);
@@ -32,7 +35,11 @@ const SearchValue = () => {
         <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
             <SafeAreaView edges={['top']} className="h-full">
                 <View className="w-full h-[8vh] flex-row justify-around items-center ">
-                    <FontAwesomeIcon icon={faAngleLeft} color='black' size={32} />
+                    <Pressable
+                        onPress={() => router.back()}
+                    >
+                        <FontAwesomeIcon icon={faAngleLeft} color='white' size={32} />
+                    </Pressable>
                     <TextInput
                         className="w-[84%] h-10 bg-white rounded-full px-4"
                         value={newQuery}
@@ -41,10 +48,6 @@ const SearchValue = () => {
                         onChangeText={(e) => setNewQuery(e)}
                         // returnKeyType='intro'
                         onSubmitEditing={() => {
-                            if (!newQuery) {
-                                return Alert.alert('Missing query', "Please input something to search results across database.")
-                            }
-
                             const results = parks.filter((park) => park.name.toLowerCase().includes(newQuery.toLowerCase()))
                             setData(results)
                         }}

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, Button, Modal, TouchableOpacity } from 'react-native'
+import { View, Image, } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Animated, { FadeInRight, interpolate, interpolateColor, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withDelay, withSpring } from 'react-native-reanimated'
 import { useState } from 'react'
@@ -6,7 +6,6 @@ import { useState } from 'react'
 
 import { images } from '../../constants'
 import ModalGame from '../../components/game/modal'
-import CardCounter from '../../components/game/card'
 import GameHeader from '../../components/game/header'
 import GameCalendar from '../../components/game/calendar'
 import GameCards from '../../components/game/card'
@@ -55,7 +54,7 @@ function Place({ user, index, onFinish, anim }) {
         }
       })}
     >
-      <Animated.Text style={textStylez}>{user.score}</Animated.Text>
+      <Animated.Text style={[{color:"#fbeecc"}, textStylez]}>{user.score}</Animated.Text>
       <Animated.View
         className="w-10 h-10 items-center" //We need to pay attention for the size of the Image below
         style={[{ backgroundColor: "rgba(0,0,0,0.1)", borderRadius: _avatarSize }, stylez]}

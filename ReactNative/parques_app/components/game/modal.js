@@ -1,12 +1,13 @@
-import { View, Text, Modal, TouchableOpacity, Pressable } from 'react-native'
+import { View, Text, TouchableOpacity, Pressable, Platform } from 'react-native'
 import { useState } from 'react'
 import { faCircle, faCircleXmark, faGem, faPlay, faPuzzlePiece, faSquare, faTrophy } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import AnimatedLottieView from 'lottie-react-native'
 import { useGlobalContext } from '../../context/GlobalProvider'
+import Modal from 'react-native-modal'
 
 const ModalGame = ({ openModal, setOpenModal }) => {
-    const { setIsPlayable } = useGlobalContext()
+    const { setIsPlayable, setScore } = useGlobalContext()
 
     const [answer, setAnswer] = useState("Yasuni")
     const [option, setOption] = useState(null)
@@ -31,6 +32,7 @@ const ModalGame = ({ openModal, setOpenModal }) => {
     const CheckAnswer = (title) => {
         if (answer === title) {
             setOption('correct')
+            setScore((prevScore) => prevScore + 1)
         } else {
             setOption('incorrect')
         }
@@ -38,12 +40,20 @@ const ModalGame = ({ openModal, setOpenModal }) => {
         setTimeout(() => {
             setOpenModal(false)
             setIsPlayable(false)
-        }, 3000)
+            setOption(null)
+        }, 1700)
     }
     return (
-        <Modal visible={openModal} animationType='slide' transparent={true}>
-            <View className="flex-1  justify-center items-center" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                <View className="bg-[#d5ceae] w-[90%] h-[70%] rounded-lg relative p-2 justify-center ">
+        <Modal
+            isVisible={openModal}
+            // animationType='slide'
+            // transparent={Platform.OS === 'android' ? false : true}
+            // onRequestClose={() => {
+            //     setOpenModal(false)
+            // }}
+        >
+            <View className="flex-1 items-center justify-center">
+                <View className=" bg-[#d5ceae] w-[350px] h-[69vh] rounded-lg relative p-2 justify-center ">
                     <TouchableOpacity onPress={() => setOpenModal(false)} className="absolute top-3 right-2 bg-white rounded-full z-10">
                         <FontAwesomeIcon icon={faCircleXmark} color='red' size={32} />
                     </TouchableOpacity>
