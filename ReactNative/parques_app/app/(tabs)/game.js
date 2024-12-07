@@ -70,8 +70,10 @@ function Place({ user, index, onFinish, anim }) {
 
 const Game = () => {
   const [openModal, setOpenModal] = useState(false)
-  const [value, setValue] = useState(12351)
   const _anim = useSharedValue(0)
+
+  const [showButton, setShowButton] = useState(false)
+
   const users = [
     { name: "Maria", score: 12 },
     { name: "Juana", score: 22 },
@@ -118,17 +120,9 @@ const Game = () => {
           }
         </View>
 
-        {/* <CardCounter setOpenModal={setOpenModal} /> */}
-        {/* <Button
-          title="Random Value"
-          onPress={() => setValue(Math.floor(Math.random() * 100000))}
-        /> */}
         {
           renderModal()
         }
-
-
-
       </SafeAreaView>
     </LinearGradient>
   )

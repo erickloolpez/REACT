@@ -1,4 +1,4 @@
-import { View, ScrollView, Image, TouchableOpacity, Text } from 'react-native'
+import { View, ScrollView, Image, TouchableOpacity, Text, Touchable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import * as Location from 'expo-location'
@@ -54,15 +54,17 @@ const Search = () => {
             {/* <Image source={images.marco} resizeMode='cover' className="w-full h-full rounded-b-3xl" /> */}
           </View>
 
-          <View className="w-full h-[30vh] px-1 mt-2">{/*Posible componente*/}
+          <TouchableOpacity
+            className="w-full h-[30vh] px-1 mt-2"
+            onPress={() => {
+              router.push(`/search/Parks`)
+            }}
+          >
             <View className="w-full h-[20%] flex-row items-center justify-between">
               <Text className="text-xl text-[#fff] font-semibold">Parques Nacionales</Text>
               <FontAwesomeIcon icon={faAngleRight} color='white' size={28} />
             </View>
-            <TouchableOpacity
-              onPress={() => {
-                router.push(`/search/Parks`)
-              }}
+            <View
               className="w-full h-[80%] flex-row rounded-xl overflow-hidden"
             >
               {
@@ -82,14 +84,19 @@ const Search = () => {
                   }
                 })
               }
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
 
-          <View className="w-full h-[48vh] mt-4">
+          <TouchableOpacity
+            onPress={() => {
+              router.push(`/search/Popular`)
+            }}
+            className="w-full h-[48vh] mt-4"
+          >
             <View className="flex-row items-center h-[10%] justify-between px-1 ">
               <View className="flex-row items-center">
                 <FontAwesomeIcon icon={faFireFlameCurved} color='#f97313' size={28} />
-                <Text className="text-white text-xl font-semibold ml-1">Populares</Text>
+                <Text className="text-white text-xl font-semibold ml-1">Atractivos Populares</Text>
               </View>
               <FontAwesomeIcon icon={faAngleRight} color='white' size={28} />
             </View>
@@ -108,9 +115,9 @@ const Search = () => {
               </View>
             </View>
 
-          </View>
+          </TouchableOpacity>
 
-          <View className="w-full h-[30vh] px-1 mt-4 mb-4">
+          <TouchableOpacity className="w-full h-[30vh] px-1 mt-4 mb-4">
             <View className="w-full h-[20%] flex-row items-center justify-between">
               <Text className="text-xl text-white font-semibold">Atractivos</Text>
               <FontAwesomeIcon icon={faAngleRight} color='white' size={28} />
@@ -139,7 +146,7 @@ const Search = () => {
                 })
               }
             </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         </ScrollView>
 
       </SafeAreaView>

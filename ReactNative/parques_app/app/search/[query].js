@@ -23,7 +23,7 @@ const SearchValue = () => {
         } else if (query === "Attractives") {
             setData(attractives);
         } else {
-            const results = parks.filter((park) => park.name.toLowerCase().includes(query.toLowerCase()))
+            const results = attractives.slice(0,10)
             setData(results)
         }
     }, []);
