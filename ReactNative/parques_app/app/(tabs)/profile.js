@@ -11,9 +11,23 @@ import { images, parks } from '../../constants'
 import { signOut } from '../../lib/appwrite'
 import { router } from 'expo-router'
 import { useGlobalContext } from '../../context/GlobalProvider'
+import { LinearTransition } from 'react-native-reanimated'
+import { MotiView } from 'moti'
+import Review from '../../components/Comment'
+
 
 const Profile = () => {
   const { setUser, setIsLogged } = useGlobalContext()
+
+
+
+  const [index, setIndex] = useState(0)
+  const [selectedIndex, setSelectedIndex] = useState(null)
+  const [isSelected, setIsSelected] = useState(0)
+  const activeColor = "#fff"
+  const inactiveColor = "#ggg"
+  const activeBackgroundColor = "#cf613c"
+  const inactiveBackgroundColor = "#17301a"
 
   const logout = async () => {
     await signOut()
@@ -21,6 +35,43 @@ const Profile = () => {
     setIsLogged(false)
 
     router.replace('/sign-in')
+  }
+
+  const InnerTabs = ({ title, id }) => {
+    return (
+      <MotiView
+        key={`commentaries`}
+        className="ml-2"
+        layout={LinearTransition.springify().damping(80).stiffness(200)}
+        animate={{
+          borderRadius: 8,
+          overflow: 'hidden',
+          backgroundColor: id === index ? "#cf613c" : "green",
+        }}
+      >
+        <Pressable onPress={() => {
+          setIndex(id)
+        }
+
+        } style={{
+        }}
+          className="flex-row items-center  "
+        >
+          <View
+            className="flex-row items-center justify-center ml-1 mr-4  rounded-lg p-2 "
+          >
+            {
+              title === "Favoritos" && <FontAwesomeIcon icon={faHeart} color='#fbeecc' size={32} />
+            }
+            {
+              title === "Reseñas" && <FontAwesomeIcon icon={faComments} color='#fbeecc' size={32} />
+            }
+            <Text className="ml-2 text-primary">{title}</Text>
+          </View>
+        </Pressable>
+
+      </MotiView>
+    )
   }
 
   return (
@@ -74,54 +125,45 @@ const Profile = () => {
 
           <View className="w-full mt-4">
             <View className="flex-row">
-              <View className="flex-row items-center justify-center ml-1 mr-4 bg-green-900 rounded-lg p-2 ">
-                <FontAwesomeIcon icon={faHeart} color='#fbeecc' size={32} />
-                <Text className="ml-2 text-primary">Favoritos</Text>
-              </View>
-              <View className="flex-row items-center justify-center bg-terciary rounded-lg p-2">
-                <FontAwesomeIcon icon={faComments} color='#fbeecc' size={32} />
-                <Text className="ml-2 text-primary">Comentarios</Text>
-              </View>
+              <InnerTabs title='Favoritos' id={0} />
+              <InnerTabs title='Reseñas' id={1} />
             </View>
 
-            <View className="w-full mt-3 ">
-              <MasonryList
-                data={parks.slice(0, 10)}
-                keyExtractor={(item) => item.name}
-                numColumns={4} // Puedes ajustar este valor según el diseño
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      if (query === "Parks") {
-                        router.push(`/modals/${item.name}`)
+            {
+              index === 0 && (
+                <View className="w-full mt-3 ">
+                  <MasonryList
+                    data={parks.slice(0, 10)}
+                    keyExtractor={(item) => item.name}
+                    numColumns={4} // Puedes ajustar este valor según el diseño
+                    renderItem={({ item }) => (
+                      <TouchableOpacity
+                        onPress={() => {
+                          router.push(`/modals/${item.name}`)
+                        }}
+                        style={{ width: '100%', margin: 5, overflow: 'hidden' }}
+                      >
+                        <Image
+                          source={item.image}
+                          resizeMode="cover"
+                          style={{ width: '96%', height: Math.random() * 150 + 100, borderRadius: 10 }} // Altura aleatoria para diseño estilo Pinterest
+                        />
+                        <Text className="text-white font-semibold">{item.name}</Text>
+                      </TouchableOpacity>
+                    )}
+                  />
 
-                      } else {
-                        let parkTrend = parks.find((park) =>
-                          park.trend.some((trend) => trend.name === item.name)
-                        );
-
-                        router.push({
-                          pathname: `/attractive/${item.desc}`,
-                          params: { modalPark: true, trend: JSON.stringify(item), park: JSON.stringify(parkTrend) }
-                        })
-                      }
-                    }}
-                    style={{ width: '100%', margin: 5, overflow: 'hidden' }}
-                  >
-                    <Image
-                      source={item.image}
-                      resizeMode="cover"
-                      style={{ width: '96%', height: Math.random() * 150 + 100, borderRadius: 10 }} // Altura aleatoria para diseño estilo Pinterest
-                    />
-                    <Text className="text-white font-semibold">{item.name}</Text>
-                  </TouchableOpacity>
-                )}
-              />
-
-            </View>
+                </View>
+              )
+            }
+            {
+              index !== 0 && (
+                <View className="items-center">
+                  <Review height={144} />
+                </View>
+              )
+            }
           </View>
-
-
         </ScrollView>
       </SafeAreaView>
     </LinearGradient >

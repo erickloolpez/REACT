@@ -31,6 +31,8 @@ const Feedback = () => {
 
     return (
         <View className="w-full h-[56vh] min-h-[50vh] items-center  relative">
+            <Review height={144} />
+
             <Pressable
                 onPress={handlePresentModalPress}
                 className=" flex-row bottom-8 absolute  w-full h-11 px-1 overflow-hidden">
@@ -46,8 +48,6 @@ const Feedback = () => {
                     </View>
                 </View>
             </Pressable>
-
-            <Review height={144} />
 
             <BottomSheetModal
                 ref={bottomSheetModalRef}

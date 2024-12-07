@@ -7,9 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 const ButtonSheet = ({ park, width }) => {
     return (
         <View style={{ width: width }} className="h-48  overflow-hidden mb-3 ml-1 ">
-            <View className="w-full h-[20%] items-center rounded-t-lg bg-[#1f4037]">
+            <View className="w-full h-[20%] items-center justify-center rounded-t-lg bg-[#1f4037]">
                 <Text className="text-lg text-white">Parque Nacional: {park.name}</Text>
-                <Text></Text>
             </View>
             <View className="w-full h-[90%] bg-yellow-900 flex-row ">
                 <View className="w-1/2 h-full bg-[#99f2c8] justify-around">
