@@ -54,7 +54,7 @@ function Place({ user, index, onFinish, anim }) {
         }
       })}
     >
-      <Animated.Text style={[{color:"#fbeecc"}, textStylez]}>{user.score}</Animated.Text>
+      <Animated.Text style={[{ color: "#fbeecc" }, textStylez]}>{user.score}</Animated.Text>
       <Animated.View
         className="w-10 h-10 items-center" //We need to pay attention for the size of the Image below
         style={[{ backgroundColor: "rgba(0,0,0,0.1)", borderRadius: _avatarSize }, stylez]}
@@ -91,7 +91,7 @@ const Game = () => {
 
   return (
     <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
-      <SafeAreaView edges={['top']} className="h-full">
+      <SafeAreaView edges={['top']} className="flex-1">
         <GameHeader />
 
         <GameCalendar />
@@ -119,10 +119,10 @@ const Game = () => {
           }
         </View>
 
-        {
-          renderModal()
-        }
       </SafeAreaView>
+      {
+        renderModal()
+      }
     </LinearGradient>
   )
 }

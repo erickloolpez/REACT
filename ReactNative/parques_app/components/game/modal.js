@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Pressable, Platform } from 'react-native'
+import { View, Text, TouchableOpacity, Pressable, Platform, Dimensions } from 'react-native'
 import { useState } from 'react'
 import { faCircle, faCircleXmark, faGem, faPlay, faPuzzlePiece, faSquare, faTrophy } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -43,18 +43,26 @@ const ModalGame = ({ openModal, setOpenModal }) => {
             setOption(null)
         }, 1700)
     }
+    const { width, height } = Dimensions.get('window')
+    const toggleModal = () => {
+        setOpenModal(false)
+    }
+
     return (
         <Modal
             isVisible={openModal}
-            // animationType='slide'
-            // transparent={Platform.OS === 'android' ? false : true}
-            // onRequestClose={() => {
-            //     setOpenModal(false)
-            // }}
+            propagateSwipe={true}
+            deviceHeight={height}
+            deviceWidth={width}
+        // animationType='slide'
+        // transparent={Platform.OS === 'android' ? false : true}
+        // onRequestClose={() => {
+        //     setOpenModal(false)
+        // }}
         >
-            <View className="flex-1 items-center justify-center">
+            <View className="flex-1 items-center justify-center" style={{}}>
                 <View className=" bg-[#d5ceae] w-[350px] h-[69vh] rounded-lg relative p-2 justify-center ">
-                    <TouchableOpacity onPress={() => setOpenModal(false)} className="absolute top-3 right-2 bg-white rounded-full z-10">
+                    <TouchableOpacity onPress={toggleModal} className="absolute top-3 right-2 bg-white rounded-full z-10">
                         <FontAwesomeIcon icon={faCircleXmark} color='red' size={32} />
                     </TouchableOpacity>
                     <View className="w-full h-[10vh] ">
