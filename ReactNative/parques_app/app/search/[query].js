@@ -50,7 +50,9 @@ const SearchValue = () => {
                         }}
                     />
                 </View>
+
                 <Nav setData={setData} />
+
                 {data.length > 0 ? (
                     <MasonryList
                         data={data}

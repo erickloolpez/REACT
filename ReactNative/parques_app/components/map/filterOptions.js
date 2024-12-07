@@ -1,8 +1,10 @@
-import { View, Text, Pressable } from 'react-native'
-import Animated, { FadeInDown, FadeInLeft, FadeInRight, FadeOutLeft, FadeOutRight, FadeOutUp, LinearTransition } from 'react-native-reanimated'
+import { Text, Pressable } from 'react-native'
+import Animated, { FadeInLeft, FadeOutRight, LinearTransition } from 'react-native-reanimated'
+import { useEffect } from 'react'
 import { MotiView } from 'moti';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBicycle, faCamera, faCampground, faPersonHiking, faPersonSwimming, faSailboat } from '@fortawesome/free-solid-svg-icons';
+import { parks } from '../../constants';
 
 const options = [faCamera, faPersonSwimming, faCampground, faBicycle, faSailboat, faPersonHiking]
 
@@ -11,14 +13,29 @@ function Icon({ index }) {
     return <FontAwesomeIcon icon={activity} color='white' size={32} />
 }
 
-const FilterOptions = ({ animation, selectedIndex, setSelectedIndex }) => {
+const FilterOptions = ({ animation, selectedIndex, setSelectedIndex, setFilteredParks }) => {
 
-    const parksID = ['Fotografia', 'Buceo', 'Camping', 'Ciclismo', 'Canotajo', 'Senderismo']
+    const parksID = ['Fotografia', 'Buceo', 'Camping', 'Ciclismo', 'Canotaje', 'Senderismo']
 
     const activeColor = "#fff"
     const inactiveColor = "#ggg"
     const activeBackgroundColor = "#cf613c"
     const inactiveBackgroundColor = "#17301a"
+
+    useEffect(() => {
+        if (selectedIndex === null) {
+            setFilteredParks(parks)
+        } else {
+            let filterPark = parks.filter((park) =>
+                park.icons.some((activity,index) => activity.name === parksID[selectedIndex])
+            );
+
+            setFilteredParks(filterPark)
+
+
+        }
+
+    }, [selectedIndex])
 
     return (
         <Animated.View
@@ -39,8 +56,12 @@ const FilterOptions = ({ animation, selectedIndex, setSelectedIndex }) => {
                                 overflow: 'hidden'
                             }}
                         >
-                            <Pressable onPress={() => selectedIndex !== index ? setSelectedIndex(index) : setSelectedIndex(null)} style={{
-                            }}
+                            <Pressable
+                                onPress={() => {
+                                    selectedIndex !== index ? setSelectedIndex(index) : setSelectedIndex(null)
+                                }}
+                                style={{
+                                }}
                                 className="flex-row items-center p-2 "
                             >
 

@@ -4,47 +4,41 @@ import { isotipos } from '../../constants'
 import { faClockRotateLeft, faCloud, faLocationDot, faStar, faTree } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
-const ButtonSheet = ({name, isotipo, width }) => {
+const ButtonSheet = ({ park, width }) => {
     return (
-        <View style={{width:width}} className="h-36 rounded-xl overflow-hidden mb-3 ml-1  ">
-            <View className=" w-full h-[70%] rounded-t-lg bg-[#327042]">
-                <View className="w-full h-[70%] flex-row ">
-                    <View className="w-[20%] h-full items-center justify-center">
-                        <View className="w-14 h-14  bg-white rounded-lg">
-                            <Image source={isotipo} resizeMode="cover" className="w-full h-full" />
+        <View style={{ width: width }} className="h-48  overflow-hidden mb-3 ml-1 ">
+            <View className="w-full h-[20%] items-center rounded-t-lg bg-[#1f4037]">
+                <Text className="text-lg text-white">Parque Nacional: {park.name}</Text>
+                <Text></Text>
+            </View>
+            <View className="w-full h-[90%] bg-yellow-900 flex-row ">
+                <View className="w-1/2 h-full bg-[#99f2c8] justify-around">
+                    <View>
+                        <Text>Horario: 8a.m - 16p.m. </Text>
+                    </View>
+                    <View className="w-full h-20 flex-row flex-wrap gap-1 content-center">
+                        {
+                            park.icons.map((icon) => (
+                                <View key={`buttonSheet-${icon.name}`} className=" w-8 h-8 grow bg-green-900 rounded-md">
+                                    <Image source={icon.image} resizeMode="contain" className="w-full h-full" />
+                                </View>
+                            ))
+                        }
+
+                    </View>
+                    <View className=" w-full h-10  flex-row items-center mb-2 ">
+                        <View className="w-32 flex-row items-end justify-around">
+                            <FontAwesomeIcon icon={faStar} color='#1f4037' size={22} />
+                            <FontAwesomeIcon icon={faStar} color='#1f4037' size={22} />
+                            <FontAwesomeIcon icon={faStar} color='#1f4037' size={22} />
+                            <FontAwesomeIcon icon={faStar} color='#1f4037' size={22} />
+                            <FontAwesomeIcon icon={faStar} color='#1f4037' size={22} />
                         </View>
                     </View>
-                    <View className="w-[60%] h-full px-2 justify-center">
-                        <Text className="text-xl text-white">Parque Nacional: {name}</Text>
-                    </View>
                 </View>
-                <View className="w-full h-[30%] p-1 flex-row justify-around">
-                    <View className="w-24  flex-row items-center justify-center rounded-lg bg-white h-full">
-                        <FontAwesomeIcon icon={faLocationDot} color='#327042' size={22} />
-                        <Text className="ml-2">Sierra</Text>
-                    </View>
-                    <View className="w-24  flex-row items-center justify-center bg-white h-full rounded-lg">
-                        <FontAwesomeIcon icon={faCloud} color='#327042' size={22} />
-                        <Text className="ml-2">Nublado</Text>
-                    </View>
-                    <View className="w-24  flex-row items-center justify-center bg-white h-full rounded-lg">
-                        <FontAwesomeIcon icon={faTree} color='#327042' size={22} />
-                        <Text className="ml-2">22km</Text>
-                    </View>
-                </View>
-            </View>
-            <View className=" w-full h-[30%] bg-terciary p-3 flex-row justify-between rounded-b-lg">
-                <View className="flex-row items-center">
-                    <FontAwesomeIcon icon={faClockRotateLeft} color='white' size={16} />
-                    <Text className="ml-1 text-white">Ultima reseña hace 1 dia </Text>
-                </View>
-
-                <View className="w-32 h-full flex-row items-center justify-center ">
-                    <FontAwesomeIcon icon={faStar} color='white' size={22} />
-                    <FontAwesomeIcon icon={faStar} color='white' size={22} />
-                    <FontAwesomeIcon icon={faStar} color='white' size={22} />
-                    <FontAwesomeIcon icon={faStar} color='white' size={22} />
-                    <FontAwesomeIcon icon={faStar} color='white' size={22} />
+                <View className="w-1/2 h-full relative overflow-hidden">
+                    <Image source={park.image} resizeMode="cover" className="w-full h-full" />
+                    <View className="w-1/2 h-44 rotate-[8deg]  bg-[#99f2c8] absolute left-[-70px] bottom-4" />
                 </View>
             </View>
         </View>

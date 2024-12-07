@@ -16,16 +16,19 @@ import ButtonSheet from '../../components/map/buttonSheet';
 
 const Map = () => {
     const { userLocation } = useGlobalContext();
+    const [parkSelected, setParkSelected] = useState(null)
 
-    const [sheetIndex, setSheetIndex] = useState(0);
+    const [filteredParks, setFilteredParks] = useState(parks)
+
     const [isHorizontal, setIsHorizontal] = useState(true)
     const sheetRef = useRef(null)
     const handleSheetChange = useCallback((index) => {
-        setIsHorizontal(index === 0);
-        setSheetIndex(index);
+        if (index === 1 || index === 2) {
+            setIsHorizontal(index === 1);
+        }
     }, [isHorizontal]);
 
-    const snapPoints = useMemo(() => ['35%', '80%'])
+    const snapPoints = useMemo(() => ['5%', '35%'])
 
     const [selectedIndex, setSelectedIndex] = useState(null)
 
@@ -58,7 +61,7 @@ const Map = () => {
 
                         }}
                     >
-                        {parks.map((park, index) => (
+                        {filteredParks.map((park, index) => (
                             <React.Fragment key={`park-map-${index}`}>
                                 {/* <Polygon coordinates={park.polygon} fillColor={'rgba(100,100,200,0.3)'} strokeWidth={1} /> */}
                                 <Marker
@@ -66,16 +69,21 @@ const Map = () => {
                                     coordinate={park.location}
                                     title={park.name}
                                     onPress={() => {
+                                        setParkSelected(park)
+
                                         _mapView.animateToRegion({
                                             latitude: park.location.latitude,
                                             longitude: park.location.longitude,
                                         }, 1000)
+
+                                        sheetRef.current?.snapToIndex(1)
                                     }} >
                                 </Marker>
                             </React.Fragment>
                         ))}
                         {/* {userLocation && <Marker coordinate={userLocation} title={'Tú'} />} */}
                     </MapView>
+
                     <TouchableOpacity
                         className=" w-12 h-12 absolute top-20 left-3 bg-green-900 rounded-full items-center justify-center"
                         onPress={() => {
@@ -93,9 +101,11 @@ const Map = () => {
                     >
                         <FontAwesomeIcon icon={faFilter} color='#fbeecc' size={22} />
                     </TouchableOpacity>
-                    <FilterOptions animation={menuStylez} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
-                    <SearchInput />
-                    {/* <MapCards mapView={_mapView} /> */}
+
+                    <FilterOptions animation={menuStylez} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} setFilteredParks={setFilteredParks} />
+
+                    <SearchInput setFilteredParks={setFilteredParks} />
+
                     <BottomSheet
                         ref={sheetRef}
                         index={0}
@@ -106,22 +116,14 @@ const Map = () => {
                         onChange={handleSheetChange}
                         enableDynamicSizing={false}
                     >
-                        <BottomSheetFlatList
-                            data={parks}
-                            keyExtractor={(park) => park.name}
-                            renderItem={({ item: park, index }) => (
-                                <ButtonSheet key={`park-bottom-${index}`} name={park.name} isotipo={park.isotipo} width={isHorizontal ? 320 : 400} />
+                        <BottomSheetView style={{ alignItems: 'center', marginTop: 12 }}>
+                            {parkSelected && (
+                                <ButtonSheet
+                                    park={parkSelected}
+                                    width={350}
+                                />
                             )}
-                            contentContainerStyle={{
-                                paddingHorizontal:8,
-                                gap:8,
-                                marginTop:20,
-                                alignItems: isHorizontal? '' : 'center'
-                            }}
-                            horizontal={isHorizontal}
-                            showsHorizontalScrollIndicator={false}
-                            showsVerticalScrollIndicator={false}
-                        />
+                        </BottomSheetView>
                     </BottomSheet>
                 </View>
 
