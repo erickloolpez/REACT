@@ -105,8 +105,8 @@ const Schedule = () => {
 
     return (
         <View className="w-full justify-around">
-            <View className="w-full mb-4 flex-row">
-                <Text className="text-xl font-bold text-primary">Horario de mayor concurrencia</Text>
+            <View className="w-full h-12 rounded-lg bg-[#283c86] items-center px-2 mb-4 flex-row">
+                <Text className="text-xl font-bold text-white">Horario de mayor concurrencia</Text>
             </View>
             <View onLayout={(e) => setDimensions({ height: e.nativeEvent.layout.height, width: e.nativeEvent.layout.width })} className="w-full flex-row  relative">
                 <Animated.View style={[animatedStyle, { width: dimensions.width / days.length }]} className="h-1 bg-primary absolute bottom-0" />
@@ -129,7 +129,7 @@ const Schedule = () => {
                 <Text style={{ color: '#fbeecc', marginLeft: 10 }}>{getBarDetails()}</Text>
             </View>
 
-            <View className="w-full">
+            <View className="w-full ">
                 <BarChart
                     data={formattedData.map((bar, index) => ({
                         ...bar,
@@ -137,7 +137,7 @@ const Schedule = () => {
                         gradientColor: index === selectedBarIndex ? '#FFBEA3' : '#009FFF',
                         onPress: () => handleBarPress(index),
                     }))}
-                    barWidth={16}
+                    barWidth={20}
                     initialSpacing={10}
                     spacing={3}
                     barBorderRadius={8}
@@ -149,6 +149,7 @@ const Schedule = () => {
                     maxValue={3000}
                     noOfSections={3}
                     yAxisLabelTexts={[' ', ' ', ' ', ' ']}
+                    hideYAxisText   
                     labelWidth={44}
                     xAxisLabelTextStyle={{ color: 'lightgray', textAlign: 'start' }}
                     isAnimated={true}

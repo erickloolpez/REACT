@@ -6,8 +6,8 @@ const Description = ({ desc }) => {
     const [readMore, setReadMore] = useState(false)
     return (
         <View className="w-full px-2">
-            <View className="w-full justify-center mt-4 mb-3">
-                <Text className="text-xl font-bold text-primary">Descripcion:</Text>
+            <View className="w-full h-12 rounded-lg px-2 justify-center mt-4 mb-3 bg-[#283c86]">
+                <Text className="text-xl font-bold text-white">Descripcion:</Text>
             </View>
             <View className="w-full">
                 <Text className="text-primary">

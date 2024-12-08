@@ -23,8 +23,8 @@ const Activities = ({ place }) => {
 
     return (
         <View className="mt-4">
-            <View className="flex-row mb-8 items-center ">
-                <Text className="text-primary text-xl  font-bold">Actividades</Text>
+            <View className="flex-row h-12 rounded-lg bg-[#283c86] px-2 mb-8 items-center ">
+                <Text className="text-white text-xl  font-bold">Actividades</Text>
             </View>
             <FlatList
                 data={place.icons}
@@ -111,11 +111,11 @@ const CardPop = ({ images, activity, isExpanded, onPressExpand }) => {
                 />
             </Animated.View>
             <Pressable
-                className="w-28 h-32 bg-terciary mt-8 mr-3 rounded-3xl items-center"
+                className="w-28 h-32 bg-[#44A08D] mt-8 mr-3 rounded-3xl items-center"
                 onPress={onPressExpand}
             >
                 <View className="w-20 h-10  relative">
-                    <View className="w-20 h-20 bg-yellow-500 absolute rounded-full top-[-30px] overflow-hidden">
+                    <View className="w-20 h-20 bg-[#093637] absolute rounded-full top-[-30px] overflow-hidden">
                         <Image source={activity.image} resizeMode="contain" className="w-full h-full" />
                     </View>
                 </View>
