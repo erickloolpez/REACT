@@ -9,9 +9,6 @@ import { faFaceLaughBeam } from '@fortawesome/free-regular-svg-icons'
 
 const Feedback = () => {
     const bottomSheetModalRef = useRef(null)
-    // const handlePresentModalPress = useCallback(() => {
-    //     bottomSheetModalRef.current?.present();
-    // }, []);
     const handlePresentModalPress = () => bottomSheetModalRef.current?.present()
     const handleEnterPress = () => bottomSheetModalRef.current?.snapToIndex(1)
     const handleExitPress = () => bottomSheetModalRef.current?.close()
@@ -29,9 +26,19 @@ const Feedback = () => {
         }
     }, [isEditing]);
 
+    const [listComments, setListComments] = useState([
+        { name: 'lol', text: "Pero que bonito parque, de verdad es una experiencia unica que todas las personas deben conocer :)" }
+    ])
+
+    const [query, setQuery] = useState('')
+
     return (
         <View className="w-full h-[56vh] min-h-[50vh] items-center  relative">
-            <Review height={144} />
+            {
+                listComments.map((comment, index) => (
+                    <Review key={`comment-${index}-${comment.name}`} height={144} text={comment.text} name={comment.name} />
+                ))
+            }
 
             <Pressable
                 onPress={handlePresentModalPress}
@@ -67,6 +74,7 @@ const Feedback = () => {
                         </Pressable>
                         <BottomSheetTextInput
                             ref={textInputRef}
+                            onChangeText={(e) => setQuery(e)}
                             style={{
                                 width: '80%',
                                 height: 90,
@@ -91,9 +99,16 @@ const Feedback = () => {
                             </Pressable>
                             <Pressable
                                 className="flex-row items-center justify-center w-24 h-full  border-2  rounded-lg"
-                                onPress={toggleEditMode}>
+                                onPress={() => {
+                                    setListComments((prevComments) => [
+                                        ...prevComments,
+                                        { name: "Erick", text: query }
+                                    ])
+                                    setQuery('')
+                                    handleExitPress()
+                                }}>
                                 <FontAwesomeIcon icon={faSquareCheck} color='black' size={25} />
-                                <Text className="ml-2">Editar</Text>
+                                <Text className="ml-2">Enviar</Text>
                             </Pressable>
                         </View>
                     </View>

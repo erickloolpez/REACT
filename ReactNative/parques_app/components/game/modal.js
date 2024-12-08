@@ -41,6 +41,7 @@ const ModalGame = ({ openModal, setOpenModal }) => {
             setOpenModal(false)
             setIsPlayable(false)
             setOption(null)
+            setIsActive(false)
         }, 1700)
     }
     const { width, height } = Dimensions.get('window')
