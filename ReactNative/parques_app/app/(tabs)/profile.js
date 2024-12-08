@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, ScrollView, Pressable } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView, Pressable, FlatList,Dimensions } from 'react-native'
 import { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -31,6 +31,10 @@ const Profile = () => {
       onRefresh()
     }, [])
   )
+  const { width, height } = Dimensions.get('window')
+  const _slideWidth = width * 0.88
+  const _slideHeight = height * 0.47
+  const _spacing = 18
 
   const listParks = ["Llanganates", "Podocarpus", "Galapagos", "Machalilla", "El cajas", "Cayambe Coca", "Sangay", "Sumaco", "Yasuni", "Yacuri", "Cotopaxi"]
 
@@ -179,8 +183,25 @@ const Profile = () => {
             }
             {
               index !== 0 && (
-                <View className="items-center">
-                  <Review height={144} />
+                <View className="items-center pt-4">
+                  <FlatList
+                    data={reviews}
+                    keyExtractor={(comment, index) => comment.$id}
+                    renderItem={({ item: comment, index }) => (
+                      <Review key={`comment-${index}-${comment.users.username}`} width={_slideWidth} height={144} text={comment.text} name={comment.users.username} />
+                    )}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    decelerationRate={"fast"}
+                    snapToInterval={_slideWidth + _spacing}
+                    contentContainerStyle={{
+                      gap: _spacing,
+                      paddingHorizontal: (width - _slideWidth) / 2,
+                      alignItems: "center",
+                    }}
+
+                    scrollEventThrottle={100 / 60}
+                  />
                 </View>
               )
             }
