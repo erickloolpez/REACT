@@ -11,7 +11,7 @@ import { parks } from '../../constants'
 import LaurelRight from '../../assets/svgs/laurel_right'
 import LaurelLeft from '../../assets/svgs/laurel_left'
 import { useGlobalContext } from '../../context/GlobalProvider'
-import { createFavorite, getAllFavoritesByUser, getFavoriteById } from '../../lib/appwrite'
+import { createFavorite, deleteFavorite, getAllFavoritesByUser } from '../../lib/appwrite'
 import useAppwrite from '../../lib/useAppwrite'
 
 const Header = ({ logo, image, park }) => {
@@ -25,7 +25,7 @@ const Header = ({ logo, image, park }) => {
             const isFavorite = favorites.some((favorite) => favorite.parks.nombre === park.nombre)
             setLike(isFavorite);
         }
-    }, [favorites, park]);
+    }, [favorites]);
 
     const [like, setLike] = useState(false)
 
@@ -33,6 +33,17 @@ const Header = ({ logo, image, park }) => {
         let form = { userId: user.$id, parkId: park.$id }
         try {
             await createFavorite(form)
+        } catch (error) {
+            console.log("error", error)
+            Alert.alert('Verts', error.message)
+        }
+    }
+
+    const delFavorite = async () => {
+        try {
+            const rowToDelete = favorites.filter((favorite) => favorite.parks.nombre === park.nombre)
+            // console.log("ROWTODELETE", rowToDelete[0].$id)
+             await deleteFavorite(rowToDelete[0].$id)
         } catch (error) {
             console.log("error", error)
             Alert.alert('Verts', error.message)
@@ -137,8 +148,15 @@ const Header = ({ logo, image, park }) => {
                 <Pressable
                     className="absolute top-4 right-4 "
                     onPress={() => {
-                        setLike((prevLike) => !prevLike)
-                        submit()
+                        setLike((prevLike) => {
+                            if (!prevLike) {
+                                submit()
+                                return true
+                            } else {
+                                delFavorite()
+                                return false
+                            }
+                        })
                     }}
                 >
                     {

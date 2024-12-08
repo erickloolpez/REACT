@@ -17,7 +17,7 @@ import Feedback from '../../components/modals/sections/feedback'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 import useAppwrite from '../../lib/useAppwrite'
-import { getAllParks, getFavoriteById } from '../../lib/appwrite'
+import { getAllParks } from '../../lib/appwrite'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Place = () => {
