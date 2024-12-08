@@ -3,7 +3,7 @@ import { images } from '../constants'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 
-const Review = ({width='90%', height = '144px', text, name}) => {
+const Review = ({width, height = '144px', text, name}) => {
     return (
         <View className="bg-white mt-4  flex-row items-center justify-around  rounded-xl shadow-sm mb-4" style={{width: width, height: height}}>
             <View className="w-[20%] h-full items-center justify-center">

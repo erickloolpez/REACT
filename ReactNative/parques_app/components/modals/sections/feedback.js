@@ -1,4 +1,4 @@
-import { View, Text, Image, Pressable } from 'react-native'
+import { View, Text, Image, Pressable, FlatList, ScrollView, Dimensions } from 'react-native'
 import Review from '../../Comment'
 import { useRef, useCallback, useMemo, useState, useEffect } from 'react'
 import { faArrowRight, faCircleXmark, faPenToSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
@@ -31,18 +31,16 @@ const Feedback = () => {
     ])
 
     const [query, setQuery] = useState('')
+    const { width, height } = Dimensions.get('window')
+    const _slideWidth = width * 0.88
+    const _slideHeight = height * 0.47
+    const _spacing = 18
 
     return (
-        <View className="w-full h-[56vh] min-h-[50vh] items-center  relative">
-            {
-                listComments.map((comment, index) => (
-                    <Review key={`comment-${index}-${comment.name}`} height={144} text={comment.text} name={comment.name} />
-                ))
-            }
-
+        <View className="w-full h-[36vh] min-h-[10vh] items-center  relative ">
             <Pressable
                 onPress={handlePresentModalPress}
-                className=" flex-row bottom-8 absolute  w-full h-11 px-1 overflow-hidden">
+                className="flex-row absolute bottom-0 w-full h-11 px-1 overflow-hidden z-10">
                 <View className="w-[15%] items-center justify-center">
                     <View>
                         <Image source={images.avatar} resizeMode="cover" className="w-10 h-10 rounded-full" />
@@ -55,6 +53,27 @@ const Feedback = () => {
                     </View>
                 </View>
             </Pressable>
+            <View className="w-full h-[80%] ">
+                <FlatList
+                    data={listComments}
+                    keyExtractor={(comment, index) => `${comment.name}-${index}`}
+                    renderItem={({ item: comment, index }) => (
+                        <Review key={`comment-${index}-${comment.name}`} width={_slideWidth} height={144} text={comment.text} name={comment.name} />
+                    )}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    decelerationRate={"fast"}
+                    snapToInterval={_slideWidth + _spacing}
+                    contentContainerStyle={{
+                        gap: _spacing,
+                        paddingHorizontal: (width - _slideWidth) / 2,
+                        alignItems: "center",
+                    }}
+
+                    scrollEventThrottle={100 / 60}
+                />
+            </View>
+
 
             <BottomSheetModal
                 ref={bottomSheetModalRef}
