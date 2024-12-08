@@ -215,6 +215,21 @@ export const getAllFavoritesByUser = async (userId) => {
 
 }
 
+export const getFavoriteById = async (userId, parkId) => {
+    try {
+        const favorites = await databases.listDocuments(
+            databaseId,
+            favoritesCollectionId,
+            Query.and([Query.equal("users", userId), Query.equal("parks", parkId)])
+        )
+        return favorites.documents
+
+    } catch (error) {
+        throw new Error(error)
+    }
+
+}
+
 export const createFavorite = async (form) => {
     try {
         const newFavorite = await databases.createDocument(
@@ -230,6 +245,20 @@ export const createFavorite = async (form) => {
     } catch (error) {
         throw new Error(error)
     }
+}
+
+export const deleteFavorite = async () => {
+    try {
+        const res = await databases.deleteDocument(
+            databaseId,
+            favoritesCollectionId,
+
+        )
+        return newFavorite
+    } catch (error) {
+        throw new Error(error)
+    }
+
 }
 
 

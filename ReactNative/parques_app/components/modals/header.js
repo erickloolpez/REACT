@@ -11,7 +11,7 @@ import { parks } from '../../constants'
 import LaurelRight from '../../assets/svgs/laurel_right'
 import LaurelLeft from '../../assets/svgs/laurel_left'
 import { useGlobalContext } from '../../context/GlobalProvider'
-import { createFavorite, getAllFavoritesByUser } from '../../lib/appwrite'
+import { createFavorite, getAllFavoritesByUser, getFavoriteById } from '../../lib/appwrite'
 import useAppwrite from '../../lib/useAppwrite'
 
 const Header = ({ logo, image, park }) => {
@@ -19,7 +19,14 @@ const Header = ({ logo, image, park }) => {
     const [openModal, setOpenModal] = useState(false)
 
     const { data: favorites, refetch } = useAppwrite(() => getAllFavoritesByUser(user.$id))
-    const yourFavorites = favorites.some((favorite) => favorite.parks.nombre === park.nombre)
+
+    useEffect(() => {
+        if (favorites) {
+            const isFavorite = favorites.some((favorite) => favorite.parks.nombre === park.nombre)
+            setLike(isFavorite);
+        }
+    }, [favorites, park]);
+
     const [like, setLike] = useState(false)
 
     const submit = async () => {
@@ -31,20 +38,6 @@ const Header = ({ logo, image, park }) => {
             Alert.alert('Verts', error.message)
         }
     }
-    useEffect(() => {
-        const isFavorite = favorites.some((favorite) => favorite.parks.nombre === park.nombre);
-        setLike(isFavorite);
-    }, [favorites, park]);
-
-
-    useEffect(() => {
-        if (like) {
-            submit()
-        } else {
-
-        }
-
-    }, [like])
 
     const { width } = Dimensions.get('window')
     const _slideWidth = width * 1
@@ -145,6 +138,7 @@ const Header = ({ logo, image, park }) => {
                     className="absolute top-4 right-4 "
                     onPress={() => {
                         setLike((prevLike) => !prevLike)
+                        submit()
                     }}
                 >
                     {

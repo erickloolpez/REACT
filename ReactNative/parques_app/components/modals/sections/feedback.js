@@ -40,20 +40,15 @@ const Feedback = ({ name, park }) => {
     const _slideHeight = height * 0.47
     const _spacing = 18
 
-    const { data: reviews, refetch } = useAppwrite(()=> getAllReviewsByPark(park.$id))
+    const { data: reviews, refetch } = useAppwrite(() => getAllReviewsByPark(park.$id))
 
     const onRefresh = async () => {
         await refetch()
     }
     const submit = async () => {
-        // setListComments((prevComments) => [
-        //     ...prevComments,
-        //     { name: "Erick", text: query, userId: user }
-        // ])
         let form = { rating: 3, text: query, userId: user.$id, parkId: park.$id }
         try {
             await createReview(form)
-            // Alert.alert('Success', 'Post Uploaded successfully')
             setQuery('')
             handleExitPress()
             onRefresh()
@@ -61,8 +56,6 @@ const Feedback = ({ name, park }) => {
             console.log("error", error)
             Alert.alert('Verts', error.message)
         }
-
-
     }
 
     return (

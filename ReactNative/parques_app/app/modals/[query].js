@@ -17,9 +17,11 @@ import Feedback from '../../components/modals/sections/feedback'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 import useAppwrite from '../../lib/useAppwrite'
-import { getAllParks } from '../../lib/appwrite'
+import { getAllParks, getFavoriteById } from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Place = () => {
+    const { user } = useGlobalContext()
     const { query } = useLocalSearchParams()
     const navBarOptions = [{ name: 'General' }, { name: "Mapa" }, { name: "Atractivos" }, { name: "Reseñas" }];
     const [category, setCategory] = useState(navBarOptions[0])
@@ -27,6 +29,7 @@ const Place = () => {
 
     const { data: parksDB } = useAppwrite(getAllParks)
     const parkFounded = parksDB.find((park) => park.nombre === place.name)
+
 
     return (
         <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
