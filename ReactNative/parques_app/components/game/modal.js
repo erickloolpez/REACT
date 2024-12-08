@@ -1,13 +1,15 @@
 import { View, Text, TouchableOpacity, Pressable, Platform, Dimensions } from 'react-native'
-import { useState } from 'react'
+import { use, useState } from 'react'
 import { faCircle, faCircleXmark, faGem, faPlay, faPuzzlePiece, faSquare, faTrophy } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import AnimatedLottieView from 'lottie-react-native'
 import { useGlobalContext } from '../../context/GlobalProvider'
 import Modal from 'react-native-modal'
+import { updateUser } from '../../lib/appwrite'
+import useAppwrite from '../../lib/useAppwrite'
 
 const ModalGame = ({ openModal, setOpenModal }) => {
-    const { setIsPlayable, setScore } = useGlobalContext()
+    const { setIsPlayable, setScore, user } = useGlobalContext()
 
     const [answer, setAnswer] = useState("Yasuni")
     const [option, setOption] = useState(null)
@@ -28,11 +30,20 @@ const ModalGame = ({ openModal, setOpenModal }) => {
             )
         }
     }
+    const submit = async () => {
+        try {
+            await updateUser(user.$id, user.puntaje + 10)
+        } catch (error) {
+            console.log("error", error)
+            Alert.alert('Verts', error.message)
+        }
+    }
 
     const CheckAnswer = (title) => {
         if (answer === title) {
+            submit()
             setOption('correct')
-            setScore((prevScore) => prevScore + 1)
+            // setScore((prevScore) => prevScore + 1)
         } else {
             setOption('incorrect')
         }

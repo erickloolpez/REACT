@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, ScrollView, Pressable, FlatList,Dimensions } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView, Pressable, FlatList, Dimensions } from 'react-native'
 import { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -8,7 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import MasonryList from '@react-native-seoul/masonry-list';
 
 import { images, parks } from '../../constants'
-import { getAllFavoritesByUser, getAllReviewsByUser, signOut } from '../../lib/appwrite'
+import { getAllFavoritesByUser, getAllReviewsByUser, getScore, signOut } from '../../lib/appwrite'
 import { router, useFocusEffect } from 'expo-router'
 import { useGlobalContext } from '../../context/GlobalProvider'
 import { LinearTransition } from 'react-native-reanimated'
@@ -19,11 +19,18 @@ import useAppwrite from '../../lib/useAppwrite'
 
 const Profile = () => {
   const { setUser, setIsLogged, user } = useGlobalContext()
-  const { data: reviews } = useAppwrite(() => getAllReviewsByUser(user.$id))
+  const { data: reviews, refetch: refetchReviews } = useAppwrite(() => getAllReviewsByUser(user.$id))
+  const { data: score, refetch: refetchScore } = useAppwrite(() => getScore(user.$id))
   const { data: favorites, refetch } = useAppwrite(() => getAllFavoritesByUser(user.$id))
 
   const onRefresh = async () => {
-    await refetch()
+    try {
+      await refetch();
+      await refetchReviews();
+      await refetchScore();
+    } catch (error) {
+      console.error("Error refreshing data:", error);
+    }
   }
 
   useFocusEffect(
@@ -133,7 +140,7 @@ const Profile = () => {
             <View className="w-[90%] h-[23%] flex-row items-center bg-primary rounded-xl">
               <View className="w-[33.3%] h-full  items-center justify-center ">
                 <FontAwesomeIcon icon={faGem} color='#93c5fd' size={32} />
-                <Text className="ml-2 text-[#925131] font-bold ">{user.puntaje} puntos</Text>
+                <Text className="ml-2 text-[#925131] font-bold ">{score.puntaje} puntos</Text>
               </View>
               <View className="w-[33.3%] h-full  items-center justify-center ">
                 {/* <FontAwesomeIcon icon={faHeart} color='#f97316' size={32} /> */}

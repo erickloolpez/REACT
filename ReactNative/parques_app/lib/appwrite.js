@@ -125,6 +125,21 @@ export const getCurrentUser = async () => {
 
 }
 
+export const getScore = async (id) => {
+    try {
+        const user = await databases.getDocument(
+            databaseId,
+            userCollectionId,
+            id,
+        )
+        console.log("GETSCORE", user)
+        return user
+
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 export const getAllParks = async () => {
     try {
         const parks = await databases.listDocuments(
@@ -197,6 +212,23 @@ export const createReview = async (form) => {
     } catch (error) {
         throw new Error(error)
     }
+
+}
+export const updateUser = async (id, newScore) => {
+    try {
+        const updateUser = await databases.updateDocument(
+            databaseId,
+            userCollectionId,
+            id,
+            {
+                puntaje: newScore
+            }
+        )
+        return newReview
+    } catch (error) {
+        throw new Error(error)
+    }
+
 
 }
 
