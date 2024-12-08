@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 const Details = ({ children }) => {
     return (
         <View className="w-full px-2">
-            <View className="w-full h-12 rounded-lg px-2 bg-[#283c86] justify-center mt-3">
+            <View className="w-full h-12 rounded-lg justify-center mt-3">
                 <Text className="text-xl text-white font-bold">Detalles del parque:</Text>
             </View>
             <View className="w-full h-[18vh]  mb-4 flex-wrap flex-row content-around">

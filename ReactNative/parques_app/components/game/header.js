@@ -3,8 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faGem, faTrophy } from '@fortawesome/free-solid-svg-icons'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
-const GameHeader = () => {
-    const {score} = useGlobalContext()
+const GameHeader = ({score}) => {
     return (
         <View className="w-full h-[10%] mt-5 items-center justify-between px-3 flex-row bg-green-900 border-t-2 border-[#fbeecc] border-b-2 ">
             <View className="flex-row">

@@ -25,7 +25,7 @@ const Navbar = ({ children, navBarOptions, setCategory }) => {
     return (
         <View onLayout={(e) => setDimensions({ height: e.nativeEvent.layout.height, width: e.nativeEvent.layout.width })} className="w-full ">
             <View className="w-full h-12 bg-secondary flex-row items-center relative">
-                <Animated.View style={[animatedStyle, { width: dimensions.width / navBarOptions.length }]} className="h-full bg-[#44A08D] absolute left-0 rounded-tr-xl rounded-tl-xl" />
+                <Animated.View style={[animatedStyle, { width: dimensions.width / navBarOptions.length }]} className="h-full bg-terciary absolute left-0 rounded-tr-xl rounded-tl-xl" />
                 {navBarOptions.map((nav, index) => {
                     let color = currentIndex === index ? '#fff' : '#ffffff'
                     return (

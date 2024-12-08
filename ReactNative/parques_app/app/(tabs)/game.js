@@ -10,6 +10,7 @@ import GameHeader from '../../components/game/header'
 import GameCalendar from '../../components/game/calendar'
 import GameCards from '../../components/game/card'
 import { LinearGradient } from 'expo-linear-gradient'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 //consts
 const _avatarSize = 40//because it's the same like h-10
@@ -68,6 +69,7 @@ function Place({ user, index, onFinish, anim }) {
 
 
 const Game = () => {
+  const {user} = useGlobalContext()
   const [openModal, setOpenModal] = useState(false)
   const _anim = useSharedValue(0)
 
@@ -92,7 +94,7 @@ const Game = () => {
   return (
     <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
       <SafeAreaView edges={['top']} className="flex-1">
-        <GameHeader />
+        <GameHeader score={user.puntaje} />
 
         <GameCalendar />
 

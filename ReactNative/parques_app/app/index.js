@@ -36,15 +36,15 @@ export default function App() {
     getLocationPermission()
   }, [])
 
-  // const logout = async () => {
-  //   await signOut()
-  //   setUser(null)
-  //   setIsLogged(false)
+  const logout = async () => {
+    await signOut()
+    setUser(null)
+    setIsLogged(false)
 
-  //   router.replace('/sign-in')
-  // }
+    router.replace('/sign-in')
+  }
 
-  // logout()
+  logout()
 
 
   return (
@@ -84,8 +84,8 @@ export default function App() {
 
           <CustomButton
             title="Continue with Email"
-            // handlePress={() => { router.push('/sign-in') }}
-            handlePress={() => { router.push('/home') }}
+            handlePress={() => { router.push('/sign-in') }}
+            // handlePress={() => { router.push('/home') }}
             containerStyles="w-full mt-7"
           />
         </View>

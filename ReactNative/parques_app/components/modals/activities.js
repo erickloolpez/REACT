@@ -23,7 +23,7 @@ const Activities = ({ place }) => {
 
     return (
         <View className="mt-4">
-            <View className="flex-row h-12 rounded-lg bg-[#283c86] px-2 mb-8 items-center ">
+            <View className="flex-row h-12 rounded-lg  mb-8 items-center ">
                 <Text className="text-white text-xl  font-bold">Actividades</Text>
             </View>
             <FlatList

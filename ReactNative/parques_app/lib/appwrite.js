@@ -14,7 +14,8 @@ export const config = {
     projectId: '67432f9c002bc6aa80b3',
     databaseId: '674331b50018a66d36d3',
     userCollectionId: '674331d8002e272bc4a7',
-    videoCollectionId: '6743321b001fbf8dc7b2',
+    parkCollectionId: '675321c4003575daec87',
+    reviewCollectionId: '6754f7c6001d20e7d936',
     storageId: '674333a2001ccefae41d'
 }
 
@@ -24,6 +25,8 @@ const {
     projectId,
     databaseId,
     userCollectionId,
+    reviewCollectionId,
+    parkCollectionId,
     videoCollectionId,
     storageId
 } = config
@@ -121,18 +124,79 @@ export const getCurrentUser = async () => {
 
 }
 
-export const getAllPosts = async () => {
+export const getAllParks = async () => {
     try {
-        const posts = await databases.listDocuments(
+        const parks = await databases.listDocuments(
             databaseId,
-            videoCollectionId,
+            parkCollectionId,
             [Query.orderDesc('$createdAt')]
         )
-        return posts.documents
+        return parks.documents
 
     } catch (error) {
         throw new Error(error)
     }
+}
+
+export const getAllRiviews = async () => {
+    try {
+        const reviews = await databases.listDocuments(
+            databaseId,
+            reviewCollectionId,
+            [Query.orderDesc('$createdAt'), Query.limit(7)]
+        )
+        return reviews.documents
+
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+export const getAllReviewsByPark = async (parkId) => {
+    try {
+        const reviews = await databases.listDocuments(
+            databaseId,
+            reviewCollectionId,
+            [Query.equal('parks', parkId), Query.orderDesc('$createdAt')]
+        )
+        return reviews.documents
+
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+export const getAllReviewsByUser = async (userId) => {
+    try {
+        const reviews = await databases.listDocuments(
+            databaseId,
+            reviewCollectionId,
+            [Query.equal('users', userId), Query.orderDesc('$createdAt')]
+        )
+        return reviews.documents
+
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+export const createReview = async (form) => {
+    try {
+        const newReview = await databases.createDocument(
+            databaseId,
+            reviewCollectionId,
+            ID.unique(),
+            {
+                rating: form.rating,
+                text: form.text,
+                users: form.userId,
+                parks: form.parkId
+            }
+        )
+        return newReview
+    } catch (error) {
+        throw new Error(error)
+    }
+
 }
 
 export const getLatestPosts = async () => {
@@ -149,26 +213,13 @@ export const getLatestPosts = async () => {
     }
 }
 
+
 export const searchPosts = async (query) => {
     try {
         const posts = await databases.listDocuments(
             databaseId,
             videoCollectionId,
             [Query.search('title', query)]
-        )
-        return posts.documents
-
-    } catch (error) {
-        throw new Error(error)
-    }
-}
-
-export const getUserPosts = async (userId) => {
-    try {
-        const posts = await databases.listDocuments(
-            databaseId,
-            videoCollectionId,
-            [Query.equal('creator', userId)]
         )
         return posts.documents
 
@@ -187,82 +238,3 @@ export const signOut = async () => {
     }
 }
 
-export const getFilePreview = async (fileId, type) => {
-    let fileUrl
-
-    console.log('FILE PREVIEW')
-
-    try {
-        if (type === 'video') {
-            fileUrl = storage.getFileView(storageId, fileId)
-        } else if (type === 'image') {
-            fileUrl = storage.getFilePreview(storageId, fileId, 2000, 2000, 'top', 100)
-        } else {
-            throw new Error('Invalid file type')
-        }
-
-        if (!fileUrl) throw Error
-
-        return fileUrl
-
-    } catch (error) {
-        throw new Error(error)
-    }
-}
-
-export const uploadFile = async (file, type) => {
-    if (!file) return
-
-    const {mimeType, ...rest} = file
-    const asset = {type: mimeType, ...rest}
-
-    // const asset = {
-    //     name: file.fileName,
-    //     type: file.mimeType,
-    //     size: file.fileSize,
-    //     uri: file.uri
-    // }
-
-
-    try {
-        const uploadedFile = await storage.createFile(
-            config.storageId,
-            ID.unique(),
-            asset
-        )
-
-        const fileUrl = await getFilePreview(uploadedFile.$id, type)
-        return fileUrl
-    } catch (error) {
-        console.log('This was the error', error)
-        throw new Error(error)
-    }
-
-}
-
-export const createVideo = async (form) => {
-    try {
-        const [thumbnailUrl, videoUrl] = await Promise.all([
-            uploadFile(form.thumbnail, 'image'),
-            uploadFile(form.video, 'video')
-        ])
-
-        const newPost = await databases.createDocument(
-            databaseId,
-            videoCollectionId,
-            ID.unique(),
-            {
-                title: form.title,
-                thumbnail: thumbnailUrl,
-                video: videoUrl,
-                prompt: form.prompt,
-                creator: form.userId
-            }
-        )
-
-        return newPost
-    } catch (error) {
-        throw new Error(error)
-    }
-
-}

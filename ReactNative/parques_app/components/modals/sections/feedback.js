@@ -1,4 +1,4 @@
-import { View, Text, Image, Pressable, FlatList, ScrollView, Dimensions } from 'react-native'
+import { View, Text, Image, Pressable, FlatList, ScrollView, Dimensions, Alert } from 'react-native'
 import Review from '../../Comment'
 import { useRef, useCallback, useMemo, useState, useEffect } from 'react'
 import { faArrowRight, faCircleXmark, faPenToSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
@@ -6,8 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { BottomSheetModal, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet'
 import { images } from '../../../constants'
 import { faFaceLaughBeam } from '@fortawesome/free-regular-svg-icons'
+import useAppwrite from '../../../lib/useAppwrite'
+import { createReview, getAllParks, getAllReviewsByPark, getAllRiviews } from '../../../lib/appwrite'
+import { useGlobalContext } from '../../../context/GlobalProvider'
 
-const Feedback = () => {
+const Feedback = ({ name, park }) => {
+    const { user } = useGlobalContext()
     const bottomSheetModalRef = useRef(null)
     const handlePresentModalPress = () => bottomSheetModalRef.current?.present()
     const handleEnterPress = () => bottomSheetModalRef.current?.snapToIndex(1)
@@ -36,6 +40,31 @@ const Feedback = () => {
     const _slideHeight = height * 0.47
     const _spacing = 18
 
+    const { data: reviews, refetch } = useAppwrite(()=> getAllReviewsByPark(park.$id))
+
+    const onRefresh = async () => {
+        await refetch()
+    }
+    const submit = async () => {
+        // setListComments((prevComments) => [
+        //     ...prevComments,
+        //     { name: "Erick", text: query, userId: user }
+        // ])
+        let form = { rating: 3, text: query, userId: user.$id, parkId: park.$id }
+        try {
+            await createReview(form)
+            // Alert.alert('Success', 'Post Uploaded successfully')
+            setQuery('')
+            handleExitPress()
+            onRefresh()
+        } catch (error) {
+            console.log("error", error)
+            Alert.alert('Verts', error.message)
+        }
+
+
+    }
+
     return (
         <View className="w-full h-[36vh] min-h-[10vh] items-center  relative ">
             <Pressable
@@ -55,10 +84,10 @@ const Feedback = () => {
             </Pressable>
             <View className="w-full h-[80%] ">
                 <FlatList
-                    data={listComments}
-                    keyExtractor={(comment, index) => `${comment.name}-${index}`}
+                    data={reviews}
+                    keyExtractor={(comment, index) => comment.$id}
                     renderItem={({ item: comment, index }) => (
-                        <Review key={`comment-${index}-${comment.name}`} width={_slideWidth} height={144} text={comment.text} name={comment.name} />
+                        <Review key={`comment-${index}-${comment.users.username}`} width={_slideWidth} height={144} text={comment.text} name={comment.users.username} />
                     )}
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -118,14 +147,8 @@ const Feedback = () => {
                             </Pressable>
                             <Pressable
                                 className="flex-row items-center justify-center w-24 h-full  border-2  rounded-lg"
-                                onPress={() => {
-                                    setListComments((prevComments) => [
-                                        ...prevComments,
-                                        { name: "Erick", text: query }
-                                    ])
-                                    setQuery('')
-                                    handleExitPress()
-                                }}>
+                                onPress={submit}
+                            >
                                 <FontAwesomeIcon icon={faSquareCheck} color='black' size={25} />
                                 <Text className="ml-2">Enviar</Text>
                             </Pressable>

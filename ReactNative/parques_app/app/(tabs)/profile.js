@@ -8,16 +8,18 @@ import { LinearGradient } from 'expo-linear-gradient'
 import MasonryList from '@react-native-seoul/masonry-list';
 
 import { images, parks } from '../../constants'
-import { signOut } from '../../lib/appwrite'
+import { getAllReviewsByUser, signOut } from '../../lib/appwrite'
 import { router } from 'expo-router'
 import { useGlobalContext } from '../../context/GlobalProvider'
 import { LinearTransition } from 'react-native-reanimated'
 import { MotiView } from 'moti'
 import Review from '../../components/Comment'
+import useAppwrite from '../../lib/useAppwrite'
 
 
 const Profile = () => {
-  const { setUser, setIsLogged } = useGlobalContext()
+  const { setUser, setIsLogged, user } = useGlobalContext()
+  const { data: reviews, refetch } = useAppwrite(() => getAllReviewsByUser(user.$id))
 
 
 
@@ -108,7 +110,7 @@ const Profile = () => {
             <View className="w-[90%] h-[23%] flex-row items-center bg-primary rounded-xl">
               <View className="w-[33.3%] h-full  items-center justify-center ">
                 <FontAwesomeIcon icon={faGem} color='#93c5fd' size={32} />
-                <Text className="ml-2 text-[#925131] font-bold ">100 puntos</Text>
+                <Text className="ml-2 text-[#925131] font-bold ">{user.puntaje} puntos</Text>
               </View>
               <View className="w-[33.3%] h-full  items-center justify-center ">
                 {/* <FontAwesomeIcon icon={faHeart} color='#f97316' size={32} /> */}
@@ -117,7 +119,7 @@ const Profile = () => {
               </View>
               <View className="w-[33.3%] h-full  items-center justify-center ">
                 {/* <FontAwesomeIcon icon={faComments} color='#232533' size={32} /> */}
-                <Text className="ml-2 text-[#925131] font-bold text-2xl">4</Text>
+                <Text className="ml-2 text-[#925131] font-bold text-2xl">{reviews.length}</Text>
                 <Text className="ml-2 text-[#925131] font-bold">reseñas</Text>
               </View>
             </View>

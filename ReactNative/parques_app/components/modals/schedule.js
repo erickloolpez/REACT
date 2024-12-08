@@ -105,7 +105,7 @@ const Schedule = () => {
 
     return (
         <View className="w-full justify-around">
-            <View className="w-full h-12 rounded-lg bg-[#283c86] items-center px-2 mb-4 flex-row">
+            <View className="w-full h-12 rounded-lg items-center px-2 mb-4 flex-row">
                 <Text className="text-xl font-bold text-white">Horario de mayor concurrencia</Text>
             </View>
             <View onLayout={(e) => setDimensions({ height: e.nativeEvent.layout.height, width: e.nativeEvent.layout.width })} className="w-full flex-row  relative">
