@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, ScrollView, Pressable } from 'react-native'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faComments, faGem, faHeart, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
@@ -8,8 +8,8 @@ import { LinearGradient } from 'expo-linear-gradient'
 import MasonryList from '@react-native-seoul/masonry-list';
 
 import { images, parks } from '../../constants'
-import { getAllReviewsByUser, signOut } from '../../lib/appwrite'
-import { router } from 'expo-router'
+import { getAllFavoritesByUser, getAllReviewsByUser, signOut } from '../../lib/appwrite'
+import { router, useFocusEffect } from 'expo-router'
 import { useGlobalContext } from '../../context/GlobalProvider'
 import { LinearTransition } from 'react-native-reanimated'
 import { MotiView } from 'moti'
@@ -19,8 +19,27 @@ import useAppwrite from '../../lib/useAppwrite'
 
 const Profile = () => {
   const { setUser, setIsLogged, user } = useGlobalContext()
-  const { data: reviews, refetch } = useAppwrite(() => getAllReviewsByUser(user.$id))
+  const { data: reviews } = useAppwrite(() => getAllReviewsByUser(user.$id))
+  const { data: favorites, refetch } = useAppwrite(() => getAllFavoritesByUser(user.$id))
 
+  const onRefresh = async () => {
+    await refetch()
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      onRefresh()
+    }, [])
+  )
+
+  const listParks = ["Llanganates", "Podocarpus", "Galapagos", "Machalilla", "El cajas", "Cayambe Coca", "Sangay", "Sumaco", "Yasuni", "Yacuri", "Cotopaxi"]
+
+  const yourFavorites = parks.filter((park) =>
+    favorites.some((favorite) => favorite.parks.nombre === park.name)
+  )
+
+  // console.log('FAVORITE', favorites)
+  // console.log("PLACES", yourFavorites)
 
 
   const [index, setIndex] = useState(0)
@@ -114,7 +133,7 @@ const Profile = () => {
               </View>
               <View className="w-[33.3%] h-full  items-center justify-center ">
                 {/* <FontAwesomeIcon icon={faHeart} color='#f97316' size={32} /> */}
-                <Text className="ml-2 text-[#925131] font-bold text-2xl">3</Text>
+                <Text className="ml-2 text-[#925131] font-bold text-2xl">{favorites.length}</Text>
                 <Text className="ml-2 text-[#925131] font-bold">favoritos</Text>
               </View>
               <View className="w-[33.3%] h-full  items-center justify-center ">
@@ -135,7 +154,7 @@ const Profile = () => {
               index === 0 && (
                 <View className="w-full mt-3 ">
                   <MasonryList
-                    data={parks.slice(0, 10)}
+                    data={yourFavorites}
                     keyExtractor={(item) => item.name}
                     numColumns={4} // Puedes ajustar este valor según el diseño
                     renderItem={({ item }) => (

@@ -32,7 +32,7 @@ const Place = () => {
         <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
             <SafeAreaView className="h-full" edges={['top']}>
                 <ScrollView contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
-                    <Header logo={place.logo} image={place.image} />
+                    <Header logo={place.logo} image={place.image} park={parkFounded} />
                     <Body >
                         <Navbar navBarOptions={navBarOptions} setCategory={setCategory}>
                             {

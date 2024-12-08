@@ -1,17 +1,50 @@
-import { View, Image, Text, TouchableOpacity, Modal, Dimensions } from 'react-native'
-import { useState } from 'react'
+import { View, Image, Text, TouchableOpacity, Modal, Dimensions, Pressable } from 'react-native'
+import { useState, useEffect } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
+import { faCircleXmark, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
+import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import Animated, { Extrapolation, interpolate, interpolateColor, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import { LinearGradient } from 'expo-linear-gradient'
 
 import { parks } from '../../constants'
 import LaurelRight from '../../assets/svgs/laurel_right'
 import LaurelLeft from '../../assets/svgs/laurel_left'
+import { useGlobalContext } from '../../context/GlobalProvider'
+import { createFavorite, getAllFavoritesByUser } from '../../lib/appwrite'
+import useAppwrite from '../../lib/useAppwrite'
 
-const Header = ({ logo, image }) => {
+const Header = ({ logo, image, park }) => {
+    const { user } = useGlobalContext()
     const [openModal, setOpenModal] = useState(false)
+
+    const { data: favorites, refetch } = useAppwrite(() => getAllFavoritesByUser(user.$id))
+    const yourFavorites = favorites.some((favorite) => favorite.parks.nombre === park.nombre)
+    const [like, setLike] = useState(false)
+
+    const submit = async () => {
+        let form = { userId: user.$id, parkId: park.$id }
+        try {
+            await createFavorite(form)
+        } catch (error) {
+            console.log("error", error)
+            Alert.alert('Verts', error.message)
+        }
+    }
+    useEffect(() => {
+        const isFavorite = favorites.some((favorite) => favorite.parks.nombre === park.nombre);
+        setLike(isFavorite);
+    }, [favorites, park]);
+
+
+    useEffect(() => {
+        if (like) {
+            submit()
+        } else {
+
+        }
+
+    }, [like])
 
     const { width } = Dimensions.get('window')
     const _slideWidth = width * 1
@@ -108,6 +141,23 @@ const Header = ({ logo, image }) => {
                     onScroll={onScroll}
                     scrollEventThrottle={100 / 60}
                 />
+                <Pressable
+                    className="absolute top-4 right-4 "
+                    onPress={() => {
+                        setLike((prevLike) => !prevLike)
+                    }}
+                >
+                    {
+                        !like && (
+                            <FontAwesomeIcon icon={faHeart} color='white' size={28} />
+                        )
+                    }
+                    {
+                        like && (
+                            <FontAwesomeIcon icon={faHeartSolid} color='red' size={28} />
+                        )
+                    }
+                </Pressable>
             </View>
             {
                 renderModal()

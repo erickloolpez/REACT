@@ -16,6 +16,7 @@ export const config = {
     userCollectionId: '674331d8002e272bc4a7',
     parkCollectionId: '675321c4003575daec87',
     reviewCollectionId: '6754f7c6001d20e7d936',
+    favoritesCollectionId: '6755c49000333655db13',
     storageId: '674333a2001ccefae41d'
 }
 
@@ -27,7 +28,7 @@ const {
     userCollectionId,
     reviewCollectionId,
     parkCollectionId,
-    videoCollectionId,
+    favoritesCollectionId,
     storageId
 } = config
 
@@ -199,34 +200,38 @@ export const createReview = async (form) => {
 
 }
 
-export const getLatestPosts = async () => {
+export const getAllFavoritesByUser = async (userId) => {
     try {
-        const posts = await databases.listDocuments(
+        const favorites = await databases.listDocuments(
             databaseId,
-            videoCollectionId,
-            [Query.orderDesc('$createdAt'), Query.limit(7)]
+            favoritesCollectionId,
+            [Query.equal('users', userId), Query.orderDesc('$createdAt')]
         )
-        return posts.documents
+        return favorites.documents
 
+    } catch (error) {
+        throw new Error(error)
+    }
+
+}
+
+export const createFavorite = async (form) => {
+    try {
+        const newFavorite = await databases.createDocument(
+            databaseId,
+            favoritesCollectionId,
+            ID.unique(),
+            {
+                users: form.userId,
+                parks: form.parkId
+            }
+        )
+        return newFavorite
     } catch (error) {
         throw new Error(error)
     }
 }
 
-
-export const searchPosts = async (query) => {
-    try {
-        const posts = await databases.listDocuments(
-            databaseId,
-            videoCollectionId,
-            [Query.search('title', query)]
-        )
-        return posts.documents
-
-    } catch (error) {
-        throw new Error(error)
-    }
-}
 
 export const signOut = async () => {
     try {
