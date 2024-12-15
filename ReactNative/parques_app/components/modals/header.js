@@ -11,44 +11,27 @@ import { parks } from '../../constants'
 import LaurelRight from '../../assets/svgs/laurel_right'
 import LaurelLeft from '../../assets/svgs/laurel_left'
 import { useGlobalContext } from '../../context/GlobalProvider'
-import { createFavorite, deleteFavorite, getAllFavoritesByUser } from '../../lib/appwrite'
-import useAppwrite from '../../lib/useAppwrite'
 
-const Header = ({ logo, image, park }) => {
+const Header = ({ logo, image, isFavorite, submit, delFavorite }) => {
     const { user } = useGlobalContext()
     const [openModal, setOpenModal] = useState(false)
 
-    const { data: favorites, refetch } = useAppwrite(() => getAllFavoritesByUser(user.$id))
+    const [like, setLike] = useState(isFavorite)
+
+    const handlePress = async () => {
+        if (!isFavorite) {
+            setLike(true);
+            await submit();
+        } else {
+            setLike(false);
+            await delFavorite();
+        }
+    };
 
     useEffect(() => {
-        if (favorites) {
-            const isFavorite = favorites.some((favorite) => favorite.parks.nombre === park.nombre)
-            setLike(isFavorite);
-        }
-    }, [favorites]);
+        setLike(isFavorite);
+    }, [isFavorite]);
 
-    const [like, setLike] = useState(false)
-
-    const submit = async () => {
-        let form = { userId: user.$id, parkId: park.$id }
-        try {
-            await createFavorite(form)
-        } catch (error) {
-            console.log("error", error)
-            Alert.alert('Verts', error.message)
-        }
-    }
-
-    const delFavorite = async () => {
-        try {
-            const rowToDelete = favorites.filter((favorite) => favorite.parks.nombre === park.nombre)
-            // console.log("ROWTODELETE", rowToDelete[0].$id)
-             await deleteFavorite(rowToDelete[0].$id)
-        } catch (error) {
-            console.log("error", error)
-            Alert.alert('Verts', error.message)
-        }
-    }
 
     const { width } = Dimensions.get('window')
     const _slideWidth = width * 1
@@ -147,17 +130,7 @@ const Header = ({ logo, image, park }) => {
                 />
                 <Pressable
                     className="absolute top-4 right-4 "
-                    onPress={() => {
-                        setLike((prevLike) => {
-                            if (!prevLike) {
-                                submit()
-                                return true
-                            } else {
-                                delFavorite()
-                                return false
-                            }
-                        })
-                    }}
+                    onPress={handlePress}
                 >
                     {
                         !like && (

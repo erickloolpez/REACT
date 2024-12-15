@@ -132,7 +132,6 @@ export const getScore = async (id) => {
             userCollectionId,
             id,
         )
-        console.log("GETSCORE", user)
         return user
 
     } catch (error) {

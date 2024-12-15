@@ -68,13 +68,6 @@ export default function App() {
               Descubre todas las posibilidades con {' '}
               <Text className="text-secondary-200">Gea</Text>
             </Text>
-
-            <Image
-              source={images.path}
-              className="w-[136px] h-[15px] absolute -bottom-2 -right-8"
-              resizeMode="contain"
-              tintColor={'#17301a'}
-            />
           </View>
 
           <Text

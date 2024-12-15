@@ -17,25 +17,47 @@ import Feedback from '../../components/modals/sections/feedback'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 import useAppwrite from '../../lib/useAppwrite'
-import { getAllParks } from '../../lib/appwrite'
+import { createFavorite, deleteFavorite, getAllFavoritesByUser, getAllParks } from '../../lib/appwrite'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Place = () => {
     const { user } = useGlobalContext()
     const { query } = useLocalSearchParams()
     const navBarOptions = [{ name: 'General' }, { name: "Mapa" }, { name: "Atractivos" }, { name: "Reseñas" }];
+
     const [category, setCategory] = useState(navBarOptions[0])
     const place = parks.find((park) => park.name === query)
+    const { data: favorites, refetch } = useAppwrite(() => getAllFavoritesByUser(user.$id))
+    const isFavorite = favorites.some((favorite) => favorite.parks.nombre === place.name)
+
 
     const { data: parksDB } = useAppwrite(getAllParks)
     const parkFounded = parksDB.find((park) => park.nombre === place.name)
-
+    const submit = async () => {
+        let form = { userId: user.$id, parkId: parkFounded.$id }
+        try {
+            await createFavorite(form)
+        } catch (error) {
+            console.log("error", error)
+            Alert.alert('Verts', error.message)
+        }
+    }
+    const delFavorite = async () => {
+        try {
+            const rowToDelete = favorites.filter((favorite) => favorite.parks.nombre === place.name)
+            // console.log("ROWTODELETE", rowToDelete[0].$id)
+            await deleteFavorite(rowToDelete[0].$id)
+        } catch (error) {
+            console.log("error", error)
+            Alert.alert('Verts', error.message)
+        }
+    }
 
     return (
         <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
             <SafeAreaView className="h-full" edges={['top']}>
                 <ScrollView contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
-                    <Header logo={place.logo} image={place.image} park={parkFounded} />
+                    <Header logo={place.logo} image={place.image} park={parkFounded} parkName={place.name} isFavorite={isFavorite} submit={submit} delFavorite={delFavorite} />
                     <Body >
                         <Navbar navBarOptions={navBarOptions} setCategory={setCategory}>
                             {
