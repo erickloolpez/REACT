@@ -7,6 +7,7 @@ export const useGlobalContext = () => useContext(GlobalContext)
 
 const GlobalProvider = ({ children }) => {
     const [userLocation, setUserLocation] = useState({})
+
     const [isLogged, setIsLogged] = useState(false)
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)

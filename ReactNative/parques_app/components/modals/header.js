@@ -2,7 +2,7 @@ import { View, Image, Text, TouchableOpacity, Modal, Dimensions, Pressable } fro
 import { useState, useEffect } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCircleXmark, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
+import { faCircleXmark, faHeart as faHeartSolid, faSquareCaretLeft } from '@fortawesome/free-solid-svg-icons'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import Animated, { Extrapolation, interpolate, interpolateColor, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -11,6 +11,7 @@ import { parks } from '../../constants'
 import LaurelRight from '../../assets/svgs/laurel_right'
 import LaurelLeft from '../../assets/svgs/laurel_left'
 import { useGlobalContext } from '../../context/GlobalProvider'
+import { router } from 'expo-router'
 
 const Header = ({ logo, image, isFavorite, submit, delFavorite }) => {
     const { user } = useGlobalContext()
@@ -90,10 +91,15 @@ const Header = ({ logo, image, isFavorite, submit, delFavorite }) => {
 
     return (
         <View className="w-full h-[50vh] relative items-center justify-center ">
-            <View className="w-full h-[20%] z-10 flex-row items-center justify-center rounded-xl border-2 border-white ">
-                {/* <LinearGradient className="w-full h-full absolute" colors={['#5A3F37', '#2C7744']}/> */}
+            <View className="w-full h-[20%] z-10 flex-row items-center justify-center relative  ">
+                <Pressable
+                 className="absolute top-6 left-2"
+                 onPress={()=>router.back()}
+                 >
+                    <FontAwesomeIcon icon={faSquareCaretLeft} color='#fff' size={32} />
+                </Pressable>
                 <LaurelLeft />
-                <Image source={logo} className="w-44 h-full" resizeMode="contain" />
+                <Image source={logo} className="w-52 h-full" resizeMode="contain" />
                 <LaurelRight />
             </View>
 

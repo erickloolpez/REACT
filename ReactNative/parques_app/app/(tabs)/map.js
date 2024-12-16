@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, Text, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Pressable } from 'react-native'
 import React, { useState, useMemo, useRef, useCallback } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MapView, { Marker } from 'react-native-maps';
@@ -22,11 +22,6 @@ const Map = () => {
 
     const [isHorizontal, setIsHorizontal] = useState(true)
     const sheetRef = useRef(null)
-    const handleSheetChange = useCallback((index) => {
-        if (index === 1 || index === 2) {
-            setIsHorizontal(index === 1);
-        }
-    }, [isHorizontal]);
 
     const snapPoints = useMemo(() => ['5%', '35%'])
 
@@ -113,15 +108,18 @@ const Map = () => {
                         backgroundStyle={{ backgroundColor: '#fff' }}
                         enableContentPanningGesture={false}
                         enableOverDrag
-                        onChange={handleSheetChange}
                         enableDynamicSizing={false}
                     >
                         <BottomSheetView style={{ alignItems: 'center', marginTop: 12 }}>
                             {parkSelected && (
-                                <ButtonSheet
-                                    park={parkSelected}
-                                    width={350}
-                                />
+                                <Pressable 
+                                onPress={()=>router.push(`/modals/${parkSelected.name}`)}
+                                >
+                                    <ButtonSheet
+                                        park={parkSelected}
+                                        width={350}
+                                    />
+                                </Pressable>
                             )}
                         </BottomSheetView>
                     </BottomSheet>

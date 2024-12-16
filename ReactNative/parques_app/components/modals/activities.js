@@ -1,85 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Image, Text, Pressable, FlatList, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Image, Text, FlatList, Dimensions, TouchableOpacity, Modal } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCircleLeft, faHeartPulse } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import MasonryList from '@react-native-seoul/masonry-list';
 
-import { images, parks } from '../../constants';
+import { parks } from '../../constants';
 
-const Activities = ({ place }) => {
-    const { width } = Dimensions.get("window");
-    const _slideWidth = width * 0.42;
-    const _spacing = 18;
 
-    const [expandedIndex, setExpandedIndex] = useState(null);
-    const viewabilityConfig = { viewAreaCoveragePercentThreshold: 50 };
-    const viewableItemsChanged = useRef(({ viewableItems }) => {
-        if (viewableItems.length > 0) {
-            const nextIndex = viewableItems[0].index; // Índice del primer ítem visible
-            setExpandedIndex(nextIndex);
-        }
-    }).current;
-
-    return (
-        <View className="mt-4">
-            <View className="flex-row h-12 rounded-lg  mb-8 items-center ">
-                <Text className="text-white text-xl  font-bold">Actividades</Text>
-            </View>
-            <FlatList
-                data={place.icons}
-                keyExtractor={(activity) => activity.name}
-                renderItem={({ item: activity, index }) => (
-                    <CardPop
-                        activity={activity}
-                        images={parks.slice(0, 3)}
-                        isExpanded={expandedIndex === index}
-                        onPressExpand={() => setExpandedIndex(expandedIndex === index ? null : index)}
-                    />
-                )}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                snapToInterval={_slideWidth + _spacing}
-                decelerationRate={"fast"}
-                contentContainerStyle={{
-                    gap: _spacing,
-                    paddingHorizontal: (width - _slideWidth) / 2,
-                    alignItems: "center",
-                }}
-                onViewableItemsChanged={viewableItemsChanged}
-                viewabilityConfig={viewabilityConfig}
-                scrollEventThrottle={16}
-            />
-        </View>
-    );
-};
-
-const CardPop = ({ images, activity, isExpanded, onPressExpand }) => {
+const CardPop = ({ images, activity, isExpanded, handleImagePress}) => {
     const width = useSharedValue(0);
     const yValue = useSharedValue(90);
-    const opacitiy = useSharedValue(0);
+    const opacity = useSharedValue(0);
     const xPosition = useSharedValue(180);
 
     const menuStylez = useAnimatedStyle(() => ({
         width: width.value,
         transform: [{ translateY: yValue.value }],
-        opacity: opacitiy.value,
-    }));
-
-    const rotateStylez = useAnimatedStyle(() => ({
-        transform: [{ rotateZ: `${xPosition.value}deg` }],
+        opacity: opacity.value,
     }));
 
     useEffect(() => {
         if (isExpanded) {
             width.value = withTiming(350, { duration: 300 });
             yValue.value = withTiming(-8, { duration: 300 });
-            opacitiy.value = withTiming(1, { duration: 300 });
+            opacity.value = withTiming(1, { duration: 300 });
             xPosition.value = withTiming(90, { duration: 300 });
         } else {
             width.value = withTiming(0, { duration: 300 });
             yValue.value = withTiming(90, { duration: 300 });
-            opacitiy.value = withTiming(0, { duration: 260 });
+            opacity.value = withTiming(0, { duration: 260 });
             xPosition.value = withTiming(180, { duration: 300 });
         }
     }, [isExpanded]);
@@ -100,6 +50,9 @@ const CardPop = ({ images, activity, isExpanded, onPressExpand }) => {
                                 marginTop: 10,
                                 marginLeft: 4,
                             }}
+                            onPress={() => {
+                                handleImagePress(item.image)
+                            }}
                         >
                             <Image
                                 source={item.image}
@@ -110,9 +63,8 @@ const CardPop = ({ images, activity, isExpanded, onPressExpand }) => {
                     )}
                 />
             </Animated.View>
-            <Pressable
-                className="w-28 h-32 bg-[#44A08D] mt-8 mr-3 rounded-3xl items-center"
-                onPress={onPressExpand}
+            <View
+                className="w-28 h-28 bg-[#44A08D] mt-8 mr-3 rounded-3xl items-center"
             >
                 <View className="w-20 h-10  relative">
                     <View className="w-20 h-20 bg-[#093637] absolute rounded-full top-[-30px] overflow-hidden">
@@ -122,10 +74,82 @@ const CardPop = ({ images, activity, isExpanded, onPressExpand }) => {
                 <View className="mt-4">
                     <Text className="text-lg font-semibold text-primary">{activity.name}</Text>
                 </View>
-                <Animated.View className="mt-3" style={rotateStylez}>
-                    <FontAwesomeIcon icon={faCircleLeft} color="black" size={25} />
-                </Animated.View>
-            </Pressable>
+            </View>
+        </View>
+    );
+};
+
+
+const Activities = ({ place }) => {
+    const [openModal, setOpenModal] = useState(false)
+    const [selectedImage, setSelectedImage] = useState(null)
+    const { width } = Dimensions.get("window");
+    const _slideWidth = width * 0.42;
+    const _spacing = 18;
+
+    const [expandedIndex, setExpandedIndex] = useState(null);
+    const viewabilityConfig = { viewAreaCoveragePercentThreshold: 50 };
+    const viewableItemsChanged = useRef(({ viewableItems }) => {
+        if (viewableItems.length > 0) {
+            const nextIndex = viewableItems[0].index; // Índice del primer ítem visible
+            setExpandedIndex(nextIndex);
+        }
+    }).current;
+
+    const handleImagePress = (image) =>{
+        setSelectedImage(image)
+        setOpenModal(true)
+    }
+
+    function renderModal(image) {
+        return (
+            <Modal visible={openModal} animationType='slide' transparent={true}>
+                <View className="flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <View className="bg-white w-[90%] h-[70%] rounded-lg relative p-2 ">
+                        <Image source={selectedImage} resizeMode='cover' className="w-full h-full" />
+                        <TouchableOpacity onPress={() => setOpenModal(false)} className="absolute top-3 right-2 bg-white rounded-full">
+                            <FontAwesomeIcon icon={faCircleXmark} color='red' size={32} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+            </Modal>
+        )
+    }
+
+    return (
+        <View className="mt-4">
+            <View className="flex-row h-12 rounded-lg  mb-8 items-center ">
+                <Text className="text-white text-xl  font-bold">Actividades</Text>
+            </View>
+            <FlatList
+                data={place.icons}
+                keyExtractor={(activity) => activity.name}
+                renderItem={({ item: activity, index }) => (
+                    <CardPop
+                        activity={activity}
+                        images={parks.slice(0, 3)}
+                        isExpanded={expandedIndex === index}
+                        handleImagePress={handleImagePress}
+                        onPressExpand={() => setExpandedIndex(expandedIndex === index ? null : index)}
+                    />
+                )}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                snapToInterval={_slideWidth + _spacing}
+                decelerationRate={"fast"}
+                contentContainerStyle={{
+                    gap: _spacing,
+                    paddingHorizontal: (width - _slideWidth) / 2,
+                    alignItems: "center",
+                }}
+                onViewableItemsChanged={viewableItemsChanged}
+                viewabilityConfig={viewabilityConfig}
+                scrollEventThrottle={16}
+            />
+            {
+                renderModal()
+            }
         </View>
     );
 };

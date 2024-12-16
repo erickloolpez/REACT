@@ -1,14 +1,16 @@
 import { View, Text, Image, Pressable, FlatList, ScrollView, Dimensions, Alert } from 'react-native'
 import Review from '../../Comment'
 import { useRef, useCallback, useMemo, useState, useEffect } from 'react'
-import { faArrowRight, faCircleXmark, faPenToSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight, faCircleXmark, faPenToSquare, faSquareCheck, faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { BottomSheetModal, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet'
 import { images } from '../../../constants'
-import { faFaceLaughBeam } from '@fortawesome/free-regular-svg-icons'
+import { faFaceLaughBeam, faStar } from '@fortawesome/free-regular-svg-icons'
 import useAppwrite from '../../../lib/useAppwrite'
 import { createReview, getAllParks, getAllReviewsByPark, getAllRiviews } from '../../../lib/appwrite'
 import { useGlobalContext } from '../../../context/GlobalProvider'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import Animated, { interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 
 const Feedback = ({ name, park }) => {
     const { user } = useGlobalContext()
@@ -16,7 +18,7 @@ const Feedback = ({ name, park }) => {
     const handlePresentModalPress = () => bottomSheetModalRef.current?.present()
     const handleEnterPress = () => bottomSheetModalRef.current?.snapToIndex(1)
     const handleExitPress = () => bottomSheetModalRef.current?.close()
-    const snapPoints = useMemo(() => ['35%'], [])
+    const snapPoints = useMemo(() => ['45%'], [])
     const [isEditing, setIsEditing] = useState(false)
     const textInputRef = useRef(null)
 
@@ -56,6 +58,44 @@ const Feedback = ({ name, park }) => {
             console.log("error", error)
             Alert.alert('Verts', error.message)
         }
+    }
+
+    let stars = []
+    // const [filled,setFilled] = useState(false)
+    const [rating, setRating] = useState(5)
+    const scale = useSharedValue(0)
+
+    const stylez = useAnimatedStyle(() => {
+        return {
+            transform: [
+                {
+                    scale: interpolate(
+                        scale.value,
+                        [0, 1],
+                        [1, 1.2]
+                    )
+                }
+            ]
+        }
+    })
+
+    for (let i = 1; i <= 5; i++) {
+        stars.push(
+            <TouchableWithoutFeedback
+                key={i}
+                onPress={() => {
+                    setRating(i)
+                    scale.value = withTiming(1, { duration: 200 }, () => {
+                        scale.value = withTiming(0, { duration: 200 })
+                    })
+                }}
+                className=" w-8 h-8 justify-center"
+            >
+                <Animated.View style={stylez}>
+                    <FontAwesomeIcon icon={i <= rating ? faStarSolid : faStar} color={i <= rating ? "#eab308" : "black"} size={25} />
+                </Animated.View>
+            </TouchableWithoutFeedback>
+        )
     }
 
     return (
@@ -131,6 +171,9 @@ const Feedback = ({ name, park }) => {
                             placeholder='Escribe tu comentario ....'
                             onSubmitEditing={handleEnterPress}
                         />
+                        <View className="flex-row w-[80%] h-10 ">
+                            {stars}
+                        </View>
                         <View className="mt-4 w-full h-12 flex-row justify-around">
                             <Pressable
                                 className="flex-row items-center justify-center w-24 h-full  border-2  rounded-lg"

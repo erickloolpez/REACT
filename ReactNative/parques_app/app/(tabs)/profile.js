@@ -54,19 +54,12 @@ const Profile = () => {
 
 
   const [index, setIndex] = useState(0)
-  const [selectedIndex, setSelectedIndex] = useState(null)
-  const [isSelected, setIsSelected] = useState(0)
-  const activeColor = "#fff"
-  const inactiveColor = "#ggg"
-  const activeBackgroundColor = "#cf613c"
-  const inactiveBackgroundColor = "#17301a"
 
   const logout = async () => {
+    router.replace('/sign-in')
     await signOut()
     setUser(null)
     setIsLogged(false)
-
-    router.replace('/sign-in')
   }
 
   const InnerTabs = ({ title, id }) => {
@@ -168,7 +161,7 @@ const Profile = () => {
                     data={yourFavorites}
                     keyExtractor={(item) => item.name}
                     numColumns={4} // Puedes ajustar este valor según el diseño
-                    renderItem={({ item }) => (
+                    renderItem={({ item, i }) => (
                       <TouchableOpacity
                         onPress={() => {
                           router.push(`/modals/${item.name}`)
@@ -178,7 +171,7 @@ const Profile = () => {
                         <Image
                           source={item.image}
                           resizeMode="cover"
-                          style={{ width: '96%', height: Math.random() * 150 + 100, borderRadius: 10 }} // Altura aleatoria para diseño estilo Pinterest
+                          style={{ width: '96%', height: 0.6 * 150 + 100, borderRadius: 10 }} // Altura aleatoria para diseño estilo Pinterest
                         />
                         <Text className="text-white font-semibold">{item.name}</Text>
                       </TouchableOpacity>
