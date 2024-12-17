@@ -6,14 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 const ButtonSheet = ({ park, width }) => {
     return (
-        <View style={{ width: width }} className="h-48  overflow-hidden mb-3 ml-1 ">
+        <View style={{ width: width }} className="h-44 overflow-hidden mb-3 ml-1 ">
             <View className="w-full h-[20%] items-center justify-center rounded-t-lg bg-[#1f4037]">
                 <Text className="text-lg text-white">Parque Nacional: {park.name}</Text>
             </View>
             <View className="w-full h-[90%] bg-yellow-900 flex-row ">
-                <View className="w-1/2 h-full bg-[#99f2c8] justify-around">
+                <View className="w-1/2 h-full bg-green-700 justify-around">
                     <View>
-                        <Text>Horario: 8a.m - 16p.m. </Text>
+                        <Text className="text-white">Horario: 8a.m - 16p.m. </Text>
                     </View>
                     <View className="w-full h-20 flex-row flex-wrap gap-1 content-center">
                         {
@@ -37,7 +37,7 @@ const ButtonSheet = ({ park, width }) => {
                 </View>
                 <View className="w-1/2 h-full relative overflow-hidden">
                     <Image source={park.image} resizeMode="cover" className="w-full h-full" />
-                    <View className="w-1/2 h-44 rotate-[8deg]  bg-[#99f2c8] absolute left-[-70px] bottom-4" />
+                    <View className="w-1/2 h-44 rotate-[8deg]  bg-green-700 absolute left-[-70px] bottom-4" />
                 </View>
             </View>
         </View>

@@ -1,14 +1,14 @@
 import { View, Text, Pressable, TouchableWithoutFeedback } from 'react-native'
 import { useEffect, useState, useRef, useMemo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCircleXmark, faPenToSquare, faSquareCheck, faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons'
+import { faCircleXmark, faPenToSquare, faSquareCheck, faStar as faStarSolid, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { interpolate, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import Animated, { withTiming } from 'react-native-reanimated'
 import { faStar } from '@fortawesome/free-regular-svg-icons'
 import { BottomSheetModal, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet'
 import { usePathname } from 'expo-router'
 import { useGlobalContext } from '../context/GlobalProvider'
-import { createReview } from '../lib/appwrite'
+import { createReview, deleteReview, updateReview } from '../lib/appwrite'
 
 
 const ModalFeedBack = ({ bottomSheetModalRef, park, refetch, comment }) => {
@@ -19,9 +19,10 @@ const ModalFeedBack = ({ bottomSheetModalRef, park, refetch, comment }) => {
     const snapPoints = useMemo(() => ['45%'], [])
     const [isEditing, setIsEditing] = useState(false)
     const textInputRef = useRef(null)
-    const [query, setQuery] = useState(comment? comment.text : '')
+    const [query, setQuery] = useState(comment ? comment.text : '')
     const scale = useSharedValue(0)
     const [rating, setRating] = useState(comment ? comment.rating : 5)
+    const message = pathname.startsWith('/profile') ? 'Actualizar' : 'Enviar '
 
 
     const toggleEditMode = () => {
@@ -45,6 +46,16 @@ const ModalFeedBack = ({ bottomSheetModalRef, park, refetch, comment }) => {
     }
     const submit = async () => {
         if (pathname.startsWith('/profile')) {
+            let form = { rating: rating, text: query }
+            try {
+                await updateReview(comment.$id, form)
+                setQuery('')
+                handleExitPress()
+                onRefresh()
+            } catch (error) {
+                console.log("error", error)
+                Alert.alert('se cayo :(', error.message)
+            }
 
         } else if (pathname.startsWith('/modals')) {
             let form = { rating: rating, text: query, userId: user.$id, parkId: park.$id }
@@ -57,6 +68,18 @@ const ModalFeedBack = ({ bottomSheetModalRef, park, refetch, comment }) => {
                 console.log("error", error)
                 Alert.alert('Verts', error.message)
             }
+        }
+    }
+
+    const onDelete = async () => {
+        try {
+            await deleteReview(comment.$id)
+            setQuery('')
+            handleExitPress()
+            onRefresh()
+        } catch (error) {
+            console.log("error", error)
+            Alert.alert('raioz', error.message)
         }
     }
 
@@ -127,7 +150,6 @@ const ModalFeedBack = ({ bottomSheetModalRef, park, refetch, comment }) => {
                             backgroundColor: 'rgba(151, 151, 151, 0.25)',
                         }}
                         placeholder={comment ? comment.text : 'Escribe tu comentario ....'}
-                        value={query}
                         onSubmitEditing={handleEnterPress}
                     />
                     <View className="flex-row w-[80%] h-10 ">
@@ -135,17 +157,27 @@ const ModalFeedBack = ({ bottomSheetModalRef, park, refetch, comment }) => {
                     </View>
                     <View className="mt-4 w-full h-12 flex-row justify-around">
                         <Pressable
-                            className="flex-row items-center justify-center w-24 h-full  border-2  rounded-lg"
+                            className="flex-row items-center justify-center w-24 h-full  border-2  rounded-lg bg-yellow-500"
                             onPress={toggleEditMode}>
-                            <FontAwesomeIcon icon={faPenToSquare} color='black' size={25} />
-                            <Text className="ml-2">Editar</Text>
+                            <FontAwesomeIcon icon={faPenToSquare} color='white' size={25} />
+                            <Text className="ml-2 text-white">Editar</Text>
                         </Pressable>
+                        {
+                            pathname.startsWith('/profile') &&
+                            <Pressable
+                                className="flex-row items-center justify-center w-28 h-full  border-2  rounded-lg bg-red-500"
+                                onPress={onDelete}
+                            >
+                                <FontAwesomeIcon icon={faTrash} color='white' size={25} />
+                                <Text className="ml-2 text-white">Eliminar</Text>
+                            </Pressable>
+                        }
                         <Pressable
-                            className="flex-row items-center justify-center w-24 h-full  border-2  rounded-lg"
+                            className="flex-row items-center justify-center w-28 h-full  border-2  rounded-lg bg-green-500"
                             onPress={submit}
                         >
-                            <FontAwesomeIcon icon={faSquareCheck} color='black' size={25} />
-                            <Text className="ml-2">Enviar</Text>
+                            <FontAwesomeIcon icon={faSquareCheck} color='white' size={25} />
+                            <Text className="ml-2 text-white ">{message}</Text>
                         </Pressable>
                     </View>
                 </View>

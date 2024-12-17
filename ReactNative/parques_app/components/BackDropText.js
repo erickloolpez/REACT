@@ -1,17 +1,15 @@
 import { View, Text, Image, TouchableOpacity, Platform, FlatList } from 'react-native'
 import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated'
-import MapView, { Marker, Polyline } from 'react-native-maps';
-import { router } from 'expo-router';
+import { useState } from 'react'
 
-import { images } from '../constants';
 import { useGlobalContext } from '../context/GlobalProvider';
-import Review from './Comment';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faFlagCheckered } from '@fortawesome/free-solid-svg-icons';
+import { router } from 'expo-router';
 
 
 const BackDropText = ({ index, scrollX, park }) => {
     const { userLocation } = useGlobalContext();
+    const [text, setText] = useState(park.desc.slice(0, 207))
+    const [readMore, setReadMore] = useState(false)
     const stylez = useAnimatedStyle(() => {
         return {
             opacity: interpolate(
@@ -38,33 +36,20 @@ const BackDropText = ({ index, scrollX, park }) => {
 
     return (
         <Animated.View className="w-full h-full items-center justify-around absolute" style={stylez}>
-            <View className="w-full h-[40%] px-2 ">
-                <Text className="text-primary">{park.desc.slice(0, 300)}</Text>
+            <View className="px-2 ">
+                <Text className="text-primary">
+                    {text}
+                    <Text
+                        className="text-[#CF613C] font-semibold"
+                        onPress={() => {
+                            router.push(`/modals/${park.name}`)
+                        }}
+                    >
+                        ...Mostrar mas
+                    </Text>
+                </Text>
             </View>
-            <View className="w-full h-[40%] flex-row justify-around ">
-                <FlatList
-                    data={park.icons}
-                    keyExtractor={(activity) => activity.name}
-                    renderItem={({ item: activity, index }) => (
-                        <View className="w-20 h-16 items-center justify-around rounded-md" style={{ backgroundColor: 'rgba(0,0,0,0.2)' }}>
-                            <View className="w-8 h-8">
-                                <Image source={activity.image} resizeMode="cover" className="w-full h-full" />
-                            </View>
-                            <Text className="text-white">{activity.name}</Text>
-                        </View>
-                    )}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    decelerationRate={"fast"}
-                    contentContainerStyle={{
-                        gap: 10,
-                        paddingHorizontal: 10,
-                        alignItems: "center",
-                    }}
-                    scrollEventThrottle={16}
-                />
-            </View>
-        </Animated.View>
+        </Animated.View >
     )
 }
 

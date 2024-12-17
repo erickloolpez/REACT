@@ -16,7 +16,7 @@ import { useGlobalContext } from '../../context/GlobalProvider'
 const Home = () => {
   const { width, height } = Dimensions.get('window')
   const _slideWidth = width * 0.58
-  const _slideHeight = height * 0.47
+  const _slideHeight = height * 0.54
   const _spacing = 18
 
   const [visibleParks, setVisibleParks] = useState(5); // Número inicial de parques visibles
@@ -61,6 +61,7 @@ const Home = () => {
   return (
     <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
       <SafeAreaView edges={['top']} className="h-full ">
+
         <View className="w-full h-[12%] relative bg-secondary justify-between px-8 border-white border-t-2 border-b-2 items-center  flex-row">
           <HumaComponent />
           {
@@ -77,7 +78,7 @@ const Home = () => {
           <CondorComponent />
         </View>
 
-        <View className="w-full h-[30%]  mt-2 items-center ">
+        <View className="w-full h-[20%]  mt-2 items-center ">
           {
             parks.slice(0, visibleParks).map((park, index) => (
               <BackDropText
@@ -90,7 +91,7 @@ const Home = () => {
           }
         </View>
 
-        <View className="w-full h-[60%] ">
+        <View className="w-full h-[68%]">
           <Animated.FlatList
             data={parks.slice(0, visibleParks)}
             keyExtractor={(park) => park.name}

@@ -213,6 +213,35 @@ export const createReview = async (form) => {
     }
 
 }
+export const updateReview = async (id, form) => {
+    try {
+        const updateReview = await databases.updateDocument(
+            databaseId,
+            reviewCollectionId,
+            id,
+            {
+                rating: form.rating,
+                text: form.text,
+            }
+        )
+        return updateReview
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+export const deleteReview = async (id) => {
+    try {
+        const res = await databases.deleteDocument(
+            databaseId,
+            reviewCollectionId,
+            id
+        )
+        return res
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 export const updateUser = async (id, newScore) => {
     try {
         const updateUser = await databases.updateDocument(

@@ -5,7 +5,8 @@ import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons'
 import { faStar } from '@fortawesome/free-regular-svg-icons'
 
 
-const Review = ({ width, height = '144px', text, name, rating }) => {
+const Review = ({ width, height = '144px', text, name, rating, date }) => {
+    let [dateClean, rest] = date.split('T')
     let stars = []
     for (let i = 1; i <= 5; i++) {
         stars.push(
@@ -23,7 +24,7 @@ const Review = ({ width, height = '144px', text, name, rating }) => {
                 <View className="flex-row justify-between">
                     <View>
                         <Text className="font-bold">{name}</Text>
-                        <Text className="text-gray-400">15 feb 2018</Text>
+                        <Text className="text-gray-400">{dateClean}</Text>
                     </View>
                     <View className=" flex-row items-center mr-4">
                         {stars}

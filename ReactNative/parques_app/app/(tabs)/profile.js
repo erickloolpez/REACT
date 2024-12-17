@@ -112,7 +112,6 @@ const Profile = () => {
       <SafeAreaView className="h-full " edges={['top']}>
         <ScrollView>
           <View className="w-full h-[50vh] items-center justify-around py-2 relative ">
-            {/* <LinearGradient className="absolute w-full h-[40%] rounded-lg " colors={['#CCCCB2', '#757519']} /> */}
             <Pressable
               className="w-full h-[10%] items-end justify-center "
               onPress={logout}
@@ -200,7 +199,7 @@ const Profile = () => {
                         setReviewSelected(comment)
                         handlePresentModalPress()
                       }}>
-                        <Review key={`comment-${index}-${comment.users.username}`} width={_slideWidth} height={144} text={comment.text} name={comment.users.username} rating={comment.rating} />
+                        <Review key={`comment-${index}-${comment.users.username}`} width={_slideWidth} height={144} text={comment.text} name={comment.users.username} rating={comment.rating} date={comment.$updatedAt} />
                       </Pressable>
                     )}
                     horizontal
@@ -220,7 +219,7 @@ const Profile = () => {
             }
           </View>
 
-          <ModalFeedBack bottomSheetModalRef={bottomSheetModalRef} comment={reviewSelected} />
+          <ModalFeedBack bottomSheetModalRef={bottomSheetModalRef} comment={reviewSelected} refetch={refetchReviews} />
         </ScrollView>
       </SafeAreaView>
     </LinearGradient >
