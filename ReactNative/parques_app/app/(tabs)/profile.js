@@ -1,20 +1,26 @@
-import { View, Text, Image, TouchableOpacity, ScrollView, Pressable, FlatList, Dimensions } from 'react-native'
-import { useCallback, useEffect, useState } from 'react'
+import { View, Text, Image, TouchableOpacity, ScrollView, Pressable, FlatList, Dimensions, TouchableWithoutFeedback } from 'react-native'
+import { useCallback, useEffect, useState, useRef, useMemo } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faComments, faGem, faHeart, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faCircleXmark, faComments, faGem, faHeart, faPenToSquare, faRightFromBracket, faSquareCheck, faXmark, faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons'
 import CountryFlag from 'react-native-country-flag'
 import { LinearGradient } from 'expo-linear-gradient'
 import MasonryList from '@react-native-seoul/masonry-list';
+import { interpolate, LinearTransition, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
+import { MotiView } from 'moti'
+import Modal from 'react-native-modal'
+import { router, useFocusEffect } from 'expo-router'
+import Animated, { withTiming } from 'react-native-reanimated'
+import { faStar } from '@fortawesome/free-regular-svg-icons'
+import { BottomSheetModal, BottomSheetTextInput, BottomSheetView } from '@gorhom/bottom-sheet'
 
 import { images, parks } from '../../constants'
 import { getAllFavoritesByUser, getAllReviewsByUser, getScore, signOut } from '../../lib/appwrite'
-import { router, useFocusEffect } from 'expo-router'
 import { useGlobalContext } from '../../context/GlobalProvider'
-import { LinearTransition } from 'react-native-reanimated'
-import { MotiView } from 'moti'
 import Review from '../../components/Comment'
 import useAppwrite from '../../lib/useAppwrite'
+import ModalFeedBack from '../../components/modalFeedback'
+
 
 
 const Profile = () => {
@@ -22,6 +28,9 @@ const Profile = () => {
   const { data: reviews, refetch: refetchReviews } = useAppwrite(() => getAllReviewsByUser(user.$id))
   const { data: score, refetch: refetchScore } = useAppwrite(() => getScore(user.$id))
   const { data: favorites, refetch } = useAppwrite(() => getAllFavoritesByUser(user.$id))
+  const bottomSheetModalRef = useRef(null)
+  const handlePresentModalPress = () => bottomSheetModalRef.current?.present()
+  const [reviewSelected, setReviewSelected] = useState(null)
 
   const onRefresh = async () => {
     try {
@@ -43,7 +52,6 @@ const Profile = () => {
   const _slideHeight = height * 0.47
   const _spacing = 18
 
-  const listParks = ["Llanganates", "Podocarpus", "Galapagos", "Machalilla", "El cajas", "Cayambe Coca", "Sangay", "Sumaco", "Yasuni", "Yacuri", "Cotopaxi"]
 
   const yourFavorites = parks.filter((park) =>
     favorites.some((favorite) => favorite.parks.nombre === park.name)
@@ -188,7 +196,12 @@ const Profile = () => {
                     data={reviews}
                     keyExtractor={(comment, index) => comment.$id}
                     renderItem={({ item: comment, index }) => (
-                      <Review key={`comment-${index}-${comment.users.username}`} width={_slideWidth} height={144} text={comment.text} name={comment.users.username} />
+                      <Pressable onPress={()=>{
+                        setReviewSelected(comment)
+                        handlePresentModalPress()
+                      }}>
+                        <Review key={`comment-${index}-${comment.users.username}`} width={_slideWidth} height={144} text={comment.text} name={comment.users.username} rating={comment.rating} />
+                      </Pressable>
                     )}
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -206,6 +219,8 @@ const Profile = () => {
               )
             }
           </View>
+
+          <ModalFeedBack bottomSheetModalRef={bottomSheetModalRef} comment={reviewSelected} />
         </ScrollView>
       </SafeAreaView>
     </LinearGradient >
