@@ -5,10 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import MasonryList from '@react-native-seoul/masonry-list';
 
-import { parks } from '../../constants';
 
-
-const CardPop = ({ images, activity, isExpanded, handleImagePress}) => {
+const CardPop = ({ images, activity, isExpanded, handleImagePress }) => {
     const width = useSharedValue(0);
     const yValue = useSharedValue(90);
     const opacity = useSharedValue(0);
@@ -35,11 +33,11 @@ const CardPop = ({ images, activity, isExpanded, handleImagePress}) => {
     }, [isExpanded]);
 
     return (
-        <View className="w-40 px-2 items-center">
+        <View className="w-40 px-2 items-center ">
             <Animated.View className="h-28 " style={menuStylez}>
                 <MasonryList
-                    data={images}
-                    keyExtractor={(item) => item.name}
+                    data={activity.picture}
+                    keyExtractor={(item, index) => `senderismo-${index}`}
                     numColumns={3}
                     renderItem={({ item }) => (
                         <TouchableOpacity
@@ -47,8 +45,8 @@ const CardPop = ({ images, activity, isExpanded, handleImagePress}) => {
                                 width: 110,
                                 height: 90,
                                 overflow: "hidden",
+                                marginRight:10,
                                 marginTop: 10,
-                                marginLeft: 4,
                             }}
                             onPress={() => {
                                 handleImagePress(item.image)
@@ -84,8 +82,8 @@ const Activities = ({ place }) => {
     const [openModal, setOpenModal] = useState(false)
     const [selectedImage, setSelectedImage] = useState(null)
     const { width } = Dimensions.get("window");
-    const _slideWidth = width * 0.42;
-    const _spacing = 18;
+    const _slideWidth = width * 0.38;
+    const _spacing = 10;
 
     const [expandedIndex, setExpandedIndex] = useState(null);
     const viewabilityConfig = { viewAreaCoveragePercentThreshold: 50 };
@@ -96,7 +94,7 @@ const Activities = ({ place }) => {
         }
     }).current;
 
-    const handleImagePress = (image) =>{
+    const handleImagePress = (image) => {
         setSelectedImage(image)
         setOpenModal(true)
     }
@@ -119,7 +117,7 @@ const Activities = ({ place }) => {
 
     return (
         <View className="mt-4">
-            <View className="flex-row h-12 rounded-lg  mb-8 items-center ">
+            <View className="flex-row h-12 rounded-lg  mb-4 items-center ">
                 <Text className="text-white text-xl  font-bold">Actividades</Text>
             </View>
             <FlatList
@@ -128,7 +126,6 @@ const Activities = ({ place }) => {
                 renderItem={({ item: activity, index }) => (
                     <CardPop
                         activity={activity}
-                        images={parks.slice(0, 3)}
                         isExpanded={expandedIndex === index}
                         handleImagePress={handleImagePress}
                         onPressExpand={() => setExpandedIndex(expandedIndex === index ? null : index)}

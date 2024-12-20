@@ -13,9 +13,7 @@ import LaurelLeft from '../../assets/svgs/laurel_left'
 import { useGlobalContext } from '../../context/GlobalProvider'
 import { router } from 'expo-router'
 
-const Header = ({ logo, image, isFavorite, submit, delFavorite }) => {
-    const { user } = useGlobalContext()
-    const [openModal, setOpenModal] = useState(false)
+const Header = ({ logo, image, isFavorite, submit, delFavorite, collections }) => {
 
     const [like, setLike] = useState(isFavorite)
 
@@ -44,7 +42,7 @@ const Header = ({ logo, image, isFavorite, submit, delFavorite }) => {
         scrollX.value = e.contentOffset.x / (_slideWidth)
     })
 
-    function DotIndex({ name, index, scrollX }) {
+    function DotIndex({ index, scrollX }) {
         const stylez = useAnimatedStyle(() => {
             return {
                 width: interpolate(
@@ -72,30 +70,13 @@ const Header = ({ logo, image, isFavorite, submit, delFavorite }) => {
 
     }
 
-    function renderModal() {
-        return (
-            <Modal visible={openModal} animationType='slide' transparent={true}>
-                <View className="flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                    <View className="bg-white w-[90%] h-[70%] rounded-lg relative p-2 ">
-                        <Image source={image} resizeMode='cover' className="w-full h-full" />
-                        <TouchableOpacity onPress={() => setOpenModal(false)} className="absolute top-3 right-2 bg-white rounded-full">
-                            <FontAwesomeIcon icon={faCircleXmark} color='red' size={32} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-            </Modal>
-        )
-    }
-
-
     return (
         <View className="w-full h-[50vh] relative items-center justify-center ">
             <View className="w-full h-[20%] z-10 flex-row items-center justify-center relative  ">
                 <Pressable
-                 className="absolute top-6 left-2"
-                 onPress={()=>router.back()}
-                 >
+                    className="absolute top-6 left-2"
+                    onPress={() => router.back()}
+                >
                     <FontAwesomeIcon icon={faSquareCaretLeft} color='#fff' size={32} />
                 </Pressable>
                 <LaurelLeft />
@@ -105,9 +86,9 @@ const Header = ({ logo, image, isFavorite, submit, delFavorite }) => {
 
             <View className="w-full h-10 flex-row absolute bottom-0 justify-center ">
                 {
-                    parks.slice(4, 8).map((park, index) => (
+                    collections.map((park, index) => (
                         <DotIndex
-                            key={`bg-photo-${park.name}`}
+                            key={`bg-photo-${index}`}
                             index={index}
                             scrollX={scrollX}
                         />
@@ -116,11 +97,11 @@ const Header = ({ logo, image, isFavorite, submit, delFavorite }) => {
             </View>
             <View className="w-full h-[80%] relative ">
                 <Animated.FlatList
-                    data={parks.slice(4, 8)}
-                    keyExtractor={(park) => park.name}
-                    renderItem={({ item: park, index }) => (
+                    data={collections}
+                    keyExtractor={(image, index) => `bg-photo-park${index}`}
+                    renderItem={({ item: collection, index }) => (
                         <View style={{ width: _slideWidth, height: _slideHeight, position: 'relative' }}>
-                            <Image source={park.image} className="w-full h-full" resizeMode='cover' />
+                            <Image source={collection.image} className="w-full h-full" resizeMode='cover' />
                             <LinearGradient className="w-full h-full absolute" colors={['rgba(0,0,0,0.2)', 'transparent']} />
                         </View>
                     )}
@@ -150,9 +131,6 @@ const Header = ({ logo, image, isFavorite, submit, delFavorite }) => {
                     }
                 </Pressable>
             </View>
-            {
-                renderModal()
-            }
         </View>
     )
 }

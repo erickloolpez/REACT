@@ -5,4 +5,6 @@ import logos from "./logos";
 import trends from "./trends";
 import isotipos from "./isotipos";
 import weekDay from './day'
-export { icons, images, parks, logos, trends, isotipos, weekDay };
+import collections from './collections'
+import activities from "./activities";
+export { icons, images, parks, logos, trends, isotipos, weekDay, collections, activities };
