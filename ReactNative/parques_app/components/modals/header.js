@@ -80,7 +80,7 @@ const Header = ({ logo, image, isFavorite, submit, delFavorite, collections }) =
                     <FontAwesomeIcon icon={faSquareCaretLeft} color='#fff' size={32} />
                 </Pressable>
                 <LaurelLeft />
-                <Image source={logo} className="w-52 h-full" resizeMode="contain" />
+                <Image source={logo} className="w-48 h-[70%]" resizeMode="contain" />
                 <LaurelRight />
             </View>
 

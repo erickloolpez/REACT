@@ -11,7 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 const InfoAttractive = () => {
     const { modalPark, trend, park } = useLocalSearchParams()
-    const [section, setSection] = useState('Ubicacion')
+    const [section, setSection] = useState('Fotos')
 
     const { userLocation } = useGlobalContext();
     const [origin] = useState({
@@ -56,18 +56,18 @@ const InfoAttractive = () => {
                 </View>
 
                 <View className="w-full h-[10vh]  flex-row justify-around items-center border-t-2 border-b-2 border-white">
-                    <TouchableOpacity onPress={() => setSection('Ubicacion')}>
-                        <Text className={`text-lg text-white ${section === 'Ubicacion' ? 'font-bold' : ''}`}>Ubicacion</Text>
-                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => setSection('Fotos')}>
                         <Text className={`text-lg text-white ${section === 'Fotos' ? 'font-bold' : ''}`}>Fotos</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setSection('Ubicacion')}>
+                        <Text className={`text-lg text-white ${section === 'Ubicacion' ? 'font-bold' : ''}`}>Ubicacion</Text>
                     </TouchableOpacity>
                 </View>
 
                 <View className="w-full h-[50vh] items-center ">
                     {
                         section === 'Ubicacion' && (
-                            <View className="w-96 h-96 rounded-full overflow-hidden mt-8">
+                            <View className="w-48 h-48 rounded-full overflow-hidden mt-8">
                                 <MapView
                                     className="w-full h-full"
                                     initialRegion={{
@@ -91,15 +91,15 @@ const InfoAttractive = () => {
                                 <View className="justify-center h-[10%] mb-4 ">
                                     <Text className="uppercase ml-3 text-lg text-white font-semibold">Lo que encontraras</Text>
                                 </View>
-                                <View className="w-full items-center justify-around flex-row gap-3 px-3 ">
-                                    <View className="w-28 h-64 rounded-xl overflow-hidden ">
-                                        <Image source={parsedTrend.image} resizeMode="cover" className="w-full h-full" />
+                                <View className="w-full items-center justify-around flex-row gap-3 px-1">
+                                    <View className="w-[128px] h-64 rounded-xl overflow-hidden ">
+                                        <Image source={parsedTrend.collection[0]} resizeMode="cover" className="w-full h-full" />
                                     </View>
-                                    <View className="w-28 h-64 rounded-xl overflow-hidden ">
-                                        <Image source={parsedTrend.image} resizeMode="cover" className="w-full h-full" />
+                                    <View className="w-[128px] h-64 rounded-xl overflow-hidden ">
+                                        <Image source={parsedTrend.collection[1]} resizeMode="cover" className="w-full h-full" />
                                     </View>
-                                    <View className="w-28 h-64 rounded-xl overflow-hidden ">
-                                        <Image source={parsedTrend.image} resizeMode="cover" className="w-full h-full" />
+                                    <View className="w-[128px] h-64 rounded-xl overflow-hidden ">
+                                        <Image source={parsedTrend.collection[2]} resizeMode="cover" className="w-full h-full" />
                                     </View>
                                 </View>
                             </View>

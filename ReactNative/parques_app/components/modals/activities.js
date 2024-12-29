@@ -20,7 +20,7 @@ const CardPop = ({ images, activity, isExpanded, handleImagePress }) => {
 
     useEffect(() => {
         if (isExpanded) {
-            width.value = withTiming(350, { duration: 300 });
+            width.value = withTiming(380, { duration: 300 });
             yValue.value = withTiming(-8, { duration: 300 });
             opacity.value = withTiming(1, { duration: 300 });
             xPosition.value = withTiming(90, { duration: 300 });
@@ -33,9 +33,10 @@ const CardPop = ({ images, activity, isExpanded, handleImagePress }) => {
     }, [isExpanded]);
 
     return (
-        <View className="w-40 px-2 items-center ">
-            <Animated.View className="h-28 " style={menuStylez}>
+        <View className="w-40 items-center bg-red-40 ">
+            <Animated.View className="h-36 items-center" style={menuStylez}>
                 <MasonryList
+                contentContainerStyle={{padding: 10}}
                     data={activity.picture}
                     keyExtractor={(item, index) => `senderismo-${index}`}
                     numColumns={3}
@@ -43,9 +44,9 @@ const CardPop = ({ images, activity, isExpanded, handleImagePress }) => {
                         <TouchableOpacity
                             style={{
                                 width: 110,
-                                height: 90,
+                                height: 110,
                                 overflow: "hidden",
-                                marginRight:10,
+                                marginRight: 10,
                                 marginTop: 10,
                             }}
                             onPress={() => {
@@ -62,7 +63,7 @@ const CardPop = ({ images, activity, isExpanded, handleImagePress }) => {
                 />
             </Animated.View>
             <View
-                className="w-28 h-28 bg-[#44A08D] mt-8 mr-3 rounded-3xl items-center"
+                className="w-28 h-24 bg-[#44A08D] mt-8 mr-3 rounded-3xl items-center"
             >
                 <View className="w-20 h-10  relative">
                     <View className="w-20 h-20 bg-[#093637] absolute rounded-full top-[-30px] overflow-hidden">

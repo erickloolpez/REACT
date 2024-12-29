@@ -50,28 +50,35 @@ const parks = [
           { image: activities.llanganatesSenderismoThree },
         ]
       },
-      { name: 'Ciclismo', image: icons.ciclismo, picture: 
-        [
-          { image: activities.llanganatesCiclismo },
-          { image: activities.llanganatesCiclismoTwo },
-          { image: activities.llanganatesCiclismoThree },
+      {
+        name: 'Ciclismo', image: icons.ciclismo, picture:
+          [
+            { image: activities.llanganatesCiclismo },
+            { image: activities.llanganatesCiclismoTwo },
+            { image: activities.llanganatesCiclismoThree },
+          ]
+      },
+      {
+        name: 'Fotografia', image: icons.camara, picture: [
+          { image: activities.llanganatesFotografia },
+          { image: activities.llanganatesFotografiaTwo },
+          { image: activities.llanganatesFotografiaThree },
         ]
       },
-      { name: 'Fotografia', image: icons.camara, picture: [
-        { image: activities.llanganatesFotografia },
-        { image: activities.llanganatesFotografiaTwo },
-        { image: activities.llanganatesFotografiaThree },
-      ]},
-      { name: 'Caballo', image: icons.caballo, picture: [
-        { image: activities.llanganatesCaballos },
-        { image: activities.llanganatesCaballosTwo },
-        { image: activities.llanganatesCaballosThree },
-      ]},
-      { name: 'Camping', image: icons.camping, picture: [
-        { image: activities.llanganatesCamping },
-        { image: activities.llanganatesCampingTwo },
-        { image: activities.llanganatesCampingThree },
-      ]}
+      {
+        name: 'Caballo', image: icons.caballo, picture: [
+          { image: activities.llanganatesCaballos },
+          { image: activities.llanganatesCaballosTwo },
+          { image: activities.llanganatesCaballosThree },
+        ]
+      },
+      {
+        name: 'Camping', image: icons.camping, picture: [
+          { image: activities.llanganatesCamping },
+          { image: activities.llanganatesCampingTwo },
+          { image: activities.llanganatesCampingThree },
+        ]
+      }
     ],
     desc: 'Pocos nombres de lugares en el Ecuador despiertan tantos sentimientos de misterio y aventura como “Llanganates”. Es muy posible que la primera idea que venga a nuestras mentes sea la de esos misteriosos parajes al oriente de Píllaro donde Rumiñahui ordenó se escondiera el tesoro de Atahualpa, tras la captura y muerte del Inca en Cajamarca.\n\nEsto, que se ha convertido en una poderosa leyenda, ha despertado la atracción y ambición de muchos buscadores de tesoros cuyas aventuras, en la mayoría de los casos han terminado en fracaso y muerte.\n\nEs que llegar a la zona del supuesto tesoro conlleva una larga y ardua travesía por bosques y páramos muy húmedos de la Cordillera de los Llanganates.El esfuerzo de la caminata, por lo accidentado de la topografía, se ve compensada por parajes de ensueño que incluyen lagunas, bosques de neblina, hasta un extraño páramo de frailejones.La historia se une a una biodiversidad fantástica, que posiblemente sea el verdadero tesoro de los Llanganates.',
     trend:
@@ -83,7 +90,12 @@ const parks = [
           location: {
             latitude: -1.0833333,
             longitude: -78.3166667,
-          }
+          },
+          collection: [
+            trends.llanganatePisayamboOne,
+            trends.llanganatePisayamboTwo,
+            trends.llanganatePisayamboThree,
+          ]
         },
         {
           name: 'Cerro Hermoso',
@@ -92,7 +104,12 @@ const parks = [
           location: {
             latitude: -1.149167,
             longitude: -78.350278,
-          }
+          },
+          collection: [
+            trends.llanganateHermosoOne,
+            trends.llanganateHermosoTwo,
+            trends.llanganateHermosoThree,
+          ]
         },
         {
           name: 'Rios y cascadas',
@@ -101,7 +118,12 @@ const parks = [
           location: {
             latitude: -1.0825,
             longitude: -78.2875,
-          }
+          },
+          collection: [
+            trends.llanganateRiosOne,
+            trends.llanganateRiosTwo,
+            trends.llanganateRiosThree,
+          ]
         },
       ],
     logo: logos.llanganantes
@@ -138,10 +160,34 @@ const parks = [
       }
     ],
     icons: [
-      { name: "Fotografia", image: icons.camara, picture: activities.podocarpusFotografia },
-      { name: "Senderismo", image: icons.senderismo, picture: activities.podocarpusSenderismo },
-      { name: "Ciclismo", image: icons.ciclismo, picture: activities.podocarpusCiclismo },
-      { name: "Camping", image: icons.camping, picuter: activities.podocarpusCamping },
+      {
+        name: "Fotografia", image: icons.camara, picture: activities.podocarpusFotografia, picture: [
+          { image: activities.podocarpusFotografia },
+          { image: activities.podocarpusFotografiaTwo },
+          { image: activities.podocarpusFotografiaThree },
+        ]
+      },
+      {
+        name: "Senderismo", image: icons.senderismo, picture: activities.podocarpusSenderismo, picture: [
+          { image: activities.podocarpusSenderismo },
+          { image: activities.podocarpusSenderismoTwo },
+          { image: activities.podocarpusSenderismoThree },
+        ]
+      },
+      {
+        name: "Ciclismo", image: icons.ciclismo, picture: activities.podocarpusCiclismo, picture: [
+          { image: activities.podocarpusCiclismo },
+          { image: activities.podocarpusCiclismoTwo },
+          { image: activities.podocarpusCiclismoThree },
+        ]
+      },
+      {
+        name: "Camping", image: icons.camping, picuter: activities.podocarpusCamping, picture: [
+          { image: activities.podocarpusCamping },
+          { image: activities.podocarpusCampingTwo },
+          { image: activities.podocarpusCampingThree },
+        ]
+      },
     ],
     desc: 'El Parque Nacional Podocarpus se encuentra en una zona de gran biodiversidad y endemismo en la región sur del Ecuador. Esto hace que sea un testimonio claro de la influencia de las montañas en tierras tropicales, una de las principales razones de la extraordinaria biodiversidad del Ecuador. Muchos estudios demuestran que la mayor parte de la biodiversidad del país está empacada en estas alturas intermedias, donde el frío no es tan extremo y, en cambio, abundan la humedad, los microclimas y las barreras geográficas. La zona donde se encuentra Podocarpus es considerada un sitio de importancia mundial para la conservación de la biodiversidad.\n\nPor esta razón, junto a otras áreas de la zona como el Parque Nacional Yacuri y la Reserva Biológica Cerro Plateado, desde 2007 forma parte de la Reserva de Biosfera Podocarpus – El Cóndor, un reconocimiento otorgado por la UNESCO. Esta área alberga una gran superficie de páramos, bosques nublados y zonas de matorral, fundamental para la preservación y continuidad de los ecosistemas del sur del Ecuador y norte de Perú.Ficha',
     trend: [
@@ -152,7 +198,12 @@ const parks = [
         location: {
           latitude: -4.091480,
           longitude: -79.114410,
-        }
+        },
+        collection: [
+          trends.podocarpusCompadreOne,
+          trends.podocarpusCompadreTwo,
+          trends.podocarpusCompadreThree,
+        ]
       },
       {
         name: 'Cajanuma',
@@ -161,7 +212,13 @@ const parks = [
         location: {
           latitude: -4.080141,
           longitude: -79.200734,
-        }
+        },
+        collection: [
+          trends.podocarpusCajanumaOne,
+          trends.podocarpusCajanumaTwo,
+          trends.podocarpusCajanumaThree,
+        ]
+
       },
       {
         name: 'Bombuscaro y Romerillos',
@@ -170,7 +227,12 @@ const parks = [
         location: {
           latitude: -4.113580,
           longitude: -78.945320,
-        }
+        },
+        collection: [
+          trends.podocarpusBombuscaroOne,
+          trends.podocarpusBombuscaroTwo,
+          trends.podocarpusBombuscaroThree,
+        ]
       },
       {
         name: 'Cerro Toledo',
@@ -179,7 +241,12 @@ const parks = [
         location: {
           latitude: -4.481210,
           longitude: -79.294200,
-        }
+        },
+        collection: [
+          trends.podocarpusToledoOne,
+          trends.podocarpusToledoTwo,
+          trends.podocarpusToledoThree,
+        ]
       },
     ], logo: logos.podocarpus
   },
@@ -213,9 +280,27 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Ciclismo", image: icons.ciclismo, picture: activities.galapagosCiclismo },
-      { name: "Fotografia", image: icons.camara, picture: activities.galapagosFotografia },
-      { name: "Camping", image: icons.camping, picture: activities.galapagosCamping },
+      {
+        name: "Ciclismo", image: icons.ciclismo, picture: activities.galapagosCiclismo, picture: [
+          { image: activities.galapagosCiclismo },
+          { image: activities.galapagosCiclismoTwo },
+          { image: activities.galapagosCiclismoThree },
+        ]
+      },
+      {
+        name: "Fotografia", image: icons.camara, picture: activities.galapagosFotografia, picture: [
+          { image: activities.galapagosFotografia },
+          { image: activities.galapagosFotografiaTwo },
+          { image: activities.galapagosFotografiaThree },
+        ]
+      },
+      {
+        name: "Camping", image: icons.camping, picture: activities.galapagosCamping, picture: [
+          { image: activities.galapagosCamping },
+          { image: activities.galapagosCampingTwo },
+          { image: activities.galapagosCampingThree },
+        ]
+      },
     ],
     desc: 'La flora y fauna extraordinarias, sus rasgos geológicos y la gran cantidad de especies únicas han convertido a este parque en un importante centro mundial de investigación científica y turismo de naturaleza.\n\nComo reconocimiento a sus valores naturales fue declarado Patrimonio de la Humanidad por la UNESCO en 1978. A pesar de todos los problemas que ha enfrentado, especialmente por los organismos introducidos desde el continente, constituye uno de los archipiélagos mejor conservados y un referente mundial de manejo de ecosistemas frágiles.\n\nGalápagos incluye dos áreas protegidas: el Parque Nacional Galápagos, que abarca el 97% de la superficie terrestre del archipiélago, y la Reserva Marina Galápagos, que protege los ambientes marinos a su alrededor.\n\nEl aspecto más llamativo de una visita a Galápagos es experimentar de primera mano cómo sus animales han evolucionado en este mundo paralelo, olvidando el miedo a los humanos. No todo el parque está abierto al turismo, pero cuenta con una extensa red de sitios de visita diseñada especialmente para ofrecer un encuentro cercano con este “laboratorio natural” y, al mismo tiempo, reducir al máximo los impactos.',
     trend:
@@ -227,7 +312,12 @@ const parks = [
           location: {
             latitude: -1.382131,
             longitude: -90.446710,
-          }
+          },
+          collection: [
+            trends.galapagosPajaroOne,
+            trends.galapagosPajaroTwo,
+            trends.galapagosPajaroThree,
+          ]
         },
         {
           name: 'Fenómenos geológicos',
@@ -236,7 +326,12 @@ const parks = [
           location: {
             latitude: -0.833333,
             longitude: -91.116667,
-          }
+          },
+          collection: [
+            trends.galapagosFenomenoOne,
+            trends.galapagosFenomenoTwo,
+            trends.galapagosFenomenoThree,
+          ]
         },
       ],
     logo: logos.galapagos
@@ -274,13 +369,55 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Fotografia", image: icons.camara, picture: activities.machalillaFotografia },
-      { name: "Buceo", image: icons.buceo, picture: activities.machalillaBuceo },
-      { name: "Nadar", image: icons.nadar, picture: activities.machalillaNadar },
-      { name: "Canotaje", image: icons.canotaje, picture: activities.machalillaCanotaje },
-      { name: "Senderismo", image: icons.senderismo, picture: activities.machalillaSenderismo },
-      { name: "Camping", image: icons.camping, picture: activities.machalillaCamping },
-      { name: "Ciclismo", image: icons.ciclismo, picture: activities.machalillaCiclismo },
+      {
+        name: "Fotografia", image: icons.camara, picture: activities.machalillaFotografia, picture: [
+          { image: activities.machalillaFotografia },
+          { image: activities.machalillaFotagrafiaTwo },
+          { image: activities.machalillaFotografiaThree },
+        ]
+      },
+      {
+        name: "Buceo", image: icons.buceo, picture: activities.machalillaBuceo, picture: [
+          { image: activities.machalillaBuceo },
+          { image: activities.machaillaBuceoTwo },
+          { image: activities.machalillaBuceoThree },
+        ]
+      },
+      {
+        name: "Nadar", image: icons.nadar, picture: activities.machalillaNadar, picture: [
+          { image: activities.machalillaNadar },
+          { image: activities.machalillaNadarTwo },
+          { image: activities.machalillaNadarThree },
+        ]
+      },
+      {
+        name: "Canotaje", image: icons.canotaje, picture: activities.machalillaCanotaje, picture: [
+          { image: activities.machalillaCanotaje },
+          { image: activities.machalillaCanotajeTwo },
+          { image: activities.machalillaCanotajeThree },
+        ]
+      },
+      {
+        name: "Senderismo", image: icons.senderismo, picture: activities.machalillaSenderismo, picture: [
+          { image: activities.machalillaSenderismo },
+          { image: activities.machalillaSenderismoTwo },
+          { image: activities.machalillaSenderismoThree },
+        ]
+      },
+      {
+        name: "Camping", image: icons.camping, picture: activities.machalillaCamping, picture: [
+          { image: activities.machalillaCamping },
+          { image: activities.machalillaCampingTwo },
+          { image: activities.machalillaCampingThree },
+        ]
+      },
+      {
+        name: "Ciclismo", image: icons.ciclismo, picture: activities.machalillaCiclismo, picture: [
+          { image: activities.machalillaCiclismo },
+          { image: activities.machalillaCiclismoTwo },
+          { image: activities.machalillaCiclismoThree },
+        ]
+      },
     ],
     desc: 'Este parque es una de las primeras áreas protegidas del país. Su declaratoria temprana, en 1979, revela que ya en los inicios del Sistema Nacional de Áreas Protegidas del Ecuador se reconoció la importancia de la zona y la urgencia de proteger sus ecosistemas: los bosques secos y semisecos, y los ambientes marino – costeros del sur de Manabí. Su nombre proviene de la cultura Machalilla, una de las culturas prehispánicas más importante de la región litoral, que habitó en esta zona durante 800 años (1800 a. C. – 1000 a. C).\n\nDentro del parque y en las zonas aledañas hay sitios arqueológicos de varias culturas, desde Valdivia hace más de 5 mil años, hasta la cultura Manteño – Huancavilca, hace 500 años.\n\nEs un parque lleno de evidencias de los antiguos pobladores de Manabí. El área protegida incluye playas, varios islotes cercanos a la línea de costa como Salango, Horno de Pan, Sucre, Pedernales y El Sombrerito, y también la célebre Isla de la Plata.',
     trend: [
@@ -291,7 +428,12 @@ const parks = [
         location: {
           latitude: -1.565854,
           longitude: -80.810486,
-        }
+        },
+        collection: [
+          trends.machalillaFrailesOne,
+          trends.machalillaFrailesTwo,
+          trends.machalillaFrailesThree,
+        ]
       },
       {
         name: 'Isla de la Plata',
@@ -300,7 +442,12 @@ const parks = [
         location: {
           latitude: -1.265810,
           longitude: -81.063780,
-        }
+        },
+        collection: [
+          trends.machalillaPlataOne,
+          trends.machalillaPlataTwo,
+          trends.machalillaPlataThree
+        ]
       },
       {
         name: 'Comuna Agua Blanca',
@@ -309,7 +456,12 @@ const parks = [
         location: {
           latitude: -1.541883,
           longitude: -80.804167,
-        }
+        },
+        collection: [
+          trends.machalillaBlancaOne,
+          trends.machalillaBlancaTwo,
+          trends.machalillaBlancaThree,
+        ]
       },
       {
         name: 'Observación de ballenas jorobadas',
@@ -318,7 +470,12 @@ const parks = [
         location: {
           latitude: -1.566667,
           longitude: -80.816667,
-        }
+        },
+        collection: [
+          trends.machalillaBallenaOne,
+          trends.machalillaBallenaTwo,
+          trends.machalillaBallenaThree,
+        ]
       },
     ],
     desc: 'Es considerada una de las pocas playas que todavía mantiene sus características naturales. Está ubicada entre los poblados de Machalilla y Puerto López. En este sector existe un sendero que recorre el bosque seco y atraviesa las playas de La Tortuguita y La Playita hasta llegar a Los Frailes.',
@@ -352,10 +509,34 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Fotografia", image: icons.camara, picture: activities.cajasFotografia },
-      { name: "Senderismo", image: icons.senderismo, picture: activities.cajasSenderismo },
-      { name: "Camping", image: icons.camping, picture: activities.cajasCamping },
-      { name: "Pesca", image: icons.pesca, picture: activities.cajasPesca },
+      {
+        name: "Fotografia", image: icons.camara, picture: activities.cajasFotografia, picture: [
+          { image: activities.cajasFotografia },
+          { image: activities.cajasFotagrafiaTwo },
+          { image: activities.cajasFotografiaThree }
+        ]
+      },
+      {
+        name: "Senderismo", image: icons.senderismo, picture: activities.cajasSenderismo, picture: [
+          { image: activities.cajasSenderismo },
+          { image: activities.cajasSenderismoTwo },
+          { image: activities.cajasSenderismoThree }
+        ]
+      },
+      {
+        name: "Camping", image: icons.camping, picture: activities.cajasCamping, picture: [
+          { image: activities.cajasCamping },
+          { image: activities.cajasCampingTwo },
+          { image: activities.cajasCampingThree }
+        ]
+      },
+      {
+        name: "Pesca", image: icons.pesca, picture: activities.cajasPesca, picture: [
+          { image: activities.cajasPesca },
+          { image: activities.cajasPescaTwo },
+          { image: activities.cajasPescaThree }
+        ]
+      },
     ],
     desc: 'El Parque Nacional Cajas está ubicado en la provincia de Azuay, en el sur del Ecuador, donde la cordillera de los Andes es más antigua, con menor actividad volcánica y sin los picos elevados que son tan comunes más al norte. En esta zona, la cordillera forma extensas altiplanicies de gran belleza donde se acumula agua en grandes cantidades.\n\nEl Cajas está lleno de cuerpos de agua: se han contado cerca de 165 lagunas con más de 1 hectárea de superficie y 621 con menos de 1 hectárea; son en total 786 cuerpos de agua. Seguramente los cóndores que lo visitan pueden apreciar su verdadera forma desde el aire: un tapete verde y dorado, muy arrugado y donde cada valle guarda lagunitas conectadas por pequeños arroyos. \n\nDebido a la gran cantidad de lagunas, la presencia de aves migratorias y la importancia que tiene para la captación, almacenamiento y provisión de agua para las poblaciones cercanas, fue reconocido como sitio Ramsar o Humedal de Importancia Internacional. Desde el año 2002, y mediante un convenio suscrito con el Ministerio del Ambiente, el P.N. Cajas es administrado por el Municipio de Cuenca.',
     trend: [
@@ -366,7 +547,12 @@ const parks = [
         location: {
           latitude: -3.097046,
           longitude: -79.332642,
-        }
+        },
+        collection: [
+          trends.cajasToreadoraOne,
+          trends.cajasToreadoraTwo,
+          trends.cajasToreadoraThree,
+        ]
       },
       {
         name: 'Qhapaq Ñan',
@@ -375,7 +561,12 @@ const parks = [
         location: {
           latitude: -3.090815,
           longitude: -79.290648,
-        }
+        },
+        collection: [
+          trends.cajasNamOne,
+          trends.cajasNamTwo,
+          trends.cajasNamThree,
+        ]
       },
     ]
     , logo: logos.cajas
@@ -409,9 +600,27 @@ const parks = [
       },
     ],
     icons: [
-      { name: 'Senderismo', image: icons.senderismo, picture: activities.cayambeSenderismo },
-      { name: 'Fotografia', image: icons.camara, picture: activities.cayambeFotografia },
-      { name: 'Ciclismo', image: icons.ciclismo, picture: activities.cayambeCiclismo },
+      {
+        name: 'Senderismo', image: icons.senderismo, picture: activities.cayambeSenderismo, picture: [
+          { image: activities.cayambeSenderismo },
+          { image: activities.cayambeSenderismoTwo },
+          { image: activities.cayambeSenderismoThree }
+        ]
+      },
+      {
+        name: 'Fotografia', image: icons.camara, picture: activities.cayambeFotografia, picture: [
+          { image: activities.cayambeFotografia },
+          { image: activities.cayambeFotografiaTwo },
+          { image: activities.cayambeFotografiaThree }
+        ]
+      },
+      {
+        name: 'Ciclismo', image: icons.ciclismo, picture: activities.cayambeCiclismo, picture: [
+          { image: activities.cayambeCiclismo },
+          { image: activities.cayambeCiclismoTwo },
+          { image: activities.cayambeCiclismoThree }
+        ]
+      },
     ],
     desc: 'Guiados por su nombre, se podría decir que el Parque Nacional Cayambe – Coca protege el volcán nevado Cayambe y las nacientes del río Coca, pero en verdad, éste es más bien el parque nacional del agua. Hay agua por todas partes, en el ambiente por la constante neblina y las lluvias, en la vegetación y la hojarasca del suelo, en los humedales y las lagunas de la parte alta, en el suelo y las almohadillas del páramo, y en los ríos que forman caídas y cascadas.\n\nEn la parte alta hay célebres vertientes de aguas termales y minerales como las de Papallacta y Oyacachi. En esta región están las nacientes de ríos como el Dué, el Chingual, el Cofanes y el Cabeno que alimentan al Aguarico, para que junto con el Coca entreguen sus aguas al gran río Napo.\n\nPor el otro lado, hacia las estribaciones occidentales, está el hogar de cientos de vertientes que nutren a los ríos Mira y Esmeraldas que desembocan en el océano Pacífico.',
     trend: [
@@ -422,7 +631,12 @@ const parks = [
         location: {
           latitude: 0.0789,
           longitude: -78.1389,
-        }
+        },
+        collection: [
+          trends.cayambeVolcanOne,
+          trends.cayambeVolcanTwo,
+          trends.cayambeVolcanThree,
+        ]
       },
       {
         name: 'Cascada San Rafael',
@@ -431,7 +645,12 @@ const parks = [
         location: {
           latitude: 0.0786,
           longitude: -77.9436,
-        }
+        },
+        collection: [
+          trends.cayambeSanOne,
+          trends.cayambeSanTwo,
+          trends.cayambeSanThree,
+        ]
       },
       {
         name: 'Aguas termales',
@@ -440,7 +659,12 @@ const parks = [
         location: {
           latitude: 0.3261,
           longitude: -77.8242,
-        }
+        },
+        collection: [
+          trends.cayambeTermasOne,
+          trends.cayambeTermasTwo,
+          trends.cayambeTermasThree,
+        ]
       },
       {
         name: 'Volcán Reventador (3.485 m)',
@@ -449,7 +673,12 @@ const parks = [
         location: {
           latitude: -0.0777,
           longitude: -77.6386,
-        }
+        },
+        collection: [
+          trends.cayambeReventadorOne,
+          trends.cayambeReventadorTwo,
+          trends.cayambeReventadorThree,
+        ]
       },
     ]
     , logo: logos.cayambe
@@ -483,10 +712,26 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Fotografia", image: icons.camara, picture: activities.sangayFotografia },
-      { name: "Camping", image: icons.camping, picture: activities.sangayCamping },
-      { name: "Canotaje", image: icons.canotaje, picture: activities.sangayCanotaje },
-      { name: "Ciclismo", image: icons.ciclismo, picture: activities.sangayCiclismo },
+      { name: "Fotografia", image: icons.camara, picture: activities.sangayFotografia, picture:[
+        { image: activities.sangayFotografia },
+        { image: activities.sangayFotografiaTwo },
+        { image: activities.sangayFotografiaThree },
+      ] },
+      { name: "Camping", image: icons.camping, picture: activities.sangayCamping, picture:[
+        { image: activities.sangayCamping },
+        { image: activities.sangayCamingTwo },
+        { image: activities.sangayCampingThree },
+      ] },
+      { name: "Canotaje", image: icons.canotaje, picture: activities.sangayCanotaje, picture:[
+        { image: activities.sangayCanotaje },
+        { image: activities.sangayCanotajeTwo },
+        { image: activities.sangayCanotajeThree },
+      ] },
+      { name: "Ciclismo", image: icons.ciclismo, picture: activities.sangayCiclismo, picture:[
+        { image: activities.sangayCiclismo },
+        { image: activities.sangayCiclismoTwo },
+        { image: activities.sangayCiclismoThree },
+      ] },
     ],
     desc: 'Este parque tiene como principales atractivos tres volcanes (dos de ellos activos), una infinidad de lagunas con historias asombrosas, como aquella donde centenares de pájaros acuden a morir, y una enorme biodiversidad. El parque se extiende sobre la cordillera Oriental protegiendo páramos, bosques altoandinos y bosques subtropicales. Por toda esta maravillosa geografía y extraordinaria biodiversidad, en 1983 la UNESCO lo declaró Patrimonio Natural de la Humanidad. \n\nEn el parque están las nacientes del Upano, río que bordea la ciudad oriental de Macas y luego desemboca en el Pastaza hacia el Amazonas. El otro río importante es el Paute que además marca el límite en la parte sur oriental; su caudal represado genera hasta ahora la mayor fuente de hidroelectricidad para el país. El Paute luego fluye hacia el río Santiago en la Amazonía.\n\nEn la parte montañosa y alta del parque habitan los descendientes de los pueblos Cañari y Puruhá, y en la zona de selva están los territorios de la nacionalidad Shuar.',
     trend: [
@@ -497,7 +742,12 @@ const parks = [
         location: {
           latitude: -2.0033,
           longitude: -78.2828,
-        }
+        },
+        collection: [
+          trends.sangayVolcanOne,
+          trends.sangayVolcanTwo,
+          trends.sangayVolcanThree,
+        ]
       },
       {
         name: 'Tungurahua',
@@ -506,7 +756,12 @@ const parks = [
         location: {
           latitude: -1.2839,
           longitude: -78.4423,
-        }
+        },
+        collection: [
+          trends.sangayTunOne,
+          trends.sangayTunTwo,
+          trends.sangayTunThree,
+        ]
       },
       {
         name: 'El Altar',
@@ -515,7 +770,12 @@ const parks = [
         location: {
           latitude: -1.4817,
           longitude: -78.5644,
-        }
+        },
+        collection: [
+          trends.sangayAltarOne,
+          trends.sangayAltarTwo,
+          trends.sangayAltarThree
+        ]
       },
     ]
     , logo: logos.sangay
@@ -549,10 +809,26 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Senderismo", image: icons.senderismo, picture: activities.sumacoSenderismo },
-      { name: "Fotografia", image: icons.camara, picture: activities.sumacoFotografio },
-      { name: "Camping", image: icons.camping, picture: activities.sumacoCamping },
-      { name: "Ciclismo", image: icons.ciclismo, picture: activities.sumacoCiclismo },
+      { name: "Senderismo", image: icons.senderismo, picture: activities.sumacoSenderismo, picture:[
+        { image: activities.sumacoSenderismo },
+        { image: activities.sumacoSenderismoTwo },
+        { image: activities.sumacoSenderismoThree },
+      ] },
+      { name: "Fotografia", image: icons.camara, picture: activities.sumacoFotografio, picture:[
+        { image: activities.sumacoFotografio },
+        { image: activities.sumacoFotagrafiaTwo },
+        { image: activities.sumacoFotografiaThree },
+      ] },
+      { name: "Camping", image: icons.camping, picture: activities.sumacoCamping, picture:[
+        { image: activities.sumacoCamping },
+        { image: activities.sumacoCampingTwo },
+        { image: activities.sumacoCampingThree },
+      ] },
+      { name: "Ciclismo", image: icons.ciclismo, picture: activities.sumacoCiclismo, picture:[
+        { image: activities.sumacoCiclismo },
+        { image: activities.sumacoCiclismoTwo },
+        { image: activities.sumacoCiclismoThree },
+      ] },
     ],
     desc: 'A un costado de la cordillera Oriental de los Andes, en la zona norte de nuestra Amazonía, existe una cadena montañosa antigua y relativamente aislada del resto de nevados, rodeada de quebradas y profundos cañones. Allí la agreste topografía y exuberante vegetación reciben todos los días la humedad que sube con la neblina nacida en la parte baja de la gran cuenca amazónica, antes de que continúe su viaje hacia las grandes montañas y nevados.\n\nSe trata de las laderas y cerros que rodean al Sumaco, el único volcán que se encuentra totalmente en territorio amazónico y que, junto a otros cerros de menor tamaño, está rodeado de bosques inconfundibles. Aquí se originan muchos riachuelos que aguas abajo forman los ríos Hollín, Suno, Payamino y Pucuno, afluentes todos del río Quijos o Coca.\n\nComo complemento se encuentra un pequeño ramal ubicado al sur del volcán Sumaco, la cordillera Napo Galeras (de allí el nombre de esta área protegida).'
     ,
@@ -564,7 +840,12 @@ const parks = [
         location: {
           latitude: -0.5011,
           longitude: -77.7381,
-        }
+        },
+        collection: [
+          trends.sumacoVolcanOne,
+          trends.sumacoVolcanTwo,
+          trends.sumacoVolcanThree,
+        ]
       },
       {
         name: 'Ríos torrentosos',
@@ -573,7 +854,12 @@ const parks = [
         location: {
           latitude: -0.2364,
           longitude: -77.6176,
-        }
+        },
+        collection: [
+          trends.sumacoRioOne,
+          trends.sumacoRioTwo,
+          trends.sumacoRioThree,
+        ]
       },
     ],
     logo: logos.sumaco
@@ -607,20 +893,37 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Fotografia", image: icons.camara, picture: activities.yasuniFotografia },
-      { name: "Senderismo", image: icons.senderismo, picture: activities.yasuniSenderismo },
-      { name: "Canotaje", image: icons.canotaje, picture: activities.yasuniCanotaje },
+      { name: "Fotografia", image: icons.camara, picture: activities.yasuniFotografia, picture:[
+        { image: activities.yasuniFotografia },
+        { image: activities.yasuniFotagrafiaTwo },
+        { image: activities.yasuniFotografiaThree },
+      ] },
+      { name: "Senderismo", image: icons.senderismo, picture: activities.yasuniSenderismo, picture:[
+        { image: activities.yasuniSenderismo},
+        { image: activities.yasuniSenderismoTwo },
+        { image: activities.yasuniSenderismoThree },
+      ] },
+      { name: "Canotaje", image: icons.canotaje, picture: activities.yasuniCanotaje, picture:[
+        { image: activities.yasuniCanotaje},
+        { image: activities.yasuniCanotajeTwo },
+        { image: activities.yasuniCanotajeThree },
+      ] },
     ],
     desc: 'Yasuní, el área protegida más grande del Ecuador continental, resguarda una impresionante biodiversidad en el corazón del bosque húmedo tropical amazónico y protege parte del territorio de la nacionalidad waorani. En el Yasuní se han reportado cifras de biodiversidad sorprendentes para varios grupos de flora y fauna, nunca antes registradas en área protegida alguna.\n\nAquí encontramos cientos de especies de árboles, anchos ríos que se desbordan con las lluvias torrenciales y grandes animales como el jaguar, la anaconda y el águila harpía.\n\nTambién hallamos seres muy pequeños, como el leoncillo o mono de bolsillo, el primate más pequeño del mundo, y una gran variedad de reptiles y anfibios que ubican a este parque entre los más biodiversos del mundo.\n\nEl lado humano del Yasuní está también lleno de sorpresas. Dentro del parque habitan los tagaeri y taromenane, Pueblos Indígenas en Aislamiento Voluntario. Para protegerlos a ellos y a la biodiversidad del Yasuní, secreó en 1999 la Zona Intangible Tagaeri-Taromenane. El Parque Nacional Yasuní, la Zona Intangible y el adyacente territorio waorani fueron declarados Reserva de la Biosfera por la UNESCO en 1989.',
     trend: [
       {
         name: 'Laguna y comunidad de Añangu',
         desc: 'La laguna es de aguas negras y tranquilas, lo que la hace parecer un espejo. Se localiza en la comunidad kichwa de Añangu, al norte del parque, y en la ribera del río Napo.\n\nEs posible navegar en canoa por la laguna, visitar el Centro de Interpretación Kuri Muyo y caminar por varios senderos que recorren el bosque tropical.',
-        image: trends.yasuniLaguna,
+        image: trends.yasuniComunidad,
         location: {
           latitude: -0.5139,
           longitude: -76.7207,
-        }
+        },
+        collection: [
+          trends.yasuniComunidadOne,
+          trends.yasuniComunidadTwo,
+          trends.yasuniComunidadThree
+        ]
       },
       {
         name: 'El bosque de tierra firme',
@@ -629,16 +932,26 @@ const parks = [
         location: {
           latitude: -0.7311,
           longitude: -76.6430,
-        }
+        },
+        collection: [
+          trends.yasuniBosqueOne,
+          trends.yasuniBosqueTwo,
+          trends.yasuniBosqueThree
+        ]
       },
       {
         name: 'Tambococha y laguna de Jatuncocha',
         desc: 'Estas dos lagunas se encuentran dentro del parque y se accede a ellas desde Nuevo Rocafuerte.',
-        image: trends.yasuniComunidad,
+        image: trends.yasuniLaguna,
         location: {
           latitude: -0.6275,
           longitude: -76.7049,
-        }
+        },
+        collection: [
+          trends.yasuniLagunaOne,
+          trends.yasuniLagunaTwo,
+          trends.yasuniLagunaThree
+        ]
       },
     ]
     , logo: logos.yasuni
@@ -676,10 +989,26 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Fotografia", image: icons.camara, picture: activities.yacuriFotografia },
-      { name: "Senderismo", image: icons.senderismo, picture: activities.yacuriSenderismo },
-      { name: "Ciclismo", image: icons.ciclismo, picture: activities.yacuriCiclismo },
-      { name: "Camping", image: icons.camping, picture: activities.yacuriCamping },
+      { name: "Fotografia", image: icons.camara, picture: activities.yacuriFotografia, picture:[
+        { image: activities.yacuriFotografia },
+        { image: activities.yacuriFotografiaTwo },
+        { image: activities.yacuriFotografiaThree },
+      ] },
+      { name: "Senderismo", image: icons.senderismo, picture: activities.yacuriSenderismo, picture:[
+        { image: activities.yacuriSenderismo },
+        { image: activities.yacuriSenderismoTwo },
+        { image: activities.yacuriSenderismoThree },
+      ] },
+      { name: "Ciclismo", image: icons.ciclismo, picture: activities.yacuriCiclismo, picture:[
+        { image: activities.yacuriCiclismo },
+        { image: activities.yacuriCiclismoTwo },
+        { image: activities.yacuriCiclismoThree}
+      ] },
+      { name: "Camping", image: icons.camping, picture: activities.yacuriCamping, picture:[
+        { image: activities.yacuriCamping },
+        { image: activities.yacuriCampingTwo },
+        { image: activities.yacuriCampingThree },
+      ] },
     ],
     desc: 'Los Andes en el sur del país presentan una cara muy diferente a los del norte y centro: contienen páramos que comienzan a menores altitudes y poseen características muy peculiares en su vegetación; de ahí la importancia de áreas protegidas como el Parque Nacional Yacuri.\n\nEste se encuentra al sureste de la población de Amaluza, entre las provincias de Loja y Zamora Chinchipe, en la frontera con Perú. Al norte de Yacuri se encuentra el Parque Nacional Podocarpus y al sur, en el Perú, el Santuario Nacional Tabaconas – Namballe, por lo que Yacuri es pieza clave para el corredor natural transfronterizo de los dos países.\n\nEl parque protege ambientes de páramos, bosques de neblina y matorrales secos de altura, que son el resultado de la confluencia de las condiciones del occidente seco y del oriente más húmedo. Yacuri es, además, parte de la Reserva de Biosfera Podocarpus – El Cóndor, un área de gran importancia para la conservación de la biodiversidad del sur del país.',
     trend: [
@@ -690,7 +1019,12 @@ const parks = [
         location: {
           latitude: -4.1257,
           longitude: -79.2025
-        }
+        },
+        collection: [
+          trends.yacuriBosqueOne,
+          trends.yacuriBosqueTwo,
+          trends.yacuriBosqueThree
+        ]
       },
       {
         name: 'Lagunas de Yacuri',
@@ -699,7 +1033,12 @@ const parks = [
         location: {
           latitude: -4.3060,
           longitude: -79.5500,
-        }
+        },
+        collection: [
+          trends.yacuriLagunaOne,
+          trends.yacuriLagunaTwo,
+          trends.yacuriLagunaThree
+        ]
       },
     ],
     logo: logos.yacuri
@@ -733,10 +1072,26 @@ const parks = [
       },
     ],
     icons: [
-      { name: "Ciclismo", image: icons.ciclismo, picture: activities.cotopaxiCiclismo },
-      { name: "Senderismo", image: icons.senderismo, picture: activities.cotopaxiSenderismo },
-      { name: "Fotografia", image: icons.camara, picture: activities.cotopaxiFotografia },
-      { name: "Camping", image: icons.camping, picture: activities.cotopaxiCamping },
+      { name: "Ciclismo", image: icons.ciclismo, picture: activities.cotopaxiCiclismo, picture:[
+        { image: activities.cotopaxiCiclismo },
+        { image: activities.cotopaxiCiclismoTwo },
+        { image: activities.cotopaxiCiclismoThree },
+      ] },
+      { name: "Senderismo", image: icons.senderismo, picture: activities.cotopaxiSenderismo, picture:[
+        { image: activities.cotopaxiSenderismo },
+        { image: activities.cotopaxiSenderismoTwo },
+        { image: activities.cotopaxiSenderismoThree },
+      ] },
+      { name: "Fotografia", image: icons.camara, picture: activities.cotopaxiFotografia, picture:[
+        { image: activities.cotopaxiFotografia },
+        { image: activities.cotopaxiFotografiaTwo },
+        { image: activities.cotopaxiFotografiaThree },
+      ] },
+      { name: "Camping", image: icons.camping, picture: activities.cotopaxiCamping, picture:[
+        { image: activities.cotopaxiCamping },
+        { image: activities.cotopaxiCampingTwo },
+        { image: activities.cotopaxiCampingThree },
+      ] },
     ],
     desc: 'El volcán Cotopaxi, un cono nevado casi perfecto que se yergue a 5.897 metros de altitud es algo único en el planeta y es quizá, junto a Galápagos, el mayor símbolo de nuestra geografía natural reconocida en el mundo entero.\n\nMillares de montañistas de todas las nacionalidades han logrado su cumbre y otros tantos sueñan con hacerlo. Debido a que se encuentra en el centro del callejón interandino y muy cercano a varias ciudades como Quito y Latacunga, el Parque Nacional Cotopaxi es uno de los más visitados y seguramente donde muchas personas tocan por primera vez la nieve.\n\nEl imponente Cotopaxi, uno de los volcanes activos más altos del mundo, domina todo el paisaje del área protegida, que también incluye otros dos más pequeños, el Morurco (4.880 m), pegado al Cotopaxi, y el Rumiñahui (4.722 m), también muy cercano. El Cotopaxi se encuentra en la zona denominada “Avenida de los Volcanes”, nombre que el naturalista alemán Alexander von Humboldt en 1802 dio al conjunto de volcanes de la Sierra centro y norte del Ecuador. El ecosistema predominante en el parque es el páramo, con su flora y fauna especiales, por lo que la vegetación principal es de pajonal y pequeños arbustos de altura.',
     trend: [
@@ -747,7 +1102,12 @@ const parks = [
         location: {
           latitude: -0.6833,
           longitude: -78.4375,
-        }
+        },
+        collection: [
+          trends.cotopaxiVolcanOne,
+          trends.cotopaxiVolcanTwo,
+          trends.cotopaxiVolcanThree
+        ]
       },
       {
         name: 'Valle Encantado y Cañón del Río Pita',
@@ -756,7 +1116,12 @@ const parks = [
         location: {
           latitude: -0.6393,
           longitude: -78.4071,
-        }
+        },
+        collection: [
+          trends.cotopaxiRioOne,
+          trends.cotopaxiRioTwo,
+          trends.cotopaxiRioThree
+        ]
       },
     ]
     , logo: logos.cotopaxi
