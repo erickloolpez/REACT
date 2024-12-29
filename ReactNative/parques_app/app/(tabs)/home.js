@@ -15,7 +15,7 @@ import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Home = () => {
   const { width, height } = Dimensions.get('window')
-  const _slideWidth = width * 0.58
+  const _slideWidth = width * 0.70
   const _slideHeight = height * 0.54
   const _spacing = 18
 
@@ -91,7 +91,7 @@ const Home = () => {
           }
         </View>
 
-        <View className="w-full h-[68%]">
+        <View className="w-full h-[68%] ">
           <Animated.FlatList
             data={parks.slice(0, visibleParks)}
             keyExtractor={(park) => park.name}
