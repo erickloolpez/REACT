@@ -5,15 +5,25 @@ import { router } from 'expo-router'
 import { useState } from 'react'
 
 
-import { images, trends } from '../../constants'
+import { images, parks, trends } from '../../constants'
 import SearchInput from '../../components/SearchInput'
 import { faAngleRight, faFireFlameCurved } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { LinearGradient } from 'expo-linear-gradient'
+import useAppwrite from '../../lib/useAppwrite'
+import { getTopFiveParks } from '../../lib/appwrite'
 
 
 const Search = () => {
   const widthLength = '100%'
+
+  const { data: favoriteParks } = useAppwrite(getTopFiveParks)
+
+  // const topFiveParks = favoriteParks.map((park) => parks.find((p) => p.nombre === park.nombre))
+  const topFiveParks = favoriteParks
+    .slice(0, 5) // Solo los primeros cinco favoritos
+    .map((park) => parks.find((p) => p.name === park.nombre))
+    .filter(Boolean);
 
   const [openSearch, setOpenSearch] = useState(0)
 
@@ -54,7 +64,10 @@ const Search = () => {
           <TouchableOpacity
             className="w-full h-[30vh] px-1 mt-2"
             onPress={() => {
-              router.push(`/search/Parks`)
+              router.push({
+                pathname: `/search/Parks`,
+                params: { topFiveParks: JSON.stringify(topFiveParks) }
+              })
             }}
           >
             <View className="w-full h-[20%] flex-row items-center justify-between">
@@ -86,7 +99,10 @@ const Search = () => {
 
           <TouchableOpacity
             onPress={() => {
-              router.push(`/search/Popular`)
+              router.push({
+                pathname: `/search/Popular`,
+                params: { topFiveParks: JSON.stringify(topFiveParks) }
+              })
             }}
             className="w-full h-[48vh] mt-4"
           >
@@ -121,7 +137,10 @@ const Search = () => {
             </View>
             <TouchableOpacity
               onPress={() => {
-                router.push(`/search/Attractives`)
+                router.push({
+                  pathname: `/search/Attractives`,
+                  params: { topFiveParks: JSON.stringify(topFiveParks) }
+                })
               }}
               className="w-full h-[80%] flex-row rounded-xl overflow-hidden"
             >

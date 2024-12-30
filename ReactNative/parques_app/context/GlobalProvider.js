@@ -15,6 +15,7 @@ const GlobalProvider = ({ children }) => {
     const [isPlayable, setIsPlayable] = useState(true)
     const [score, setScore] = useState(120)
 
+
     useEffect(() => {
         getCurrentUser()
             .then((res) => {

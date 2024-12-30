@@ -11,7 +11,16 @@ import Nav from '../../components/search/nav';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const SearchValue = () => {
-    const { query } = useLocalSearchParams();
+    const { query, topFiveParks } = useLocalSearchParams();
+
+    let parsedTopFiveParks = [];
+    try {
+        parsedTopFiveParks = topFiveParks ? JSON.parse(topFiveParks) : [];
+    } catch (error) {
+        console.error("Failed to parse topFiveParks:", error);
+        parsedTopFiveParks = []; // Usa un valor predeterminado seguro
+    }
+
     const [data, setData] = useState([]);
     const [newQuery, setNewQuery] = useState('')
 
@@ -23,7 +32,7 @@ const SearchValue = () => {
         } else if (query === "Attractives") {
             setData(attractives);
         } else if (query === "Popular") {
-            const results = attractives.slice(0, 10)
+            const results = parsedTopFiveParks
             setData(results)
         } else {
             const results = parks.filter((park) => park.name.toLowerCase().includes(query.toLowerCase()))
@@ -61,33 +70,38 @@ const SearchValue = () => {
                         data={data}
                         keyExtractor={(item) => item.name}
                         numColumns={2} // Puedes ajustar este valor según el diseño
-                        renderItem={({ item }) => (
-                            <TouchableOpacity
-                                onPress={() => {
-                                    if (query === "Parks") {
-                                        router.push(`/modals/${item.name}`)
+                        renderItem={({ item,i }) => {
+                            let heightValue = i % 2 === 0 ? 0.68 : 0.88
+                            return (
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        if (query === "Parks") {
+                                            router.push(`/modals/${item.name}`)
 
-                                    } else {
-                                        let parkTrend = parks.find((park) =>
-                                            park.trend.some((trend) => trend.name === item.name)
-                                        );
+                                        } else {
+                                            let parkTrend = parks.find((park) =>
+                                                park.trend.some((trend) => trend.name === item.name)
+                                            );
 
-                                        router.push({
-                                            pathname: `/attractive/${item.desc}`,
-                                            params: { modalPark: true, trend: JSON.stringify(item), park: JSON.stringify(parkTrend) }
-                                        })
-                                    }
-                                }}
-                                style={{ width: '100%', margin: 5, overflow: 'hidden' }}
-                            >
-                                <Image
-                                    source={item.image}
-                                    resizeMode="cover"
-                                    style={{ width: '96%', height: Math.random() * 150 + 100, borderRadius: 10 }} // Altura aleatoria para diseño estilo Pinterest
-                                />
-                                <Text className="text-white font-semibold">{item.name}</Text>
-                            </TouchableOpacity>
-                        )}
+                                            router.push({
+                                                pathname: `/attractive/${item.desc}`,
+                                                params: { modalPark: true, trend: JSON.stringify(item), park: JSON.stringify(parkTrend) }
+                                            })
+                                        }
+                                    }}
+                                    style={{ width: '100%', margin: 5, overflow: 'hidden' }}
+                                >
+                                    <Image
+                                        source={item.image}
+                                        resizeMode="cover"
+                                        // style={{ width: '96%', height: Math.random() * 150 + 100, borderRadius: 10 }} // Altura aleatoria para diseño estilo Pinterest
+                                        style={{ width: '96%', height: heightValue * 150 + 100, borderRadius: 10 }} // Altura aleatoria para diseño estilo Pinterest
+                                    />
+                                    <Text className="text-white font-semibold">{item.name}</Text>
+                                </TouchableOpacity>
+
+                            )
+                        }}
                     />
                 ) : (
                     <EmptyState

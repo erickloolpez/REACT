@@ -180,6 +180,33 @@ export const getAllReviewsByPark = async (parkId) => {
     }
 }
 
+export const getTopFiveParks = async () => {
+    try {
+        const favoriteParks = []
+
+        const parksDB = await getAllParks()
+        for (let park of parksDB) {
+            let sum = 0
+            const reviews = await getAllReviewsByPark(park.$id)
+            if (reviews.length > 0) {
+                reviews.forEach((review) => {
+                    sum += review.rating
+                })
+                let result = sum / reviews.length
+                let roundedValue = Math.round(result)
+
+                if (roundedValue >= 4) {
+                    favoriteParks.push(park)
+                }
+            }
+        }
+
+        return favoriteParks
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 export const getAllReviewsByUser = async (userId) => {
     try {
         const reviews = await databases.listDocuments(

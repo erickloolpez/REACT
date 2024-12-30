@@ -7,7 +7,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 
-const SearchInput = ({animation, animatedStyle, setOpenSearch, openSearch}) => {
+const SearchInput = ({ animation, animatedStyle, setOpenSearch, openSearch }) => {
     const pathname = usePathname()
     const [query, setQuery] = useState('')
 

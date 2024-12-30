@@ -50,16 +50,6 @@ const TabLayout = () => {
                     }}
                 />
                 <Tabs.Screen
-                    name="game"
-                    options={{
-                        title: 'Game',
-                        headerShown: false,
-                        tabBarIcon: ({ color, focused }) => (
-                            <TabIcon icon={faTrophy} name={'Prizes'} color={color} />
-                        )
-                    }}
-                />
-                <Tabs.Screen
                     name="search"
                     options={{
                         title: 'Search',

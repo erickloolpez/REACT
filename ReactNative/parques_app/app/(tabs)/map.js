@@ -1,12 +1,11 @@
-import { View, Text, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Pressable } from 'react-native'
-import React, { useState, useMemo, useRef, useCallback } from 'react'
+import { View, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Pressable } from 'react-native'
+import React, { useState, useMemo, useRef, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MapView, { Marker } from 'react-native-maps';
 import { router } from 'expo-router'
 import { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import BottomSheet, { BottomSheetFlatList, BottomSheetView } from '@gorhom/bottom-sheet'
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet'
 
-import { useGlobalContext } from '../../context/GlobalProvider';
 import { parks } from '../../constants/dummy';
 import FilterOptions from '../../components/map/filterOptions';
 import SearchInput from '../../components/map/searchInput';
@@ -15,12 +14,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import ButtonSheet from '../../components/map/buttonSheet';
 
 const Map = () => {
-    const { userLocation } = useGlobalContext();
     const [parkSelected, setParkSelected] = useState(null)
+
+    useEffect(()=>{
+        setParkSelected(parks[0])
+    },[])
 
     const [filteredParks, setFilteredParks] = useState(parks)
 
-    const [isHorizontal, setIsHorizontal] = useState(true)
     const sheetRef = useRef(null)
 
     const snapPoints = useMemo(() => ['5%', '35%'])
@@ -112,8 +113,8 @@ const Map = () => {
                     >
                         <BottomSheetView style={{ alignItems: 'center', marginTop: 12 }}>
                             {parkSelected && (
-                                <Pressable 
-                                onPress={()=>router.push(`/modals/${parkSelected.name}`)}
+                                <Pressable
+                                    onPress={() => router.push(`/modals/${parkSelected.name}`)}
                                 >
                                     <ButtonSheet
                                         park={parkSelected}
