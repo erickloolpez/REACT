@@ -9,17 +9,13 @@ import EmptyState from '../../components/EmptyState';
 import { parks } from '../../constants';
 import Nav from '../../components/search/nav';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const SearchValue = () => {
-    const { query, topFiveParks } = useLocalSearchParams();
+    const { query } = useLocalSearchParams();
+    const { topFiveParks } = useGlobalContext()
 
-    let parsedTopFiveParks = [];
-    try {
-        parsedTopFiveParks = topFiveParks ? JSON.parse(topFiveParks) : [];
-    } catch (error) {
-        console.error("Failed to parse topFiveParks:", error);
-        parsedTopFiveParks = []; // Usa un valor predeterminado seguro
-    }
+    let parsedTopFiveParks = topFiveParks ? topFiveParks : [];
 
     const [data, setData] = useState([]);
     const [newQuery, setNewQuery] = useState('')
@@ -43,39 +39,48 @@ const SearchValue = () => {
     return (
         <LinearGradient className="w-full h-full" colors={['#5A3F37', '#2C7744']}>
             <SafeAreaView edges={['top']} className="h-full">
-                <View className="w-full h-[8vh] flex-row justify-around items-center ">
+                <View className="w-full h-[8vh] flex-row justify-end items-center relative ">
                     <Pressable
                         onPress={() => router.back()}
+                        className="absolute left-4"
                     >
                         <FontAwesomeIcon icon={faAngleLeft} color='white' size={32} />
                     </Pressable>
-                    <TextInput
-                        className="w-[84%] h-10 bg-white rounded-full px-4"
-                        value={newQuery}
-                        placeholder={'Busca tu parque favorito.'}
-                        placeholderTextColor="#CF613C"
-                        onChangeText={(e) => setNewQuery(e)}
-                        // returnKeyType='intro'
-                        onSubmitEditing={() => {
-                            const results = parks.filter((park) => park.name.toLowerCase().includes(newQuery.toLowerCase()))
-                            setData(results)
-                        }}
-                    />
+                    {
+                        query !== "Popular" &&<TextInput
+                            className="w-[84%] h-10 bg-white rounded-full px-4 mr-2"
+                            value={newQuery}
+                            placeholder={'Busca tu parque favorito.'}
+                            placeholderTextColor="#CF613C"
+                            onChangeText={(e) => setNewQuery(e)}
+                            // returnKeyType='intro'
+                            onSubmitEditing={() => {
+                                let listOfParks = query === "Attractives" ? attractives : parks;
+                                const results = listOfParks.filter((park) => park.name.toLowerCase().includes(newQuery.toLowerCase()))
+                                setData(results)
+                            }}
+                        />
+
+                    }
                 </View>
 
-                <Nav setData={setData} />
+                {
+                    query !== "Attractives" && (
+                        <Nav query={query} setData={setData} />
+                    )
+                }
 
                 {data.length > 0 ? (
                     <MasonryList
                         data={data}
                         keyExtractor={(item) => item.name}
                         numColumns={2} // Puedes ajustar este valor según el diseño
-                        renderItem={({ item,i }) => {
+                        renderItem={({ item, i }) => {
                             let heightValue = i % 2 === 0 ? 0.68 : 0.88
                             return (
                                 <TouchableOpacity
                                     onPress={() => {
-                                        if (query === "Parks") {
+                                        if (query === "Parks" || query === "Popular") {
                                             router.push(`/modals/${item.name}`)
 
                                         } else {

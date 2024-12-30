@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { getCurrentUser } from '../lib/appwrite'
+import { getCurrentUser, getTopFiveParks } from '../lib/appwrite'
+import useAppwrite from '../lib/useAppwrite'
+import { parks } from '../constants'
 
 const GlobalContext = createContext()
 
@@ -14,7 +16,17 @@ const GlobalProvider = ({ children }) => {
 
     const [isPlayable, setIsPlayable] = useState(true)
     const [score, setScore] = useState(120)
+    const [topFiveParks, setTopFiveParks] = useState([])
 
+    useEffect(() => {
+        getTopFiveParks()
+            .then((res) => {
+                setTopFiveParks(res
+                    .slice(0, 5) // Solo los primeros cinco favoritos
+                    .map((park) => parks.find((p) => p.name === park.nombre))
+                    .filter(Boolean))
+            })
+    }, [])
 
     useEffect(() => {
         getCurrentUser()
@@ -48,7 +60,8 @@ const GlobalProvider = ({ children }) => {
             isPlayable,
             setIsPlayable,
             score,
-            setScore
+            setScore,
+            topFiveParks
         }}>
             {children}
         </GlobalContext.Provider>

@@ -17,14 +17,6 @@ import { getTopFiveParks } from '../../lib/appwrite'
 const Search = () => {
   const widthLength = '100%'
 
-  const { data: favoriteParks } = useAppwrite(getTopFiveParks)
-
-  // const topFiveParks = favoriteParks.map((park) => parks.find((p) => p.nombre === park.nombre))
-  const topFiveParks = favoriteParks
-    .slice(0, 5) // Solo los primeros cinco favoritos
-    .map((park) => parks.find((p) => p.name === park.nombre))
-    .filter(Boolean);
-
   const [openSearch, setOpenSearch] = useState(0)
 
   const animation = useSharedValue(0)
@@ -64,10 +56,7 @@ const Search = () => {
           <TouchableOpacity
             className="w-full h-[30vh] px-1 mt-2"
             onPress={() => {
-              router.push({
-                pathname: `/search/Parks`,
-                params: { topFiveParks: JSON.stringify(topFiveParks) }
-              })
+              router.push(`/search/Parks`)
             }}
           >
             <View className="w-full h-[20%] flex-row items-center justify-between">
@@ -99,17 +88,14 @@ const Search = () => {
 
           <TouchableOpacity
             onPress={() => {
-              router.push({
-                pathname: `/search/Popular`,
-                params: { topFiveParks: JSON.stringify(topFiveParks) }
-              })
+              router.push(`/search/Popular`)
             }}
             className="w-full h-[48vh] mt-4"
           >
             <View className="flex-row items-center h-[10%] justify-between px-1 ">
               <View className="flex-row items-center">
                 <FontAwesomeIcon icon={faFireFlameCurved} color='#f97313' size={28} />
-                <Text className="text-white text-xl font-semibold ml-1">Atractivos Populares</Text>
+                <Text className="text-white text-xl font-semibold ml-1">Parques Populares</Text>
               </View>
               <FontAwesomeIcon icon={faAngleRight} color='white' size={28} />
             </View>
@@ -137,10 +123,7 @@ const Search = () => {
             </View>
             <TouchableOpacity
               onPress={() => {
-                router.push({
-                  pathname: `/search/Attractives`,
-                  params: { topFiveParks: JSON.stringify(topFiveParks) }
-                })
+                router.push(`/search/Attractives`)
               }}
               className="w-full h-[80%] flex-row rounded-xl overflow-hidden"
             >

@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, ScrollView, Touchable } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView, Touchable, Pressable } from 'react-native'
 import { useState } from 'react'
 import { useLocalSearchParams, router } from 'expo-router'
 import MapView, { Marker, Polyline, Polygon } from 'react-native-maps';
@@ -20,6 +20,7 @@ const InfoAttractive = () => {
     });
 
     const parsedTrend = JSON.parse(trend)
+    const parsedPark = JSON.parse(park)
 
     return (
         <ScrollView contentContainerStyle={{ backgroundColor: "#FBEECC" }} showsVerticalScrollIndicator={false}>
@@ -59,28 +60,48 @@ const InfoAttractive = () => {
                     <TouchableOpacity onPress={() => setSection('Fotos')}>
                         <Text className={`text-lg text-white ${section === 'Fotos' ? 'font-bold' : ''}`}>Fotos</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setSection('Ubicacion')}>
-                        <Text className={`text-lg text-white ${section === 'Ubicacion' ? 'font-bold' : ''}`}>Ubicacion</Text>
+                    <TouchableOpacity onPress={() => setSection('Parque')}>
+                        <Text className={`text-lg text-white ${section === 'Ubicacion' ? 'font-bold' : ''}`}>Parque</Text>
                     </TouchableOpacity>
                 </View>
 
                 <View className="w-full h-[50vh] items-center ">
                     {
-                        section === 'Ubicacion' && (
-                            <View className="w-48 h-48 rounded-full overflow-hidden mt-8">
-                                <MapView
-                                    className="w-full h-full"
-                                    initialRegion={{
-                                        latitude: -0.209028110783209,
-                                        longitude: -78.49107901848447,
-                                        latitudeDelta: 0.1,
-                                        longitudeDelta: 15.0,
+                        section === 'Parque' && (
+                            <View className="w-full h-[90%] flex-row mt-4 justify-around items-center ">
+                                <View className="w-[45%] h-[75%] bg-green-400 overflow-hidden rounded-2xl">
+                                    <Image source={parsedPark.image} resizeMode="cover" className="w-full h-full" />
+                                </View>
+                                <View
+                                    className="w-1/2 h-[75%] items-center rounded-2xl bg-[#283c86] px-2"
+                                    style={{
+                                        justifyContent: modalPark === "true" ? 'space-around' : 'center',
+
                                     }}
                                 >
-                                    <Marker coordinate={parsedTrend.location} title={parsedTrend.name} />
-                                    {/* {userLocation && <Marker coordinate={userLocation} title={'Tú'} />} */}
-                                </MapView>
+                                    <View style={{marginBottom: modalPark === "true" ? 0 : 8}}>
+                                        <Text className="text-white text-lg font-psemibold uppercase">{parsedPark.name}</Text>
+                                    </View>
+                                    <View>
+                                        <Text numberOfLines={8} className="text-primary">
+                                            {parsedPark.desc.slice(0, 200)}
+                                        </Text>
+                                    </View>
+                                    {
+                                        modalPark === "true" && (
+                                            <Pressable
+                                                className="w-32 h-10 items-center justify-center rounded-full bg-red-400"
+                                                onPress={() => {
+                                                    router.replace(`/modals/${parsedPark.name}`)
+                                                }}
 
+                                            >
+                                                <Text className="text-white font-psemibold">Ver parque</Text>
+                                            </Pressable>
+
+                                        )
+                                    }
+                                </View>
 
                             </View>
                         )

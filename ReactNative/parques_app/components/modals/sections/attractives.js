@@ -16,7 +16,7 @@ const Attractives = ({ attractives, park }) => {
                             onPress={() => {
                                 router.push({
                                     pathname: `/attractive/${item.desc}`,
-                                    params: { modalPark: true, trend: JSON.stringify(item), park: JSON.stringify(park) }
+                                    params: { modalPark: false, trend: JSON.stringify(item), park: JSON.stringify(park) }
                                 })
                             }}
                             style={{ width: '100%', margin: 5, overflow: 'hidden' }}

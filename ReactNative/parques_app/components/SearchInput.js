@@ -25,6 +25,10 @@ const SearchInput = ({ animation, animatedStyle, setOpenSearch, openSearch }) =>
                         return Alert.alert('Valor Faltante', "Por favor ingresa algo para buscarlo en la base de datos.")
                     }
 
+                    animation.value = 0
+                    setOpenSearch(0)
+                    setQuery('')
+
                     router.push(`/search/${query}`)
                 }}
             />

@@ -1,10 +1,11 @@
 import { View, Text, Pressable } from 'react-native'
 import { faBicycle, faCamera, faCampground, faPersonHiking, faPersonSwimming, faSailboat } from '@fortawesome/free-solid-svg-icons';
 import { MotiView } from 'moti';
-import Animated, { FadeInDown, FadeOutUp, LinearTransition } from 'react-native-reanimated'
+import Animated, { FadeInDown, FadeInLeft, FadeOutRight, FadeOutUp, LinearTransition } from 'react-native-reanimated'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { parks } from '../../constants';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 
 const options = [faCamera, faPersonSwimming, faCampground, faBicycle, faSailboat, faPersonHiking]
@@ -14,7 +15,8 @@ function Icon({ index }) {
     return <FontAwesomeIcon icon={activity} color='white' size={32} />
 }
 
-const Nav = ({setData}) => {
+const Nav = ({ setData, query }) => {
+    const { topFiveParks } = useGlobalContext()
     const parksID = ['Fotografia', 'Buceo', 'Camping', 'Ciclismo', 'Canotaje', 'Senderismo']
     const [selectedIndex, setSelectedIndex] = useState(null)
     const activeColor = "#fff"
@@ -39,11 +41,18 @@ const Nav = ({setData}) => {
                             }}
                         >
                             <Pressable onPress={() => {
-                                selectedIndex !== index ? setSelectedIndex(index) : setSelectedIndex(null)
-                                let filterPark = parks.filter((park) =>
-                                    park.icons.some((activity) => activity.name === parksID[index])
-                                );
-                                setData(filterPark)
+                                if (selectedIndex === index) {
+                                    setSelectedIndex(null);
+                                    let listOfParks = query === "Popular" ? topFiveParks : parks;
+                                    setData(listOfParks); // Restablecer los datos a `parks`
+                                } else {
+                                    setSelectedIndex(index);
+                                    let listOfParks = query === "Popular" ? topFiveParks : parks;
+                                    let filterPark = listOfParks.filter((park) =>
+                                        park.icons.some((activity) => activity.name === parksID[index])
+                                    );
+                                    setData(filterPark);
+                                }
                             }
 
                             } style={{
@@ -58,8 +67,8 @@ const Nav = ({setData}) => {
                                     isSelected &&
                                     <Animated.Text
                                         className=" justify-center p-2"
-                                        entering={FadeInDown.springify().damping(80).stiffness(200)}
-                                        exiting={FadeOutUp.springify().damping(80).stiffness(200)}
+                                        entering={FadeInLeft.springify().damping(80).stiffness(200)}
+                                        exiting={FadeOutRight.springify().damping(80).stiffness(200)}
                                     >
                                         <Text style={{ color: isSelected ? activeColor : inactiveColor }}>{park}</Text>
                                     </Animated.Text>

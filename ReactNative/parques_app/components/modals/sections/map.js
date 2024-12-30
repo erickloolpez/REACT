@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useState } from 'react';
 import MapView, { Marker, Polyline, Polygon } from 'react-native-maps';
 import { Video, ResizeMode } from 'expo-av'
@@ -25,15 +25,29 @@ const Map = ({ place }) => {
                         _height = 100
                     }
                     return (
-                        <View key={`route-${option.name}`} className="w-full  flex-row" style={{ height: _height }}>
-                            <View className="w-[25%] h-full items-center justify-center  relative border-r-2">
-                                <Text className="text-lg text-primary font-semibold">{option.name}</Text>
-                                <View className="w-4 h-4 rounded-full absolute bg-terciary top-0 right-[-8px] z-10" />
+                        <ScrollView
+                            key={`route-${option.name}`}
+                        >
+                            <View className="w-full h-full flex-row ">
+                                <View className="w-[25%] h-full items-center justify-center relative border-r-2 ">
+                                    <Text className="text-lg text-primary font-semibold">{option.name}</Text>
+                                    <View className="w-4 h-4 rounded-full absolute bg-terciary top-0 right-[-8px] z-10" />
+                                </View>
+                                <View className="w-[75%] h-full p-2 items-center justify-center">
+                                    <Text className="text-primary">{option.order}</Text>
+                                </View>
+
                             </View>
-                            <View className="w-[75%] h-full  p-2 items-center justify-center">
-                                <Text className="text-primary">{option.order}</Text>
-                            </View>
-                        </View>
+                        </ScrollView>
+                        // <View key={`route-${option.name}`} className="w-full  flex-row overflow-scroll" style={{ height: 200 }}>
+                        //     <View className="w-[25%] h-full items-center justify-center  relative border-r-2">
+                        //         <Text className="text-lg text-primary font-semibold">{option.name}</Text>
+                        //         <View className="w-4 h-4 rounded-full absolute bg-terciary top-0 right-[-8px] z-10" />
+                        //     </View>
+                        //     <View className="w-[75%] h-full  p-2 items-center justify-center">
+                        //         <Text className="text-primary">{option.order}</Text>
+                        //     </View>
+                        // </View>
 
                     )
                 })
