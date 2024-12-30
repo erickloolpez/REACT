@@ -47,7 +47,7 @@ const Feedback = ({ name, park }) => {
                     data={reviews}
                     keyExtractor={(comment, index) => comment.$id}
                     renderItem={({ item: comment, index }) => (
-                        <Review key={`comment-${index}-${comment.users.username}`} width={_slideWidth} height={144} text={comment.text} name={comment.users.username} rating={comment.rating} date={comment.$updatedAt} />
+                        <Review key={`comment-${index}-${comment.users.username}`} width={_slideWidth} height={144} text={comment.text} name={comment.users.username} rating={comment.rating} date={comment.$updatedAt} avatar={comment.users.avatar} />
                     )}
                     horizontal
                     showsHorizontalScrollIndicator={false}

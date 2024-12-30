@@ -121,33 +121,31 @@ const Profile = () => {
               </View>
             </Pressable>
 
-            <View className="w-full h-[60%] items-center justify-center">
+            <View className="w-full h-[60%] items-center justify-center ">
               <View className="w-28 h-28  rounded-full overflow-hidden ">
-                <Image source={images.avatar} resizeMode="cover" className="w-full h-full" />
+                <Image source={{ uri: user.avatar }} resizeMode="cover" className="w-full h-full" />
               </View>
 
-              <View className="items-center">
-                <View className="h-10 rounded-lg items-center justify-center">
-                  <Text className="text-white font-semibold text-xl">Monica Perez</Text>
-                </View>
+              <View className="h-10 rounded-lg items-center justify-center mt-4">
+                <Text className="text-white font-semibold text-2xl">{user.username}</Text>
+              </View>
 
-                <View className="">
+              {/* <View className="">
                   <CountryFlag isoCode="de" size={25} />
-                </View>
-              </View>
+                </View> */}
             </View>
 
             <View className="w-[90%] h-[23%] flex-row items-center bg-primary rounded-xl">
-              <View className="w-[33.3%] h-full  items-center justify-center ">
+              {/* <View className="w-[33.3%] h-full  items-center justify-center ">
                 <FontAwesomeIcon icon={faGem} color='#93c5fd' size={32} />
                 <Text className="ml-2 text-[#925131] font-bold ">{score.puntaje} puntos</Text>
-              </View>
-              <View className="w-[33.3%] h-full  items-center justify-center ">
+              </View> */}
+              <View className="w-1/2 h-full  items-center justify-center ">
                 {/* <FontAwesomeIcon icon={faHeart} color='#f97316' size={32} /> */}
                 <Text className="ml-2 text-[#925131] font-bold text-2xl">{favorites.length}</Text>
                 <Text className="ml-2 text-[#925131] font-bold">favoritos</Text>
               </View>
-              <View className="w-[33.3%] h-full  items-center justify-center ">
+              <View className="w-1/2 h-full  items-center justify-center ">
                 {/* <FontAwesomeIcon icon={faComments} color='#232533' size={32} /> */}
                 <Text className="ml-2 text-[#925131] font-bold text-2xl">{reviews.length}</Text>
                 <Text className="ml-2 text-[#925131] font-bold">reseñas</Text>
@@ -163,58 +161,95 @@ const Profile = () => {
 
             {
               index === 0 && (
-                <View className="w-full mt-3 ">
-                  <MasonryList
-                    data={yourFavorites}
-                    keyExtractor={(item) => item.name}
-                    numColumns={4} // Puedes ajustar este valor según el diseño
-                    renderItem={({ item, i }) => (
-                      <TouchableOpacity
-                        onPress={() => {
-                          router.push(`/modals/${item.name}`)
-                        }}
-                        style={{ width: '100%', margin: 5, overflow: 'hidden' }}
-                      >
-                        <Image
-                          source={item.image}
-                          resizeMode="cover"
-                          style={{ width: '96%', height: 0.6 * 150 + 100, borderRadius: 10 }} // Altura aleatoria para diseño estilo Pinterest
-                        />
-                        <Text className="text-white font-semibold">{item.name}</Text>
-                      </TouchableOpacity>
-                    )}
-                  />
+                yourFavorites.length !== 0 ? (
+                  <View className="w-full mt-3 ">
+                    <MasonryList
+                      data={yourFavorites}
+                      keyExtractor={(item) => item.name}
+                      numColumns={3} // Puedes ajustar este valor según el diseño
+                      renderItem={({ item, i }) => {
+                        return (
+                          <TouchableOpacity
+                            onPress={() => {
+                              router.push(`/modals/${item.name}`)
+                            }}
+                            style={{ width: '100%', margin: 5, overflow: 'hidden' }}
+                          >
+                            <Image
+                              source={item.image}
+                              resizeMode="cover"
+                              style={{ width: '96%', height: 0.6 * 150 + 100, borderRadius: 10 }} // Altura aleatoria para diseño estilo Pinterest
+                            />
+                            <Text className="text-white font-semibold">{item.name}</Text>
+                          </TouchableOpacity>
 
-                </View>
+                        )
+                      }}
+                    />
+
+                  </View>
+                ) : (
+                  <View className="w-full h-[25vh] relative  items-end justify-center">
+                    <View className="w-[60%] h-44">
+                      <Image source={images.addFavorite} resizeMode="cover" className="w-full h-full" />
+                    </View>
+                    <Pressable
+                      className="absolute top-8 left-2 w-40 bg-blue-200 rounded-t-2xl rounded-bl-2xl p-2"
+                      onPress={() => {
+                        router.replace('/home')
+                      }}
+                    >
+                      <Text>Busca tu parques favoritos en el home</Text>
+                    </Pressable>
+                  </View>
+                )
+
               )
             }
             {
               index !== 0 && (
-                <View className="items-center pt-4">
-                  <FlatList
-                    data={reviews}
-                    keyExtractor={(comment, index) => comment.$id}
-                    renderItem={({ item: comment, index }) => (
-                      <Pressable onPress={()=>{
-                        setReviewSelected(comment)
-                        handlePresentModalPress()
-                      }}>
-                        <Review key={`comment-${index}-${comment.users.username}`} width={_slideWidth} height={144} text={comment.text} name={comment.users.username} rating={comment.rating} date={comment.$updatedAt} />
-                      </Pressable>
-                    )}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    decelerationRate={"fast"}
-                    snapToInterval={_slideWidth + _spacing}
-                    contentContainerStyle={{
-                      gap: _spacing,
-                      paddingHorizontal: (width - _slideWidth) / 2,
-                      alignItems: "center",
-                    }}
+                reviews.length !== 0 ? (
+                  <View className="items-center pt-4">
+                    <FlatList
+                      data={reviews}
+                      keyExtractor={(comment, index) => comment.$id}
+                      renderItem={({ item: comment, index }) => (
+                        <Pressable onPress={() => {
+                          setReviewSelected(comment)
+                          handlePresentModalPress()
+                        }}>
+                          <Review key={`comment-${index}-${comment.users.username}`} width={_slideWidth} height={144} text={comment.text} name={comment.users.username} rating={comment.rating} date={comment.$updatedAt} avatar={comment.users.avatar} />
+                        </Pressable>
+                      )}
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      decelerationRate={"fast"}
+                      snapToInterval={_slideWidth + _spacing}
+                      contentContainerStyle={{
+                        gap: _spacing,
+                        paddingHorizontal: (width - _slideWidth) / 2,
+                        alignItems: "center",
+                      }}
 
-                    scrollEventThrottle={100 / 60}
-                  />
-                </View>
+                      scrollEventThrottle={100 / 60}
+                    />
+                  </View>
+
+                ) : (
+                  <View className="w-full h-[25vh] relative items-start justify-center">
+                    <View className="w-[60%] h-44 mt-8">
+                      <Image source={images.addReviews} resizeMode="contain" className="w-full h-full" />
+                    </View>
+                    <Pressable
+                      className="absolute top-8 right-8 w-40 bg-blue-200 rounded-t-2xl rounded-br-2xl p-2"
+                      onPress={() => {
+                        router.replace('/home')
+                      }}
+                    >
+                      <Text>Escribe una reseña en el parque que visitaste</Text>
+                    </Pressable>
+                  </View>
+                )
               )
             }
           </View>

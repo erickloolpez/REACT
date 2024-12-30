@@ -80,7 +80,7 @@ const SearchValue = () => {
                             return (
                                 <TouchableOpacity
                                     onPress={() => {
-                                        if (query === "Parks" || query === "Popular") {
+                                        if (query === "Parks" || query === "Popular" || query !== "Attractives") {
                                             router.push(`/modals/${item.name}`)
 
                                         } else {

@@ -23,5 +23,8 @@ import path from '../assets/images/path.png'
 import ruins from '../assets/images/Ruins 1.png'
 import dots from '../assets/images/dots.png'
 import background from '../assets/images/background.png'
+import addFavorite from '../assets/images/addFavorite.png'
+import addReviews from '../assets/images/addReviews.png'
 
-export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto, marco, isotipo,video,senderismo, sendero, avatar,cards, logo, path,ruins,dots, background};
+
+export default { empty, cajas, galapagos, llanganantes, machalilla, sumaco, yasuni, yacuri,sangay, podocarpus,cotopaxi,cayambe, coto, marco, isotipo,video,senderismo, sendero, avatar,cards, logo, path,ruins,dots, background,addFavorite, addReviews};
