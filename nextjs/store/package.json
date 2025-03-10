@@ -1,0 +1,32 @@
+{
+  "name": "nextjs-store",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "classnames": "^2.5.1",
+    "graphql": "^16.10.0",
+    "graphql-request": "^7.1.2",
+    "next": "14.2.24",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-icons": "^5.5.0",
+    "sanitize-html": "^2.14.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/sanitize-html": "^2.13.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.24",
+    "sass": "^1.85.1",
+    "typescript": "^5"
+  }
+}
