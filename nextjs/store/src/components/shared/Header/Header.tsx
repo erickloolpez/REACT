@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { validateAccessToken } from 'app/utils/auth/validateAccessToken'
 import styles from './Header.module.sass'
-import { ShoppingCart } from '../ShoppingCart/ShoppingCart'
+import dynamic from 'next/dynamic'
+
+const NoSSRShoppingCart = dynamic(() => import('../ShoppingCart'), { ssr: false })
 
 export const Header = async () => {
   const customer = await validateAccessToken()
@@ -31,7 +33,7 @@ export const Header = async () => {
         {customer?.firstName ?
           (<p>Hola! {customer.firstName}</p>) : (<Link href="/login">Login</Link>)
         }
-        <ShoppingCart />
+        <NoSSRShoppingCart />
       </div>
     </header>)
 }

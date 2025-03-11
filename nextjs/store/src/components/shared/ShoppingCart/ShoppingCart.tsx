@@ -4,34 +4,59 @@ import { useState } from "react"
 import { FaShoppingCart } from "react-icons/fa"
 import styles from './ShoppingCart.module.sass'
 import { useShoppingCart } from "app/hooks/useShoppingCart"
+import { ShoppingCartItem } from "./ShoppingCartItem"
+import { handleCreateCart } from "app/actions"
 
-export const ShoppingCart = () => {
+export default function ShoppingCart() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isBuying, setIsBuying] = useState(false)
   const { cart } = useShoppingCart()
 
-  const handleOpen = () => setIsOpen(!isOpen)
+  const hasItems = cart.length > 0;
+
+  const handleOpen = () => {
+    if (hasItems) {
+      setIsOpen(!isOpen)
+    }
+  };
+
+  const handleBuy =  async () => {
+    try {
+      setIsBuying(true)
+      const checkoutUrl = await handleCreateCart(cart) 
+      if(!checkoutUrl) throw new Error("Error creating checkout")
+      window.localStorage.removeItem('cart')
+      window.location.href = checkoutUrl
+
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsBuying(false)
+    }
+  }
 
   return (
-    <button className={styles.ShoppingCart} onClick={handleOpen}>
-      <span className={styles.ShoppingCart__counter}>{cart.length}</span>
-      <FaShoppingCart />
+    <div className={styles.ShoppingCart}>
       {
-        isOpen && (
-          <div className={styles.ShoppingCart__items}>
-            {
-              cart.map(item => (
-                <>
-                  <p key={item.id}>{item?.title}</p>
-                  <p>Cantidad: {item.quantity}</p>
-                </>
-              ))
-            }
-            <button className={styles.ShoppingCart__buyButton}>
-              Buy
-            </button>
-          </div>
+        hasItems && (
+          <span className={styles.ShoppingCart__counter}>
+            {cart.length}
+          </span>
         )
       }
-    </button>
+      <button className={styles.ShoppingCart__cart} onClick={handleOpen}>
+        <FaShoppingCart />
+      </button>
+      {isOpen && hasItems && (
+        <div className={styles.ShoppingCart__items} >
+          {
+            cart.map(item => (<ShoppingCartItem key={item.id} item={item} />))
+          }
+          <button onClick={handleBuy} className={styles.ShoppingCart__buyButton} disabled={isBuying}>
+            Buy
+          </button>
+        </div>
+      )}
+    </div>
   )
 }
