@@ -2,7 +2,7 @@ import { headers } from "next/headers"
 import { shopifyUrls } from "./urls"
 import { env } from 'app/config/env'
 
-export const getProducts = async (id?: string): Promise<ProductType[]> => {
+export const getProducts = async (id?: string) => {
   try {
     const apiUrl = id ? `${shopifyUrls.products.all}?ids=${id}` : shopifyUrls.products.all
     const response = await fetch(apiUrl, {
@@ -40,7 +40,7 @@ export const getMainProducts = async () => {
     //   revalidate: 10
     // },
     // cache: 'no-cache'
-    next:{
+    next: {
       tags: ['main-products']
     }
   })

@@ -32,8 +32,8 @@ export const Description = () => {
         </div>
       </button>
       <div>
-        <h2>Bring the future today</h2>
-        <p>Future World: Your Gateway to Tomorrow's Tech! Dive into a world of cutting-edge gadgets and gear. Stay ahaead of the curve and redefine your degital lifestyle with us.</p>
+        <h2>Bring the future today</h2> 
+        <p>Future World: Your Gateway to Tomorrow&apos;s Tech! Dive into a world of cutting-edge gadgets and gear. Stay ahaead of the curve and redefine your degital lifestyle with us.</p>
       </div>
     </section>
   )

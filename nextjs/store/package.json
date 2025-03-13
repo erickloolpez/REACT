@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.2.2",
+    "@next/bundle-analyzer": "^15.2.2",
     "ai": "^4.1.54",
     "classnames": "^2.5.1",
     "graphql": "^16.10.0",
@@ -27,6 +29,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/sanitize-html": "^2.13.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.24",
     "sass": "^1.85.1",

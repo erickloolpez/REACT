@@ -7,5 +7,7 @@ export const createAgent = (productTitles: string) => {
   Recomienda productos de los anteriormente listados.
 
   La respuesta tiene que ser convincente y mostrar todas las ventajas de este producto. Usa respuestas cortas y carismáticas.
+
+  Tu respuesta no debe superar mas de 280 caracteres. 
   `
 }
