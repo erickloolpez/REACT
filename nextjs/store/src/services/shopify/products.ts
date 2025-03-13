@@ -1,4 +1,3 @@
-import { headers } from "next/headers"
 import { shopifyUrls } from "./urls"
 import { env } from 'app/config/env'
 

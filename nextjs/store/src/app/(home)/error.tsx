@@ -1,11 +1,10 @@
 "use client"
 
 interface ErrorProps {
-  error: Error;
   reset: () => void;
 }
 
-export default function Error({ error, reset }: ErrorProps) {
+export default function Error({ reset }: ErrorProps) {
   return (
     <div>
       <h1>404 Not found :( </h1>

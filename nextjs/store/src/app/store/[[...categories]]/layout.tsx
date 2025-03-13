@@ -3,6 +3,12 @@ import { getCollections } from "app/services/shopify/collections"
 import { ChatLink } from 'app/components/store/ChatLink'
 import styles from '../StoreLayout.module.sass'
 
+interface CollectionStore {
+  id: string;
+  handle: string;
+  title: string;
+}
+
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const collections = await getCollections()
   return (
@@ -11,7 +17,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
       <nav>
         <ul className={styles.StoreLayout__list}>
           {
-            collections?.map((collection: any) => (
+            collections?.map((collection: CollectionStore) => (
               <Link key={collection.id} href={'/store/' + collection.handle} className={styles.StoreLayout__chip}>
                 {collection.title}
               </Link>
