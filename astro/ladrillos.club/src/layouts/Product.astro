@@ -1,7 +1,8 @@
 ---
-import Header from "../components/Header.tsx";
 import "../styles/global.css";
-const { frontmatter } = Astro.props;
+import { type CollectionEntry } from "astro:content";
+type Props = CollectionEntry<"product">["data"];
+const { title, description, pubDate, heroImage, price, category } = Astro.props;
 ---
 
 <!doctype html>
@@ -9,11 +10,13 @@ const { frontmatter } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>lol</title>
+    <title>{title}</title>
   </head>
   <body>
-    <Header title='chorizo' />
     <main class="container mx-auto p-4 ">
+      <h2>{title}</h2>
+      <span>{pubDate}</span>
+      <span>{price}</span>
       <slot />
     </main>
   </body>
