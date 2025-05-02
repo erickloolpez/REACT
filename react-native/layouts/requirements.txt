@@ -3,3 +3,4 @@ npm install @animatereactnative/marquee
 npx expo install react-native-gesture-handler
 npm install nativewind tailwindcss react-native-reanimated react-native-safe-area-context 
 npx expo install react-native-reanimated
+npm i moti --legacy-peer-deps

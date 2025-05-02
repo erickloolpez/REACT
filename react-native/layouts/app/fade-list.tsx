@@ -42,7 +42,7 @@ export default function Index() {
       <View className="h-[60%]">
         <Animated.FlatList
           data={podocarpusTrends.slice(0, visibleParks)}
-          keyExtractor={(park) => park.name}
+          keyExtractor={(park, index) => `park-${index}`}
           renderItem={({ item: park, index }) => (
             <Cards key={`park-name-${index}`} park={park} scrollX={scrollX} index={index} width={_slideWidth} height={_slideHeight} />
           )

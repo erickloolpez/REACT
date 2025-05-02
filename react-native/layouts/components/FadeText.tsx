@@ -4,7 +4,6 @@ import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated
 
 export default function FadeText({ index, scrollX }) {
   const [text, setText] = useState(`hola mundo ${index} uwu.`)
-  const [readMore, setReadMore] = useState(false)
   const stylez = useAnimatedStyle(() => {
     return {
       opacity: interpolate(
@@ -37,9 +36,9 @@ export default function FadeText({ index, scrollX }) {
       <View className="w-1/2 h-1/2">
         {
           index % 2 == 0 ? (
-            <Image source={require('../assets/images/face-one.png')} className="w-full h-full" resizeMode='contain' />
+            <Image source={require('../assets/images/face-one.png')} className="w-44 h-44" resizeMode='cover' />
           ) : (
-            <Image source={require('../assets/images/face-two.png')} className="w-full h-full" resizeMode='contain' />
+            <Image source={require('../assets/images/face-two.png')} className="w-44 h-44" resizeMode='contain' />
           )
         }
       </View>

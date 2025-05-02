@@ -38,6 +38,14 @@ export default function TabTwoScreen() {
           <Image source={require('../../assets/images/rotate-slide.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
         </Link>
       </Collapsible>
+      <Collapsible title="counter">
+        <ThemedText>
+          This app use a counter but it appears in a particular way:{' '}
+        </ThemedText>
+        <Link href={'/counter'} style={{ marginTop: 8 }}>
+          <Image source={require('../../assets/images/counter.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
+        </Link>
+      </Collapsible>
     </ParallaxScrollView >
   );
 }
