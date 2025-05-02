@@ -30,6 +30,14 @@ export default function TabTwoScreen() {
           <Image source={require('../../assets/images/ai-playground.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
         </Link>
       </Collapsible>
+      <Collapsible title="fade-images">
+        <ThemedText>
+          This app use a flat list with a cool animation using react-native-reanimated:{' '}
+        </ThemedText>
+        <Link href={'/fade-list'} style={{ marginTop: 8 }}>
+          <Image source={require('../../assets/images/rotate-slide.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
+        </Link>
+      </Collapsible>
     </ParallaxScrollView >
   );
 }
