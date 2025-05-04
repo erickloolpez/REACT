@@ -54,6 +54,14 @@ export default function TabTwoScreen() {
           <Image source={require('../../assets/images/masonry.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
         </Link>
       </Collapsible>
+      <Collapsible title="navbar">
+        <ThemedText>
+          This app use an animated navbar:{' '}
+        </ThemedText>
+        <Link href={'/nav'} style={{ marginTop: 8 }}>
+          <Image source={require('../../assets/images/masonry.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
+        </Link>
+      </Collapsible>
     </ParallaxScrollView >
   );
 }
