@@ -62,6 +62,14 @@ export default function TabTwoScreen() {
           <Image source={require('../../assets/images/masonry.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
         </Link>
       </Collapsible>
+      <Collapsible title="bottom modal">
+        <ThemedText>
+          This app use an animated bottom modal:{' '} In the ROOT you need to add the BottomSheetModalProvider and in the component you need to add the BottomSheetModal and BottomSheetView
+        </ThemedText>
+        <Link href={'/modalBottom'} style={{ marginTop: 8 }}>
+          <Image source={require('../../assets/images/masonry.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
+        </Link>
+      </Collapsible>
     </ParallaxScrollView >
   );
 }
