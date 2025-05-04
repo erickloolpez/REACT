@@ -46,6 +46,14 @@ export default function TabTwoScreen() {
           <Image source={require('../../assets/images/counter.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
         </Link>
       </Collapsible>
+      <Collapsible title="ranking">
+        <ThemedText>
+          This app use an animated rank for the positions:{' '}
+        </ThemedText>
+        <Link href={'/masonry'} style={{ marginTop: 8 }}>
+          <Image source={require('../../assets/images/masonry.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
+        </Link>
+      </Collapsible>
     </ParallaxScrollView >
   );
 }
