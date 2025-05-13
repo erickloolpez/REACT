@@ -1,0 +1,3 @@
+npm install react-native-swiper # for the swipe
+npm install @animatereactnative/marquee # for the ai images
+npx expo install expo-linear-gradient #for the gradient
