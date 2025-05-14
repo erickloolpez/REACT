@@ -27,11 +27,12 @@ export default function Index() {
   return (
     <GestureHandlerRootView>
       <View
+        className=" bg-blue-400"
         style={{
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: _bgColor,
+          // backgroundColor: _bgColor,
           overflow: 'hidden'
         }}
       >
@@ -54,7 +55,7 @@ export default function Index() {
               >
                 <View style={{ flexDirection: 'row', gap: _spacing }}>
                   {column.map((image, index) => (
-                    <Image key={`image-for-column-${columnIndex}-${index}`} source={{ uri: image }} style={{ width: _itemSize, aspectRatio: 1, borderRadius: _spacing }} />
+                    <Image key={`image-for-column-${columnIndex}-${index}`} source={image} style={{ width: _itemSize, aspectRatio: 1, borderRadius: _spacing }} />
                   ))}
                 </View>
               </Marquee>
@@ -76,12 +77,12 @@ export default function Index() {
           }}
         />
         <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center', padding: _spacing, gap: _spacing }}>
-          <Text style={{ color: "#fff", fontSize: 28, marginTop: _spacing, textAlign: 'center' }}>
+          <Text className="font-BlockHead" style={{ color: "#fff", fontSize: 28, marginTop: _spacing, textAlign: 'center' }}>
             Unlock your {" "}
             <Text style={{ fontWeight: 'bold' }}>Creative</Text>{'\n'}
-            <Text style={{ fontWeight: 'bold' }}>Potential</Text>{" "} with AI
+            <Text style={{ fontWeight: 'bold' }}>Potential</Text>{" "}with AI
           </Text>
-          <Text style={{ color: "#fff", fontSize: 16, textAlign: 'center', paddingHorizontal: _spacing, opacity: 0.6 }}>Click on the images to view them in full size</Text>
+          <Text className="font-Waku" style={{ color: "#fff", fontSize: 16, textAlign: 'center', paddingHorizontal: _spacing, opacity: 0.6 }}>Click on the images to view them in full size</Text>
         </View>
       </View>
     </GestureHandlerRootView >
