@@ -1,3 +1,6 @@
 npm install react-native-swiper # for the swipe
 npm install @animatereactnative/marquee # for the ai images
 npx expo install expo-linear-gradient #for the gradient
+npm install @clerk/clerk-expo # for the validation
+npm install expo-secure-store # another dependency for the validation
+npm install nativewind tailwindcss react-native-reanimated react-native-safe-area-context #tailwind
