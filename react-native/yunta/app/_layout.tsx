@@ -9,6 +9,8 @@ import './global.css';
 export default function RootLayout() {
   const [loaded] = useFonts({
     "BlockHead": require("../assets/fonts/You Blockhead.ttf"),
+    "Jakarta": require("../assets/fonts/PlusJakartaSans-Regular.ttf"),
+    "Waku": require("../assets/fonts/mini-wakuwaku.otf"),
   });
 
   useEffect(() => {
