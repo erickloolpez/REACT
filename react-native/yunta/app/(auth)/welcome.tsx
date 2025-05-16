@@ -1,90 +1,75 @@
-import { images } from "@/constants";
-import { Marquee } from "@animatereactnative/marquee";
+import Presentation from "@/components/(auth)/Presentation";
+import CustomButton from "@/components/CustomButton";
+import { onboarding } from "@/constants";
 import { LinearGradient } from 'expo-linear-gradient';
-import { useMemo } from "react";
-import { Dimensions, Image, Text, View } from "react-native";
+import { router } from "expo-router";
+import { useRef, useState } from 'react';
+import { Image, Text, View } from "react-native";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
-const { width } = Dimensions.get('window')
-const _itemSize = width * 0.4
-const _spacing = 8
-const _bgColor = '#0c0820'
-
-function chunkArray(arr: string[], size: number) {
-  const chunked_arr = []
-  let index = 0
-  while (index < arr.length) {
-    chunked_arr.push(arr.slice(index, index + size))
-    index += size
-  }
-  return chunked_arr
-}
+import { SafeAreaView } from "react-native-safe-area-context";
+import Swiper from 'react-native-swiper';
 
 export default function Index() {
-  const pictures = useMemo(() => chunkArray(images, Math.floor(images.length / 3)),
-    []
-  )
+  const swiperRef = useRef<Swiper>(null);
+  const [activeIndex, setActiveIndex] = useState(0)
+  const isLastSlide = activeIndex === onboarding.length - 1
+
   return (
-    <GestureHandlerRootView>
-      <View
-        className=" bg-blue-400"
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          // backgroundColor: _bgColor,
-          overflow: 'hidden'
-        }}
-      >
+    <SafeAreaView className="flex-1">
+      <GestureHandlerRootView>
         <View
-          style={{ flex: 1, overflow: "hidden" }}
-        >
-          <View style={{
-            flex: 1,
-            gap: _spacing,
-            transform: [{
-              rotate: '-4deg'
-            }]
-          }}>
-            {pictures.map((column, columnIndex) => (
-              <Marquee
-                speed={0.5}
-                spacing={_spacing}
-                key={`marquee-${columnIndex}`}
-                reverse={columnIndex % 2 !== 0}
-              >
-                <View style={{ flexDirection: 'row', gap: _spacing }}>
-                  {column.map((image, index) => (
-                    <Image key={`image-for-column-${columnIndex}-${index}`} source={image} style={{ width: _itemSize, aspectRatio: 1, borderRadius: _spacing }} />
-                  ))}
-                </View>
-              </Marquee>
-            ))}
-          </View>
-        </View>
-        <LinearGradient
-          colors={['#00000000', _bgColor, _bgColor]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 1 }}
-          locations={[0, 0.7, 1]}
-          pointerEvents='none'
+          className=" bg-blue-400"
           style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: "50%"
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            // backgroundColor: _bgColor,
+            overflow: 'hidden'
           }}
-        />
-        <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center', padding: _spacing, gap: _spacing }}>
-          <Text className="font-BlockHead" style={{ color: "#fff", fontSize: 28, marginTop: _spacing, textAlign: 'center' }}>
-            Unlock your {" "}
-            <Text style={{ fontWeight: 'bold' }}>Creative</Text>{'\n'}
-            <Text style={{ fontWeight: 'bold' }}>Potential</Text>{" "}with AI
-          </Text>
-          <Text className="font-Waku" style={{ color: "#fff", fontSize: 16, textAlign: 'center', paddingHorizontal: _spacing, opacity: 0.6 }}>Click on the images to view them in full size</Text>
+        >
+          <Swiper
+            ref={swiperRef}
+            loop={false}
+            dot={<View className="w-[32px] h-[4px] mx-1 bg-[#e2e8f0] rounded-full" />}
+            activeDot={<View className="w-[32px] h-[4px] mx-1 bg-[#0286ff] rounded-full" />}
+            onIndexChanged={(index) => setActiveIndex(index)}
+          >
+            {
+              onboarding.map((item, index) => (
+                index === 0 ?
+                  <Presentation key={item.id} />
+                  :
+                  <View key={item.id} className="flex-1 items-center justify-center">
+                    <Image
+                      source={item.image}
+                      className="w-full h-full object-cover"
+                      resizeMode="cover"
+                    />
+                    <LinearGradient
+                      colors={['#00000000', '#000000']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 0, y: 1 }}
+                      locations={[0, 1]}
+                      pointerEvents='none'
+                      className="absolute top-0 left-0 w-full h-full"
+                    />
+                    <View className="absolute bottom-10 w-11/12">
+                      <Text className="text-white text-2xl font-bold text-center">{item.title}</Text>
+                      <Text className="text-white text-base text-center mt-2">{item.description}</Text>
+                    </View>
+                  </View>
+
+              ))
+            }
+          </Swiper>
+          <CustomButton
+            title={isLastSlide ? "Get Started" : "Next"}
+            onPress={() => isLastSlide ? router.replace('/(auth)/sign-up') : swiperRef.current?.scrollBy(1)}
+            className="w-11/12 mt-10 mb-5"
+          />
         </View>
-      </View>
-    </GestureHandlerRootView >
+      </GestureHandlerRootView >
+
+    </SafeAreaView>
   );
 }
