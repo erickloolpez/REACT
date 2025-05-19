@@ -49,7 +49,7 @@ import star from "@/assets/icons/star.png"
 import target from "@/assets/icons/target.png"
 import to from "@/assets/icons/to.png"
 
-export const images = [
+export const carrusel = [
   archer,
   elf,
   gibbling,
@@ -71,6 +71,10 @@ export const images = [
   cat,
   thief,
   welcomeBgOne
+]
+
+export const images = [
+  dog,
 ]
 
 export const icons = {

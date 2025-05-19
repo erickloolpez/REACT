@@ -1,4 +1,4 @@
-import { images } from "@/constants";
+import { carrusel } from "@/constants";
 import { Marquee } from "@animatereactnative/marquee";
 import { LinearGradient } from "expo-linear-gradient";
 import { useMemo } from "react";
@@ -20,7 +20,7 @@ function chunkArray(arr: string[], size: number) {
 }
 
 export default function Presentation() {
-  const pictures = useMemo(() => chunkArray(images, Math.floor(images.length / 3)),
+  const pictures = useMemo(() => chunkArray(carrusel, Math.floor(carrusel.length / 3)),
     []
   )
   return (
