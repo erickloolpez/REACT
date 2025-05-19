@@ -5,10 +5,10 @@ import bgOne from "@/assets/images/bg-one.webp"
 import bgThree from "@/assets/images/bg-three.webp"
 import bgTwo from "@/assets/images/bg-two.webp"
 import cat from "@/assets/images/cat.webp"
+import chart from "@/assets/images/chart.webp"
 import dog from "@/assets/images/dog.webp"
 import dragon from "@/assets/images/dragon.webp"
 import elf from "@/assets/images/elf.webp"
-import frame from "@/assets/images/frame.png"
 import gibbling from "@/assets/images/gibbling.webp"
 import horse from "@/assets/images/horse.webp"
 import kidOne from "@/assets/images/kid-one.webp"
@@ -17,9 +17,11 @@ import mageOne from "@/assets/images/mage-one.webp"
 import mageTwo from "@/assets/images/mage-two.webp"
 import oso from "@/assets/images/oso.webp"
 import thief from "@/assets/images/robber.webp"
-import sherlock from "@/assets/images/sherlock.webp"
+import sherlock from "@/assets/images/sherlock-rb.webp"
 import warriorTwo from "@/assets/images/warrior-two.webp"
 import warrior from "@/assets/images/warrior.webp"
+import welcomeBgOne from "@/assets/images/welcome-BgOne.webp"
+import welcomeBgTwo from "@/assets/images/welcome-BgTwo.webp"
 
 export const images = [
   archer,
@@ -42,11 +44,13 @@ export const images = [
   dog,
   cat,
   thief,
+  welcomeBgOne,
+  welcomeBgTwo,
 ]
 
 export const welcomeImages = {
   sherlock,
-  frame,
+  chart,
 }
 
 export const onboarding = [
@@ -66,7 +70,7 @@ export const onboarding = [
     id: 3,
     title: "Play with your friends",
     description: "You can play with your friends and have fun together",
-    image: frame,
+    image: chart,
   },
 ]
 
