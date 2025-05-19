@@ -4,3 +4,4 @@ npx expo install expo-linear-gradient #for the gradient
 npm install @clerk/clerk-expo # for the validation
 npm install expo-secure-store # another dependency for the validation
 npm install nativewind tailwindcss react-native-reanimated react-native-safe-area-context #tailwind
+npm install react-native-modal #modal verification for clerk
