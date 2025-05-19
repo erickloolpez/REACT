@@ -20,8 +20,8 @@ import thief from "@/assets/images/robber.webp"
 import sherlock from "@/assets/images/sherlock-rb.webp"
 import warriorTwo from "@/assets/images/warrior-two.webp"
 import warrior from "@/assets/images/warrior.webp"
-import welcomeBgOne from "@/assets/images/welcome-BgOne.webp"
-import welcomeBgTwo from "@/assets/images/welcome-BgTwo.webp"
+import welcomeBgOne from "@/assets/images/welcome-bgOne.webp"
+import welcomeBgTwo from "@/assets/images/welcome-bgTwo.webp"
 
 export const images = [
   archer,
@@ -44,14 +44,8 @@ export const images = [
   dog,
   cat,
   thief,
-  welcomeBgOne,
-  welcomeBgTwo,
+  welcomeBgOne
 ]
-
-export const welcomeImages = {
-  sherlock,
-  chart,
-}
 
 export const onboarding = [
   {
@@ -59,18 +53,21 @@ export const onboarding = [
     title: "Welcome to the game",
     description: "This is a game where you can play with your friends and have fun",
     image: sherlock,
+    background: welcomeBgOne,
   },
   {
     id: 2,
     title: "Choose your character",
     description: "You can choose from different characters to play with",
     image: sherlock,
+    background: welcomeBgOne,
   },
   {
     id: 3,
     title: "Play with your friends",
     description: "You can play with your friends and have fun together",
     image: chart,
+    background: welcomeBgTwo,
   },
 ]
 
