@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from 'react';
+import { StatusBar } from 'react-native';
 import './global.css';
 
 export default function RootLayout() {
@@ -24,6 +25,7 @@ export default function RootLayout() {
   }
   return (
     <ClerkProvider tokenCache={tokenCache}>
+      <StatusBar hidden={true} />
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(root)" options={{ headerShown: false }} />
