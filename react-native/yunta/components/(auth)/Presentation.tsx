@@ -65,13 +65,12 @@ export default function Presentation() {
           height: "50%"
         }}
       />
-      <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center', padding: _spacing, gap: _spacing }}>
-        <Text className="font-BlockHead" style={{ color: "#fff", fontSize: 28, marginTop: _spacing, textAlign: 'center' }}>
+      <View style={{ flex: 0.2, marginBottom: 30, justifyContent: 'center', alignItems: 'center', padding: _spacing, gap: _spacing }}>
+        <Text className="font-BlockHead" style={{ color: "#fff", fontSize: 20, marginTop: _spacing, textAlign: 'center' }}>
           Unlock your {" "}
           <Text style={{ fontWeight: 'bold' }}>Creative</Text>{'\n'}
           <Text style={{ fontWeight: 'bold' }}>Potential</Text>{" "}with AI
         </Text>
-        <Text className="font-Waku" style={{ color: "#fff", fontSize: 16, textAlign: 'center', paddingHorizontal: _spacing, opacity: 0.6 }}>Click on the images to view them in full size</Text>
       </View>
 
     </View>
