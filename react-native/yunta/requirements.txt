@@ -5,3 +5,4 @@ npm install @clerk/clerk-expo # for the validation
 npm install expo-secure-store # another dependency for the validation
 npm install nativewind tailwindcss react-native-reanimated react-native-safe-area-context #tailwind
 npm install react-native-modal #modal verification for clerk
+npm install @neondatabase/serverless # for the connection string for databases
