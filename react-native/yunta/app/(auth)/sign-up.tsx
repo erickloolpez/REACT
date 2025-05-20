@@ -172,7 +172,7 @@ const SignUp = () => {
       <ReactNativeModal isVisible={showSuccessModal}>
         <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
           <Image source={images.check} className="w-[110px] h-[110px] mx-auto my-5" />
-          <Text className="text-3xl font-JakartaBold text-center" >Verified</Text>
+          <Text className="text-3xl font-BlockHead text-center" >Verified</Text>
           <Text className="text-base text-gray-400 font-Jakarta text-center">You have successfully verified</Text>
           <CustomButton
             title="Browse Home"
