@@ -1,4 +1,5 @@
 import archer from "@/assets/images/arch.webp"
+import banner from "@/assets/images/banner.webp"
 import bgFive from "@/assets/images/bg-five.webp"
 import bgFour from "@/assets/images/bg-four.webp"
 import bgOne from "@/assets/images/bg-one.webp"
@@ -80,6 +81,7 @@ export const images = {
   check,
   noResult,
   message,
+  banner
 }
 
 export const icons = {
@@ -120,17 +122,17 @@ export const onboarding = [
   },
   {
     id: 2,
-    title: "Choose your character",
-    description: "You can choose from different characters to play with",
-    image: sherlock,
-    background: welcomeBgOne,
+    title: "Welcome to the game",
+    description: "This is a game where you can play with your friends and have fun",
+    image: chart,
+    background: welcomeBgTwo,
   },
   {
     id: 3,
     title: "Play with your friends",
     description: "You can play with your friends and have fun together",
-    image: chart,
-    background: welcomeBgTwo,
+    image: sherlock,
+    background: welcomeBgOne,
   },
 ]
 
