@@ -19,7 +19,7 @@ function chunkArray(arr: string[], size: number) {
   return chunked_arr
 }
 
-export default function Presentation() {
+export default function Presentation({ isLastSlide, swiperRef }: { isLastSlide: boolean, swiperRef: React.RefObject<any> }) {
   const pictures = useMemo(() => chunkArray(carrusel, Math.floor(carrusel.length / 3)),
     []
   )
