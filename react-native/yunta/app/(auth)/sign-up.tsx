@@ -89,11 +89,11 @@ const SignUp = () => {
 
   return (
     <ScrollView className="flex-1 bg-white">
-      <View className="relative w-full h-[250px]">
-        <Image source={images.signUpCar} className="z-0 w-full h-[250px]" />
-        <Text className="text-2xl text-black font-JakartaSemiBold absolute bottom-5 left-5">Creat your account</Text>
+      <View className="relative w-full h-[250px] justify-center items-center ">
+        <Image source={images.banner} className="z-0 w-full h-[230px] scale-[0.7]" resizeMode={"contain"} />
+        <Text className="font-Waku text-2xl text-black font-JakartaSemiBold absolute bottom-0 left-5">Create your account</Text>
       </View>
-      <View className="p-5" >
+      <View className="p-5">
         <InputField
           label="Name"
           placeholder="enter your name"
@@ -122,17 +122,20 @@ const SignUp = () => {
             setForm({ ...form, password: value })
           }
         />
-        <CustomButton
-          title="Sign up"
-          onPress={onSignUpPress}
-        />
+        <View className="mt-10">
+          <CustomButton
+            title="Sign up"
+            textVariant="default"
+            onPress={onSignUpPress}
+          />
 
-        <OAuth />
+          <OAuth />
 
-        <Link href="/sign-in" className="text-lg text-center text-general-200 mt-10">
-          Already have an account? {" "}
-          <Text className="text-primary-500">Log In</Text>
-        </Link>
+          <Text className="font-Waku text-lg text-center text-general-200 mt-10">
+            Already have an account? {" "}
+            <Link href="/sign-in" className="text-blue-500">Log In</Link>
+          </Text>
+        </View>
       </View>
 
       <ReactNativeModal
@@ -143,7 +146,7 @@ const SignUp = () => {
         }
       >
         <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
-          <Text className="text-2xl font-Jakarta mb-2 ">Verification</Text>
+          <Text className="text-2xl font-BlockHead mb-2 ">Verification</Text>
           <Text className="font-Jakarta mb-5">We've sent a verification code to {form.email}</Text>
           <InputField
             label="Code"
@@ -162,6 +165,7 @@ const SignUp = () => {
 
           <CustomButton
             title="Verify Email"
+            textVariant="default"
             onPress={onVerifyPress}
             className="mt-5 bg-success-500"
           />
@@ -176,6 +180,7 @@ const SignUp = () => {
           <Text className="text-base text-gray-400 font-Jakarta text-center">You have successfully verified</Text>
           <CustomButton
             title="Browse Home"
+            textVariant="default"
             onPress={() => {
               setShowSuccessModal(false)
               router.replace('/(root)/(tabs)/home')

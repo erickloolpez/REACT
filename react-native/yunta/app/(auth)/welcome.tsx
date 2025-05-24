@@ -10,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from 'react-native-swiper';
 
 const _bgColor = '#0c0820'
+const _bgImage = '420px'
 
 export default function Index() {
   const swiperRef = useRef<Swiper>(null);
@@ -39,13 +40,13 @@ export default function Index() {
             {
               onboarding.map((item, index) => (
                 index === 0 ?
-                  <Presentation key={item.id} />
+                  <Presentation key={item.id} isLastSlide={isLastSlide} swiperRef={swiperRef} />
                   :
                   <ImageBackground source={item.background} key={item.id} className="flex-1 items-center justify-center">
                     <Image
                       source={item.image}
-                      className="w-[420px] h-[420px] object-cover"
-                      resizeMode="cover"
+                      className={`${index === 2 ? "w-[320px] h-[320px]" : "w-[420px] h-[420px]"} object-cover `}
+                      resizeMode="contain"
                     />
                     <LinearGradient
                       colors={['#00000000', '#000000']}
@@ -55,15 +56,29 @@ export default function Index() {
                       pointerEvents='none'
                       className="absolute top-0 left-0 w-full h-full"
                     />
-                    <View className="absolute bottom-24 w-11/12">
-                      <Text className="text-white text-2xl font-bold text-center">{item.title}</Text>
-                      <Text className="text-white text-base text-center mt-2">{item.description}</Text>
+                    <View className={` ${index === 2 ? "absolute bottom-20" : ""} w-11/12`}>
+                      <Text style={{ textShadowColor: "black", textShadowOffset: { width: 2, height: 2 }, textShadowRadius: 1 }} className="text-white  font-BlockHead text-2xl font-bold text-center">{item.title}</Text>
+                      <Text className="text-white font-Waku text-xl text-center mt-2">{item.description}</Text>
                     </View>
                   </ImageBackground>
 
               ))
             }
           </Swiper>
+          <LinearGradient
+            colors={['#00000000', _bgColor, _bgColor]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            locations={[0, 0.7, 1]}
+            pointerEvents='none'
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: "20%"
+            }}
+          />
           <CustomButton
             title={isLastSlide ? "Get Started" : "Next"}
             onPress={() => isLastSlide ? router.replace('/(auth)/sign-up') : swiperRef.current?.scrollBy(1)}
