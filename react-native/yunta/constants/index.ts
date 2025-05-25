@@ -5,8 +5,12 @@ import bgFour from "@/assets/images/bg-four.webp"
 import bgOne from "@/assets/images/bg-one.webp"
 import bgThree from "@/assets/images/bg-three.webp"
 import bgTwo from "@/assets/images/bg-two.webp"
+import bgDictionary from "@/assets/images/bgDictionary.webp"
+import bgHome from "@/assets/images/bgMain.webp"
+import bgNotes from "@/assets/images/bgNotes.webp"
 import cat from "@/assets/images/cat.webp"
 import chart from "@/assets/images/chart.webp"
+import check from "@/assets/images/check.png"
 import dog from "@/assets/images/dog.webp"
 import dragon from "@/assets/images/dragon.webp"
 import elf from "@/assets/images/elf.webp"
@@ -16,6 +20,8 @@ import kidOne from "@/assets/images/kid-one.webp"
 import kidTwo from "@/assets/images/kid-two.webp"
 import mageOne from "@/assets/images/mage-one.webp"
 import mageTwo from "@/assets/images/mage-two.webp"
+import message from "@/assets/images/message.png"
+import noResult from "@/assets/images/no-result.png"
 import oso from "@/assets/images/oso.webp"
 import thief from "@/assets/images/robber.webp"
 import sherlock from "@/assets/images/sherlock-rb.webp"
@@ -30,16 +36,18 @@ import backArrow from "@/assets/icons/back-arrow.png"
 import chat from "@/assets/icons/chat.png"
 import checkmark from "@/assets/icons/check.png"
 import close from "@/assets/icons/close.png"
+import dictionary from "@/assets/icons/dictionary.webp"
 import dollar from "@/assets/icons/dollar.png"
 import email from "@/assets/icons/email.png"
 import eyecross from "@/assets/icons/eyecross.png"
 import google from "@/assets/icons/google.png"
-import home from "@/assets/icons/home.png"
+import home from "@/assets/icons/home.webp"
 import list from "@/assets/icons/list.png"
 import lock from "@/assets/icons/lock.png"
 import map from "@/assets/icons/map.png"
 import marker from "@/assets/icons/marker.png"
 import out from "@/assets/icons/out.png"
+import pencil from "@/assets/icons/pencil.webp"
 import person from "@/assets/icons/person.png"
 import pin from "@/assets/icons/pin.png"
 import point from "@/assets/icons/point.png"
@@ -49,9 +57,6 @@ import selectedMarker from "@/assets/icons/selected-marker.png"
 import star from "@/assets/icons/star.png"
 import target from "@/assets/icons/target.png"
 import to from "@/assets/icons/to.png"
-import check from "@/assets/images/check.png"
-import message from "@/assets/images/message.png"
-import noResult from "@/assets/images/no-result.png"
 
 export const carrusel = [
   archer,
@@ -81,10 +86,15 @@ export const images = {
   check,
   noResult,
   message,
-  banner
+  banner,
+  bgHome,
+  bgDictionary,
+  bgNotes
 }
 
 export const icons = {
+  pencil,
+  dictionary,
   arrowDown,
   arrowUp,
   backArrow,
