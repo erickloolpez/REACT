@@ -33,6 +33,7 @@ import welcomeBgTwo from "@/assets/images/welcome-bgTwo.webp"
 import arrowDown from "@/assets/icons/arrow-down.png"
 import arrowUp from "@/assets/icons/arrow-up.png"
 import backArrow from "@/assets/icons/back-arrow.png"
+import catIcon from "@/assets/icons/cat.webp"
 import chat from "@/assets/icons/chat.png"
 import checkmark from "@/assets/icons/check.png"
 import close from "@/assets/icons/close.png"
@@ -93,6 +94,7 @@ export const images = {
 }
 
 export const icons = {
+  catIcon,
   pencil,
   dictionary,
   arrowDown,
