@@ -1,11 +1,12 @@
+import { images } from '@/constants'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { ImageBackground, Text } from 'react-native'
 
 const Home = () => {
   return (
-    <View>
+    <ImageBackground source={images.bgHome} className="flex-1 justify-center items-center">
       <Text>Home</Text>
-    </View>
+    </ImageBackground>
   )
 }
 

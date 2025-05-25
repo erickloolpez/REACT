@@ -3,15 +3,12 @@ import { Tabs } from "expo-router";
 import { Image, ImageSourcePropType, View } from 'react-native';
 
 const TabIcon = ({ focused, source }: { source: ImageSourcePropType, focused: boolean }) => (
-  <View className={`flex flex-row justify-center items-center rounded-full ${focused ? 'bg-general-300' : ''}`}>
-    <View className={`rounded-full w-12 h-12 items-center justify-center ${focused ? 'bg-general-400' : ''} `}>
-      <Image
-        source={source}
-        tintColor={"white"}
-        resizeMode="contain"
-        className="w-7 h-7"
-      />
-    </View>
+  <View className={`flex w-40 h-28 mb-8 justify-center items-center ${focused ? 'bg-orange-400' : ''}`}>
+    <Image
+      source={source}
+      resizeMode="contain"
+      className="w-16 h-16"
+    />
   </View>
 )
 
@@ -21,13 +18,12 @@ const Layout = () => (
     tabBarInactiveTintColor: 'white',
     tabBarShowLabel: false,
     tabBarStyle: {
-      backgroundColor: '#333333',
-      borderRadius: 50,
+      backgroundColor: '#FFD200',
       paddingBottom: 0,
       overflow: "hidden",
-      marginHorizontal: 20,
-      marginBottom: 20,
-      height: 78,
+      marginBottom: 0,
+      width: '100%',
+      height: 90,
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: "center",
@@ -36,6 +32,14 @@ const Layout = () => (
     }
   }}>
     <Tabs.Screen
+      name="notes"
+      options={{
+        title: 'Notes',
+        headerShown: false,
+        tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.pencil} />
+      }}
+    />
+    <Tabs.Screen
       name="home"
       options={{
         title: 'Home',
@@ -43,31 +47,14 @@ const Layout = () => (
         tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.home} />
       }}
     />
-    {/* <Tabs.Screen
-      name="rides"
+    <Tabs.Screen
+      name="dictionary"
       options={{
-        title: 'Rides',
+        title: 'Dictionary',
         headerShown: false,
-        tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.list} />
+        tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.dictionary} />
       }}
     />
-    <Tabs.Screen
-      name="chat"
-      options={{
-        title: 'Chat',
-        headerShown: false,
-        tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.chat} />
-      }}
-    />
-    <Tabs.Screen
-      name="profile"
-      options={{
-        title: 'Profile',
-        headerShown: false,
-        tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.profile} />
-      }}
-    /> */}
-
   </Tabs>
 )
 
