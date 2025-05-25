@@ -65,13 +65,13 @@ const Home = () => {
       <View className="w-[220px] h-10 bg-red-400 rounded-lg justify-center px-5">
         <Text>erickloolpez</Text>
       </View>
-      <View className="w-full h-48 bg-green-400 items-center justify-center">
-        <Animated.Image entering={FadeIn.duration(500)} exiting={FadeOut.duration(500)} key={`image-${activeIndex}`} source={carrusel[activeIndex]} style={{ width: 100, height: 100 }} resizeMode={"contain"} />
+      <View className="flex-1 bg-green-400 items-center justify-center">
+        <Animated.Image entering={FadeIn.duration(500)} exiting={FadeOut.duration(500)} key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-60 h-60 rounded-lg object-contain " />
       </View>
       <Animated.FlatList
         style={{
           backgroundColor: 'red',
-          flexGrow: 0,
+          flexGrow: 1,
           height: _itemSize * 2,
           paddingBottom: _itemSize
         }}
