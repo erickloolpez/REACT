@@ -3,7 +3,7 @@ import MessageList from '@/components/(chat)/MessageList';
 import { chatAPI } from '@/lib/fetch';
 import { Message } from '@/types/chat';
 import { useState } from 'react';
-import { View } from 'react-native';
+import { KeyboardAvoidingView, Platform, View } from 'react-native';
 
 const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -55,15 +55,18 @@ const Chat = () => {
       <View className="flex-1 px-4 py-4">
         <MessageList messages={messages} streamingMessage={streamingMessage} />
       </View>
-      <View className="border-t border-gray-200 dark:border-gray-800 px-4 py-2">
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={70}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         <ChatInput
           onSendMessage={handleSendMessage}
           onAddImage={handleAddImage}
           pendingImages={pendingImages}
           isLoading={isLoading}
         />
-      </View>
-    </View>
+      </KeyboardAvoidingView>
+    </View >
   );
 };
 
