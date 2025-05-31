@@ -1,7 +1,8 @@
 import BannerShape from '@/components/BannerShape'
 import { carrusel, images } from '@/constants'
+import { router } from 'expo-router'
 import React, { useState } from 'react'
-import { Dimensions, Image, ImageBackground, Text, View } from 'react-native'
+import { Dimensions, Image, ImageBackground, Text, TouchableOpacity, View } from 'react-native'
 import Animated, { clamp, FadeIn, FadeOut, interpolate, interpolateColor, runOnJS, SharedValue, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 
 const { width } = Dimensions.get('screen')
@@ -66,7 +67,9 @@ const Home = () => {
         <Text>erickloolpez</Text>
       </View>
       <View className="flex-1 bg-green-400 items-center justify-center">
-        <Animated.Image entering={FadeIn.duration(500)} exiting={FadeOut.duration(500)} key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-60 h-60 rounded-lg object-contain " />
+        <TouchableOpacity onPress={() => router.push('/(chat)/chat')} className="w-60 h-60 bg-white rounded-lg items-center justify-center">
+          <Animated.Image entering={FadeIn.duration(500)} exiting={FadeOut.duration(500)} key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-60 h-60 rounded-lg object-contain " />
+        </TouchableOpacity>
       </View>
       <Animated.FlatList
         style={{
