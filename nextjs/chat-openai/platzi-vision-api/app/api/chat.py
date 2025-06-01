@@ -1,10 +1,9 @@
-from flask import request, jsonify, Response
+from flask import request, Response
 import openai
 import json
 from openai import OpenAI
 
-
-def generate_image(prompt: str, quality: str = "standard") -> str:
+def generateImage(prompt: str, quality: str = "standard") -> str:
     """
     Genera una imagen utilizando el modelo DALL-E 3 de OpenAI.
     """
@@ -25,7 +24,28 @@ def generate_image(prompt: str, quality: str = "standard") -> str:
 
 def chat():
     try:
-        data = request.json
+        data = request.get_json()
+
+        if not data:
+            return Response(
+                json.dumps({'error': 'No JSON data provided', 'status': 'error'}),
+                status=400,
+                mimetype='application/json'
+            )
+
+        if 'messages' not in data:
+            return Response(
+                json.dumps({'error': 'Missing messages field', 'status': 'error'}),
+                status=400,
+                mimetype='application/json'
+            )
+
+        if not isinstance(data['messages'], list):
+            return Response(
+                json.dumps({'error': 'Messages must be a list', 'status': 'error'}),
+                status=400,
+                mimetype='application/json'
+            )
 
         formatted_messages = [
             {
@@ -43,7 +63,7 @@ def chat():
                     content_parts.append({
                         "type": "image_url",
                         "image_url": {
-                            "url": f"data:image/png,base64,{image_data_base64}"
+                            "url": f"data:image/png;base64,{image_data_base64}"
                         }
                     })
 
@@ -63,7 +83,7 @@ def chat():
             {
                 "type": "function",
                 "function": {
-                    "name": "generate_image",
+                    "name": "generateImage",
                     "description": "Cuando el usuario lo solicite, genera una imagen",
                     "parameters": {
                         "type": "object",
@@ -88,7 +108,6 @@ def chat():
             current_tool_call_id = None
 
             while True:
-
                 if response is None:
                     response = client.chat.completions.create(
                         model="gpt-4o-mini",
@@ -99,10 +118,10 @@ def chat():
 
                 for chunk in response:
                     if chunk.choices[0].delta.content:
-                        yield f"data: {json.dumps({ 'content': chunk.choices[0].delta.content, 'status': 'streaming' })}\n\n"
+                        yield f"data: {json.dumps({'content': chunk.choices[0].delta.content, 'status': 'streaming'})}\n\n"
 
                     if chunk.choices[0].finish_reason == "stop":
-                        yield f"data: {json.dumps({ 'status': 'done' })}\n\n"
+                        yield f"data: {json.dumps({'status': 'done'})}\n\n"
                         break
 
                     if chunk.choices[0].delta.tool_calls:
@@ -121,9 +140,12 @@ def chat():
                                 function_args = json.loads(accumulated_args)
 
                                 if 'prompt' in function_args:
-                                    yield f"data: {json.dumps({ 'status': 'generating_image' })}"
+                                    yield f"data: {json.dumps({'status': 'generating_image'})}\n\n"
 
-                                    image_url = generate_image(prompt=function_args["prompt"], quality=function_args["quality"])
+                                    image_url = generateImage(
+                                        prompt=function_args["prompt"],
+                                        quality=function_args.get("quality", "standard")
+                                    )
 
                                     formatted_messages.append({
                                         "role": "assistant",
@@ -131,7 +153,7 @@ def chat():
                                         "tool_calls": [{
                                             "id": current_tool_call_id,
                                             "function": {
-                                                "name": "generated_image",
+                                                "name": "generateImage",
                                                 "arguments": accumulated_args
                                             },
                                             "type": "function"
@@ -145,16 +167,26 @@ def chat():
                                     })
 
                                     response = None
+                                    accumulated_args = ""
                                     break
-                            except:
+                            except json.JSONDecodeError:
                                 pass
-
+                            except Exception as e:
+                                print(f"Error en tool call: {e}")
+                                pass
 
         return Response(generate(), mimetype="text/event-stream")
 
     except Exception as e:
         print(f"Chat request failed: {str(e)}")
-        return jsonify({
-            'error': str(e),
-            'status': 'error'
-        }), 500
+        import traceback
+        traceback.print_exc()
+
+        return Response(
+            json.dumps({
+                'error': str(e),
+                'status': 'error'
+            }),
+            status=500,
+            mimetype='application/json'
+        )
