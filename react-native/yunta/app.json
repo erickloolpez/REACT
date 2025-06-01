@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/icon-rbg.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.erickloolpez.yunta"
     },
     "web": {
       "bundler": "metro",

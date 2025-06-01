@@ -32,6 +32,7 @@ export const chatApi = {
   // Función principal para enviar mensajes al API
   // Acepta un array de mensajes y una función opcional para manejar chunks de respuesta
   sendMessage: async (messages: Message[], onChunk: (chunk: ChatResponse) => void): Promise<ChatResponse> => {
+    console.log('Sending messages to API:', JSON.stringify(messages));
     // Si hay función de callback, configura streaming de datos
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api'}/chat`, {
       method: 'POST',
@@ -65,7 +66,7 @@ export const chatApi = {
           try {
             const data = JSON.parse(jsonStr);
             console.log('Parsed SSE data:', data);
-            
+
             // Maneja diferentes estados de la respuesta
             if (data.status === 'streaming' && data.content) {
               // Acumula el contenido del mensaje y notifica

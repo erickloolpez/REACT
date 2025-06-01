@@ -1,73 +1,95 @@
-import ChatInput from '@/components/(chat)/ChatInput';
-import MessageList from '@/components/(chat)/MessageList';
-import { chatAPI } from '@/lib/fetch';
-import { Message } from '@/types/chat';
+import { generateAPIUrl } from '@/utils/utils';
+import { useCompletion } from '@ai-sdk/react';
+import { fetch as expoFetch } from 'expo/fetch';
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, View } from 'react-native';
+import { ActivityIndicator, Button, Image, SafeAreaView, TextInput } from 'react-native';
 
-const Chat = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [pendingImages, setPendingImages] = useState<string[]>([]);
-  const [streamingMessage, setStreamingMessage] = useState<string>('');
+export default function App() {
+  // const { messages, error, handleInputChange, input, handleSubmit } = useChat({
+  //   fetch: expoFetch as unknown as typeof globalThis.fetch,
+  //   api: generateAPIUrl('/(api)/chat'),
+  //   onError: error => console.error(error, 'ERROR'),
+  // });
 
-  const handleAddImage = (imageData: string) => {
-    setPendingImages(prev => [...prev, imageData]);
-  };
+  const [message, setMessage] = useState('Create ghibli styled imaged of a developer') //new
 
-  const handleSendMessage = async (content: string) => {
-    const newMessage: Message = {
-      role: 'user',
-      content,
-      ...(pendingImages.length > 0 && { image_data: pendingImages }),
-    };
+  const { complete, completion, isLoading } = useCompletion({
+    api: generateAPIUrl('/(api)/generate-image'),
+    fetch: expoFetch as unknown as typeof globalThis.fetch,
+    onError: error => console.error(error, 'ERROR'),
+    streamProtocol: 'text'
+  });
 
-    try {
-      setIsLoading(true);
-      setPendingImages([]);
-      setMessages(prev => [...prev, newMessage]);
-      setStreamingMessage('');
-
-      await chatAPI.sendMessage([...messages, newMessage], (chunk) => {
-        if (chunk.status === 'streaming' && chunk.content) {
-          setStreamingMessage(chunk.content);
-        } else if (chunk.status === 'generating_image') {
-          setStreamingMessage('Generando imagen...');
-        } else if (chunk.status === 'done' && chunk.content) {
-          const assistantMessage: Message = {
-            role: 'assistant',
-            content: chunk.content,
-          };
-          setMessages(prev => [...prev, assistantMessage]);
-          setStreamingMessage('');
-        }
-      });
-    } catch (error) {
-      console.error('Error sending message:', error);
-    } finally {
-      setIsLoading(false);
-      setPendingImages([]);
-    }
-  };
+  const onSubmit = async () => {
+    complete(message)
+  }
 
   return (
-    <View className="flex-1 bg-white dark:bg-gray-900">
-      <View className="flex-1 px-4 py-4">
-        <MessageList messages={messages} streamingMessage={streamingMessage} />
-      </View>
-      <KeyboardAvoidingView
-        keyboardVerticalOffset={70}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <ChatInput
-          onSendMessage={handleSendMessage}
-          onAddImage={handleAddImage}
-          pendingImages={pendingImages}
-          isLoading={isLoading}
-        />
-      </KeyboardAvoidingView>
-    </View >
-  );
-};
+    // <SafeAreaView style={{ height: '100%' }}>
+    //   <View
+    //     style={{
+    //       height: '95%',
+    //       display: 'flex',
+    //       flexDirection: 'column',
+    //       paddingHorizontal: 8,
+    //     }}
+    //   >
+    //     <ScrollView style={{ flex: 1 }}>
+    //       {messages.map(m => (
+    //         <View key={m.id} style={{ marginVertical: 8 }}>
+    //           <View>
+    //             <Text style={{ fontWeight: 700 }}>{m.role}</Text>
+    //             <Text>{m.content}</Text>
+    //           </View>
+    //         </View>
+    //       ))}
+    //     </ScrollView>
 
-export default Chat;
+    //     <View style={{ marginTop: 8 }}>
+    //       <TextInput
+    //         style={{ backgroundColor: 'white', padding: 8 }}
+    //         placeholder="Say something..."
+    //         value={input}
+    //         onChange={e =>
+    //           handleInputChange({
+    //             ...e,
+    //             target: {
+    //               ...e.target,
+    //               value: e.nativeEvent.text,
+    //             },
+    //           } as unknown as React.ChangeEvent<HTMLInputElement>)
+    //         }
+    //         onSubmitEditing={e => {
+    //           handleSubmit(e);
+    //           e.preventDefault();
+    //         }}
+    //         autoFocus={true}
+    //       />
+    //     </View>
+    //   </View>
+    // </SafeAreaView>
+    <SafeAreaView className="flex-1">
+      <TextInput
+        value={message}
+        onChangeText={setMessage}
+        placeholder="Type something"
+        style={{
+          borderWidth: 1,
+          borderColor: "#ccc",
+          padding: 8,
+          margin: 8,
+          backgroundColor: 'green'
+        }}
+      />
+      <Button title="Ask AI" onPress={onSubmit} />
+      {
+        isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <Image source={{ uri: completion }} style={{ width: 300, height: 300, margin: 8 }} />
+        )
+      }
+
+    </SafeAreaView>
+  );
+}
