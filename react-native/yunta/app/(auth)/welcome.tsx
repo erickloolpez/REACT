@@ -1,9 +1,10 @@
 import Presentation from "@/components/(auth)/Presentation";
 import CustomButton from "@/components/CustomButton";
 import { onboarding } from "@/constants";
+import { useAuth } from "@clerk/clerk-expo";
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from "expo-router";
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Image, ImageBackground, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from 'react-native-swiper';
@@ -15,6 +16,23 @@ export default function Index() {
   const swiperRef = useRef<Swiper>(null);
   const [activeIndex, setActiveIndex] = useState(0)
   const isLastSlide = activeIndex === onboarding.length - 1
+
+  const { signOut, isLoaded } = useAuth();
+
+  useEffect(() => {
+    const handleSignOut = async () => {
+      if (isLoaded) {
+        try {
+          await signOut();
+          console.log('Sesión cerrada al inicio de la aplicación');
+        } catch (error) {
+          console.error('Error al cerrar sesión:', error);
+        }
+      }
+    };
+
+    handleSignOut();
+  }, [isLoaded, signOut]);
 
   return (
     <SafeAreaView className="flex-1">

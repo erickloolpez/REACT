@@ -67,7 +67,7 @@ const Home = () => {
         <Text>erickloolpez</Text>
       </View>
       <View className="flex-1 bg-green-400 items-center justify-center">
-        <TouchableOpacity onPress={() => router.push('/(chat)/chat')} className="w-60 h-60 bg-white rounded-lg items-center justify-center">
+        <TouchableOpacity onPress={() => router.push('/(chat)/n8n')} className="w-60 h-60 bg-white rounded-lg items-center justify-center">
           <Animated.Image entering={FadeIn.duration(500)} exiting={FadeOut.duration(500)} key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-60 h-60 rounded-lg object-contain " />
         </TouchableOpacity>
       </View>
