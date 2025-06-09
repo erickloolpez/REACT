@@ -1,35 +1,40 @@
-import { Message } from "@/types/chat";
+import { icons } from "@/constants";
+import { Message } from "@/utils/interfaces";
+import { FlashList } from "@shopify/flash-list";
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
-// Si usas markdown, importa el componente adecuado para React Native
-// import Markdown from 'react-native-markdown-display';
+import { Image, View } from "react-native";
+import ChatMessage from "./ChatMessage";
 
-interface MessageListProps {
+type Props = {
   messages: Message[];
-  streamingMessage?: string;
+  height: number;
 }
 
-const MessageList = ({ messages, streamingMessage }: MessageListProps) => {
+const MessageList = ({ messages, height }: Props) => {
   return (
-    <ScrollView
-      className="flex-1 px-2 py-4"
-      contentContainerStyle={{ gap: 24, paddingBottom: 24 }}
-    // Si quieres que siempre muestre el último mensaje, puedes usar ref y scrollToEnd
-    >
-      {Array.from({ length: 100 }).map((_, index) => (
-        <View key={index} className="flex-row items-start gap-2">
-          <View className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700" />
-          <View className="flex-1">
-            <Text className="text-sm text-gray-500 dark:text-gray-400">
-              Usuario {index + 1}
-            </Text>
-            <Text className="text-base text-gray-900 dark:text-gray-100">
-              Mensaje de ejemplo {index + 1}
-            </Text>
+    <>
+      {
+        messages.length === 0 && (
+          <View style={[{ marginTop: height / 2 - 100, alignItems: 'center', gap: 16 }]}>
+            <View className="self-center items-center justify-center w-14 h-14 bg-white rounded-full" >
+              <Image source={icons.person} className="w-12 h-12" resizeMode={'cover'} />
+            </View>
           </View>
-        </View>
-      ))}
-    </ScrollView>
+        )
+      }
+      <FlashList
+        data={messages}
+        renderItem={({ item }) => (
+          <ChatMessage {...item} />
+        )}
+        estimatedItemSize={400}
+        contentContainerStyle={{
+          paddingBottom: 100,
+          paddingTop: 10
+        }}
+        keyboardDismissMode="on-drag"
+      />
+    </>
   );
 };
 
