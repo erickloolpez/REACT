@@ -50,16 +50,6 @@ const ChatInput = ({
     }
   })
 
-  const onChangeText = (text: string) => {
-    collapseItems()
-    setMessage(text);
-  }
-
-  const handleSend = () => {
-    onSendMessage(message)
-    setMessage("")
-  };
-
   return (
     <View className="bg-white dark:bg-transparent" style={{ paddingBottom: bottom, }}>
       <View className="flex-row items-end gap-x-2">
@@ -80,7 +70,6 @@ const ChatInput = ({
         </Animated.View>
 
         <TextInput
-          autoFocus
           onFocus={collapseItems}
           onChange={e =>
             onSendMessage({
