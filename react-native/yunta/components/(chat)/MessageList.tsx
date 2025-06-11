@@ -1,12 +1,11 @@
 import { icons } from "@/constants";
-import { Message } from "@/utils/interfaces";
 import { FlashList } from "@shopify/flash-list";
 import React from "react";
 import { Image, View } from "react-native";
 import ChatMessage from "./ChatMessage";
 
 type Props = {
-  messages: Message[];
+  messages: any;
   height: number;
 }
 

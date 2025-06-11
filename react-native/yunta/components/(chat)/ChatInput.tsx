@@ -1,14 +1,16 @@
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
-import { CameraIcon, Loader2, PlusIcon, SendHorizonal } from "lucide-react-native";
+import { CameraIcon, PlusIcon } from "lucide-react-native";
 import React, { useState } from "react";
 import { TextInput, TouchableOpacity, View } from "react-native";
 import Animated, { Extrapolation, interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export type ChatInputProps = {
-  onSendMessage: (content: string) => void;
+  onSendMessage: any;
   isLoading: boolean;
+  input: any;
+  handleSubmit: any;
 }
 
 const ATouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
@@ -16,6 +18,8 @@ const ATouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const ChatInput = ({
   onSendMessage,
   isLoading,
+  input,
+  handleSubmit
 }: ChatInputProps) => {
   const { bottom } = useSafeAreaInsets();
   const [message, setMessage] = useState("");
@@ -77,28 +81,27 @@ const ChatInput = ({
 
         <TextInput
           autoFocus
-          multiline
           onFocus={collapseItems}
-          value={message}
-          onChangeText={onChangeText}
+          onChange={e =>
+            onSendMessage({
+              ...e,
+              target: {
+                ...e.target,
+                value: e.nativeEvent.text,
+              },
+            } as unknown as React.ChangeEvent<HTMLInputElement>)
+          }
+          onSubmitEditing={(e) => {
+            handleSubmit(e);
+            e.preventDefault();
+          }}
+          value={input}
           placeholder="Escribe un mensaje"
           className="flex-1 rounded-lg border-2 border-gray-200 dark:border-gray-700 p-2
             bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100
             placeholder-gray-500 dark:placeholder-gray-400"
           editable={!isLoading}
         />
-
-        <TouchableOpacity
-          onPress={handleSend}
-          disabled={!message.trim() || isLoading}
-          className="p-2.5 bg-[#07b56a] rounded-lg disabled:opacity-50"
-        >
-          {isLoading ? (
-            <Loader2 size={26} color="#fff" className="animate-spin" />
-          ) : (
-            <SendHorizonal size={26} color="#fff" />
-          )}
-        </TouchableOpacity>
       </View>
     </View>
   );
