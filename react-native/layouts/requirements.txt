@@ -6,3 +6,4 @@ npx expo install react-native-reanimated
 npm i moti --legacy-peer-deps
 yarn add @react-native-seoul/masonry-list
 yarn add @gorhom/bottom-sheet@^5
+npm install lucide-react-native

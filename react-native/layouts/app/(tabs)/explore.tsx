@@ -4,7 +4,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Link } from 'expo-router';
-import { Image, StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 export default function TabTwoScreen() {
   return (
@@ -27,7 +27,7 @@ export default function TabTwoScreen() {
           This app has two consists in something beautiful to present to the user:{' '}
         </ThemedText>
         <Link href={'/ai-playground'} style={{ marginTop: 8 }}>
-          <Image source={require('../../assets/images/ai-playground.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
+          <Text className="text-red-400">LINK</Text>
         </Link>
       </Collapsible>
       <Collapsible title="fade-images">
@@ -35,7 +35,7 @@ export default function TabTwoScreen() {
           This app use a flat list with a cool animation using react-native-reanimated:{' '}
         </ThemedText>
         <Link href={'/fade-list'} style={{ marginTop: 8 }}>
-          <Image source={require('../../assets/images/rotate-slide.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
+          <Text className="text-red-400" >LINK</Text>
         </Link>
       </Collapsible>
       <Collapsible title="counter">
@@ -43,7 +43,7 @@ export default function TabTwoScreen() {
           This app use a counter but it appears in a particular way:{' '}
         </ThemedText>
         <Link href={'/counter'} style={{ marginTop: 8 }}>
-          <Image source={require('../../assets/images/counter.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
+          <Text className="text-red-400" >LINK</Text>
         </Link>
       </Collapsible>
       <Collapsible title="ranking">
@@ -51,7 +51,7 @@ export default function TabTwoScreen() {
           This app use an animated rank for the positions:{' '}
         </ThemedText>
         <Link href={'/masonry'} style={{ marginTop: 8 }}>
-          <Image source={require('../../assets/images/masonry.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
+          <Text className="text-red-400" >LINK</Text>
         </Link>
       </Collapsible>
       <Collapsible title="navbar">
@@ -59,7 +59,7 @@ export default function TabTwoScreen() {
           This app use an animated navbar:{' '}
         </ThemedText>
         <Link href={'/nav'} style={{ marginTop: 8 }}>
-          <Image source={require('../../assets/images/masonry.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
+          <Text className="text-red-400" >LINK</Text>
         </Link>
       </Collapsible>
       <Collapsible title="bottom modal">
@@ -67,7 +67,15 @@ export default function TabTwoScreen() {
           This app use an animated bottom modal:{' '} In the ROOT you need to add the BottomSheetModalProvider and in the component you need to add the BottomSheetModal and BottomSheetView
         </ThemedText>
         <Link href={'/modalBottom'} style={{ marginTop: 8 }}>
-          <Image source={require('../../assets/images/masonry.png')} style={{ width: 300, height: 300, resizeMode: 'contain' }} />
+          <Text className="text-red-400" >LINK</Text>
+        </Link>
+      </Collapsible>
+      <Collapsible title="horaries animation">
+        <ThemedText>
+          This app use something incredible to present the horaries.
+        </ThemedText>
+        <Link href={'/horaries'} style={{ marginTop: 8 }}>
+          <Text className="text-red-400" >LINK</Text>
         </Link>
       </Collapsible>
     </ParallaxScrollView >
