@@ -4,6 +4,7 @@ import { router } from 'expo-router'
 import React, { useState } from 'react'
 import { Dimensions, Image, ImageBackground, Text, TouchableOpacity, View } from 'react-native'
 import Animated, { clamp, FadeIn, FadeOut, interpolate, interpolateColor, runOnJS, SharedValue, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const { width } = Dimensions.get('screen')
 const _itemSize = width * .24
@@ -53,48 +54,51 @@ const Home = () => {
   })
 
   return (
-    <ImageBackground source={images.bgHome} className="flex-1">
-      <BannerShape
-        width={250}
-        height={80}
-        fillColor="#f0c000" // Un amarillo similar al de tu imagen
-        strokeColor="#1e609e" // Un azul similar al de tu imagen
-        strokeWidth={6}
-        cornerRadius={10}
-        vNotchDepth={30}
-      />
-      <View className="w-[220px] h-10 bg-red-400 rounded-lg justify-center px-5">
-        <Text>erickloolpez</Text>
-      </View>
-      <View className="flex-1 bg-green-400 items-center justify-center">
-        <TouchableOpacity onPress={() => router.push('/(chat)/chat')} className="w-60 h-60 bg-white rounded-lg items-center justify-center">
-          <Animated.Image entering={FadeIn.duration(500)} exiting={FadeOut.duration(500)} key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-60 h-60 rounded-lg object-contain " />
-        </TouchableOpacity>
-      </View>
-      <Animated.FlatList
-        style={{
-          backgroundColor: 'red',
-          flexGrow: 1,
-          height: _itemSize * 2,
-          paddingBottom: _itemSize
-        }}
-        contentContainerStyle={{
-          gap: _spacing,
-          paddingHorizontal: (width - _itemSize) / 2,
-        }}
-        data={carrusel}
-        keyExtractor={(_, index) => String(index)}
-        renderItem={({ item, index }) => {
-          return <CarouselItem imageUri={item} index={index} scrollX={scrollX} />
-        }}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        onScroll={onScroll}
-        scrollEventThrottle={1000 / 60}
-        snapToInterval={_itemTotalSize}
-        decelerationRate={"fast"}
-      />
-    </ImageBackground>
+    <SafeAreaView className="flex-1">
+      <ImageBackground source={images.bgHome} className="flex-1">
+        <BannerShape
+          width={250}
+          height={80}
+          fillColor="#f0c000" // Un amarillo similar al de tu imagen
+          strokeColor="#1e609e" // Un azul similar al de tu imagen
+          strokeWidth={6}
+          cornerRadius={10}
+          vNotchDepth={30}
+        />
+        <View className="w-[220px] h-10 bg-red-400 rounded-lg justify-center px-5">
+          <Text>erickloolpez</Text>
+        </View>
+        <View className="flex-1 bg-green-400 items-center justify-center">
+          <TouchableOpacity onPress={() => router.push('/(chat)/chat')} className="w-60 h-60 bg-white rounded-lg items-center justify-center">
+            <Animated.Image entering={FadeIn.duration(500)} exiting={FadeOut.duration(500)} key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-60 h-60 rounded-lg object-contain " />
+          </TouchableOpacity>
+        </View>
+        <Animated.FlatList
+          style={{
+            backgroundColor: 'red',
+            flexGrow: 1,
+            height: _itemSize * 2,
+            paddingBottom: _itemSize
+          }}
+          contentContainerStyle={{
+            gap: _spacing,
+            paddingHorizontal: (width - _itemSize) / 2,
+          }}
+          data={carrusel}
+          keyExtractor={(_, index) => String(index)}
+          renderItem={({ item, index }) => {
+            return <CarouselItem imageUri={item} index={index} scrollX={scrollX} />
+          }}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          onScroll={onScroll}
+          scrollEventThrottle={1000 / 60}
+          snapToInterval={_itemTotalSize}
+          decelerationRate={"fast"}
+        />
+      </ImageBackground>
+
+    </SafeAreaView>
   )
 }
 
