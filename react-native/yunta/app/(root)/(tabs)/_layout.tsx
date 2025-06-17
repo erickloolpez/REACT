@@ -53,7 +53,7 @@ const Layout = () => (
     }
   }}>
     <Tabs.Screen
-      name="notes"
+      name="(notes)"
       options={{
         title: 'Notes',
         headerShown: false,
