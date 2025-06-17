@@ -1,5 +1,6 @@
 import archer from "@/assets/images/arch.webp"
 import banner from "@/assets/images/banner.webp"
+import bannerDictionary from "@/assets/images/banner_dictionary.webp"
 import bgFive from "@/assets/images/bg-five.webp"
 import bgFour from "@/assets/images/bg-four.webp"
 import bgOne from "@/assets/images/bg-one.webp"
@@ -90,7 +91,8 @@ export const images = {
   banner,
   bgHome,
   bgDictionary,
-  bgNotes
+  bgNotes,
+  bannerDictionary
 }
 
 export const icons = {
@@ -147,6 +149,3 @@ export const onboarding = [
     background: welcomeBgOne,
   },
 ]
-
-
-

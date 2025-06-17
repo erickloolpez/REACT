@@ -47,8 +47,8 @@ const Dictionary = () => {
       >
         <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} showsVerticalScrollIndicator={false}>
           <Animated.Image
-            source={require('@/assets/images/partial-react-logo.png')}
-            style={[{ height: _imageHeight, objectFit: "cover" }, imageAnimatedStyle]}
+            source={require('@/assets/images/banner_dictionary.webp')}
+            style={[{ width: 400, height: _imageHeight, objectFit: "contain" }, imageAnimatedStyle]}
           />
           <View
             className="flex-1"
