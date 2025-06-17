@@ -29,31 +29,38 @@ const Dictionary = () => {
     return {
       transform: [
         {
-          translateY: interpolate(scrollOfset.value, [-_imageHeight, 0, _imageHeight], [-_imageHeight / 2, 0, _imageHeight * .75], 'clamp')
+          translateX: interpolate(scrollOfset.value, [-_imageHeight, 0, _imageHeight], [_imageHeight / 2, 0, -_imageHeight * .75], 'clamp')
         },
         {
           scale: interpolate(scrollOfset.value, [-_imageHeight, 0, _imageHeight], [2, 1, 1], 'clamp')
         }
-      ]
-
+      ],
 
     }
   })
   return (
     <View className="flex-1">
-      <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
-        <Animated.Image source={require('@/assets/images/partial-react-logo.png')} style={[{ height: _imageHeight, objectFit: "cover" }, imageAnimatedStyle]} />
-        <ImageBackground source={require('@/assets/images/bgDictionary.webp')} className="flex-1" resizeMode="cover">
+      <ImageBackground
+        source={require('@/assets/images/bgDictionary.webp')}
+        className="rounded-lg"
+        resizeMode="cover"
+      >
+        <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} showsVerticalScrollIndicator={false}>
+          <Animated.Image
+            source={require('@/assets/images/partial-react-logo.png')}
+            style={[{ height: _imageHeight, objectFit: "cover" }, imageAnimatedStyle]}
+          />
           <View
             className="flex-1"
             style={{
-              height: _screenHeight,
               padding: _spacing,
               gap: _spacing,
             }}
           >
-            {weekDays.map((day) => (
+            {weekDays.map((day, index) => (
               <Day
+                weekLength={weekDays.length}
+                lastOne={index}
                 day={day}
                 _color={_color}
                 _borderRadius={_borderRadius}
@@ -64,8 +71,8 @@ const Dictionary = () => {
             ))}
           </View>
 
-        </ImageBackground>
-      </Animated.ScrollView>
+        </Animated.ScrollView>
+      </ImageBackground>
 
     </View>
   )
