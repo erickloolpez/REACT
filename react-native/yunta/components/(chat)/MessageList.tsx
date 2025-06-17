@@ -10,7 +10,6 @@ type Props = {
 }
 
 const MessageList = ({ messages, height }: Props) => {
-  console.log('heigth', height)
   return (
     <>
       {

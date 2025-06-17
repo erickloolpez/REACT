@@ -26,6 +26,7 @@ import noResult from "@/assets/images/no-result.png"
 import oso from "@/assets/images/oso.webp"
 import thief from "@/assets/images/robber.webp"
 import sherlock from "@/assets/images/sherlock-rb.webp"
+import steve from "@/assets/images/steve.webp"
 import warriorTwo from "@/assets/images/warrior-two.webp"
 import warrior from "@/assets/images/warrior.webp"
 import welcomeBgOne from "@/assets/images/welcome-bgOne.webp"
@@ -85,6 +86,7 @@ export const carrusel = [
 ]
 
 export const images = {
+  steve,
   check,
   noResult,
   message,
