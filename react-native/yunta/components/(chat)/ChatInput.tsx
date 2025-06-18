@@ -51,7 +51,7 @@ const ChatInput = ({
   })
 
   return (
-    <View className="bg-white dark:bg-transparent" style={{ paddingBottom: bottom, }}>
+    <View className=" bg-white dark:bg-transparent" style={{ paddingBottom: 20 }}>
       <View className="flex-row items-end gap-x-2">
         <ATouchableOpacity onPress={expandItems} className="bg-green-400 rounded-full w-[30] h-[30] items-center justify-center" style={expandedButtonStyle}>
           <PlusIcon size={26} color="black" />

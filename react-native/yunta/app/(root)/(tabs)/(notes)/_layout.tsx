@@ -21,6 +21,9 @@ const Layout = () => {
         tabBarActiveTintColor: "#131620",
         tabBarLabelStyle: { fontSize: 16, fontWeight: "bold" },
         tabBarIndicatorStyle: { backgroundColor: "blue", height: 3 },
+        tabBarStyle: {
+          height: 50,
+        }
       }}
     >
       <MaterialTopTabs.Screen
