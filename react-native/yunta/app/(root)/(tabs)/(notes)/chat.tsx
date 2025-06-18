@@ -20,7 +20,6 @@ const Notes = () => {
     onError: error => console.error(error, 'ERROR'),
   });
 
-
   return (
     <SafeAreaView className="flex-1">
       <ImageBackground source={images.bgNotes} className="flex-1">
@@ -32,7 +31,7 @@ const Notes = () => {
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={100}
-            className="w-full justify-end flex-1"
+            className="w-full h-12 justify-end"
           >
             <ChatInput onSendMessage={handleInputChange} input={input} handleSubmit={handleSubmit} isLoading={false} />
           </KeyboardAvoidingView>

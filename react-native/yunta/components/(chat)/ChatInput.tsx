@@ -86,7 +86,7 @@ const ChatInput = ({
           }}
           value={input}
           placeholder="Escribe un mensaje"
-          className="flex-1 rounded-lg border-2 border-gray-200 dark:border-gray-700 p-2
+          className="flex-1 h-10 rounded-lg border-2 border-gray-200 dark:border-gray-700 p-2
             bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100
             placeholder-gray-500 dark:placeholder-gray-400"
           editable={!isLoading}
