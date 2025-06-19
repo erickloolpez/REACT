@@ -1,80 +1,85 @@
-import { MotiView } from 'moti';
-import { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
-import Animated, { LinearTransition } from 'react-native-reanimated';
+import { MotiView } from 'moti'
+import { useState } from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
 
-const abecedary = [
-  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
-];
-const VISIBLE_LETTERS = 5;
+const lettersToNice = [
+  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+]
 
-export default function AlphabetCarousel() {
-  const [startIndex, setStartIndex] = useState(0);
-  const [selectedIndex, setSelectedIndex] = useState(null);
+const fontSize = 40
+const _staggerCounter = 50
+const JUMP = 9 // salto de 9 posiciones
 
-  // Limita el índice para no salirte del array
-  const canGoUp = startIndex > 0;
-  const canGoDown = startIndex + VISIBLE_LETTERS < abecedary.length;
+function Tick({ children }) {
+  return (
+    <Text style={{ fontSize: fontSize, lineHeight: fontSize * 1.1, fontVariant: ['tabular-nums'], color: 'white' }}>
+      {children}
+    </Text>
+  )
+}
 
-  const visibleLetters = abecedary.slice(startIndex, startIndex + VISIBLE_LETTERS);
+function TickerList({ index }) {
+  return (
+    <View style={{ height: fontSize }}>
+      <MotiView
+        animate={{
+          translateY: -fontSize * 1.1 * index
+        }}
+        transition={{
+          delay: _staggerCounter,
+          damping: 80,
+          stiffness: 200
+        }}
+      >
+        {
+          lettersToNice.map((letter, idx) => {
+            return <Tick key={`letter-${letter}-${idx}`} >{letter}</Tick>
+          })
+        }
+      </MotiView>
+    </View>
+  )
+}
+
+export default function Counter() {
+  const [currentIndex, setCurrentIndex] = useState(4)
+
+  // Función para avanzar 9 posiciones
+  const handleNext = () => {
+    setCurrentIndex(prev => {
+      const next = prev + JUMP
+      return next < lettersToNice.length ? next : prev // no pasar del final
+    })
+  }
+
+  // Función para retroceder 9 posiciones
+  const handlePrev = () => {
+    setCurrentIndex(prev => {
+      const next = prev - JUMP
+      return next >= 0 ? next : prev // no pasar del inicio
+    })
+  }
 
   return (
-    <View style={{ alignItems: 'center' }}>
-      <Pressable
-        onPress={() => canGoUp && setStartIndex(startIndex - 1)}
-        disabled={!canGoUp}
-        style={{
-          opacity: canGoUp ? 1 : 0.3,
-          marginBottom: 10,
-        }}
+    <View className="w-14 h-44 bg-green-400 flex-col  items-center justify-around">
+      <View
+        className="w-full h-[400px] items-center justify-center bg-[#cf613c] rounded-2xl"
+        style={{ overflow: 'hidden' }}
       >
-        <Text style={{ fontSize: 24 }}>⬆️</Text>
-      </Pressable>
-
-      <Animated.View style={{ gap: 8 }}>
-        {visibleLetters.map((letter, idx) => {
-          const isSelected = selectedIndex === idx
-          return (
-            <MotiView
-              key={startIndex + idx}
-              layout={LinearTransition.springify().damping(80).stiffness(200)}
-              animate={{
-                backgroundColor: isSelected ? '#dc2626' : '#003366',
-                borderRadius: 8,
-              }}
-              style={{
-                marginVertical: 2,
-                width: 48,
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 8,
-              }}
-            >
-              <Pressable onPress={() => {
-                if (selectedIndex === idx) {
-                  setSelectedIndex(null);
-                } else {
-                  setSelectedIndex(idx);
-                }
-              }}>
-                <Text style={{ color: '#fff', fontSize: 20 }}>{letter}</Text>
-
-              </Pressable>
-            </MotiView>
-          )
-        })}
-      </Animated.View>
-
-      <Pressable
-        onPress={() => canGoDown && setStartIndex(startIndex + 1)}
-        disabled={!canGoDown}
-        style={{
-          opacity: canGoDown ? 1 : 0.3,
-          marginTop: 10,
-        }}
-      >
-        <Text style={{ fontSize: 24 }}>⬇️</Text>
-      </Pressable>
+        <TickerList index={currentIndex} />
+      </View>
+      <View style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
+        <TouchableOpacity onPress={handlePrev}>
+          <View className="w-16 h-10 bg-green-900 rounded-xl flex-row items-center justify-center">
+            <Text className="text-xl text-white">Prev</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleNext}>
+          <View className="w-16 h-10 bg-green-900 rounded-xl flex-row items-center justify-center">
+            <Text className="text-xl text-white">Next</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
-  );
+  )
 }
