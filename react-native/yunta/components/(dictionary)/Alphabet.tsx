@@ -41,7 +41,7 @@ function Tick({ children, setSelectedIndex, selectedIndex, index }: { children: 
   )
 }
 
-function TickerList({ index, setSelectedIndex, selectedIndex }) {
+function TickerList({ index, setSelectedIndex, selectedIndex }: { index: number, setSelectedIndex: (index: number | null) => void, selectedIndex: number | null }) {
   return (
     <View
       style={{ height: fontSize, width: fontSize }}
