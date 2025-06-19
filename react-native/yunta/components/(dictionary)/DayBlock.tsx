@@ -1,10 +1,10 @@
-import { Plus, X } from "lucide-react-native";
+import { Plus } from "lucide-react-native";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 import Animated, { FadeInDown, FadeOut, LinearTransition } from "react-native-reanimated";
-import HourBlock from "./HourBlock";
 
-export default function DayBlock({ _spacing, _damping, _borderRadius, _color }: { _spacing: number, _damping: number, _borderRadius: number, _color: string }) {
+export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _spacing: number, _damping: number, _borderRadius: number, day: any }) {
   const _entering = FadeInDown.springify().damping(_damping);
   const _exiting = FadeOut.springify().damping(_damping)
   const _layout = LinearTransition.springify().damping(_damping);
@@ -13,13 +13,15 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, _color }: 
   const [hours, setHours] = useState([_startHour])
   const AnimatedPressionable = Animated.createAnimatedComponent(Pressable);
 
+  const colors = ["#31773C", "#FD7D24", "#4592C4", "#719F3F", "#EED535", "#A38C21", "#7B62A3"]
+
   return (
     <Animated.View
       entering={_entering}
       exiting={_exiting}
       layout={_layout}
       style={{
-        gap: _spacing
+        gap: _spacing,
       }}
     >
       {hours.map((hour) => (
@@ -34,11 +36,15 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, _color }: 
           exiting={_exiting}
           layout={_layout}
         >
-          <Text className="font-Waku">From:</Text>
+          {/* <Text className="font-Waku">From:</Text>
           <HourBlock block={hour} _borderRadius={_borderRadius} _color={_color} _damping={_damping} _spacing={_spacing} />
           <Text className="font-Waku">To:</Text>
-          <HourBlock block={hour} _borderRadius={_borderRadius} _color={_color} _damping={_damping} _spacing={_spacing} />
-          <AnimatedPressionable
+          <HourBlock block={hour} _borderRadius={_borderRadius} _color={_color} _damping={_damping} _spacing={_spacing} /> */}
+          <TextInput
+            className="flex-1 border border-gray-300 p-2 rounded-lg "
+            value={day.relation}
+          />
+          {/* <AnimatedPressionable
             layout={_layout}
             onPress={() => {
               console.log("Remove hour: ", hour);
@@ -57,10 +63,24 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, _color }: 
             >
               <X size={14} color="#fff" />
             </View>
-          </AnimatedPressionable>
+          </AnimatedPressionable> */}
         </Animated.View>
       ))
       }
+      <Text className="font-Waku">Historias</Text>
+      <View className="flex-row gap-1">
+        {
+          day.stories.map((story: any, index: number) => (
+            <View
+              className="p-2 border border-black rounded-full "
+              style={{ backgroundColor: colors[index % colors.length] }}
+              key={`story-${index}`}
+            >
+              <Text className="font-Waku text-white">{story.title}</Text>
+            </View>
+          ))
+        }
+      </View>
       <Pressable
         onPress={() => {
           if (hours.length === 0) {

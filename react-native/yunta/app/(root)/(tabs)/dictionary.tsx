@@ -1,17 +1,19 @@
+import Alphabet from '@/components/(dictionary)/Alphabet';
 import Day from '@/components/(dictionary)/Day';
 import React from 'react';
 import { Dimensions, ImageBackground, View } from 'react-native';
 import Animated, { interpolate, useAnimatedRef, useAnimatedStyle, useScrollViewOffset } from 'react-native-reanimated';
 
 const weekDays = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
+  { name: 'Sunday', relation: 'Es una vaquita en el parque', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
+  { name: 'Monday', relation: 'Es un perro en la playa', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
+  { name: 'Tuesday', relation: 'Es un gato en la montaña', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
+  { name: 'Wednesday', relation: 'Es un pez en el río', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
+  { name: 'Thursday', relation: 'Es un pájaro en el cielo', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
+  { name: 'Friday', relation: 'Es un conejo en el bosque', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
+  { name: 'Saturday', relation: 'Es un elefante en la selva', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
 ]
+
 
 const _spacing = 10;
 const _color = "#ececec";
@@ -51,26 +53,29 @@ const Dictionary = () => {
             style={[{ width: 400, height: _imageHeight, objectFit: "contain" }, imageAnimatedStyle]}
           />
           <View
-            className="flex-1"
+            className="flex-1 flex-row"
             style={{
               padding: _spacing,
               gap: _spacing,
             }}
           >
-            {weekDays.map((day, index) => (
-              <Day
-                weekLength={weekDays.length}
-                lastOne={index}
-                day={day}
-                _color={_color}
-                _borderRadius={_borderRadius}
-                _spacing={_spacing}
-                _damping={_damping}
-                key={`day-${day}`}
-              />
-            ))}
-          </View>
+            <Alphabet />
+            <View className="flex-1 gap-4" >
+              {weekDays.map((day, index) => (
+                <Day
+                  weekLength={weekDays.length}
+                  lastOne={index}
+                  day={day}
+                  _color={_color}
+                  _borderRadius={_borderRadius}
+                  _spacing={_spacing}
+                  _damping={_damping}
+                  key={`day-${day.name}`}
+                />
+              ))}
 
+            </View>
+          </View>
         </Animated.ScrollView>
       </ImageBackground>
 

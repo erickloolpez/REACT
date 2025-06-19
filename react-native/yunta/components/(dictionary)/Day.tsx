@@ -25,7 +25,7 @@ export default function Day({ day, _color, _borderRadius, _spacing, _damping, la
       <View
         className="flex-row  items-center justify-between"
       >
-        <Text className={`${isOn ? 'text-black' : 'text-white'} font-Waku`}>{day}</Text>
+        <Text className={`${isOn ? 'text-black' : 'text-white'} font-Waku`}>{day.name}</Text>
         <Switch
           value={isOn}
           onValueChange={(value) => setIsOn(value)}
@@ -39,7 +39,7 @@ export default function Day({ day, _color, _borderRadius, _spacing, _damping, la
           }}
         />
       </View>
-      {isOn && <DayBlock _borderRadius={_borderRadius} _damping={_damping} _spacing={_spacing} _color={_color} />}
+      {isOn && <DayBlock _borderRadius={_borderRadius} _damping={_damping} _spacing={_spacing} day={day} />}
     </Animated.View>
   )
 }
