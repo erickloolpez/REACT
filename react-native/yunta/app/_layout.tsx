@@ -1,3 +1,4 @@
+import GlobalProvider from '@/context/GlobalProvider';
 import '@/polyfills';
 import { ClerkProvider } from '@clerk/clerk-expo';
 import { tokenCache } from '@clerk/clerk-expo/token-cache';
@@ -28,12 +29,14 @@ export default function RootLayout() {
     <ClerkProvider tokenCache={tokenCache}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <StatusBar hidden={true} />
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="(root)" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(chat)" options={{ headerShown: false }} />
-        </Stack>
+        <GlobalProvider>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(root)" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(chat)" options={{ headerShown: false }} />
+          </Stack>
+        </GlobalProvider>
       </GestureHandlerRootView>
     </ClerkProvider>
   )

@@ -4,7 +4,7 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import DayBlock from "./DayBlock";
 
 
-export default function Day({ day, _color, _borderRadius, _spacing, _damping, lastOne, weekLength }: { day: any, _color: string, _borderRadius: number, _spacing: number, _damping: number, lastOne?: number, weekLength: number }) {
+export default function Day({ day, _color, _borderRadius, _spacing, _damping, lastOne, weekLength, setCustomData }: { day: any, _color: string, _borderRadius: number, _spacing: number, _damping: number, lastOne?: number, weekLength: number, setCustomData: (data: any[]) => void }) {
   const [isOn, setIsOn] = useState(false);
   const _layout = LinearTransition.springify().damping(_damping);
   return (
@@ -17,7 +17,7 @@ export default function Day({ day, _color, _borderRadius, _spacing, _damping, la
         padding: _spacing,
         backgroundColor: isOn ? _color : "transparent",
         gap: _spacing,
-        marginBottom: lastOne === weekLength - 1 ? 120 : 0,
+        marginBottom: lastOne === weekLength - 1 ? 220 : 0,
       }}
       layout={_layout}
     >
@@ -39,7 +39,7 @@ export default function Day({ day, _color, _borderRadius, _spacing, _damping, la
           }}
         />
       </View>
-      {isOn && <DayBlock _borderRadius={_borderRadius} _damping={_damping} _spacing={_spacing} day={day} />}
+      {isOn && <DayBlock _borderRadius={_borderRadius} _damping={_damping} _spacing={_spacing} day={day} setCustomData={setCustomData} />}
     </Animated.View>
   )
 }

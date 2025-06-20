@@ -1,10 +1,11 @@
-import { Plus } from "lucide-react-native";
+import { useGlobalContext } from "@/context/GlobalProvider";
+import { Plus, Trash2 } from "lucide-react-native";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Animated, { FadeInDown, FadeOut, LinearTransition } from "react-native-reanimated";
 
-export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _spacing: number, _damping: number, _borderRadius: number, day: any }) {
+export default function DayBlock({ _spacing, _damping, _borderRadius, day, setCustomData }: { _spacing: number, _damping: number, _borderRadius: number, day: any, setCustomData: (data: any[]) => void }) {
   const _entering = FadeInDown.springify().damping(_damping);
   const _exiting = FadeOut.springify().damping(_damping)
   const _layout = LinearTransition.springify().damping(_damping);
@@ -14,6 +15,8 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _
   const AnimatedPressionable = Animated.createAnimatedComponent(Pressable);
 
   const colors = ["#31773C", "#FD7D24", "#4592C4", "#719F3F", "#EED535", "#A38C21", "#7B62A3"]
+
+  const { deleteWord } = useGlobalContext();
 
   return (
     <Animated.View
@@ -36,34 +39,10 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _
           exiting={_exiting}
           layout={_layout}
         >
-          {/* <Text className="font-Waku">From:</Text>
-          <HourBlock block={hour} _borderRadius={_borderRadius} _color={_color} _damping={_damping} _spacing={_spacing} />
-          <Text className="font-Waku">To:</Text>
-          <HourBlock block={hour} _borderRadius={_borderRadius} _color={_color} _damping={_damping} _spacing={_spacing} /> */}
           <TextInput
-            className="flex-1 border border-gray-300 p-2 rounded-lg "
+            className="flex-1 border border-gray-300 p-2 rounded-lg font-Waku"
             value={day.relation}
           />
-          {/* <AnimatedPressionable
-            layout={_layout}
-            onPress={() => {
-              console.log("Remove hour: ", hour);
-              setHours((prev) => [...prev.filter((k) => k !== hour)]);
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: "#003366",
-                height: 24,
-                aspectRatio: 1,
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 4,
-              }}
-            >
-              <X size={14} color="#fff" />
-            </View>
-          </AnimatedPressionable> */}
         </Animated.View>
       ))
       }
@@ -81,31 +60,57 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _
           ))
         }
       </View>
-      <Pressable
-        onPress={() => {
-          if (hours.length === 0) {
-            setHours([_startHour]);
-            return;
-          }
-          setHours((prev) => [...prev, prev[prev.length - 1] + 1]);
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            gap: _spacing / 2,
-            padding: _spacing,
-            borderRadius: _borderRadius - _spacing / 2,
-            backgroundColor: "#003366",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: _spacing / 2,
+      <View className="w-full flex-row gap-2">
+        <Pressable
+          className="flex-1"
+          onPress={() => {
+            if (hours.length === 0) {
+              setHours([_startHour]);
+              return;
+            }
+            setHours((prev) => [...prev, prev[prev.length - 1] + 1]);
           }}
         >
-          <Plus size={18} color="#fff" />
-          <Text className="font-Waku" style={{ fontSize: 14, color: "#fff" }}>Add more</Text>
-        </View>
-      </Pressable>
+          <View
+            style={{
+              flexDirection: "row",
+              gap: _spacing / 2,
+              padding: _spacing,
+              borderRadius: _borderRadius - _spacing / 2,
+              backgroundColor: "#003366",
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: _spacing / 2,
+            }}
+          >
+            <Plus size={18} color="#fff" />
+            <Text className="font-Waku" style={{ fontSize: 14, color: "#fff" }}>Add more</Text>
+          </View>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            console.log(day)
+            deleteWord(day.name)
+          }}
+        >
+          <View
+            style={{
+              width: 40,
+              flexDirection: "row",
+              gap: _spacing / 2,
+              padding: _spacing,
+              borderRadius: _borderRadius - _spacing / 2,
+              backgroundColor: "#003366",
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: _spacing / 2,
+            }}
+          >
+            <Trash2 size={18} color="#fff" />
+          </View>
+        </Pressable>
+
+      </View>
     </Animated.View >
   )
 }

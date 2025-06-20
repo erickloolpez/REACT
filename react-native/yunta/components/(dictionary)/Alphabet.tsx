@@ -1,3 +1,4 @@
+import { useGlobalContext } from '@/context/GlobalProvider'
 import { ArrowDown, ArrowUp } from 'lucide-react-native'
 import { MotiView } from 'moti'
 import { useState } from 'react'
@@ -12,8 +13,9 @@ const fontSize = 40
 const _staggerCounter = 50
 const JUMP = 6 // salto de 9 posiciones
 
-function Tick({ children, setSelectedIndex, selectedIndex, index }: { children: string, setSelectedIndex: (index: number | null) => void, selectedIndex: number | null, index: number }) {
+function Tick({ children, setSelectedIndex, selectedIndex, index, setCustomData }: { children: string, setSelectedIndex: (index: number) => void, selectedIndex: number | null, index: number, setCustomData: (data: any[]) => void }) {
   // MotiView para animar el fondo
+  const { words } = useGlobalContext()
   const isSelected = selectedIndex === index
   return (
     <MotiView
@@ -29,6 +31,9 @@ function Tick({ children, setSelectedIndex, selectedIndex, index }: { children: 
             setSelectedIndex(null);
           } else {
             setSelectedIndex(index);
+            const letter = lettersToNice[index]
+            const newWords = words.filter((word) => word.name.charAt(0).toUpperCase() === letter);
+            setCustomData(newWords)
           }
         }
         }
@@ -41,7 +46,7 @@ function Tick({ children, setSelectedIndex, selectedIndex, index }: { children: 
   )
 }
 
-function TickerList({ index, setSelectedIndex, selectedIndex }: { index: number, setSelectedIndex: (index: number | null) => void, selectedIndex: number | null }) {
+function TickerList({ index, setSelectedIndex, selectedIndex, setCustomData }: { index: number, setSelectedIndex: (index: number) => void, selectedIndex: number | null, setCustomData: (data: any[]) => void }) {
   return (
     <View
       style={{ height: fontSize, width: fontSize }}
@@ -58,7 +63,7 @@ function TickerList({ index, setSelectedIndex, selectedIndex }: { index: number,
       >
         {
           lettersToNice.map((letter, idx) => {
-            return <Tick key={`letter-${letter}-${idx}`} index={idx} setSelectedIndex={setSelectedIndex} selectedIndex={selectedIndex} >{letter}</Tick>
+            return <Tick key={`letter-${letter}-${idx}`} index={idx} setSelectedIndex={setSelectedIndex} selectedIndex={selectedIndex} setCustomData={setCustomData} >{letter}</Tick>
           })
         }
       </MotiView>
@@ -66,7 +71,7 @@ function TickerList({ index, setSelectedIndex, selectedIndex }: { index: number,
   )
 }
 
-export default function Counter() {
+export default function Alphabet({ setCustomData }: { setCustomData: (data: any[]) => void }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedIndex, setSelectedIndex] = useState(0)
 
@@ -97,7 +102,7 @@ export default function Counter() {
         className="w-full h-[280px] items-center justify-start p-3"
         style={{ overflow: 'hidden' }}
       >
-        <TickerList setSelectedIndex={setSelectedIndex} selectedIndex={selectedIndex} index={currentIndex} />
+        <TickerList setSelectedIndex={setSelectedIndex} selectedIndex={selectedIndex} index={currentIndex} setCustomData={setCustomData} />
       </View>
       <View style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
         <TouchableOpacity onPress={handleNext}>

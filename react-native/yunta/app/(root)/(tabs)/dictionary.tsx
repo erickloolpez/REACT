@@ -1,19 +1,11 @@
 import Alphabet from '@/components/(dictionary)/Alphabet';
 import Day from '@/components/(dictionary)/Day';
-import React from 'react';
-import { Dimensions, ImageBackground, View } from 'react-native';
+import { useGlobalContext } from '@/context/GlobalProvider';
+import { PlusIcon, SearchIcon } from 'lucide-react-native';
+import React, { useEffect, useState } from 'react';
+import { ImageBackground, View } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import Animated, { interpolate, useAnimatedRef, useAnimatedStyle, useScrollViewOffset } from 'react-native-reanimated';
-
-const weekDays = [
-  { name: 'Sunday', relation: 'Es una vaquita en el parque', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Monday', relation: 'Es un perro en la playa', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Tuesday', relation: 'Es un gato en la montaña', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Wednesday', relation: 'Es un pez en el río', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Thursday', relation: 'Es un pájaro en el cielo', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Friday', relation: 'Es un conejo en el bosque', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Saturday', relation: 'Es un elefante en la selva', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-]
-
 
 const _spacing = 10;
 const _color = "#ececec";
@@ -25,7 +17,13 @@ const Dictionary = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>()
   const scrollOfset = useScrollViewOffset(scrollRef);
   const _imageHeight = 300
-  const _screenHeight = Dimensions.get('screen').height;
+  const { words } = useGlobalContext();
+  const [customData, setCustomData] = useState([]);
+
+  useEffect(() => {
+    const customFilter = words.filter((day) => day.name.charAt(0).toLowerCase() === 'a');
+    setCustomData(customFilter);
+  }, [words])
 
   const imageAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -52,25 +50,42 @@ const Dictionary = () => {
             source={require('@/assets/images/banner_dictionary.webp')}
             style={[{ width: 400, height: _imageHeight, objectFit: "contain" }, imageAnimatedStyle]}
           />
+          <View className="w-full h-20 items-center justify-around flex-row">
+            <View className="w-4/5 h-12 flex-row bg-white rounded-full p-3 justify-center items-center overflow-hidden">
+              <View className="w-10 h-10 bg-red-400 justify-center items-center rounded-full">
+                <SearchIcon size={24} color="#fff" />
+              </View>
+              <TextInput
+                className="flex-1 h-10 p-2 font-Waku"
+                placeholder='Search a word...'
+                placeholderTextColor="black"
+              />
+            </View>
+            <View className="w-10 h-10 rounded-full items-center justify-center bg-blue-400">
+              <PlusIcon size={24} color="#fff" />
+            </View>
+
+          </View>
           <View
-            className="flex-1 flex-row"
+            className="flex-1 flex-row mb-24 "
             style={{
               padding: _spacing,
               gap: _spacing,
             }}
           >
-            <Alphabet />
+            <Alphabet setCustomData={setCustomData} />
             <View className="flex-1 gap-4" >
-              {weekDays.map((day, index) => (
+              {customData.map((day, index) => (
                 <Day
-                  weekLength={weekDays.length}
+                  key={`day-${day.name}-${index}`}
+                  setCustomData={setCustomData}
+                  weekLength={words.length}
                   lastOne={index}
                   day={day}
                   _color={_color}
                   _borderRadius={_borderRadius}
                   _spacing={_spacing}
                   _damping={_damping}
-                  key={`day-${day.name}`}
                 />
               ))}
 
