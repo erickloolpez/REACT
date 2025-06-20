@@ -2,6 +2,7 @@ import GlobalProvider from '@/context/GlobalProvider';
 import '@/polyfills';
 import { ClerkProvider } from '@clerk/clerk-expo';
 import { tokenCache } from '@clerk/clerk-expo/token-cache';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -28,15 +29,17 @@ export default function RootLayout() {
   return (
     <ClerkProvider tokenCache={tokenCache}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar hidden={true} />
-        <GlobalProvider>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="(root)" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(chat)" options={{ headerShown: false }} />
-          </Stack>
-        </GlobalProvider>
+        <BottomSheetModalProvider>
+          <StatusBar hidden={true} />
+          <GlobalProvider>
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen name="(root)" options={{ headerShown: false }} />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen name="(chat)" options={{ headerShown: false }} />
+            </Stack>
+          </GlobalProvider>
+        </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </ClerkProvider>
   )

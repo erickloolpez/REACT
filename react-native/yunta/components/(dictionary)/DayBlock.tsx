@@ -5,7 +5,7 @@ import { Pressable, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Animated, { FadeInDown, FadeOut, LinearTransition } from "react-native-reanimated";
 
-export default function DayBlock({ _spacing, _damping, _borderRadius, day, setCustomData }: { _spacing: number, _damping: number, _borderRadius: number, day: any, setCustomData: (data: any[]) => void }) {
+export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _spacing: number, _damping: number, _borderRadius: number, day: any, setCustomData: (data: any[]) => void }) {
   const _entering = FadeInDown.springify().damping(_damping);
   const _exiting = FadeOut.springify().damping(_damping)
   const _layout = LinearTransition.springify().damping(_damping);

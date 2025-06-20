@@ -26,11 +26,16 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
 
   }
 
+  const addWord = (newWord: { name: string; relation: string; stories: { title: string }[] }) => {
+    setWords((prev) => [...prev, newWord]);
+  }
+
   return (
     <GlobalContext.Provider value={{
+      words,
       setWords,
+      addWord,
       deleteWord,
-      words
     }}>
       {children}
     </GlobalContext.Provider>

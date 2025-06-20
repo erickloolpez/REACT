@@ -1,10 +1,12 @@
 import Alphabet from '@/components/(dictionary)/Alphabet';
 import Day from '@/components/(dictionary)/Day';
+import ModalFeedBack from '@/components/(dictionary)/ModalFeedback';
 import { useGlobalContext } from '@/context/GlobalProvider';
+import BottomSheet from '@gorhom/bottom-sheet';
 import { PlusIcon, SearchIcon } from 'lucide-react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ImageBackground, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { Pressable, TextInput } from 'react-native-gesture-handler';
 import Animated, { interpolate, useAnimatedRef, useAnimatedStyle, useScrollViewOffset } from 'react-native-reanimated';
 
 const _spacing = 10;
@@ -19,6 +21,16 @@ const Dictionary = () => {
   const _imageHeight = 300
   const { words } = useGlobalContext();
   const [customData, setCustomData] = useState([]);
+
+  const bottomSheetModalRef = useRef<BottomSheet>(null)
+  const handlePresentModalPress = () => bottomSheetModalRef.current?.present()
+
+  const [query, setQuery] = useState('')
+  const submitQuery = () => {
+    const filteredWords = words.filter((word) => word.name.toLowerCase().includes(query.toLowerCase()));
+    setCustomData(filteredWords);
+    setQuery('');
+  }
 
   useEffect(() => {
     const customFilter = words.filter((day) => day.name.charAt(0).toLowerCase() === 'a');
@@ -56,13 +68,22 @@ const Dictionary = () => {
                 <SearchIcon size={24} color="#fff" />
               </View>
               <TextInput
+                value={query}
+                onChangeText={(e) => {
+                  setQuery(e)
+                }}
+                onSubmitEditing={submitQuery}
                 className="flex-1 h-10 p-2 font-Waku"
                 placeholder='Search a word...'
                 placeholderTextColor="black"
               />
             </View>
             <View className="w-10 h-10 rounded-full items-center justify-center bg-blue-400">
-              <PlusIcon size={24} color="#fff" />
+              <Pressable
+                onPress={handlePresentModalPress}
+              >
+                <PlusIcon size={24} color="#fff" />
+              </Pressable>
             </View>
 
           </View>
@@ -78,7 +99,6 @@ const Dictionary = () => {
               {customData.map((day, index) => (
                 <Day
                   key={`day-${day.name}-${index}`}
-                  setCustomData={setCustomData}
                   weekLength={words.length}
                   lastOne={index}
                   day={day}
@@ -91,9 +111,9 @@ const Dictionary = () => {
 
             </View>
           </View>
+          <ModalFeedBack bottomSheetModalRef={bottomSheetModalRef} comment="Hola" />
         </Animated.ScrollView>
       </ImageBackground>
-
     </View>
   )
 }
