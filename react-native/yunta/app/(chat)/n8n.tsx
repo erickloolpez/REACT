@@ -1,29 +1,47 @@
+import ModalFeedBack from "@/components/(n8n)/ModalFeedback";
 import Story from "@/components/(n8n)/Story";
 import { images } from "@/constants";
+import { useGlobalContext } from "@/context/GlobalProvider";
+import BottomSheet from "@gorhom/bottom-sheet";
 import { ArrowLeft } from "lucide-react-native";
-import React, { useEffect, useRef, useState } from 'react';
-import { ImageBackground, Text, View } from 'react-native';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { ImageBackground, Text, TextInput, View } from 'react-native';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from "react-native-swiper";
 
 const N8n = () => {
+  const { words: wordsNeonDB } = useGlobalContext();
+  const wordsDB = wordsNeonDB.map((word) => word.name.toLowerCase());
+  const [story, setStory] = useState({
+    title: 'Hola mundo',
+    character: 'Steve',
+    description: 'Aveces ipsum dolor sit amet burro adipisicing elit. Suscipit doloremque magni ipsum minima delectus. cat optio numquam esse perferendis tenetur natus nulla corporis quia, officia diego ratione consectetur praesentium perrito .',
+  })
+  const words = story.description.split(' ');
+  const storyWords = useMemo(() => {
+    return words.filter(word => wordsDB.includes(word));
+  }, [story.description]);
+  const [selectedWord, setSelectedWord] = useState('');
+  const [newWord, setNewWord] = useState(wordsDB[0])
+
+  const bottomSheetModalRef = useRef<BottomSheet>(null)
+  const handlePresentModalPress = () => bottomSheetModalRef.current?.present()
+
   const swiperRef = useRef<Swiper>(null);
   const [activeIndex, setActiveIndex] = useState(0)
   const [onboarding, setOnboarding] = useState(['History', 'Words', 'Practice'])
 
   const [ready, setReady] = useState(false)
-  const [character, setCharacter] = useState('')
-  const [place, setPlace] = useState('')
   const [loading, setLoading] = useState(false)
 
   const callWebhook = () => {
     setLoading(true)
     move.value = withRepeat(
       withTiming(-360, { duration: 1000 }),
-      3,
+      1,
       false,
-      (finished) => {
+      () => {
         runOnJS(setLoading)(false); //This is a worklet
         runOnJS(setReady)(true); //This is a worklet
       },
@@ -82,7 +100,49 @@ const N8n = () => {
                 {
                   onboarding.map((item, index) => (
                     <View key={`${item}-index`} className="flex-1 p-6" >
-                      <Text className="font-Waku text-white text-base/7">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit doloremque magni ipsum minima delectus. Distinctio optio numquam esse perferendis tenetur natus nulla corporis quia, officia commodi ratione consectetur praesentium. Necessitatibus.</Text>
+                      <View className="flex-row items-center h-10 bg-green-400">
+                        <Text className="font-BlockHead text-white ">Titulo: </Text>
+                        <TextInput
+                          value={story.title}
+                          onChangeText={(text) => setStory(prev => ({ ...prev, title: text }))}
+                          className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
+                        />
+                      </View>
+                      <View className="flex-row items-center h-10 bg-green-400">
+                        <Text className="font-BlockHead text-white ">Personaje: </Text>
+                        <TextInput
+                          value={story.character}
+                          onChangeText={(text) => setStory(prev => ({ ...prev, character: text }))}
+                          className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
+                        />
+                      </View>
+                      <View className="mt-4 ">
+                        <Text className="font-Waku text-white text-base/7">
+                          {
+                            words.map((word, index) => {
+                              if (wordsDB.includes(word)) {
+                                return (
+                                  <Text
+                                    key={`${word}-${index}`}
+                                    className="text-red-600 font-Waku"
+                                    onPress={() => {
+                                      setSelectedWord(word)
+                                      handlePresentModalPress()
+                                    }}
+                                  >{word} </Text>
+                                )
+                              }
+                              return (
+                                <Text
+                                  key={`${word}-${index}`}
+                                  className="text-white font-Waku"
+                                >{word} </Text>
+                              )
+
+                            })
+                          }
+                        </Text>
+                      </View>
                     </View>
                   ))
                 }
@@ -102,6 +162,7 @@ const N8n = () => {
             )
 
           }
+          <ModalFeedBack bottomSheetModalRef={bottomSheetModalRef} comment={selectedWord} setNewWord={setNewWord} newWord={newWord} filterWords={wordsDB} storyWords={storyWords} setStory={setStory} />
         </View>
       </ImageBackground>
     </SafeAreaView >
