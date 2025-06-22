@@ -92,6 +92,7 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, 
             <TouchableOpacity
               className="w-full h-14 justify-center items-center bg-[#003366] rounded-lg mt-10"
               onPress={() => {
+                console.log('cambio de palabra', comment, newWord);
                 setStory(prev => ({
                   ...prev,
                   description: prev.description.replace(comment, newWord)

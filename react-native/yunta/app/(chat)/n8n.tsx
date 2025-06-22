@@ -4,31 +4,19 @@ import CustomButton from "@/components/CustomButton";
 import { images } from "@/constants";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import BottomSheet from "@gorhom/bottom-sheet";
+import axios from 'axios';
 import { ArrowLeft } from "lucide-react-native";
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { ImageBackground, Text, TextInput, View } from 'react-native';
+import { Alert, ImageBackground, ScrollView, Text, TextInput, View } from 'react-native';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from "react-native-swiper";
 
 const N8n = () => {
   const { words: wordsNeonDB } = useGlobalContext();
-  const wordsDB = wordsNeonDB.map((word) => word.name.toLowerCase());
-  const [originalStory, setOriginalStory] = useState({
-    title: 'Hola mundo',
-    character: 'Steve',
-    description: 'Aveces ipsum Steve sit amet burro adipisicing elit. Suscipit doloremque magni ipsum minima delectus. cat optio Steve esse perferendis tenetur natus nulla corporis quia, officia diego ratione consectetur praesentium perrito .',
-  })
-  const [story, setStory] = useState(originalStory);
-  const words = story.description.split(' ');
-  const storyWords = useMemo(() => {
-    return words.filter(word => wordsDB.includes(word));
-  }, [story.description]);
+  const wordsDB = wordsNeonDB.map((word) => word.word.toLowerCase());
   const [selectedWord, setSelectedWord] = useState('');
   const [newWord, setNewWord] = useState(wordsDB[0])
-  const hasChanges = () => {
-    return story.title !== originalStory.title || story.character !== originalStory.character;
-  };
 
   const bottomSheetModalRef = useRef<BottomSheet>(null)
   const handlePresentModalPress = () => bottomSheetModalRef.current?.present()
@@ -75,6 +63,70 @@ const N8n = () => {
 
   const [customHeight, setCustomHeight] = useState(false);
 
+  const [yourWords, setYourWords] = useState([])
+  const [yourStory, setYourStory] = useState([])
+  useEffect(() => {
+    // Aquí haces la petición GET a tu backend
+    axios.get('http://192.168.100.10:3003/words')
+      .then(response => {
+        setYourWords(response.data);
+      })
+      .catch(err => {
+        console.error('Error fetching words:', err);
+      });
+    axios.get('http://192.168.100.10:3003/history')
+      .then(response => {
+        setYourStory(response.data);
+      })
+      .catch(err => {
+        console.error('Error fetching Story:', err);
+      });
+  }, []);
+
+  const [originalStory, setOriginalStory] = useState({
+    title: yourStory[0]?.story_title || 'Mi Historia',
+    character: yourStory[0]?.character || 'Steve',
+    description: yourStory[0]?.story || 'Aveces ipsum Steve sit amet burro adipisicing elit. Suscipit doloremque magni ipsum minima delectus. cat optio Steve esse perferendis tenetur natus nulla corporis quia, officia diego ratione consectetur praesentium perrito .',
+    place: yourStory[0]?.place || 'El bosque encantado',
+  })
+  const [story, setStory] = useState(originalStory);
+
+  const words = story.description.split(' ');
+  const cleanWord = (word) => word.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
+  const wordsCleaned = words.map(word => cleanWord(word));
+  const storyWords = useMemo(() => {
+    return wordsCleaned.filter(word => wordsDB.includes(word));
+  }, [story.description]);
+
+  useEffect(() => {
+    if (yourStory.length > 0) {
+      const firstStory = yourStory[0];
+      const newOriginalStory = {
+        title: firstStory.story_title || 'Mi Historia',
+        character: firstStory.character || 'Steve',
+        description: firstStory.story || 'Aveces ipsum Steve sit amet burro ...',
+        place: firstStory.place || 'El bosque encantado',
+      };
+      setOriginalStory(newOriginalStory);
+      setStory(newOriginalStory);
+    }
+  }, [yourStory]);
+
+  const hasChanges = () => {
+    return story.title !== originalStory.title || story.character !== originalStory.character || story.place !== originalStory.place;
+  };
+
+  const saveYourChanges = (dataToSave) => {
+    axios.put('http://192.168.100.10:3003/history/1', dataToSave)
+      .then(response => {
+        console.log('Cambios guardados:', response.data);
+        Alert.alert('Éxito', 'Cambios guardados correctamente');
+        // Opcional: actualizar estado o hacer algo después de guardar
+      })
+      .catch(err => {
+        console.error('Error guardando cambios:', err);
+      });
+  }
   return (
     <SafeAreaView className="flex-1">
       <ImageBackground source={images.bgHome} className="flex-1">
@@ -121,16 +173,31 @@ const N8n = () => {
                           onSubmitEditing={() => {
                             setStory(prev => ({
                               ...prev,
-                              description: prev.description.replace('Steve', story.character)
+                              description: prev.description.replace(prev.character, story.character)
                             }))
                           }}
                           className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
                         />
                       </View>
-                      <View className="mt-4 flex-1 ">
+                      <View className="flex-row items-center h-10 bg-green-400">
+                        <Text className="font-BlockHead text-white ">Lugar: </Text>
+                        <TextInput
+                          value={story.place}
+                          onChangeText={(text) => setStory(prev => ({ ...prev, place: text }))}
+                          onSubmitEditing={() => {
+                            setStory(prev => ({
+                              ...prev,
+                              description: prev.description.replace(prev.place, story.character)
+                            }))
+                          }}
+                          className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
+                        />
+                      </View>
+
+                      <ScrollView className="mt-4 h-44  ">
                         <Text className="font-Waku text-white text-base/7">
                           {
-                            words.map((word, index) => {
+                            wordsCleaned.map((word, index) => {
                               if (wordsDB.includes(word)) {
                                 return (
                                   <Text
@@ -153,14 +220,18 @@ const N8n = () => {
                             })
                           }
                         </Text>
-                      </View>
+                      </ScrollView>
                       {
                         hasChanges() && (
                           <CustomButton
                             className="mb-2"
                             title="Guardar Cambios"
                             textVariant="default"
-                            onPress={() => { }}
+                            onPress={() => saveYourChanges({
+                              story_title: story.title,
+                              character: story.character,
+                              place: story.place
+                            })}
                           />
                         )
                       }

@@ -1,6 +1,7 @@
+import axios from 'axios';
 import * as DocumentPicker from 'expo-document-picker';
 import { router } from 'expo-router';
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 
 const GlobalContext = createContext<any>({})
@@ -23,7 +24,19 @@ const weekDays = [
 
 const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [lastId, setLastId] = useState('');
-  const [words, setWords] = useState(weekDays)
+  const [words, setWords] = useState([])
+
+  useEffect(() => {
+    // Aquí haces la petición GET a tu backend
+    axios.get('http://192.168.100.10:3003/words')
+      .then(response => {
+        setWords(response.data);
+      })
+      .catch(err => {
+        console.error('Error fetching words:', err);
+      });
+  }, []);
+
 
   const deleteWord = (name: string) => {
     setWords((prev) => prev.filter((d) => d.name !== name));
