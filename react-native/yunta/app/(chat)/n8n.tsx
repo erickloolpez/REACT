@@ -1,5 +1,6 @@
 import ModalFeedBack from "@/components/(n8n)/ModalFeedback";
 import Story from "@/components/(n8n)/Story";
+import CustomButton from "@/components/CustomButton";
 import { images } from "@/constants";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import BottomSheet from "@gorhom/bottom-sheet";
@@ -13,17 +14,21 @@ import Swiper from "react-native-swiper";
 const N8n = () => {
   const { words: wordsNeonDB } = useGlobalContext();
   const wordsDB = wordsNeonDB.map((word) => word.name.toLowerCase());
-  const [story, setStory] = useState({
+  const [originalStory, setOriginalStory] = useState({
     title: 'Hola mundo',
     character: 'Steve',
-    description: 'Aveces ipsum dolor sit amet burro adipisicing elit. Suscipit doloremque magni ipsum minima delectus. cat optio numquam esse perferendis tenetur natus nulla corporis quia, officia diego ratione consectetur praesentium perrito .',
+    description: 'Aveces ipsum Steve sit amet burro adipisicing elit. Suscipit doloremque magni ipsum minima delectus. cat optio Steve esse perferendis tenetur natus nulla corporis quia, officia diego ratione consectetur praesentium perrito .',
   })
+  const [story, setStory] = useState(originalStory);
   const words = story.description.split(' ');
   const storyWords = useMemo(() => {
     return words.filter(word => wordsDB.includes(word));
   }, [story.description]);
   const [selectedWord, setSelectedWord] = useState('');
   const [newWord, setNewWord] = useState(wordsDB[0])
+  const hasChanges = () => {
+    return story.title !== originalStory.title || story.character !== originalStory.character;
+  };
 
   const bottomSheetModalRef = useRef<BottomSheet>(null)
   const handlePresentModalPress = () => bottomSheetModalRef.current?.present()
@@ -77,7 +82,7 @@ const N8n = () => {
           <View className="absolute left-3 bg-[#003366] rounded-full p-3">
             <ArrowLeft size={28} color="#fff" />
           </View>
-          <Text className="font-BlockHead text-[#FFD200] text-2xl">Hola mundo</Text>
+          <Text className="font-BlockHead text-[#FFD200] text-2xl">Tu Historia</Text>
         </View>
         <View className={`flex-row justify-center items-center ${loading ? 'flex-1' : ''}`}>
           <Animated.Image
@@ -93,13 +98,13 @@ const N8n = () => {
                 ref={swiperRef}
                 loop={false}
                 dot={<View className="w-[32px] h-[4px] mx-1 bg-[#e2e8f0] rounded-full" />}
-                activeDot={<View className="w-[32px] h-[4px] mx-1 bg-[#FFD200] rounded-full" />}
+                activeDot={<View className="w-[32px] h-[4px]  mx-1 bg-[#FFD200] rounded-full" />}
                 onIndexChanged={(index) => setActiveIndex(index)}
-                paginationStyle={{ bottom: 25 }}
+                paginationStyle={{ bottom: 10 }}
               >
                 {
                   onboarding.map((item, index) => (
-                    <View key={`${item}-index`} className="flex-1 p-6" >
+                    <View key={`${item}-index`} className="flex-1 p-6 flex-col " >
                       <View className="flex-row items-center h-10 bg-green-400">
                         <Text className="font-BlockHead text-white ">Titulo: </Text>
                         <TextInput
@@ -113,10 +118,16 @@ const N8n = () => {
                         <TextInput
                           value={story.character}
                           onChangeText={(text) => setStory(prev => ({ ...prev, character: text }))}
+                          onSubmitEditing={() => {
+                            setStory(prev => ({
+                              ...prev,
+                              description: prev.description.replace('Steve', story.character)
+                            }))
+                          }}
                           className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
                         />
                       </View>
-                      <View className="mt-4 ">
+                      <View className="mt-4 flex-1 ">
                         <Text className="font-Waku text-white text-base/7">
                           {
                             words.map((word, index) => {
@@ -143,6 +154,16 @@ const N8n = () => {
                           }
                         </Text>
                       </View>
+                      {
+                        hasChanges() && (
+                          <CustomButton
+                            className="mb-2"
+                            title="Guardar Cambios"
+                            textVariant="default"
+                            onPress={() => { }}
+                          />
+                        )
+                      }
                     </View>
                   ))
                 }
@@ -151,7 +172,7 @@ const N8n = () => {
           }
           {
             (!ready && !loading) && (
-              <Story callWebhook={callWebhook} />
+              <Story callWebhook={callWebhook} setCustomHeight={setCustomHeight} />
             )
           }
           {
@@ -162,7 +183,7 @@ const N8n = () => {
             )
 
           }
-          <ModalFeedBack bottomSheetModalRef={bottomSheetModalRef} comment={selectedWord} setNewWord={setNewWord} newWord={newWord} filterWords={wordsDB} storyWords={storyWords} setStory={setStory} />
+          <ModalFeedBack bottomSheetModalRef={bottomSheetModalRef} comment={selectedWord} setNewWord={setNewWord} newWord={newWord} filterWords={wordsDB} storyWords={storyWords} setStory={setStory} setComment={setSelectedWord} />
         </View>
       </ImageBackground>
     </SafeAreaView >

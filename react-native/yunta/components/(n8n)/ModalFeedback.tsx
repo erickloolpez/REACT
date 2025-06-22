@@ -21,7 +21,7 @@ interface ModalFeedBackProps {
 }
 
 
-const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, setNewWord, newWord, setStory }: ModalFeedBackProps) => {
+const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, setNewWord, newWord, setStory, setComment }: ModalFeedBackProps) => {
 
   // callbacks
   const handleEnterPress = useCallback((index: number) => {
@@ -33,7 +33,8 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, 
   const snapPoints = useMemo(() => ['35%', '55%'], [])
 
   const [showList, setShowList] = useState(false);
-  const [optionsList, setOptionsList] = useState([])
+  const [changeOption, setChangeOption] = useState([]);
+  const [optionsList, setOptionsList] = useState('current')
 
   return (
     <BottomSheetModal
@@ -63,10 +64,11 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, 
           <View className="w-full items-center justify-around mt-4">
             <View className="w-full flex-row justify-center">
               <Pressable
-                className="h-20 border border-black rounded-lg items-center justify-center p-4"
+                className="w-32 h-20 border border-black rounded-lg items-center justify-center p-4"
                 onPress={() => {
                   setShowList(true);
-                  setOptionsList(storyWords);
+                  setOptionsList('current');
+                  setChangeOption(storyWords);
                   handleEnterPress(1);
                 }}
               >
@@ -76,10 +78,11 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, 
                 <ArrowRightLeft size={24} color="black" />
               </View>
               <Pressable
-                className="h-20 border border-black rounded-lg items-center justify-center p-4"
+                className="w-32 h-20 border border-black rounded-lg items-center justify-center p-4"
                 onPress={() => {
                   setShowList(true);
-                  setOptionsList(filterWords);
+                  setOptionsList('db');
+                  setChangeOption(filterWords);
                   handleEnterPress(1);
                 }}
               >
@@ -101,13 +104,17 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, 
           </View>
         ) : (
           <BottomSheetFlashList
-            data={optionsList}
+            data={changeOption}
             keyExtractor={(item, index) => `${item}-${index}`}
             renderItem={({ item }) => (
               <Pressable
                 className="flex-1 h-14 border border-black items-center justify-between flex-row px-4 rounded-lg mr-2 ml-2 mt-2"
                 onPress={() => {
-                  setNewWord(item);
+                  if (optionsList === 'current') {
+                    setComment(item);
+                  } else {
+                    setNewWord(item);
+                  }
                   setShowList(false);
                   handleEnterPress(0);
                 }}
