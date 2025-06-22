@@ -1,8 +1,10 @@
+import { useGlobalContext } from "@/context/GlobalProvider";
 import { useState } from "react";
 import { KeyboardAvoidingView, Platform, Text, TextInput, View } from "react-native";
 import CustomButton from "../CustomButton";
 
 export default function Story({ callWebhook, setCustomHeight }: { callWebhook: () => void, setCustomHeight: (height: boolean) => void }) {
+  const { lastId } = useGlobalContext();
   const [character, setCharacter] = useState('');
   const [place, setPlace] = useState('');
   return (
@@ -17,7 +19,7 @@ export default function Story({ callWebhook, setCustomHeight }: { callWebhook: (
             <View className="w-10 h-10 bg-[#FFD200] rounded-full items-center justify-center">
               <Text className="font-BlockHead text-white" >1</Text>
             </View>
-            <Text className="flex-1 font-BlockHead text-white ">Escribe el lugar para tu historia</Text>
+            <Text className="flex-1 font-BlockHead text-white ">Quien quieres que sea el personaje de tu historia ?</Text>
           </View>
           <TextInput
             className="w-full h-10 mt-8 bg-white rounded-md p-2 font-Waku"
@@ -31,7 +33,7 @@ export default function Story({ callWebhook, setCustomHeight }: { callWebhook: (
             <View className="w-10 h-10 bg-[#FFD200] rounded-full items-center justify-center">
               <Text className="font-BlockHead text-white" >1</Text>
             </View>
-            <Text className="flex-1 font-BlockHead text-white ">Quien quieres que sea el personaje de tu historia ?</Text>
+            <Text className="flex-1 font-BlockHead text-white ">Escribe el lugar para tu historia</Text>
           </View>
           <TextInput
             className="w-full h-10 mt-8 bg-white rounded-md p-2 font-Waku"
@@ -39,7 +41,21 @@ export default function Story({ callWebhook, setCustomHeight }: { callWebhook: (
             placeholderTextColor="#000"
             onChangeText={(text) => setPlace(text)}
             onFocus={() => setCustomHeight(true)}
-            onSubmitEditing={() => {
+            onSubmitEditing={async () => {
+              const formData = {
+                character: character,
+                place: place,
+                id: lastId,
+              }
+              const response = await fetch('https://n8n.srv831273.hstgr.cloud/webhook-test/93f442cd-0326-46f9-acd3-282de51b20ce', {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              });
+
+              const data = await response.json();
               setCustomHeight(false);
             }}
           />

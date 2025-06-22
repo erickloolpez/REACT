@@ -1,4 +1,5 @@
 import * as DocumentPicker from 'expo-document-picker';
+import { router } from 'expo-router';
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { Alert } from 'react-native';
 
@@ -21,6 +22,7 @@ const weekDays = [
 ]
 
 const GlobalProvider = ({ children }: GlobalProviderProps) => {
+  const [lastId, setLastId] = useState('');
   const [words, setWords] = useState(weekDays)
 
   const deleteWord = (name: string) => {
@@ -67,7 +69,8 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
 
       const data = await response.json();
       console.log('Archivo subido:', data);
-
+      setLastId(data.publicUrl.split('/').pop() || '');
+      router.push('/n8n');
     } catch (error) {
       Alert.alert('Error', error.message);
     }
@@ -79,7 +82,8 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       setWords,
       addWord,
       deleteWord,
-      pickAndUpload
+      pickAndUpload,
+      lastId,
     }}>
       {children}
     </GlobalContext.Provider>
