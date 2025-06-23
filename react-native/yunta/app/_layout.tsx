@@ -37,6 +37,7 @@ export default function RootLayout() {
               <Stack.Screen name="(root)" options={{ headerShown: false }} />
               <Stack.Screen name="(auth)" options={{ headerShown: false }} />
               <Stack.Screen name="(chat)" options={{ headerShown: false }} />
+              <Stack.Screen name="(n8n)" options={{ headerShown: false }} />
             </Stack>
           </GlobalProvider>
         </BottomSheetModalProvider>

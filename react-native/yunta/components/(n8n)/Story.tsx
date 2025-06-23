@@ -41,21 +41,7 @@ export default function Story({ callWebhook, setCustomHeight }: { callWebhook: (
             placeholderTextColor="#000"
             onChangeText={(text) => setPlace(text)}
             onFocus={() => setCustomHeight(true)}
-            onSubmitEditing={async () => {
-              const formData = {
-                character: character,
-                place: place,
-                id: lastId,
-              }
-              const response = await fetch('https://n8n.srv831273.hstgr.cloud/webhook-test/93f442cd-0326-46f9-acd3-282de51b20ce', {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              });
-
-              const data = await response.json();
+            onSubmitEditing={() => {
               setCustomHeight(false);
             }}
           />
@@ -63,7 +49,14 @@ export default function Story({ callWebhook, setCustomHeight }: { callWebhook: (
         <CustomButton
           title="Comenzar"
           textVariant="default"
-          onPress={callWebhook}
+          onPress={() => {
+            let formData = {
+              character: character,
+              place: place,
+              lastId: lastId
+            }
+            callWebhook(formData)
+          }}
         />
       </View>
     </KeyboardAvoidingView>

@@ -5,9 +5,9 @@ import { useCallback, useMemo, useState } from 'react';
 import { Pressable, Text, TouchableOpacity, View } from 'react-native';
 
 interface Story {
-  description: string;
+  story: string;
   character: string;
-  title: string;
+  story_title: string;
 }
 interface ModalFeedBackProps {
   bottomSheetModalRef: RefObject<BottomSheetModal>;
@@ -18,10 +18,11 @@ interface ModalFeedBackProps {
   newWord?: string;
   setNewWord?: (newWord: string) => void;
   setStory?: React.Dispatch<React.SetStateAction<Story>>;
+  setHadAnUpdate?: (hadUpdate: boolean) => void;
 }
 
 
-const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, setNewWord, newWord, setStory, setComment }: ModalFeedBackProps) => {
+const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, setNewWord, newWord, setStory, setComment, setHadAnUpdate }: ModalFeedBackProps) => {
 
   // callbacks
   const handleEnterPress = useCallback((index: number) => {
@@ -95,12 +96,13 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, 
                 console.log('cambio de palabra', comment, newWord);
                 setStory(prev => ({
                   ...prev,
-                  description: prev.description.replace(comment, newWord)
+                  story: prev.story.replace(comment, newWord)
                 }))
+                setHadAnUpdate(true);
                 handleExitPress()
               }}
             >
-              <Text className="font-BlockHead text-white">Guardar</Text>
+              <Text className="font-BlockHead text-white">Reemplazar Palabra</Text>
             </TouchableOpacity>
           </View>
         ) : (

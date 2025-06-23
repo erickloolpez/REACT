@@ -11,40 +11,46 @@ interface GlobalProviderProps {
   children: ReactNode
 }
 
-const weekDays = [
-  { name: 'Aveces', relation: 'Es una vaquita en el parque', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Burro', relation: 'Es un perro en la playa', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Cat', relation: 'Es un gato en la montaña', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Diego', relation: 'Es un pez en el río', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Daniela', relation: 'Es un pez en el río', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Erick', relation: 'Es un pájaro en el cielo', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Farid', relation: 'Es un conejo en el bosque', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-  { name: 'Joshue', relation: 'Es un elefante en la selva', stories: [{ title: 'History 1' }, { title: 'History 2' }, { title: 'History 3' }] },
-]
-
 const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [lastId, setLastId] = useState('');
-  const [words, setWords] = useState([])
+  const [yourWords, setYourWords] = useState([])
+  const [yourDictionary, setYourDictionary] = useState(0);
+  const [yourStories, setYourStories] = useState([]);
+  const [stories, setStories] = useState([])
 
   useEffect(() => {
-    // Aquí haces la petición GET a tu backend
-    axios.get('http://192.168.100.10:3003/words')
-      .then(response => {
-        setWords(response.data);
-      })
-      .catch(err => {
-        console.error('Error fetching words:', err);
-      });
+    const callDB = async () => {
+      const [wordsResponse, storiesResponse] = await Promise.all([
+        axios.get('http://192.168.100.10:3003/words').catch(err => {
+          console.error('Error fetching words:', err);
+          return { data: [] }; // fallback o manejo alternativo
+        }),
+        axios.get(`http://192.168.100.10:3003/history/user/1`).catch(err => {
+          console.error('Error fetching story:', err);
+          return { data: [] };
+        }),
+      ]);
+
+      const wordsArray = wordsResponse.data.map(item => item.word);
+      const justStory = storiesResponse.data.map(item => item.story_id)
+      setYourWords(wordsArray);
+      setStories(storiesResponse.data);
+      console.log('Words fetched:', wordsArray);
+      console.log('Story fetched:', justStory);
+
+    }
+
+    callDB();
   }, []);
 
 
   const deleteWord = (name: string) => {
-    setWords((prev) => prev.filter((d) => d.name !== name));
+    setYourWords((prev) => prev.filter((d) => d.name !== name));
 
   }
 
   const addWord = (newWord: { name: string; relation: string; stories: { title: string }[] }) => {
-    setWords((prev) => [...prev, newWord]);
+    setYourWords((prev) => [...prev, newWord]);
   }
 
   const pickAndUpload = async () => {
@@ -83,7 +89,7 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       const data = await response.json();
       console.log('Archivo subido:', data);
       setLastId(data.publicUrl.split('/').pop() || '');
-      router.push('/n8n');
+      router.push('/(n8n)/0');
     } catch (error) {
       Alert.alert('Error', error.message);
     }
@@ -91,12 +97,19 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
 
   return (
     <GlobalContext.Provider value={{
-      words,
-      setWords,
+      yourWords,
+      setYourWords,
       addWord,
       deleteWord,
       pickAndUpload,
       lastId,
+      setLastId,
+      yourDictionary,
+      setYourDictionary,
+      yourStories,
+      setYourStories,
+      stories,
+      setStories
     }}>
       {children}
     </GlobalContext.Provider>

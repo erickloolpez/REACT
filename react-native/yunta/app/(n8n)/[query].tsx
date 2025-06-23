@@ -1,3 +1,6 @@
+import { useLocalSearchParams } from 'expo-router';
+
+
 import ModalFeedBack from "@/components/(n8n)/ModalFeedback";
 import Story from "@/components/(n8n)/Story";
 import CustomButton from "@/components/CustomButton";
@@ -13,10 +16,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from "react-native-swiper";
 
 const N8n = () => {
-  const { words: wordsNeonDB } = useGlobalContext();
-  const wordsDB = wordsNeonDB.map((word) => word.word.toLowerCase());
-  const [selectedWord, setSelectedWord] = useState('');
+  const { query } = useLocalSearchParams<{ query: string }>();
+  const { yourWords, setYourDictionary, yourDictionary, setWords, stories, setStories } = useGlobalContext();
+
+  const wordsDB = yourWords.map((word) => word.toLowerCase());
+  //Is the first option to show on the bottom sheet modal
   const [newWord, setNewWord] = useState(wordsDB[0])
+  const [selectedWord, setSelectedWord] = useState('');
 
   const bottomSheetModalRef = useRef<BottomSheet>(null)
   const handlePresentModalPress = () => bottomSheetModalRef.current?.present()
@@ -28,7 +34,12 @@ const N8n = () => {
   const [ready, setReady] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const callWebhook = () => {
+  const [yourStory, setYourStory] = useState({})
+  const [flag, setFlag] = useState(false)
+  const [hadAnUpdate, setHadAnUpdate] = useState(false);
+  const [refetch, setRefetch] = useState(false);
+
+  const callWebhook = async (formData) => {
     setLoading(true)
     move.value = withRepeat(
       withTiming(-360, { duration: 1000 }),
@@ -39,6 +50,41 @@ const N8n = () => {
         runOnJS(setReady)(true); //This is a worklet
       },
     );
+    // Llamar al webhook de n8n
+    try {
+      const { data: webhookData } = await axios.post('https://n8n.srv831273.hstgr.cloud/webhook/93f442cd-0326-46f9-acd3-282de51b20ce', formData)
+      console.log('Response from WEBHOOK n8n.tsx:', webhookData);
+
+      if (!webhookData?.storyId) {
+        throw new Error('La respuesta del webhook no contiene storyId');
+      }
+
+      setYourDictionary(webhookData.storyId);
+      console.log('Dictionary saved', webhookData);
+
+      // Ejecutar las dos peticiones GET en paralelo
+      const [wordsResponse, storyResponse] = await Promise.all([
+        axios.get('http://192.168.100.10:3003/words').catch(err => {
+          console.error('Error fetching words:', err);
+          return { data: [] }; // fallback o manejo alternativo
+        }),
+        axios.get(`http://192.168.100.10:3003/history/${webhookData.storyId}`).catch(err => {
+          console.error('Error fetching story:', err);
+          return { data: null };
+        }),
+      ]);
+
+      const wordsArray = wordsResponse.data.map(item => item.word);
+      const justStory = storyResponse.data.story_id;
+      setWords(wordsArray);
+      setYourStory(storyResponse.data);
+      console.log('Words fetched:', wordsArray);
+      console.log('Story fetched:', justStory);
+      setFlag(true);
+
+    } catch (error: any) {
+      console.error('Error en la operación:', error.message || error);
+    }
   }
 
   const move = useSharedValue(0)
@@ -61,72 +107,83 @@ const N8n = () => {
     );
   }, []);
 
+  const [contentStory, setContentStory] = useState(stories[query])
   const [customHeight, setCustomHeight] = useState(false);
-
-  const [yourWords, setYourWords] = useState([])
-  const [yourStory, setYourStory] = useState([])
-  useEffect(() => {
-    // Aquí haces la petición GET a tu backend
-    axios.get('http://192.168.100.10:3003/words')
-      .then(response => {
-        setYourWords(response.data);
-      })
-      .catch(err => {
-        console.error('Error fetching words:', err);
-      });
-    axios.get('http://192.168.100.10:3003/history')
-      .then(response => {
-        setYourStory(response.data);
-      })
-      .catch(err => {
-        console.error('Error fetching Story:', err);
-      });
-  }, []);
-
   const [originalStory, setOriginalStory] = useState({
-    title: yourStory[0]?.story_title || 'Mi Historia',
-    character: yourStory[0]?.character || 'Steve',
-    description: yourStory[0]?.story || 'Aveces ipsum Steve sit amet burro adipisicing elit. Suscipit doloremque magni ipsum minima delectus. cat optio Steve esse perferendis tenetur natus nulla corporis quia, officia diego ratione consectetur praesentium perrito .',
-    place: yourStory[0]?.place || 'El bosque encantado',
+    story_title: contentStory?.story_title || 'Mi Historia',
+    character: contentStory?.character || 'Steve',
+    story: contentStory?.story || 'Aveces ipsum Steve sit amet burro adipisicing elit. Suscipit doloremque magni ipsum minima delectus. cat optio Steve esse perferendis tenetur natus nulla corporis quia, officia diego ratione consectetur praesentium perrito .',
+    place: contentStory?.place || 'El bosque encantado',
   })
   const [story, setStory] = useState(originalStory);
 
-  const words = story.description.split(' ');
+  const words = story.story.split(' ');
   const cleanWord = (word) => word.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
   const wordsCleaned = words.map(word => cleanWord(word));
   const storyWords = useMemo(() => {
     return wordsCleaned.filter(word => wordsDB.includes(word));
-  }, [story.description]);
+  }, [story.story]);
 
   useEffect(() => {
-    if (yourStory.length > 0) {
-      const firstStory = yourStory[0];
+    console.log('Flag changed:', flag);
+    console.log('Refetch changed:', refetch);
+    if ((yourStory && Object.keys(yourStory).length > 0) && yourDictionary !== 0) {
       const newOriginalStory = {
-        title: firstStory.story_title || 'Mi Historia',
-        character: firstStory.character || 'Steve',
-        description: firstStory.story || 'Aveces ipsum Steve sit amet burro ...',
-        place: firstStory.place || 'El bosque encantado',
-      };
+        story_title: yourStory.story_title || 'Mi Historia',
+        character: yourStory.character || 'Steve',
+        story: yourStory.story || 'Descripción por defecto...',
+        place: yourStory.place || 'El bosque encantado',
+      }
       setOriginalStory(newOriginalStory);
       setStory(newOriginalStory);
+    } else if (refetch) {
+      axios.get(`http://192.168.100.10:3003/history/user/1`)
+        .then(response => {
+          setStories(response.data);
+          console.log('Data fetched for the next open 📝')
+        })
+        .catch(err => {
+          console.error('Data not fetched for the next Open', err);
+        });
     }
-  }, [yourStory]);
+
+  }, [flag, refetch]);
 
   const hasChanges = () => {
-    return story.title !== originalStory.title || story.character !== originalStory.character || story.place !== originalStory.place;
+    return story.story_title !== originalStory.story_title || story.character !== originalStory.character || story.place !== originalStory.place || hadAnUpdate;
   };
 
-  const saveYourChanges = (dataToSave) => {
-    axios.put('http://192.168.100.10:3003/history/1', dataToSave)
+  const getChangedFields = (original, modified) => {
+    const changes = {};
+    for (const key in modified) {
+      if (modified[key] !== original[key]) {
+        changes[key] = modified[key];
+      }
+    }
+    return changes;
+  };
+
+  const saveYourChanges = () => {
+    const changes = getChangedFields(originalStory, story);
+    if (Object.keys(changes).length === 0) {
+      console.log('No hay cambios para guardar');
+      return;
+    }
+
+    console.log('Cambios detectados: 🔃', changes);
+    console.log('ID de la historia:', contentStory?.story_id);
+    axios.put(`http://192.168.100.10:3003/history/${query ? contentStory?.story_id : ''}`, changes)
       .then(response => {
-        console.log('Cambios guardados:', response.data);
+        console.log('Cambios guardados ✅');
         Alert.alert('Éxito', 'Cambios guardados correctamente');
-        // Opcional: actualizar estado o hacer algo después de guardar
+        setHadAnUpdate(false);
+        setRefetch(true);
       })
       .catch(err => {
         console.error('Error guardando cambios:', err);
       });
-  }
+  };
+
   return (
     <SafeAreaView className="flex-1">
       <ImageBackground source={images.bgHome} className="flex-1">
@@ -145,7 +202,7 @@ const N8n = () => {
         </View>
         <View className={`${loading ? 'hidden' : 'flex-1'} rounded-t-3xl bg-[#003366] overflow-hidden `}>
           {
-            ready && (
+            ready || query && (
               <Swiper
                 ref={swiperRef}
                 loop={false}
@@ -160,8 +217,8 @@ const N8n = () => {
                       <View className="flex-row items-center h-10 bg-green-400">
                         <Text className="font-BlockHead text-white ">Titulo: </Text>
                         <TextInput
-                          value={story.title}
-                          onChangeText={(text) => setStory(prev => ({ ...prev, title: text }))}
+                          value={story.story_title}
+                          onChangeText={(text) => setStory(prev => ({ ...prev, story_title: text }))}
                           className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
                         />
                       </View>
@@ -173,7 +230,7 @@ const N8n = () => {
                           onSubmitEditing={() => {
                             setStory(prev => ({
                               ...prev,
-                              description: prev.description.replace(prev.character, story.character)
+                              story: prev.story.replace(prev.character, story.character)
                             }))
                           }}
                           className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
@@ -187,7 +244,7 @@ const N8n = () => {
                           onSubmitEditing={() => {
                             setStory(prev => ({
                               ...prev,
-                              description: prev.description.replace(prev.place, story.character)
+                              story: prev.story.replace(prev.place, story.character)
                             }))
                           }}
                           className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
@@ -227,11 +284,7 @@ const N8n = () => {
                             className="mb-2"
                             title="Guardar Cambios"
                             textVariant="default"
-                            onPress={() => saveYourChanges({
-                              story_title: story.title,
-                              character: story.character,
-                              place: story.place
-                            })}
+                            onPress={() => saveYourChanges()}
                           />
                         )
                       }
@@ -242,19 +295,11 @@ const N8n = () => {
             )
           }
           {
-            (!ready && !loading) && (
+            (!ready && !loading) && !query && (
               <Story callWebhook={callWebhook} setCustomHeight={setCustomHeight} />
             )
           }
-          {
-            loading && (
-              <View>
-                <Text>Cargando ...</Text>
-              </View>
-            )
-
-          }
-          <ModalFeedBack bottomSheetModalRef={bottomSheetModalRef} comment={selectedWord} setNewWord={setNewWord} newWord={newWord} filterWords={wordsDB} storyWords={storyWords} setStory={setStory} setComment={setSelectedWord} />
+          <ModalFeedBack bottomSheetModalRef={bottomSheetModalRef} comment={selectedWord} setNewWord={setNewWord} newWord={newWord} filterWords={wordsDB} storyWords={storyWords} setStory={setStory} setComment={setSelectedWord} setHadAnUpdate={setHadAnUpdate} />
         </View>
       </ImageBackground>
     </SafeAreaView >

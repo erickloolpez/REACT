@@ -6,7 +6,7 @@ import { router } from 'expo-router'
 import { Origami } from 'lucide-react-native'
 import React, { useEffect, useState } from 'react'
 import { Dimensions, ImageBackground, Text, TouchableOpacity, View } from 'react-native'
-import Animated, { clamp, FadeIn, FadeOut, runOnJS, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated'
+import Animated, { clamp, runOnJS, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const { width } = Dimensions.get('screen')
@@ -15,13 +15,13 @@ const _spacing = 12
 const _itemTotalSize = _itemSize + _spacing
 
 const Home = () => {
+  const { stories } = useGlobalContext()
   const scrollX = useSharedValue(0)
   const [activeIndex, setActiveIndex] = useState(0)
-  const splitCarrusel = carrusel.slice(0, 3)
-  const dataWithAddButton = [...splitCarrusel, { type: 'ADD_BUTTON' }]
+  const dataWithAddButton = [...stories, { type: 'ADD_BUTTON' }]
 
   const onScroll = useAnimatedScrollHandler(e => {
-    scrollX.value = clamp(e.contentOffset.x / _itemTotalSize, 0, carrusel.length - 1)
+    scrollX.value = clamp(e.contentOffset.x / _itemTotalSize, 0, dataWithAddButton.length - 1)
     const newActiveIndex = Math.round(scrollX.value)
 
     if (newActiveIndex !== activeIndex) {
@@ -74,12 +74,12 @@ const Home = () => {
           </View>
           <View className="flex-1 items-center justify-center ">
             {
-              activeIndex === 3 ? (
+              activeIndex > stories.length - 1 ? (
                 <View className="w-3/4 h-40 items-center justify-center">
                   <Animated.View style={stylez}>
                     <TouchableOpacity
-                      // onPress={pickAndUpload}
-                      onPress={() => router.push('/(chat)/n8n')}
+                      onPress={pickAndUpload}
+                      // onPress={() => router.push('/(chat)/n8n')}
                       className="mt-4 bg-white px-4 py-2 rounded-lg"
                     >
                       <Text className="text-center font-BlockHead">Crear historia</Text>
@@ -88,8 +88,8 @@ const Home = () => {
                 </View>
               ) :
                 (
-                  <TouchableOpacity onPress={() => router.push('/(chat)/n8n')} className="w-60 h-60 bg-white rounded-lg items-center justify-center">
-                    <Animated.Image entering={FadeIn.duration(500)} exiting={FadeOut.duration(500)} key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-60 h-60 rounded-lg object-contain " />
+                  <TouchableOpacity onPress={() => router.push(`/(n8n)/${activeIndex}`)} className="w-60 h-60 bg-white rounded-lg items-center justify-center">
+                    <Animated.Image key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-60 h-60 rounded-lg object-contain " />
                   </TouchableOpacity>
                 )
             }
@@ -110,7 +110,7 @@ const Home = () => {
                 return <CarouselItem imageUri={item.type} index={index} scrollX={scrollX} _itemSize={_itemSize} />
               }
 
-              return <CarouselItem imageUri={item} index={index} scrollX={scrollX} _itemSize={_itemSize} />
+              return <CarouselItem imageUri={carrusel[index]} index={index} scrollX={scrollX} _itemSize={_itemSize} />
             }}
             horizontal
             showsHorizontalScrollIndicator={false}
