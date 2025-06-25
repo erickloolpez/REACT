@@ -125,8 +125,8 @@ const N8n = () => {
   }, [story.story]);
 
   useEffect(() => {
+    console.log('Refetch en n8n query 🏹');
     console.log('Flag changed:', flag);
-    console.log('Refetch changed:', refetch);
     if ((yourStory && Object.keys(yourStory).length > 0) && yourDictionary !== 0) {
       const newOriginalStory = {
         story_title: yourStory.story_title || 'Mi Historia',
@@ -252,14 +252,14 @@ const N8n = () => {
                       </View>
 
                       <ScrollView className="mt-4 h-44  ">
-                        <Text className="font-Waku text-white text-base/7">
+                        <Text className=" text-white text-base/7">
                           {
                             wordsCleaned.map((word, index) => {
                               if (wordsDB.includes(word)) {
                                 return (
                                   <Text
                                     key={`${word}-${index}`}
-                                    className="text-red-600 font-Waku"
+                                    className="text-red-600 "
                                     onPress={() => {
                                       setSelectedWord(word)
                                       handlePresentModalPress()
@@ -270,7 +270,7 @@ const N8n = () => {
                               return (
                                 <Text
                                   key={`${word}-${index}`}
-                                  className="text-white font-Waku"
+                                  className="text-white "
                                 >{word} </Text>
                               )
 

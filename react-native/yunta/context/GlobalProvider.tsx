@@ -12,6 +12,7 @@ interface GlobalProviderProps {
 }
 
 const GlobalProvider = ({ children }: GlobalProviderProps) => {
+  const [user, setUser] = useState(null)
   const [lastId, setLastId] = useState('');
   const [yourWords, setYourWords] = useState([])
   const [yourDictionary, setYourDictionary] = useState(0);
@@ -22,11 +23,11 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
     const callDB = async () => {
       const [wordsResponse, storiesResponse] = await Promise.all([
         axios.get('http://192.168.100.10:3003/words').catch(err => {
-          console.error('Error fetching words:', err);
+          console.error('Error fetching words in Global Provider:', err);
           return { data: [] }; // fallback o manejo alternativo
         }),
         axios.get(`http://192.168.100.10:3003/history/user/1`).catch(err => {
-          console.error('Error fetching story:', err);
+          console.error('Error fetching story in Global Provider:', err);
           return { data: [] };
         }),
       ]);
@@ -35,8 +36,8 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       const justStory = storiesResponse.data.map(item => item.story_id)
       setYourWords(wordsArray);
       setStories(storiesResponse.data);
-      console.log('Words fetched:', wordsArray);
-      console.log('Story fetched:', justStory);
+      console.log('Words fetched Global Provider:', wordsArray);
+      console.log('Story fetched Global Provider:', justStory);
 
     }
 
@@ -89,7 +90,7 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       const data = await response.json();
       console.log('Archivo subido:', data);
       setLastId(data.publicUrl.split('/').pop() || '');
-      router.push('/(n8n)/0');
+      router.push('/(n8n)/8');
     } catch (error) {
       Alert.alert('Error', error.message);
     }
@@ -109,7 +110,9 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       yourStories,
       setYourStories,
       stories,
-      setStories
+      setStories,
+      user,
+      setUser
     }}>
       {children}
     </GlobalContext.Provider>

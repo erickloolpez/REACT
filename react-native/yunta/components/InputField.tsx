@@ -3,6 +3,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   Text,
   TextInput,
   TouchableWithoutFeedback,
@@ -10,6 +11,8 @@ import {
 } from "react-native";
 
 import { InputFieldProps } from "@/types/type";
+import { Eye, EyeClosed } from "lucide-react-native";
+import React from "react";
 
 const InputField = ({
   label,
@@ -20,8 +23,12 @@ const InputField = ({
   inputStyle,
   iconStyle,
   className,
+  setCustomHeight = () => { },
+  showPassword,
+  setShowPassword = () => { },
   ...props
 }: InputFieldProps) => {
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -39,9 +46,23 @@ const InputField = ({
             )}
             <TextInput
               className={`rounded-full p-4 font-Waku text-[15px] flex-1 ${inputStyle} text-left`}
-              secureTextEntry={secureTextEntry}
+              onFocus={() => setCustomHeight(true)}
+              onSubmitEditing={() => setCustomHeight(false)}
+              secureTextEntry={showPassword ? !showPassword : secureTextEntry}
               {...props}
             />
+            {secureTextEntry ? (
+              <Pressable
+                onPress={() => setShowPassword(!showPassword)}
+                style={{ position: "absolute", right: 16 }}
+              >
+                {showPassword ? (
+                  <EyeClosed size={20} color="#000" />
+                ) : (
+                  <Eye size={20} color="#000" />
+                )}
+              </Pressable>
+            ) : null}
           </View>
         </View>
       </TouchableWithoutFeedback>

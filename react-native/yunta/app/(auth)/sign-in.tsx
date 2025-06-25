@@ -2,13 +2,16 @@ import CustomButton from '@/components/CustomButton'
 import InputField from '@/components/InputField'
 import OAuth from '@/components/OAuth'
 import { icons, images } from '@/constants'
+import { useGlobalContext } from '@/context/GlobalProvider'
 import { useClerk, useSignIn } from '@clerk/clerk-expo'
+import axios from 'axios'
 import { useRouter } from 'expo-router'
 import { useState } from 'react'
 import { Image, ScrollView, Text, View } from 'react-native'
 
 
 const SignIn = () => {
+  const { setUser } = useGlobalContext()
   const { signIn, setActive, isLoaded } = useSignIn()
   const router = useRouter()
   const [form, setForm] = useState({
@@ -41,6 +44,15 @@ const SignIn = () => {
 
       if (signInAttempt.status === 'complete') {
         await setActive({ session: signInAttempt.createdSessionId })
+        axios.get(`http://192.168.100.10:3003/users?email=${form.email}`)
+          .then(response => {
+            console.log('Usuario encontrado en la base de Datos ✅');
+            console.log('Usuario:', response.data);
+            setUser(response.data);
+          })
+          .catch(err => {
+            console.log('Error encontrando al usuario ❌', err);
+          });
         router.replace('/(root)/(tabs)/home')
       } else {
         console.error(JSON.stringify(signInAttempt, null, 2))

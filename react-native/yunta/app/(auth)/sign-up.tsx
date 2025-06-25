@@ -2,8 +2,9 @@ import CustomButton from '@/components/CustomButton'
 import InputField from '@/components/InputField'
 import OAuth from '@/components/OAuth'
 import { icons, images } from '@/constants'
-import { fetchAPI } from '@/lib/fetch'
+import { useGlobalContext } from '@/context/GlobalProvider'
 import { useSignUp } from '@clerk/clerk-expo'
+import axios from 'axios'
 import { Link, router } from 'expo-router'
 import { useState } from 'react'
 import { Alert, Image, ScrollView, Text, View } from 'react-native'
@@ -11,10 +12,13 @@ import { ReactNativeModal } from 'react-native-modal'
 
 
 const SignUp = () => {
+  const { setUser } = useGlobalContext()
   const { isLoaded, signUp, setActive } = useSignUp()
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [customHeight, setCustomHeight] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+
   const [form, setForm] = useState({
-    name: "",
     email: "",
     password: "",
   })
@@ -56,14 +60,18 @@ const SignUp = () => {
       // If verification was completed, set the session to active
       // and redirect the user
       if (signUpAttempt.status === 'complete') {
-        await fetchAPI('/(api)/user', {
-          method: 'POST',
-          body: JSON.stringify({
-            name: form.name,
-            email: form.email,
-            clerkId: signUpAttempt.createdUserId
-          })
+        axios.post(`http://192.168.100.10:3003/users`, {
+          password: form.password,
+          email: form.email,
         })
+          .then(response => {
+            console.log('Usuario creado en la base de Datos ✅');
+            console.log('Usuario:', response.data);
+            setUser(response.data);
+          })
+          .catch(err => {
+            console.log('Error guardando al usuario ❌', err);
+          });
 
         await setActive({ session: signUpAttempt.createdSessionId })
         setVerification({
@@ -89,8 +97,8 @@ const SignUp = () => {
 
   return (
     <ScrollView className="flex-1 bg-white">
-      <View className="relative w-full h-[250px] justify-center items-center ">
-        <Image source={images.banner} className="z-0 w-full h-[230px] scale-[0.7]" resizeMode={"contain"} />
+      <View className={`relative w-full ${customHeight ? 'h-[100px] ' : 'h-[250px] '} justify-center  items-center   `}>
+        <Image source={images.banner} className={`${customHeight ? "hidden" : "block"} z-0 w-full  scale-[0.7] `} resizeMode={"contain"} />
         <Text className="font-Waku text-2xl text-black font-JakartaSemiBold absolute bottom-0 left-5">Create your account</Text>
       </View>
       <View className="p-5">
@@ -112,12 +120,16 @@ const SignUp = () => {
             setForm({ ...form, email: value })
           }
         />
+
         <InputField
           label="Password"
           placeholder="enter your password"
           icon={icons.lock}
           value={form.password}
           secureTextEntry={true}
+          setCustomHeight={setCustomHeight}
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
           onChangeText={(value) =>
             setForm({ ...form, password: value })
           }
