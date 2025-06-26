@@ -25,7 +25,7 @@ export default function Day({ day, _color, _borderRadius, _spacing, _damping, la
       <View
         className="flex-row  items-center justify-between"
       >
-        <Text className={`${isOn ? 'text-black' : 'text-white'} font-Waku`}>{day.name}</Text>
+        <Text className={`${isOn ? 'text-black' : 'text-white'} font-Waku`}>{day.word}</Text>
         <Switch
           value={isOn}
           onValueChange={(value) => setIsOn(value)}

@@ -21,23 +21,30 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
 
   useEffect(() => {
     const callDB = async () => {
-      const [wordsResponse, storiesResponse] = await Promise.all([
-        axios.get('http://192.168.100.10:3003/words').catch(err => {
+      const [wordsResponse, storiesResponse, userResponse] = await Promise.all([
+        axios.get('http://192.168.100.10:3003/associations').catch(err => {
           console.error('Error fetching words in Global Provider:', err);
           return { data: [] }; // fallback o manejo alternativo
         }),
-        axios.get(`http://192.168.100.10:3003/history/user/1`).catch(err => {
+        axios.get(`http://192.168.100.10:3003/story-details/user/1`).catch(err => {
           console.error('Error fetching story in Global Provider:', err);
+          return { data: [] };
+        }),
+        axios.get(`http://192.168.100.10:3003/users/1`).catch(err => {
+          console.error('Error fetching User in Global Provider:', err);
           return { data: [] };
         }),
       ]);
 
       const wordsArray = wordsResponse.data.map(item => item.word);
-      const justStory = storiesResponse.data.map(item => item.story_id)
-      setYourWords(wordsArray);
+      const justStory = storiesResponse.data.map(item => item.title)
+      const justName = userResponse.data.username;
+      setYourWords(wordsResponse.data);
       setStories(storiesResponse.data);
+      setUser(userResponse.data);
       console.log('Words fetched Global Provider:', wordsArray);
       console.log('Story fetched Global Provider:', justStory);
+      console.log('User fetched Global Provider:', justName);
 
     }
 

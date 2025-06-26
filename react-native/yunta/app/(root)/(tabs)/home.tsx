@@ -4,7 +4,6 @@ import CustomButton from '@/components/CustomButton'
 import InputField from '@/components/InputField'
 import { carrusel, icons, images } from '@/constants'
 import { useGlobalContext } from '@/context/GlobalProvider'
-import { useUser } from '@clerk/clerk-expo'
 import axios from 'axios'
 import { router } from 'expo-router'
 import { Origami, XIcon } from 'lucide-react-native'
@@ -21,7 +20,6 @@ const _itemTotalSize = _itemSize + _spacing
 
 const Home = () => {
   const { stories, user, pickAndUpload, setUser } = useGlobalContext()
-  const { user: userClerk, isLoaded } = useUser();
   const [copyOfUser, setCopyOfUser] = useState(user || { username: '', email: '' })
 
   const scrollX = useSharedValue(0)

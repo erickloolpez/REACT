@@ -6,6 +6,7 @@ import { TextInput } from "react-native-gesture-handler";
 import Animated, { FadeInDown, FadeOut, LinearTransition } from "react-native-reanimated";
 
 export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _spacing: number, _damping: number, _borderRadius: number, day: any, setCustomData: (data: any[]) => void }) {
+  const { deleteWord, yourStories } = useGlobalContext();
   const _entering = FadeInDown.springify().damping(_damping);
   const _exiting = FadeOut.springify().damping(_damping)
   const _layout = LinearTransition.springify().damping(_damping);
@@ -16,7 +17,6 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _
 
   const colors = ["#31773C", "#FD7D24", "#4592C4", "#719F3F", "#EED535", "#A38C21", "#7B62A3"]
 
-  const { deleteWord } = useGlobalContext();
 
   return (
     <Animated.View
@@ -40,6 +40,7 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _
           layout={_layout}
         >
           <TextInput
+            multiline
             className="flex-1 border border-gray-300 p-2 rounded-lg font-Waku"
             value={day.relation}
           />
@@ -49,13 +50,13 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _
       <Text className="font-Waku">Historias</Text>
       <View className="flex-row gap-1">
         {
-          day.stories.map((story: any, index: number) => (
+          day.fetchedRelations.map((story: any, index: number) => (
             <View
               className="p-2 border border-black rounded-full "
               style={{ backgroundColor: colors[index % colors.length] }}
               key={`story-${index}`}
             >
-              <Text className="font-Waku text-white">{story.title}</Text>
+              <Text className="font-Waku text-white">{story}</Text>
             </View>
           ))
         }

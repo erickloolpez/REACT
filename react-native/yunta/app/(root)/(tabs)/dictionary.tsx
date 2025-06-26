@@ -19,7 +19,7 @@ const Dictionary = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>()
   const scrollOfset = useScrollViewOffset(scrollRef);
   const _imageHeight = 300
-  const { words } = useGlobalContext();
+  const { yourWords } = useGlobalContext();
   const [customData, setCustomData] = useState([]);
 
   const bottomSheetModalRef = useRef<BottomSheet>(null)
@@ -27,15 +27,15 @@ const Dictionary = () => {
 
   const [query, setQuery] = useState('')
   const submitQuery = () => {
-    const filteredWords = words.filter((word) => word.name.toLowerCase().includes(query.toLowerCase()));
+    const filteredWords = yourWords.filter((word) => word.word.toLowerCase().includes(query.toLowerCase()));
     setCustomData(filteredWords);
     setQuery('');
   }
 
   useEffect(() => {
-    const customFilter = words.filter((day) => day.name.charAt(0).toLowerCase() === 'a');
+    const customFilter = yourWords.filter((word) => word.word.charAt(0).toLowerCase() === 'a');
     setCustomData(customFilter);
-  }, [words])
+  }, [yourWords])
 
   const imageAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -85,7 +85,6 @@ const Dictionary = () => {
                 <PlusIcon size={24} color="#fff" />
               </Pressable>
             </View>
-
           </View>
           <View
             className="flex-1 flex-row mb-24 "
@@ -99,7 +98,7 @@ const Dictionary = () => {
               {customData.map((day, index) => (
                 <Day
                   key={`day-${day.name}-${index}`}
-                  weekLength={words.length}
+                  weekLength={yourWords.length}
                   lastOne={index}
                   day={day}
                   _color={_color}
