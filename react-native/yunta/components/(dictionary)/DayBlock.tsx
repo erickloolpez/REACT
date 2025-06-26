@@ -1,11 +1,12 @@
 import { useGlobalContext } from "@/context/GlobalProvider";
+import axios from "axios";
 import { Plus, Trash2 } from "lucide-react-native";
 import { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Alert, Pressable, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Animated, { FadeInDown, FadeOut, LinearTransition } from "react-native-reanimated";
 
-export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _spacing: number, _damping: number, _borderRadius: number, day: any, setCustomData: (data: any[]) => void }) {
+export default function DayBlock({ _spacing, _damping, _borderRadius, day, handlePresentModalPress, setNewWord }: { _spacing: number, _damping: number, _borderRadius: number, day: any, setCustomData: (data: any[]) => void, handlePresentModalPress: () => void, setNewWord?: (newWord: string) => void }) {
   const { deleteWord, yourStories } = useGlobalContext();
   const _entering = FadeInDown.springify().damping(_damping);
   const _exiting = FadeOut.springify().damping(_damping)
@@ -16,7 +17,6 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _
   const AnimatedPressionable = Animated.createAnimatedComponent(Pressable);
 
   const colors = ["#31773C", "#FD7D24", "#4592C4", "#719F3F", "#EED535", "#A38C21", "#7B62A3"]
-
 
   return (
     <Animated.View
@@ -41,7 +41,8 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _
         >
           <TextInput
             multiline
-            className="flex-1 border border-gray-300 p-2 rounded-lg font-Waku"
+            editable={false}
+            className="flex-1 border border-gray-300 p-2 rounded-lg  "
             value={day.relation}
           />
         </Animated.View>
@@ -56,7 +57,7 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _
               style={{ backgroundColor: colors[index % colors.length] }}
               key={`story-${index}`}
             >
-              <Text className="font-Waku text-white">{story}</Text>
+              <Text className="font-Waku text-white">{story.title}</Text>
             </View>
           ))
         }
@@ -65,11 +66,13 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _
         <Pressable
           className="flex-1"
           onPress={() => {
-            if (hours.length === 0) {
-              setHours([_startHour]);
-              return;
-            }
-            setHours((prev) => [...prev, prev[prev.length - 1] + 1]);
+            setNewWord(day)
+            handlePresentModalPress()
+            // if (hours.length === 0) {
+            //   setHours([_startHour]);
+            //   return;
+            // }
+            // setHours((prev) => [...prev, prev[prev.length - 1] + 1]);
           }}
         >
           <View
@@ -85,13 +88,22 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, day }: { _
             }}
           >
             <Plus size={18} color="#fff" />
-            <Text className="font-Waku" style={{ fontSize: 14, color: "#fff" }}>Add more</Text>
+            <Text className="font-Waku" style={{ fontSize: 14, color: "#fff" }}>Editar Contenido</Text>
           </View>
         </Pressable>
         <Pressable
           onPress={() => {
             console.log(day)
             deleteWord(day.name)
+            axios.delete(`http://192.168.100.10:3003/associations/${day.association_id}`)
+              .then(response => {
+                console.log('Asociacion eliminada correctamente ✅');
+                Alert.alert('Éxito', 'Cambios guardados correctamente');
+                // setUser(response.data);
+              })
+              .catch(err => {
+                console.log('Error eliminando palabra:', err);
+              });
           }}
         >
           <View

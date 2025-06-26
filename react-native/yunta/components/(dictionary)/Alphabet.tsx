@@ -2,7 +2,7 @@ import { useGlobalContext } from '@/context/GlobalProvider'
 import axios from 'axios'
 import { ArrowDown, ArrowUp } from 'lucide-react-native'
 import { MotiView } from 'moti'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { Pressable, Text, TouchableOpacity, View } from 'react-native'
 import { LinearTransition } from 'react-native-reanimated'
 
@@ -22,77 +22,6 @@ function Tick({ children, setSelectedIndex, selectedIndex, index, setCustomData 
 
   // Cache para evitar peticiones duplicadas
   const wordCacheRef = useRef(new Map())
-
-  useEffect(() => {
-    const handleTry = async () => {
-
-      setSelectedIndex(index);
-      const letter = lettersToNice[index];
-      console.log('Refetch in Alphabet 🔠', letter);
-
-      // Filtrar palabras que empiecen con la letra seleccionada
-      const filteredWords = yourWords.filter((word) =>
-        word.word.charAt(0).toUpperCase() === letter
-      );
-
-      try {
-        const wordsWithRelations = [];
-
-        for (const word of filteredWords) {
-          const wordKey = word.word.toLowerCase(); // Normalizar para el cache
-
-          // Verificar si ya tenemos los datos en cache
-          if (wordCacheRef.current.has(wordKey)) {
-            const cachedData = wordCacheRef.current.get(wordKey);
-            console.log(`Using cached data for word: ${word.word}`);
-
-            wordsWithRelations.push({
-              ...word,
-              fetchedRelations: cachedData
-            });
-          } else {
-            // Hacer petición solo si no está en cache
-            try {
-              console.log(`Fetching data for word: ${word.word}`);
-              const response = await axios.get(`http://192.168.100.10:3003/story-associations/word/${word.word}`);
-              const storyTitles = response.data.map((story) => story.storyDetails);
-
-              // Guardar en cache
-              wordCacheRef.current.set(wordKey, storyTitles);
-
-              wordsWithRelations.push({
-                ...word,
-                fetchedRelations: storyTitles
-              });
-
-            } catch (err) {
-              console.error(`Error fetching data for word ${word.word}:`, err);
-
-              // En caso de error, agregar la palabra sin relaciones adicionales
-              wordsWithRelations.push({
-                ...word,
-                fetchedRelations: []
-              });
-
-              // Guardar en cache como array vacío para evitar reintentos
-              wordCacheRef.current.set(wordKey, []);
-            }
-          }
-        }
-
-        // Recopilar todas las relaciones para el estado local
-        const allRelations = wordsWithRelations.flatMap(word => word.fetchedRelations || []);
-        setRelations(allRelations);
-
-        // Pasar las palabras con sus relaciones asociadas
-        setCustomData(wordsWithRelations);
-      }
-      catch (err) {
-        console.error('Error in handleTry:', err);
-      }
-    }
-    handleTry()
-  }, []);
 
   const handlePress = useCallback(async () => {
     if (selectedIndex === index) {
