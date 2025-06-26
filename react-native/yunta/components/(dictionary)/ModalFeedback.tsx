@@ -14,7 +14,7 @@ interface ModalFeedBackProps {
 }
 
 const ModalFeedBack = ({ bottomSheetModalRef, comment, newWord, setNewWord }: ModalFeedBackProps) => {
-  const { addWord } = useGlobalContext();
+  const { addWord, updateWords } = useGlobalContext();
   const handleEnterPress = () => bottomSheetModalRef.current?.snapToIndex(1)
   const handleExitPress = () => bottomSheetModalRef.current?.close()
   const snapPoints = useMemo(() => ['45%'], [])
@@ -23,6 +23,8 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, newWord, setNewWord }: Mo
   useEffect(() => {
     if (newWord) {
       setValue(newWord.relation);
+    } else {
+      setValue(null)
     }
   }, [newWord]);
 
@@ -136,18 +138,22 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, newWord, setNewWord }: Mo
                 setOption('Guardar')
                 handleEnterPress()
 
+              } else if (option === 'Guardar' && value) {
                 axios.put(`http://192.168.100.10:3003/associations/${newWord.association_id}`, {
                   relation: value
                 })
                   .then(response => {
+                    updateWords()
                     console.log('Cambios guardados del Usuario ✅');
                     Alert.alert('Éxito', 'Cambios guardados correctamente');
+                    setNewWord(null);
                     handleExitPress()
                     // setUser(response.data);
                   })
                   .catch(err => {
                     console.error('Error guardando cambios:', err);
                   });
+
               } else {
                 let form = { name, relation, stories: [{ title: 'Nueva historia' }] }
                 addWord(form)

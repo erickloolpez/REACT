@@ -51,6 +51,17 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
     callDB();
   }, []);
 
+  const updateWords = async () => {
+    try {
+      const response = await axios.get('http://192.168.100.10:3003/associations');
+      const wordsArray = response.data.map(item => item.word);
+      setYourWords(response.data);
+      console.log('Words updated Global Provider:', wordsArray);
+    } catch (error) {
+      console.error('Error updating words in Global Provider:', error);
+    }
+  }
+
 
   const deleteWord = (name: string) => {
     setYourWords((prev) => prev.filter((d) => d.name !== name));
@@ -119,7 +130,8 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       stories,
       setStories,
       user,
-      setUser
+      setUser,
+      updateWords
     }}>
       {children}
     </GlobalContext.Provider>

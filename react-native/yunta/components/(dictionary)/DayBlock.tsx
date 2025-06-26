@@ -7,7 +7,7 @@ import { TextInput } from "react-native-gesture-handler";
 import Animated, { FadeInDown, FadeOut, LinearTransition } from "react-native-reanimated";
 
 export default function DayBlock({ _spacing, _damping, _borderRadius, day, handlePresentModalPress, setNewWord }: { _spacing: number, _damping: number, _borderRadius: number, day: any, setCustomData: (data: any[]) => void, handlePresentModalPress: () => void, setNewWord?: (newWord: string) => void }) {
-  const { deleteWord, yourStories } = useGlobalContext();
+  const { deleteWord, updateWords } = useGlobalContext();
   const _entering = FadeInDown.springify().damping(_damping);
   const _exiting = FadeOut.springify().damping(_damping)
   const _layout = LinearTransition.springify().damping(_damping);
@@ -98,6 +98,7 @@ export default function DayBlock({ _spacing, _damping, _borderRadius, day, handl
             axios.delete(`http://192.168.100.10:3003/associations/${day.association_id}`)
               .then(response => {
                 console.log('Asociacion eliminada correctamente ✅');
+                updateWords()
                 Alert.alert('Éxito', 'Cambios guardados correctamente');
                 // setUser(response.data);
               })
