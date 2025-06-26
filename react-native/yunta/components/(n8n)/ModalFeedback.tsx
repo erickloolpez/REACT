@@ -96,7 +96,7 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, 
                 console.log('cambio de palabra', comment, newWord);
                 setStory(prev => ({
                   ...prev,
-                  story: prev.story.replace(comment, newWord)
+                  story_text: prev.story_text.replace(comment, newWord)
                 }))
                 setHadAnUpdate(true);
                 handleExitPress()

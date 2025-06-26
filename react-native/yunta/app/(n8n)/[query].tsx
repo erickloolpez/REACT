@@ -19,7 +19,7 @@ const N8n = () => {
   const { query } = useLocalSearchParams<{ query: string }>();
   const { yourWords, setYourDictionary, yourDictionary, setWords, stories, setStories } = useGlobalContext();
 
-  const wordsDB = yourWords.map((word) => word.toLowerCase());
+  const wordsDB = yourWords.map((word) => word.word.toLowerCase());
   //Is the first option to show on the bottom sheet modal
   const [newWord, setNewWord] = useState(wordsDB[0])
   const [selectedWord, setSelectedWord] = useState('');
@@ -29,7 +29,7 @@ const N8n = () => {
 
   const swiperRef = useRef<Swiper>(null);
   const [activeIndex, setActiveIndex] = useState(0)
-  const [onboarding, setOnboarding] = useState(['History', 'Words', 'Practice'])
+  const [onboarding, setOnboarding] = useState(['History', 'Words'])
 
   const [ready, setReady] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -110,14 +110,14 @@ const N8n = () => {
   const [contentStory, setContentStory] = useState(stories[query])
   const [customHeight, setCustomHeight] = useState(false);
   const [originalStory, setOriginalStory] = useState({
-    story_title: contentStory?.story_title || 'Mi Historia',
+    title: contentStory?.title || 'Mi Historia',
     character: contentStory?.character || 'Steve',
-    story: contentStory?.story || 'Aveces ipsum Steve sit amet burro adipisicing elit. Suscipit doloremque magni ipsum minima delectus. cat optio Steve esse perferendis tenetur natus nulla corporis quia, officia diego ratione consectetur praesentium perrito .',
+    story_text: contentStory?.story_text || 'Aveces ipsum Steve sit amet burro adipisicing elit. Suscipit doloremque magni ipsum minima delectus. cat optio Steve esse perferendis tenetur natus nulla corporis quia, officia diego ratione consectetur praesentium perrito .',
     place: contentStory?.place || 'El bosque encantado',
   })
   const [story, setStory] = useState(originalStory);
 
-  const words = story.story.split(' ');
+  const words = story.story_text.split(' ');
   const cleanWord = (word) => word.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
   const wordsCleaned = words.map(word => cleanWord(word));
   const storyWords = useMemo(() => {
@@ -125,11 +125,11 @@ const N8n = () => {
   }, [story.story]);
 
   useEffect(() => {
-    console.log('Refetch en n8n query 🏹');
     console.log('Flag changed:', flag);
+    console.log('Refetch en n8n query 🏹');
     if ((yourStory && Object.keys(yourStory).length > 0) && yourDictionary !== 0) {
       const newOriginalStory = {
-        story_title: yourStory.story_title || 'Mi Historia',
+        title: yourStory.title || 'Mi Historia',
         character: yourStory.character || 'Steve',
         story: yourStory.story || 'Descripción por defecto...',
         place: yourStory.place || 'El bosque encantado',
@@ -137,7 +137,7 @@ const N8n = () => {
       setOriginalStory(newOriginalStory);
       setStory(newOriginalStory);
     } else if (refetch) {
-      axios.get(`http://192.168.100.10:3003/history/user/1`)
+      axios.get(`http://192.168.100.10:3003/story-details/user/1`)
         .then(response => {
           setStories(response.data);
           console.log('Data fetched for the next open 📝')
@@ -150,7 +150,7 @@ const N8n = () => {
   }, [flag, refetch]);
 
   const hasChanges = () => {
-    return story.story_title !== originalStory.story_title || story.character !== originalStory.character || story.place !== originalStory.place || hadAnUpdate;
+    return story.title !== originalStory.title || story.character !== originalStory.character || story.place !== originalStory.place || hadAnUpdate;
   };
 
   const getChangedFields = (original, modified) => {
@@ -171,8 +171,8 @@ const N8n = () => {
     }
 
     console.log('Cambios detectados: 🔃', changes);
-    console.log('ID de la historia:', contentStory?.story_id);
-    axios.put(`http://192.168.100.10:3003/history/${query ? contentStory?.story_id : ''}`, changes)
+    console.log('ID de la historia:', contentStory?.story_details_id);
+    axios.put(`http://192.168.100.10:3003/story-details/${query ? contentStory?.story_details_id : ''}`, changes)
       .then(response => {
         console.log('Cambios guardados ✅');
         Alert.alert('Éxito', 'Cambios guardados correctamente');
@@ -214,15 +214,15 @@ const N8n = () => {
                 {
                   onboarding.map((item, index) => (
                     <View key={`${item}-index`} className="flex-1 p-6 flex-col " >
-                      <View className="flex-row items-center h-10 bg-green-400">
+                      <View className="flex-row items-center h-10 ">
                         <Text className="font-BlockHead text-white ">Titulo: </Text>
                         <TextInput
-                          value={story.story_title}
-                          onChangeText={(text) => setStory(prev => ({ ...prev, story_title: text }))}
+                          value={story.title}
+                          onChangeText={(text) => setStory(prev => ({ ...prev, title: text }))}
                           className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
                         />
                       </View>
-                      <View className="flex-row items-center h-10 bg-green-400">
+                      <View className="flex-row items-center h-10 ">
                         <Text className="font-BlockHead text-white ">Personaje: </Text>
                         <TextInput
                           value={story.character}
@@ -230,13 +230,13 @@ const N8n = () => {
                           onSubmitEditing={() => {
                             setStory(prev => ({
                               ...prev,
-                              story: prev.story.replace(prev.character, story.character)
+                              story_text: prev.story_text.replace(prev.character, story.character)
                             }))
                           }}
                           className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
                         />
                       </View>
-                      <View className="flex-row items-center h-10 bg-green-400">
+                      <View className="flex-row items-center h-10 ">
                         <Text className="font-BlockHead text-white ">Lugar: </Text>
                         <TextInput
                           value={story.place}
@@ -244,7 +244,7 @@ const N8n = () => {
                           onSubmitEditing={() => {
                             setStory(prev => ({
                               ...prev,
-                              story: prev.story.replace(prev.place, story.character)
+                              story_text: prev.story_text.replace(prev.place, story.character)
                             }))
                           }}
                           className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"

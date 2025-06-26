@@ -53,7 +53,7 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
 
   const updateWords = async () => {
     try {
-      const response = await axios.get('http://192.168.100.10:3003/associations');
+      const response = await axios.get('http://192.168.100.10:3003/associations/');
       const wordsArray = response.data.map(item => item.word);
       setYourWords(response.data);
       console.log('Words updated Global Provider:', wordsArray);
