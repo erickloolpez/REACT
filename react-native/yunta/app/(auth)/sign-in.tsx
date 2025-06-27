@@ -68,12 +68,13 @@ const SignIn = () => {
       <View className=" flex-1 bg-white">
         <View className="relative w-full h-[250px]">
           <Image source={images.signUpCar} className="z-0 w-full h-[250px]" />
-          <Text className="text-2xl text-lg font-BlockHead absolute bottom-5 left-5">Welcome 👋</Text>
+          <Text className="text-2xl text-lg font-BlockHead absolute bottom-5 left-5">Bienvenido 👋</Text>
         </View>
         <View className="p-5" >
           <InputField
             label="Email"
-            placeholder="enter your email"
+            placeholder="Ingresa tu email"
+            placeholderTextColor="#8c8c8c"
             icon={icons.email}
             value={form.email}
             onChangeText={(value) =>
@@ -81,8 +82,9 @@ const SignIn = () => {
             }
           />
           <InputField
-            label="Password"
-            placeholder="enter your password"
+            label="Contraseña"
+            placeholder="Ingresa tu contraseña"
+            placeholderTextColor="#8c8c8c"
             icon={icons.lock}
             value={form.password}
             secureTextEntry={true}
@@ -92,7 +94,7 @@ const SignIn = () => {
           />
           <View className="mt-10">
             <CustomButton
-              title="Sign In"
+              title="Iniciar Sesión"
               textVariant="default"
               onPress={onSignInPress}
             />
@@ -100,8 +102,8 @@ const SignIn = () => {
             <OAuth />
 
             <Text className="font-Waku text-lg text-center text-general-200 mt-10">
-              Don't have an account ? {" "}
-              <Text onPress={() => router.back()} className="text-blue-500">Sign Up</Text>
+              No tienes una cuenta ? {" "}
+              <Text onPress={() => router.back()} className="text-blue-500">Registrarse</Text>
             </Text>
 
           </View>

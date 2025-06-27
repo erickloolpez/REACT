@@ -1,7 +1,7 @@
-import { icons } from "@/constants";
 import { FlashList } from "@shopify/flash-list";
+import { BlurView } from "expo-blur";
 import React from "react";
-import { Image, View } from "react-native";
+import { Text } from "react-native";
 import ChatMessage from "./ChatMessage";
 
 type Props = {
@@ -13,11 +13,10 @@ const MessageList = ({ messages }: Props) => {
     <>
       {
         messages.length === 0 && (
-          <View className="absolute left-0 right-0 top-48" style={[{ alignItems: 'center', gap: 16 }]}>
-            <View className="self-center items-center justify-center w-14 h-14 bg-white rounded-full" >
-              <Image source={icons.person} className="w-12 h-12" resizeMode={'cover'} />
-            </View>
-          </View >
+          <BlurView className="absolute h-20 justify-center items-center left-0 top-20 right-0 ">
+            <Text className="font-BlockHead text-white text-">Consulta tus archivos aqui.</Text>
+            {/* <Image source={icons.person} className="w-12 h-12" resizeMode={'cover'} /> */}
+          </BlurView >
         )
       }
       <FlashList

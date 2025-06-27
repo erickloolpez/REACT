@@ -10,7 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { height: screenHeight } = Dimensions.get('window');
 const _tabBottomHeight = 90;
-const _tabTopHeight = 100
+const _tabTopHeight = 50
 
 const Notes = () => {
 
@@ -21,7 +21,7 @@ const Notes = () => {
   });
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView edges={'top'} className="flex-1">
       <ImageBackground source={images.bgNotes} className="flex-1">
         <View className="w-full relative" style={{ height: screenHeight - _tabBottomHeight - _tabTopHeight }}>
           <View className="flex-1 px-4 py-4" >
@@ -30,7 +30,7 @@ const Notes = () => {
 
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={100}
+            keyboardVerticalOffset={50}
             className="w-full h-12 justify-end"
           >
             <ChatInput onSendMessage={handleInputChange} input={input} handleSubmit={handleSubmit} isLoading={false} />

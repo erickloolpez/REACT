@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, Platform, Text, TextInput, View } from "react-nat
 import CustomButton from "../CustomButton";
 
 export default function Story({ callWebhook, setCustomHeight }: { callWebhook: () => void, setCustomHeight: (height: boolean) => void }) {
-  const { lastId } = useGlobalContext();
+  const { user } = useGlobalContext();
   const [character, setCharacter] = useState('');
   const [place, setPlace] = useState('');
   return (
@@ -53,7 +53,7 @@ export default function Story({ callWebhook, setCustomHeight }: { callWebhook: (
             let formData = {
               character: character,
               place: place,
-              lastId: lastId
+              user_id: user.user_id
             }
             callWebhook(formData)
           }}

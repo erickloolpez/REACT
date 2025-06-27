@@ -50,7 +50,7 @@ const OAuth = () => {
       </View>
 
       <CustomButton
-        title="Log In with Google"
+        title="Iniciar con Google"
         className="mt-5 w-full shadow-none"
         IconLeft={() => (
           <Image

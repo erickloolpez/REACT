@@ -2,7 +2,7 @@ import { useGlobalContext } from '@/context/GlobalProvider'
 import axios from 'axios'
 import { ArrowDown, ArrowUp } from 'lucide-react-native'
 import { MotiView } from 'moti'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Pressable, Text, TouchableOpacity, View } from 'react-native'
 import { LinearTransition } from 'react-native-reanimated'
 
@@ -12,16 +12,12 @@ const lettersToNice = [
 
 const fontSize = 40
 const _staggerCounter = 50
-const JUMP = 6 // salto de 9 posiciones
+const JUMP = 6 // salto de 6 posiciones
 
 function Tick({ children, setSelectedIndex, selectedIndex, index, setCustomData }: { children: string, setSelectedIndex: (index: number) => void, selectedIndex: number | null, index: number, setCustomData: (data: any[]) => void }) {
-  // MotiView para animar el fondo
-  const { yourWords } = useGlobalContext()
   const isSelected = selectedIndex === index
+  const { yourWords } = useGlobalContext() // Asumiendo que tienes un contexto global para las palabras
   const [relations, setRelations] = useState([])
-
-  // Cache para evitar peticiones duplicadas
-  const wordCacheRef = useRef(new Map())
 
   const handlePress = useCallback(async () => {
     if (selectedIndex === index) {
@@ -41,46 +37,51 @@ function Tick({ children, setSelectedIndex, selectedIndex, index, setCustomData 
 
     try {
       const wordsWithRelations = [];
+      const processedWords = new Set(); // Para trackear palabras ya procesadas
 
       for (const word of filteredWords) {
-        const wordKey = word.word.toLowerCase(); // Normalizar para el cache
+        const wordKey = word.word.toLowerCase(); // Normalizar para comparación
 
-        // Verificar si ya tenemos los datos en cache
-        if (wordCacheRef.current.has(wordKey)) {
-          const cachedData = wordCacheRef.current.get(wordKey);
-          console.log(`Using cached data for word: ${word.word}`);
+        // Verificar si ya procesamos esta palabra
+        if (processedWords.has(wordKey)) {
+          console.log(`Word already processed, skipping: ${word.word}`);
+
+          // Buscar la palabra ya procesada y usar sus datos
+          const existingWord = wordsWithRelations.find(w =>
+            w.word.toLowerCase() === wordKey
+          );
+
+          if (existingWord) {
+            // Agregar la palabra con los mismos datos de relación
+            wordsWithRelations.push({
+              ...word,
+              fetchedRelations: existingWord.fetchedRelations
+            });
+          }
+          continue;
+        }
+
+        // Marcar como procesada
+        processedWords.add(wordKey);
+
+        try {
+          console.log(`Fetching data for word: ${word.word}`);
+          const response = await axios.get(`http://192.168.100.10:3003/story-associations/word/${word.word}`);
+          const storyTitles = response.data.map((story) => story.storyDetails);
 
           wordsWithRelations.push({
             ...word,
-            fetchedRelations: cachedData
+            fetchedRelations: storyTitles
           });
-        } else {
-          // Hacer petición solo si no está en cache
-          try {
-            console.log(`Fetching data for word: ${word.word}`);
-            const response = await axios.get(`http://192.168.100.10:3003/story-associations/word/${word.word}`);
-            const storyTitles = response.data.map((story) => story.storyDetails);
 
-            // Guardar en cache
-            wordCacheRef.current.set(wordKey, storyTitles);
+        } catch (err) {
+          console.error(`Error fetching data for word ${word.word}:`, err);
 
-            wordsWithRelations.push({
-              ...word,
-              fetchedRelations: storyTitles
-            });
-
-          } catch (err) {
-            console.error(`Error fetching data for word ${word.word}:`, err);
-
-            // En caso de error, agregar la palabra sin relaciones adicionales
-            wordsWithRelations.push({
-              ...word,
-              fetchedRelations: []
-            });
-
-            // Guardar en cache como array vacío para evitar reintentos
-            wordCacheRef.current.set(wordKey, []);
-          }
+          // En caso de error, agregar la palabra sin relaciones adicionales
+          wordsWithRelations.push({
+            ...word,
+            fetchedRelations: []
+          });
         }
       }
 
@@ -94,7 +95,7 @@ function Tick({ children, setSelectedIndex, selectedIndex, index, setCustomData 
       console.log('Data processed for the next open 📝', {
         totalWords: wordsWithRelations.length,
         totalRelations: allRelations.length,
-        cacheSize: wordCacheRef.current.size
+        uniqueWordsProcessed: processedWords.size
       });
       console.log('wordsWithRelations:', wordsWithRelations);
 
@@ -102,6 +103,7 @@ function Tick({ children, setSelectedIndex, selectedIndex, index, setCustomData 
       console.error('Error in handlePress:', err);
     }
   }, [selectedIndex, index, yourWords, setSelectedIndex, setCustomData]);
+
   return (
     <MotiView
       layout={LinearTransition.springify().damping(80).stiffness(200)}
@@ -110,9 +112,7 @@ function Tick({ children, setSelectedIndex, selectedIndex, index, setCustomData 
       }}
       style={{ marginBottom: 10, borderRadius: 10 }}
     >
-      <Pressable
-        onPress={handlePress}
-      >
+      <Pressable onPress={handlePress}>
         <Text className="font-BlockHead" style={{ fontSize: fontSize - 10, lineHeight: fontSize * 1.1, textAlign: 'center', fontVariant: ['tabular-nums'], color: 'white' }}>
           {children}
         </Text>
@@ -123,9 +123,7 @@ function Tick({ children, setSelectedIndex, selectedIndex, index, setCustomData 
 
 function TickerList({ index, setSelectedIndex, selectedIndex, setCustomData }: { index: number, setSelectedIndex: (index: number) => void, selectedIndex: number | null, setCustomData: (data: any[]) => void }) {
   return (
-    <View
-      style={{ height: fontSize, width: fontSize }}
-    >
+    <View style={{ height: fontSize, width: fontSize }}>
       <MotiView
         animate={{
           translateY: -fontSize * 1.12 * index,
@@ -138,7 +136,7 @@ function TickerList({ index, setSelectedIndex, selectedIndex, setCustomData }: {
       >
         {
           lettersToNice.map((letter, idx) => {
-            return <Tick key={`letter-${letter}-${idx}`} index={idx} setSelectedIndex={setSelectedIndex} selectedIndex={selectedIndex} setCustomData={setCustomData} >{letter}</Tick>
+            return <Tick key={`letter-${letter}-${idx}`} index={idx} setSelectedIndex={setSelectedIndex} selectedIndex={selectedIndex} setCustomData={setCustomData}>{letter}</Tick>
           })
         }
       </MotiView>
@@ -150,7 +148,7 @@ export default function Alphabet({ setCustomData }: { setCustomData: (data: any[
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  // Función para avanzar 9 posiciones
+  // Función para avanzar 6 posiciones
   const handleNext = () => {
     setCurrentIndex(prev => {
       const next = prev + JUMP
@@ -158,7 +156,7 @@ export default function Alphabet({ setCustomData }: { setCustomData: (data: any[
     })
   }
 
-  // Función para retroceder 9 posiciones
+  // Función para retroceder 6 posiciones
   const handlePrev = () => {
     setCurrentIndex(prev => {
       const next = prev - JUMP
@@ -181,7 +179,7 @@ export default function Alphabet({ setCustomData }: { setCustomData: (data: any[
       </View>
       <View style={{ flexDirection: 'row', gap: 10, marginTop: 10 }}>
         <TouchableOpacity onPress={handleNext}>
-          <View className="w-10 h-10  bg-[#003366] rounded-full flex-row items-center justify-center">
+          <View className="w-10 h-10 bg-[#003366] rounded-full flex-row items-center justify-center">
             <ArrowDown size={30} color="white" />
           </View>
         </TouchableOpacity>

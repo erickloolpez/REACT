@@ -1,6 +1,3 @@
-import * as DocumentPicker from "expo-document-picker";
-import * as ImagePicker from "expo-image-picker";
-import { CameraIcon, PlusIcon } from "lucide-react-native";
 import React, { useState } from "react";
 import { TextInput, TouchableOpacity, View } from "react-native";
 import Animated, { Extrapolation, interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
@@ -51,24 +48,8 @@ const ChatInput = ({
   })
 
   return (
-    <View className=" bg-white dark:bg-transparent" style={{ paddingBottom: 20 }}>
+    <View className="p-2 pb-4">
       <View className="flex-row items-end gap-x-2">
-        <ATouchableOpacity onPress={expandItems} className="bg-green-400 rounded-full w-[30] h-[30] items-center justify-center" style={expandedButtonStyle}>
-          <PlusIcon size={26} color="black" />
-        </ATouchableOpacity>
-
-        <Animated.View style={buttonViewStyle} className="flex-row items-center gap-4" >
-          <TouchableOpacity onPress={() => ImagePicker.launchCameraAsync()}>
-            <CameraIcon size={24} color="white" className="" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => ImagePicker.launchImageLibraryAsync()}>
-            <CameraIcon size={24} color="white" className="" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => DocumentPicker.getDocumentAsync({ type: 'image/*' })}>
-            <CameraIcon size={24} color="white" className="" />
-          </TouchableOpacity>
-        </Animated.View>
-
         <TextInput
           onFocus={collapseItems}
           onChange={e =>
@@ -86,8 +67,9 @@ const ChatInput = ({
           }}
           value={input}
           placeholder="Escribe un mensaje"
-          className="flex-1 h-10 rounded-lg border-2 border-gray-200 dark:border-gray-700 p-2
-            bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100
+          placeholderTextColor={"#8c8c8c"}
+          className="flex-1 h-14 bg-white rounded-2xl border-2   p-4
+            bg-white  text-gray-900 dark:text-gray-100
             placeholder-gray-500 dark:placeholder-gray-400"
           editable={!isLoading}
         />

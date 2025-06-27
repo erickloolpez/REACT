@@ -107,6 +107,7 @@ const Home = () => {
         <View style={{ flex: 1 }}>
           <Pressable
             onPress={() => setOpenModal(true)}
+            className=""
           >
             <BannerShape
               width={250}
@@ -127,7 +128,7 @@ const Home = () => {
               </View>
             </View>
           </Pressable>
-          <View className="flex-1 items-center justify-center ">
+          <View className="flex-1 items-center justify-center mt-12  ">
             {
               activeIndex > stories.length - 1 ? (
                 <View className="w-3/4 h-40 items-center justify-center">
@@ -143,37 +144,51 @@ const Home = () => {
                 </View>
               ) :
                 (
-                  <TouchableOpacity onPress={() => router.push(`/(n8n)/${activeIndex}`)} className="w-60 h-60 bg-white rounded-lg items-center justify-center">
-                    <Animated.Image key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-60 h-60 rounded-lg object-contain " />
-                  </TouchableOpacity>
+                  <View className="w-full h-[300px] ">
+                    <View className="h-10 bg-[#003366] self-end items-center p-2 rounded-sm">
+                      <Text className="text-white font-BlockHead">{dataWithAddButton[activeIndex]?.title}</Text>
+                    </View>
+                    <View className="flex-1  items-center">
+                      <TouchableOpacity onPress={() => router.push(`/(n8n)/${activeIndex}`)} className="flex-1 rounded-lg items-center justify-center overflow-hidden">
+                        <Animated.Image key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-48 h-48 object-contain rounded-t-full " />
+                      </TouchableOpacity>
+                      <View className="w-4/5 h-20 items-center justify-center p-3 bg-[#ffd700] rounded-lg ">
+                        <Text numberOfLines={3}>
+                          {dataWithAddButton[activeIndex]?.story_text.slice(0, 100) || 'No hay descripción disponible.'}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
                 )
             }
           </View>
-          <Animated.FlatList
-            style={{
-              height: 5,
-              paddingBottom: _itemSize - 100,
-            }}
-            contentContainerStyle={{
-              gap: _spacing,
-              paddingHorizontal: (width - _itemSize) / 2,
-            }}
-            data={dataWithAddButton}
-            keyExtractor={(_, index) => String(index)}
-            renderItem={({ item, index }) => {
-              if (item.type === 'ADD_BUTTON') {
-                return <CarouselItem imageUri={item.type} index={index} scrollX={scrollX} _itemSize={_itemSize} />
-              }
+          <View className="flex-1 pt-10">
+            <Animated.FlatList
+              style={{
+                height: 5,
+                paddingBottom: _itemSize - 100,
+              }}
+              contentContainerStyle={{
+                gap: _spacing,
+                paddingHorizontal: (width - _itemSize) / 2,
+              }}
+              data={dataWithAddButton}
+              keyExtractor={(_, index) => String(index)}
+              renderItem={({ item, index }) => {
+                if (item.type === 'ADD_BUTTON') {
+                  return <CarouselItem imageUri={item.type} index={index} scrollX={scrollX} _itemSize={_itemSize} />
+                }
 
-              return <CarouselItem imageUri={carrusel[index]} index={index} scrollX={scrollX} _itemSize={_itemSize} />
-            }}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            onScroll={onScroll}
-            scrollEventThrottle={1000 / 60}
-            snapToInterval={_itemTotalSize}
-            decelerationRate={"fast"}
-          />
+                return <CarouselItem imageUri={carrusel[index]} index={index} scrollX={scrollX} _itemSize={_itemSize} />
+              }}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              onScroll={onScroll}
+              scrollEventThrottle={1000 / 60}
+              snapToInterval={_itemTotalSize}
+              decelerationRate={"fast"}
+            />
+          </View>
         </View>
 
       </ImageBackground>

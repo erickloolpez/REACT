@@ -60,7 +60,7 @@ const SignUp = () => {
       // If verification was completed, set the session to active
       // and redirect the user
       if (signUpAttempt.status === 'complete') {
-        axios.post(`http://192.168.100.10:3003/users`, {
+        axios.post(`http://172.20.20.10:3003/users`, {
           password: form.password,
           email: form.email,
         })
@@ -99,12 +99,13 @@ const SignUp = () => {
     <ScrollView className="flex-1 bg-white">
       <View className={`relative w-full ${customHeight ? 'h-[100px] ' : 'h-[250px] '} justify-center  items-center   `}>
         <Image source={images.banner} className={`${customHeight ? "hidden" : "block"} z-0 w-full  scale-[0.7] `} resizeMode={"contain"} />
-        <Text className="font-Waku text-2xl text-black font-JakartaSemiBold absolute bottom-0 left-5">Create your account</Text>
+        <Text className="font-Waku text-2xl text-black font-JakartaSemiBold absolute bottom-0 left-5">Crea tu cuenta</Text>
       </View>
       <View className="p-5">
         <InputField
-          label="Name"
-          placeholder="enter your name"
+          label="Nombre"
+          placeholder="Ingresa tu nombre"
+          placeholderTextColor="#8c8c8c"
           icon={icons.person}
           value={form.name}
           onChangeText={(value) =>
@@ -113,7 +114,8 @@ const SignUp = () => {
         />
         <InputField
           label="Email"
-          placeholder="enter your email"
+          placeholder="Ingresa tu email"
+          placeholderTextColor="#8c8c8c"
           icon={icons.email}
           value={form.email}
           onChangeText={(value) =>
@@ -122,8 +124,9 @@ const SignUp = () => {
         />
 
         <InputField
-          label="Password"
-          placeholder="enter your password"
+          label="Contraseña"
+          placeholder="Ingresa tu contraseña"
+          placeholderTextColor="#8c8c8c"
           icon={icons.lock}
           value={form.password}
           secureTextEntry={true}
@@ -136,7 +139,7 @@ const SignUp = () => {
         />
         <View className="mt-10">
           <CustomButton
-            title="Sign up"
+            title="Registrarse"
             textVariant="default"
             onPress={onSignUpPress}
           />
@@ -144,8 +147,8 @@ const SignUp = () => {
           <OAuth />
 
           <Text className="font-Waku text-lg text-center text-general-200 mt-10">
-            Already have an account? {" "}
-            <Link href="/sign-in" className="text-blue-500">Log In</Link>
+            Ya tienes una cuenta? {" "}
+            <Link href="/sign-in" className="text-blue-500">Iniciar Sesion</Link>
           </Text>
         </View>
       </View>

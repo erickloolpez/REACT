@@ -1,6 +1,6 @@
 import Presentation from "@/components/(auth)/Presentation";
 import CustomButton from "@/components/CustomButton";
-import { onboarding } from "@/constants";
+import { images, onboarding } from "@/constants";
 import { useAuth } from "@clerk/clerk-expo";
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from "expo-router";
@@ -58,26 +58,17 @@ export default function Index() {
               index === 0 ?
                 <Presentation key={item.id} isLastSlide={isLastSlide} swiperRef={swiperRef} />
                 :
-                <ImageBackground source={item.background} key={item.id} className="flex-1 items-center justify-center">
+                <ImageBackground source={images.bgLessons} key={item.id} className="flex-1 items-center justify-center pb-10">
+                  <View className={` ${index === 2 ? "" : ""} w-11/12`}>
+                    <Text style={{ textShadowColor: "black", textShadowOffset: { width: 2, height: 2 }, textShadowRadius: 1 }} className="text-white  font-BlockHead text-2xl font-bold text-center">{item.title}</Text>
+                    <Text className="text-white text-xl text-center mt-2">{item.description}</Text>
+                  </View>
                   <Image
                     source={item.image}
-                    className={`${index === 2 ? "w-[320px] h-[320px]" : "w-[420px] h-[420px]"} object-cover `}
+                    className={`${index === 2 ? "w-[300px] h-[300px]" : "w-[320px] h-[320px]"} object-cover `}
                     resizeMode="contain"
                   />
-                  <LinearGradient
-                    colors={['#00000000', '#000000']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 0, y: 1 }}
-                    locations={[0, 1]}
-                    pointerEvents='none'
-                    className="absolute top-0 left-0 w-full h-full"
-                  />
-                  <View className={` ${index === 2 ? "absolute bottom-20" : ""} w-11/12`}>
-                    <Text style={{ textShadowColor: "black", textShadowOffset: { width: 2, height: 2 }, textShadowRadius: 1 }} className="text-white  font-BlockHead text-2xl font-bold text-center">{item.title}</Text>
-                    <Text className="text-white font-Waku text-xl text-center mt-2">{item.description}</Text>
-                  </View>
                 </ImageBackground>
-
             ))
           }
         </Swiper>
@@ -96,7 +87,7 @@ export default function Index() {
           }}
         />
         <CustomButton
-          title={isLastSlide ? "Get Started" : "Next"}
+          title={isLastSlide ? "Comencemos" : "Siguiente"}
           onPress={() => isLastSlide ? router.replace('/(auth)/sign-up') : swiperRef.current?.scrollBy(1)}
           className="w-11/12  mb-5"
         />

@@ -18,9 +18,9 @@ const Layout = () => {
   return (
     <MaterialTopTabs
       screenOptions={{
-        tabBarActiveTintColor: "#131620",
+        tabBarActiveTintColor: "#003366",
         tabBarLabelStyle: { fontSize: 16, fontWeight: "bold" },
-        tabBarIndicatorStyle: { backgroundColor: "blue", height: 3 },
+        tabBarIndicatorStyle: { backgroundColor: "#003366", height: 3 },
         tabBarStyle: {
           height: 50,
         }

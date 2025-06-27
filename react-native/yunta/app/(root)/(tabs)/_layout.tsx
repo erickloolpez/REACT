@@ -56,7 +56,8 @@ const Layout = () => (
       name="(notes)"
       options={{
         title: 'Notes',
-        tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.pencil} />,
+        headerShown: false,
+        tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.chat} />,
         headerStyle: { height: 50 }
       }}
     />

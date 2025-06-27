@@ -2,7 +2,6 @@ import { useLocalSearchParams } from 'expo-router';
 
 
 import ModalFeedBack from "@/components/(n8n)/ModalFeedback";
-import Story from "@/components/(n8n)/Story";
 import CustomButton from "@/components/CustomButton";
 import { images } from "@/constants";
 import { useGlobalContext } from "@/context/GlobalProvider";
@@ -29,7 +28,7 @@ const N8n = () => {
 
   const swiperRef = useRef<Swiper>(null);
   const [activeIndex, setActiveIndex] = useState(0)
-  const [onboarding, setOnboarding] = useState(['History', 'Words'])
+  const [onboarding, setOnboarding] = useState(['History'])
 
   const [ready, setReady] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -40,6 +39,7 @@ const N8n = () => {
   const [refetch, setRefetch] = useState(false);
 
   const callWebhook = async (formData) => {
+    setYourDictionary(1)
     setLoading(true)
     move.value = withRepeat(
       withTiming(-360, { duration: 1000 }),
@@ -68,7 +68,7 @@ const N8n = () => {
           console.error('Error fetching words:', err);
           return { data: [] }; // fallback o manejo alternativo
         }),
-        axios.get(`http://192.168.100.10:3003/history/${webhookData.storyId}`).catch(err => {
+        axios.get(`http://192.168.100.10:3003/story-details/${webhookData.storyId}`).catch(err => {
           console.error('Error fetching story:', err);
           return { data: null };
         }),
@@ -85,6 +85,7 @@ const N8n = () => {
     } catch (error: any) {
       console.error('Error en la operación:', error.message || error);
     }
+    setYourDictionary(0)
   }
 
   const move = useSharedValue(0)
@@ -295,9 +296,9 @@ const N8n = () => {
             )
           }
           {
-            (!ready && !loading) && !query && (
-              <Story callWebhook={callWebhook} setCustomHeight={setCustomHeight} />
-            )
+            // (!ready && !loading) && yourDictionary == 0 && (
+            //   <Story callWebhook={callWebhook} setCustomHeight={setCustomHeight} />
+            // )
           }
           <ModalFeedBack bottomSheetModalRef={bottomSheetModalRef} comment={selectedWord} setNewWord={setNewWord} newWord={newWord} filterWords={wordsDB} storyWords={storyWords} setStory={setStory} setComment={setSelectedWord} setHadAnUpdate={setHadAnUpdate} />
         </View>

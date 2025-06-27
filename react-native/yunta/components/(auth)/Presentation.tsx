@@ -67,9 +67,9 @@ export default function Presentation({ isLastSlide, swiperRef }: { isLastSlide: 
       />
       <View style={{ flex: 0.2, marginBottom: 30, justifyContent: 'center', alignItems: 'center', padding: _spacing, gap: _spacing }}>
         <Text className="font-BlockHead" style={{ color: "#fff", fontSize: 20, marginTop: _spacing, textAlign: 'center' }}>
-          Unlock your {" "}
-          <Text style={{ fontWeight: 'bold' }}>Creative</Text>{'\n'}
-          <Text style={{ fontWeight: 'bold' }}>Potential</Text>{" "}with AI
+          Desbloquea tu {" "}
+          <Text style={{ fontWeight: 'bold' }}>Creativad</Text>{'\n'}
+          <Text style={{ fontWeight: 'bold' }}>y Potencial</Text>{" "}con la IA
         </Text>
       </View>
 
