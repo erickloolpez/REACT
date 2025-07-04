@@ -3,43 +3,71 @@ import { Switch, Text, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import DayBlock from "./DayBlock";
 
+interface DayType {
+  word: string;
+  fetchedRelations?: any[];
+}
 
-export default function Day({ day, _color, _borderRadius, _spacing, _damping, lastOne, weekLength, handlePresentModalPress, setNewWord }: { day: any, _color: string, _borderRadius: number, _spacing: number, _damping: number, lastOne?: number, weekLength: number, handlePresentModalPress: () => void, setNewWord?: (newWord: string) => void }) {
-  const [isOn, setIsOn] = useState(false);
+export default function Day({
+  day,
+  _color,
+  _borderRadius,
+  _spacing,
+  _damping,
+  lastOne,
+  weekLength,
+  handlePresentModalPress,
+  setNewWord
+}: {
+  day: DayType;
+  _color: string;
+  _borderRadius: number;
+  _spacing: number;
+  _damping: number;
+  lastOne?: number;
+  weekLength: number;
+  handlePresentModalPress: () => void;
+  setNewWord: (newWord: string) => void;
+}) {
+  const [showRelations, setShowRelations] = useState(false);
   const _layout = LinearTransition.springify().damping(_damping);
+
   return (
     <Animated.View
+      layout={_layout}
       style={{
         width: "100%",
         borderWidth: 1,
         borderColor: _color,
         borderRadius: _borderRadius,
         padding: _spacing,
-        backgroundColor: isOn ? _color : "transparent",
+        backgroundColor: showRelations ? _color : "transparent",
         gap: _spacing,
-        marginBottom: lastOne === weekLength - 1 ? 220 : 0,
+        marginBottom: lastOne !== undefined && lastOne === weekLength - 1 ? 220 : 0,
       }}
-      layout={_layout}
     >
-
-      <View
-        className="flex-row  items-center justify-between"
-      >
-        <Text className={`${isOn ? 'text-black' : 'text-white'} font-Waku`}>{day.word}</Text>
+      <View className="flex-row items-center justify-between">
+        <Text className={`${showRelations ? "text-black" : "text-white"} font-Waku`}>
+          {day.word}
+        </Text>
         <Switch
-          value={isOn}
-          onValueChange={(value) => setIsOn(value)}
+          value={showRelations}
+          onValueChange={setShowRelations}
           trackColor={{ true: "#F9A620" }}
-          style={{
-            transformOrigin: ["100%", "50%", 0],//x, y, z
-            transform: [{
-              scale: 0.7
-            }
-            ]
-          }}
+          style={{ transform: [{ scale: 0.7 }] }}
         />
       </View>
-      {isOn && <DayBlock _borderRadius={_borderRadius} _damping={_damping} _spacing={_spacing} day={day} handlePresentModalPress={handlePresentModalPress} setNewWord={setNewWord} />}
+
+      {showRelations && (
+        <DayBlock
+          _borderRadius={_borderRadius}
+          _damping={_damping}
+          _spacing={_spacing}
+          day={day}
+          handlePresentModalPress={handlePresentModalPress}
+          setNewWord={setNewWord}
+        />
+      )}
     </Animated.View>
-  )
+  );
 }
