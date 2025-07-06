@@ -1,8 +1,7 @@
 import { useGlobalContext } from "@/context/GlobalProvider";
-import axios from "axios";
 import { Plus, Trash2 } from "lucide-react-native";
 import { useState } from "react";
-import { Alert, Pressable, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Animated, {
   FadeInDown,
@@ -30,6 +29,8 @@ interface Props {
   day: DayType;
   handlePresentModalPress: () => void;
   setNewWord: (word: DayType) => void;
+  setCustomData: React.Dispatch<React.SetStateAction<any[]>>;
+  setOpenModal?: (open: boolean) => void;
 }
 
 export default function DayBlock({
@@ -39,8 +40,10 @@ export default function DayBlock({
   day,
   handlePresentModalPress,
   setNewWord,
+  setCustomData,
+  setOpenModal,
 }: Props) {
-  const { deleteWord, updateWords } = useGlobalContext();
+  const { deleteWord, updateWords, setWordToDelete } = useGlobalContext();
 
   const [hours] = useState([8]); // está fijo por ahora
 
@@ -53,21 +56,10 @@ export default function DayBlock({
     "#719F3F", "#EED535", "#A38C21", "#7B62A3"
   ];
 
+
   const handleDelete = () => {
-    console.log(day);
-
-    deleteWord(day.name);
-
-    axios
-      .delete(`http://192.168.100.10:3003/associations/${day.association_id}`)
-      .then(() => {
-        console.log("Asociación eliminada correctamente ✅");
-        updateWords();
-        Alert.alert("Éxito", "Cambios guardados correctamente");
-      })
-      .catch((err) => {
-        console.log("Error eliminando palabra:", err);
-      });
+    setWordToDelete({ association_id: day.association_id, word: day.word });
+    setOpenModal?.(true);
   };
 
   const handleEdit = () => {

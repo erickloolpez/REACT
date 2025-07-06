@@ -19,6 +19,7 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [yourStories, setYourStories] = useState([]);
   const [stories, setStories] = useState([])
   const [cachedStories, setCachedStories] = useState([])
+  const [wordToDelete, setWordToDelete] = useState<{ association_id?: number, word?: string } | null>(null);
 
   useEffect(() => {
     const callDB = async () => {
@@ -64,10 +65,26 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
   }
 
 
-  const deleteWord = (name: string) => {
-    setYourWords((prev) => prev.filter((d) => d.name !== name));
+  const deleteWord = async () => {
+    console.log('Eliminando palabra:', wordToDelete);
+    try {
+      await axios.delete(
+        `http://192.168.100.10:3003/associations/${wordToDelete?.association_id}`
+      );
 
-  }
+      // 1. Quitarla del contexto global
+      setYourWords((prev) =>
+        prev.filter((w) => w.association_id !== wordToDelete?.association_id)
+      );
+
+      console.log(`🗑️  Palabra "${wordToDelete?.word}" eliminada con éxito`);
+      return { association_id: wordToDelete?.association_id, word: wordToDelete?.word };           // 2. Devuélvala para la UI
+    } catch (err) {
+      console.error('❌ Error eliminando palabra:', err);
+      Alert.alert('Error', 'No se pudo eliminar la palabra');
+      return null;
+    }
+  };
 
   const addWord = async (newWord: { word: string; relation: string }) => {
     console.log('Agregando nueva palabra:', newWord);
@@ -149,7 +166,9 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       setUser,
       updateWords,
       cachedStories,
-      setCachedStories
+      setCachedStories,
+      wordToDelete,
+      setWordToDelete
     }}>
       {children}
     </GlobalContext.Provider>

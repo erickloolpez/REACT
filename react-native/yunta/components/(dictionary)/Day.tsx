@@ -17,7 +17,9 @@ export default function Day({
   lastOne,
   weekLength,
   handlePresentModalPress,
-  setNewWord
+  setNewWord,
+  setCustomData,
+  setOpenModal
 }: {
   day: DayType;
   _color: string;
@@ -28,6 +30,8 @@ export default function Day({
   weekLength: number;
   handlePresentModalPress: () => void;
   setNewWord: (newWord: string) => void;
+  setCustomData: React.Dispatch<React.SetStateAction<any[]>>;
+  setOpenModal: (open: boolean) => void;
 }) {
   const [showRelations, setShowRelations] = useState(false);
   const _layout = LinearTransition.springify().damping(_damping);
@@ -66,6 +70,8 @@ export default function Day({
           day={day}
           handlePresentModalPress={handlePresentModalPress}
           setNewWord={setNewWord}
+          setCustomData={setCustomData}
+          setOpenModal={setOpenModal}
         />
       )}
     </Animated.View>
