@@ -18,6 +18,7 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [yourDictionary, setYourDictionary] = useState(0);
   const [yourStories, setYourStories] = useState([]);
   const [stories, setStories] = useState([])
+  const [cachedStories, setCachedStories] = useState([])
 
   useEffect(() => {
     const callDB = async () => {
@@ -68,9 +69,24 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
 
   }
 
-  const addWord = (newWord: { name: string; relation: string; stories: { title: string }[] }) => {
-    setYourWords((prev) => [...prev, newWord]);
-  }
+  const addWord = async (newWord: { word: string; relation: string }) => {
+    console.log('Agregando nueva palabra:', newWord);
+    try {
+      const response = await axios.post('http://192.168.100.10:3003/associations', {
+        user_id: user?.user_id,
+        word: newWord.word,
+        relation: newWord.relation
+      });
+
+      // Suponiendo que el backend devuelve el nuevo objeto completo
+      setYourWords((prev) => [...prev, response.data]);
+      console.log('✅ Palabra agregada con éxito:', response.data);
+      return response.data
+    } catch (err) {
+      console.error('❌ Error al agregar palabra:', err);
+      Alert.alert('Error', 'No se pudo agregar la palabra');
+    }
+  };
 
   const pickAndUpload = async () => {
     console.log('Iniciando DocumentPicker...');
@@ -131,7 +147,9 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       setStories,
       user,
       setUser,
-      updateWords
+      updateWords,
+      cachedStories,
+      setCachedStories
     }}>
       {children}
     </GlobalContext.Provider>

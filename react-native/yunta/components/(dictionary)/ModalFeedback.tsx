@@ -21,6 +21,7 @@ interface ModalFeedBackProps {
   comment?: { text: string; rating: number };
   newWord?: any;
   setNewWord?: (word: any | null) => void;
+  setCustomData: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 export default function ModalFeedBack({
@@ -28,6 +29,7 @@ export default function ModalFeedBack({
   comment,
   newWord,
   setNewWord,
+  setCustomData
 }: ModalFeedBackProps) {
   const { addWord, updateWords } = useGlobalContext();
 
@@ -58,6 +60,7 @@ export default function ModalFeedBack({
   const handleConfirm = () => {
     if (buttonText === 'Listo') {
       Keyboard.dismiss();
+      bottomSheetModalRef.current?.snapToIndex(1);
       setButtonText('Guardar');
       return;
     }
@@ -70,6 +73,20 @@ export default function ModalFeedBack({
         })
         .then(() => {
           updateWords();
+          setCustomData((prev) =>
+            prev.map((group) =>
+              group.letter === newWord.word.charAt(0).toLowerCase()
+                ? {
+                  ...group,
+                  data: group.data.map((item) =>
+                    item.word === newWord.word
+                      ? { ...item, relation: relationText }
+                      : item
+                  ),
+                }
+                : group
+            )
+          );
           Alert.alert('✅ Éxito', 'Cambios guardados correctamente');
           setNewWord?.(null);
           handleClose();
@@ -83,12 +100,42 @@ export default function ModalFeedBack({
     // 🆕 Si estamos creando una palabra nueva
     if (name && relation) {
       const form = {
-        name,
+        word: name,
         relation,
-        stories: [{ title: 'Nueva historia' }],
       };
-      addWord(form);
-      handleClose();
+
+      addWord(form).then((newWord) => {
+        if (!newWord) return;
+
+        const firstLetter = name.charAt(0).toLowerCase();
+
+        setCustomData((prev) => {
+          const exists = prev.find((group) => group.letter === firstLetter);
+          if (exists) {
+            return prev.map((group) =>
+              group.letter === firstLetter
+                ? {
+                  ...group,
+                  data: [...group.data, { ...newWord, fetchedRelations: [] }],
+                }
+                : group
+            );
+          } else {
+            return [
+              ...prev,
+              {
+                letter: firstLetter,
+                data: [{ ...newWord, fetchedRelations: [] }],
+              },
+            ];
+          }
+        });
+
+        setName('');
+        setRelation('');
+        handleClose();
+        Alert.alert('✅ Éxito', 'Palabra creada correctamente');
+      });
     }
   };
 
