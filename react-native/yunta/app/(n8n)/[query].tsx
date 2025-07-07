@@ -1,310 +1,217 @@
-import { useLocalSearchParams } from 'expo-router';
-
-
-import ModalFeedBack from "@/components/(n8n)/ModalFeedback";
-import CustomButton from "@/components/CustomButton";
-import { images } from "@/constants";
-import { useGlobalContext } from "@/context/GlobalProvider";
-import BottomSheet from "@gorhom/bottom-sheet";
+// components/screens/N8n.tsx
+import BottomSheet from '@gorhom/bottom-sheet';
 import axios from 'axios';
-import { ArrowLeft } from "lucide-react-native";
+import { useLocalSearchParams } from 'expo-router';
+import { ArrowLeft } from 'lucide-react-native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, ImageBackground, ScrollView, Text, TextInput, View } from 'react-native';
-import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from "react-native-reanimated";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Swiper from "react-native-swiper";
+import {
+  Alert,
+  ImageBackground,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Swiper from 'react-native-swiper';
+
+import ModalFeedBack from '@/components/(n8n)/ModalFeedback';
+import CustomButton from '@/components/CustomButton';
+import { images } from '@/constants';
+import { useGlobalContext } from '@/context/GlobalProvider';
 
 const N8n = () => {
-  const { query } = useLocalSearchParams<{ query: string }>();
-  const { yourWords, setYourDictionary, yourDictionary, setWords, stories, setStories } = useGlobalContext();
+  /* ─── Ruta & contexto ─────────────────────────────────────── */
+  const { query } = useLocalSearchParams<{ query?: string }>(); // query opcional
+  const {
+    yourWords,
+    setStories,            // actualizar historias
+    stories,
+  } = useGlobalContext();
 
-  const wordsDB = yourWords.map((word) => word.word.toLowerCase());
-  //Is the first option to show on the bottom sheet modal
-  const [newWord, setNewWord] = useState(wordsDB[0])
-  const [selectedWord, setSelectedWord] = useState('');
+  const wordsDB = yourWords.map((w) => w.word.toLowerCase());
 
-  const bottomSheetModalRef = useRef<BottomSheet>(null)
-  const handlePresentModalPress = () => bottomSheetModalRef.current?.present()
-
+  /* ─── Refs / estado ───────────────────────────────────────── */
+  const bottomSheetModalRef = useRef<BottomSheet>(null);
   const swiperRef = useRef<Swiper>(null);
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [onboarding, setOnboarding] = useState(['History'])
 
-  const [ready, setReady] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [selectedWord, setSelectedWord] = useState('');
+  const [newWord, setNewWord] = useState(wordsDB[0]);
+  const [ready, setReady] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [yourStory, setYourStory] = useState({})
-  const [flag, setFlag] = useState(false)
-  const [hadAnUpdate, setHadAnUpdate] = useState(false);
-  const [refetch, setRefetch] = useState(false);
-
-  const callWebhook = async (formData) => {
-    setYourDictionary(1)
-    setLoading(true)
-    move.value = withRepeat(
-      withTiming(-360, { duration: 1000 }),
-      1,
-      false,
-      () => {
-        runOnJS(setLoading)(false); //This is a worklet
-        runOnJS(setReady)(true); //This is a worklet
-      },
-    );
-    // Llamar al webhook de n8n
-    try {
-      const { data: webhookData } = await axios.post('https://n8n.srv831273.hstgr.cloud/webhook/93f442cd-0326-46f9-acd3-282de51b20ce', formData)
-      console.log('Response from WEBHOOK n8n.tsx:', webhookData);
-
-      if (!webhookData?.storyId) {
-        throw new Error('La respuesta del webhook no contiene storyId');
-      }
-
-      setYourDictionary(webhookData.storyId);
-      console.log('Dictionary saved', webhookData);
-
-      // Ejecutar las dos peticiones GET en paralelo
-      const [wordsResponse, storyResponse] = await Promise.all([
-        axios.get('http://192.168.100.10:3003/words').catch(err => {
-          console.error('Error fetching words:', err);
-          return { data: [] }; // fallback o manejo alternativo
-        }),
-        axios.get(`http://192.168.100.10:3003/story-details/${webhookData.storyId}`).catch(err => {
-          console.error('Error fetching story:', err);
-          return { data: null };
-        }),
-      ]);
-
-      const wordsArray = wordsResponse.data.map(item => item.word);
-      const justStory = storyResponse.data.story_id;
-      setWords(wordsArray);
-      setYourStory(storyResponse.data);
-      console.log('Words fetched:', wordsArray);
-      console.log('Story fetched:', justStory);
-      setFlag(true);
-
-    } catch (error: any) {
-      console.error('Error en la operación:', error.message || error);
-    }
-    setYourDictionary(0)
-  }
-
-  const move = useSharedValue(0)
-  const imageAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          // translateX: interpolate(move.value, [0, 100], [-50, 50], 'clamp')
-          rotate: `${move.value}deg`, // importante el string con 'deg'
-        },
-      ],
-    }
-  })
-
+  /* ─── Animación personaje ─────────────────────────────────── */
+  const move = useSharedValue(0);
+  const imageStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${move.value}deg` }],
+  }));
   useEffect(() => {
-    move.value = withRepeat(
-      withTiming(-15, { duration: 3000 }),
-      -1, // repetir infinito
-      true,
-    );
+    move.value = withRepeat(withTiming(-15, { duration: 3000 }), -1, true);
   }, []);
 
-  const [contentStory, setContentStory] = useState(stories[query])
-  const [customHeight, setCustomHeight] = useState(false);
+  /* ─── Historia actual ─────────────────────────────────────── */
+  const contentStory = query ? stories[query] : undefined;
   const [originalStory, setOriginalStory] = useState({
     title: contentStory?.title || 'Mi Historia',
     character: contentStory?.character || 'Steve',
-    story_text: contentStory?.story_text || 'Aveces ipsum Steve sit amet burro adipisicing elit. Suscipit doloremque magni ipsum minima delectus. cat optio Steve esse perferendis tenetur natus nulla corporis quia, officia diego ratione consectetur praesentium perrito .',
+    story_text: contentStory?.story_text || 'Aveces ipsum Steve sit amet...',
     place: contentStory?.place || 'El bosque encantado',
-  })
+  });
   const [story, setStory] = useState(originalStory);
 
+  /* ─── Palabras clicables ──────────────────────────────────── */
   const words = story.story_text.split(' ');
-  const cleanWord = (word) => word.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
-  const wordsCleaned = words.map(word => cleanWord(word));
-  const storyWords = useMemo(() => {
-    return wordsCleaned.filter(word => wordsDB.includes(word));
-  }, [story.story]);
+  const clean = (w: string) => w.toLowerCase().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '');
+  const wordsCleaned = words.map(clean);
+  const storyWords = useMemo(
+    () => wordsCleaned.filter((w) => wordsDB.includes(w)),
+    [story.story_text],
+  );
 
-  useEffect(() => {
-    console.log('Flag changed:', flag);
-    console.log('Refetch en n8n query 🏹');
-    if ((yourStory && Object.keys(yourStory).length > 0) && yourDictionary !== 0) {
-      const newOriginalStory = {
-        title: yourStory.title || 'Mi Historia',
-        character: yourStory.character || 'Steve',
-        story: yourStory.story || 'Descripción por defecto...',
-        place: yourStory.place || 'El bosque encantado',
-      }
-      setOriginalStory(newOriginalStory);
-      setStory(newOriginalStory);
-    } else if (refetch) {
-      axios.get(`http://192.168.100.10:3003/story-details/user/1`)
-        .then(response => {
-          setStories(response.data);
-          console.log('Data fetched for the next open 📝')
-        })
-        .catch(err => {
-          console.error('Data not fetched for the next Open', err);
-        });
-    }
-
-  }, [flag, refetch]);
-
-  const hasChanges = () => {
-    return story.title !== originalStory.title || story.character !== originalStory.character || story.place !== originalStory.place || hadAnUpdate;
+  /* ─── Abrir modal para cambiar palabra ────────────────────── */
+  const openModalForWord = (word: string) => {
+    setSelectedWord(word);
+    bottomSheetModalRef.current?.present();
   };
 
-  const getChangedFields = (original, modified) => {
-    const changes = {};
-    for (const key in modified) {
-      if (modified[key] !== original[key]) {
-        changes[key] = modified[key];
-      }
-    }
-    return changes;
+  /* ─── Guardar cambios ─────────────────────────────────────── */
+  const diffFields = (orig: any, mod: any) => {
+    const out: any = {};
+    Object.keys(mod).forEach((k) => {
+      if (mod[k] !== orig[k]) out[k] = mod[k];
+    });
+    return out;
   };
 
   const saveYourChanges = () => {
-    const changes = getChangedFields(originalStory, story);
-    if (Object.keys(changes).length === 0) {
-      console.log('No hay cambios para guardar');
+    if (!query) {
+      Alert.alert('Error', 'No hay ID de historia');
       return;
     }
 
-    console.log('Cambios detectados: 🔃', changes);
-    console.log('ID de la historia:', contentStory?.story_details_id);
-    axios.put(`http://192.168.100.10:3003/story-details/${query ? contentStory?.story_details_id : ''}`, changes)
-      .then(response => {
-        console.log('Cambios guardados ✅');
+    const changes = diffFields(originalStory, story);
+    if (!Object.keys(changes).length) return;
+
+    axios
+      .put(`http://192.168.100.10:3003/story-details/${contentStory?.story_details_id}`, changes)
+      .then(() => {
         Alert.alert('Éxito', 'Cambios guardados correctamente');
-        setHadAnUpdate(false);
-        setRefetch(true);
+
+        /* 1️⃣  Sincronizar estado local */
+        setOriginalStory(story);
+
+        setStories((prev) => {
+          const index = prev.findIndex((s) => s.story_details_id === contentStory?.story_details_id);
+          if (index === -1) return prev;
+
+          const updated = [...prev];
+          updated[index] = { ...updated[index], ...story };
+
+          return updated;
+        });
+
       })
-      .catch(err => {
-        console.error('Error guardando cambios:', err);
-      });
+      .catch((err) => console.error('Error guardando cambios:', err));
   };
 
+  /* ─── Render ──────────────────────────────────────────────── */
   return (
     <SafeAreaView className="flex-1">
       <ImageBackground source={images.bgHome} className="flex-1">
-        <View className="h-24 flex-row relative items-center justify-center">
-          <View className="absolute left-3 bg-[#003366] rounded-full p-3">
+        {/* Header */}
+        <View className="h-24 flex-row items-center justify-center relative">
+          <View className="absolute left-3 bg-[#003366] p-3 rounded-full">
             <ArrowLeft size={28} color="#fff" />
           </View>
-          <Text className="font-BlockHead text-[#FFD200] text-2xl">Tu Historia</Text>
+          <Text className="font-BlockHead text-[#FFD200] text-2xl">
+            Tu Historia
+          </Text>
         </View>
-        <View className={`flex-row justify-center items-center ${loading ? 'flex-1' : ''}`}>
+
+        {/* Personaje */}
+        <View
+          className={`flex-row justify-center ${loading ? 'flex-1' : ''} items-center`}
+        >
           <Animated.Image
             source={images.steve}
-            className={`${customHeight ? 'hidden' : 'block'} w-40 h-64  object-contain  `}
-            style={imageAnimatedStyle}
+            className="w-40 h-64 object-contain"
+            style={imageStyle}
           />
         </View>
-        <View className={`${loading ? 'hidden' : 'flex-1'} rounded-t-3xl bg-[#003366] overflow-hidden `}>
-          {
-            ready || query && (
-              <Swiper
-                ref={swiperRef}
-                loop={false}
-                dot={<View className="w-[32px] h-[4px] mx-1 bg-[#e2e8f0] rounded-full" />}
-                activeDot={<View className="w-[32px] h-[4px]  mx-1 bg-[#FFD200] rounded-full" />}
-                onIndexChanged={(index) => setActiveIndex(index)}
-                paginationStyle={{ bottom: 10 }}
-              >
-                {
-                  onboarding.map((item, index) => (
-                    <View key={`${item}-index`} className="flex-1 p-6 flex-col " >
-                      <View className="flex-row items-center h-10 ">
-                        <Text className="font-BlockHead text-white ">Titulo: </Text>
-                        <TextInput
-                          value={story.title}
-                          onChangeText={(text) => setStory(prev => ({ ...prev, title: text }))}
-                          className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
-                        />
-                      </View>
-                      <View className="flex-row items-center h-10 ">
-                        <Text className="font-BlockHead text-white ">Personaje: </Text>
-                        <TextInput
-                          value={story.character}
-                          onChangeText={(text) => setStory(prev => ({ ...prev, character: text }))}
-                          onSubmitEditing={() => {
-                            setStory(prev => ({
-                              ...prev,
-                              story_text: prev.story_text.replace(prev.character, story.character)
-                            }))
-                          }}
-                          className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
-                        />
-                      </View>
-                      <View className="flex-row items-center h-10 ">
-                        <Text className="font-BlockHead text-white ">Lugar: </Text>
-                        <TextInput
-                          value={story.place}
-                          onChangeText={(text) => setStory(prev => ({ ...prev, place: text }))}
-                          onSubmitEditing={() => {
-                            setStory(prev => ({
-                              ...prev,
-                              story_text: prev.story_text.replace(prev.place, story.character)
-                            }))
-                          }}
-                          className="font-BlockHead text-black text-base border border-black px-2 bg-white rounded-md"
-                        />
-                      </View>
 
-                      <ScrollView className="mt-4 h-44  ">
-                        <Text className=" text-white text-base/7">
-                          {
-                            wordsCleaned.map((word, index) => {
-                              if (wordsDB.includes(word)) {
-                                return (
-                                  <Text
-                                    key={`${word}-${index}`}
-                                    className="text-red-600 "
-                                    onPress={() => {
-                                      setSelectedWord(word)
-                                      handlePresentModalPress()
-                                    }}
-                                  >{word} </Text>
-                                )
-                              }
-                              return (
-                                <Text
-                                  key={`${word}-${index}`}
-                                  className="text-white "
-                                >{word} </Text>
-                              )
+        {/* Contenedor azul */}
+        <View className="flex-1 bg-[#003366] rounded-t-3xl overflow-hidden">
+          <Swiper
+            ref={swiperRef}
+            loop={false}
+            dot={<View className="w-8 h-1 mx-1 bg-slate-200 rounded-full" />}
+            activeDot={<View className="w-8 h-1 mx-1 bg-[#FFD200] rounded-full" />}
+          >
+            <View className="flex-1 p-6">
+              {/* Campos editables */}
+              {(['title', 'character', 'place'] as const).map((field) => (
+                <View key={field} className="flex-row items-center h-10">
+                  <Text className="font-BlockHead text-white capitalize">
+                    {field}:{' '}
+                  </Text>
+                  <TextInput
+                    value={(story as any)[field]}
+                    onChangeText={(t) =>
+                      setStory((p: any) => ({ ...p, [field]: t }))
+                    }
+                    className="bg-white border border-black px-2 rounded-md font-BlockHead text-black text-base flex-1"
+                  />
+                </View>
+              ))}
 
-                            })
-                          }
-                        </Text>
-                      </ScrollView>
-                      {
-                        hasChanges() && (
-                          <CustomButton
-                            className="mb-2"
-                            title="Guardar Cambios"
-                            textVariant="default"
-                            onPress={() => saveYourChanges()}
-                          />
-                        )
-                      }
-                    </View>
-                  ))
-                }
-              </Swiper>
-            )
-          }
-          {
-            // (!ready && !loading) && yourDictionary == 0 && (
-            //   <Story callWebhook={callWebhook} setCustomHeight={setCustomHeight} />
-            // )
-          }
-          <ModalFeedBack bottomSheetModalRef={bottomSheetModalRef} comment={selectedWord} setNewWord={setNewWord} newWord={newWord} filterWords={wordsDB} storyWords={storyWords} setStory={setStory} setComment={setSelectedWord} setHadAnUpdate={setHadAnUpdate} />
+              {/* Texto + palabras clicables */}
+              <ScrollView className="mt-4 h-44">
+                <Text className="text-white text-base leading-7">
+                  {wordsCleaned.map((w, i) =>
+                    wordsDB.includes(w) ? (
+                      <Text
+                        key={`${w}-${i}`}
+                        className="text-red-600"
+                        onPress={() => openModalForWord(w)}
+                      >
+                        {words[i]}{' '}
+                      </Text>
+                    ) : (
+                      <Text key={`${w}-${i}`}>{words[i]} </Text>
+                    ),
+                  )}
+                </Text>
+              </ScrollView>
+
+              {/* Botón guardar */}
+              {Object.keys(diffFields(originalStory, story)).length > 0 && (
+                <CustomButton title="Guardar Cambios" onPress={saveYourChanges} />
+              )}
+            </View>
+          </Swiper>
+
+          {/* Modal BottomSheet */}
+          <ModalFeedBack
+            bottomSheetModalRef={bottomSheetModalRef}
+            comment={selectedWord}
+            newWord={newWord}
+            setNewWord={setNewWord}
+            filterWords={wordsDB}
+            storyWords={storyWords}
+            setStory={setStory}
+            setComment={setSelectedWord}
+            setHadAnUpdate={() => { }}
+          />
         </View>
       </ImageBackground>
-    </SafeAreaView >
-  )
-}
+    </SafeAreaView>
+  );
+};
 
-export default N8n
+export default N8n;
