@@ -134,8 +134,8 @@ const Home = () => {
                 <View className="w-3/4 h-40 items-center justify-center">
                   <Animated.View style={stylez}>
                     <TouchableOpacity
-                      onPress={pickAndUpload}
-                      // onPress={() => router.push('/(chat)/n8n')}
+                      // onPress={pickAndUpload}
+                      onPress={() => router.push('/(n8n)/history')}
                       className="mt-4 bg-white px-4 py-2 rounded-lg"
                     >
                       <Text className="text-center font-BlockHead">Crear historia</Text>
