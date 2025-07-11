@@ -1,5 +1,6 @@
 import { TikTokMessages } from '@/components/(n8n)/TikTokMessage';
 import { ChatItem, generateMessage } from "@/constants/chat";
+import { useGlobalContext } from '@/context/GlobalProvider';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, Text, View } from 'react-native';
@@ -12,30 +13,33 @@ const chatSpeed = {
 }
 
 const History = () => {
-  const [messages, setMessages] = useState<ChatItem[]>(
-    [...Array(10).keys()].map(generateMessage)
-  )
+  const { n8nData } = useGlobalContext()
+  const [messages, setMessages] = useState<ChatItem[]>([])
 
   const timeout = useRef<NodeJS.Timeout | null>(null)
 
   const [speed, setSpeed] = useState<keyof typeof chatSpeed>('slow')
 
-  const generateData = () => {
+  const generateData = (text: string) => {
     clearTimeout(timeout.current)
     const selectedSpeed = chatSpeed[speed]
     const timer = Math.random() * selectedSpeed[0] + selectedSpeed[1]
 
     timeout.current = setTimeout(() => {
       setMessages((data) => {
-        return [generateMessage(), ...data]
+        return [generateMessage(text), ...data]
       })
-      generateData()
+      // generateData()
     }, timer)
   }
 
   useEffect(() => {
-    generateData()
-  }, [speed])
+    const uploadStatus = !n8nData.upload ? 'Creando historia...' :
+      n8nData.upload?.data ? 'Historia en la Vector Store' :
+        'No se creó la historia en la vector Store';
+
+    generateData(uploadStatus);
+  }, [speed, n8nData])
   return (
     <View className="flex-1 items-center justify-center">
       <TikTokMessages
@@ -66,6 +70,7 @@ const History = () => {
           selectedIndex={Object.keys(chatSpeed).indexOf(speed)}
           onChange={(e) => {
             setSpeed(e.nativeEvent.value as keyof typeof chatSpeed)
+            generateData()
           }}
         />
 
