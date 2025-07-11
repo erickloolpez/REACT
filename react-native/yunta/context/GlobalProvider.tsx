@@ -11,6 +11,12 @@ interface GlobalProviderProps {
   children: ReactNode
 }
 
+interface N8nData {
+  upload: any | null;
+  summary: any | null;
+  history: any | null;
+}
+
 const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [user, setUser] = useState(null)
   const [lastId, setLastId] = useState('');
@@ -20,6 +26,11 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [stories, setStories] = useState([])
   const [cachedStories, setCachedStories] = useState([])
   const [wordToDelete, setWordToDelete] = useState<{ association_id?: number, word?: string } | null>(null);
+  const [n8nData, setN8nData] = useState<N8nData>({
+    upload: null,
+    summary: null,
+    history: null,
+  });
 
   useEffect(() => {
     const callDB = async () => {
@@ -130,18 +141,19 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
         type: mimeType,
       });
 
-      const response = await fetch('http://192.168.100.10:3003/upload', {
-        method: 'POST',
-        body: formData,
+      router.push('/(n8n)/history');
+
+      const response = await axios.post('http://192.168.100.10:3003/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      const data = await response.json();
-      console.log('Archivo subido:', data);
-      setLastId(data.publicUrl.split('/').pop() || '');
-      router.push('/(n8n)/8');
+      console.log('Respuesta upload ⬆️', response.data);
+      setN8nData((prev: any) => ({
+        ...prev,
+        upload: response.data,
+      }));
+      // Actualización CORRECTA - conserva otros datos y solo actualiza upload
     } catch (error) {
       Alert.alert('Error', error.message);
     }
@@ -168,7 +180,9 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       cachedStories,
       setCachedStories,
       wordToDelete,
-      setWordToDelete
+      setWordToDelete,
+      n8nData,
+      setN8nData
     }}>
       {children}
     </GlobalContext.Provider>
