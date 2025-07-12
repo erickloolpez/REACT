@@ -55,14 +55,34 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       setYourWords(wordsResponse.data);
       setStories(storiesResponse.data);
       setUser(userResponse.data);
-      console.log('Words fetched Global Provider:', wordsArray);
-      console.log('Story fetched Global Provider:', justStory);
-      console.log('User fetched Global Provider:', justName);
+      console.log('Words 🔠 fetched Global Provider:', wordsArray);
+      console.log('Story 📖 fetched Global Provider:', justStory);
+      console.log('User 👤 fetched Global Provider:', justName);
 
     }
 
     callDB();
   }, []);
+
+  const updateStories = async () => {
+    try {
+      const [wordsResponse, storiesResponse] = await Promise.all([
+        axios.get('http://192.168.100.10:3003/associations').catch(err => {
+          console.error('Error fetching words in Global Provider:', err);
+          return { data: [] }; // fallback o manejo alternativo
+        }),
+        axios.get(`http://192.168.100.10:3003/story-details/user/1`).catch(err => {
+          console.error('Error fetching story in Global Provider:', err);
+          return { data: [] };
+        }),
+      ]);
+
+      setYourWords(wordsResponse.data);
+      setStories(storiesResponse.data);
+    } catch (error) {
+      console.error('Error updating stories in Global Provider:', error);
+    }
+  }
 
   const updateWords = async () => {
     try {
@@ -74,7 +94,6 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       console.error('Error updating words in Global Provider:', error);
     }
   }
-
 
   const deleteWord = async () => {
     console.log('Eliminando palabra:', wordToDelete);
@@ -153,6 +172,19 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
         ...prev,
         upload: response.data,
       }));
+
+      const responseSummary = await axios.post('https://n8n.srv831273.hstgr.cloud/webhook/e6f62379-14f5-4de0-a7e6-79f97c5bc954', {
+        metadata_id: response.data.data[0].metadata.file_id,
+        pageContent: response.data.data[0].data
+      })
+
+      console.log('Respuesta summary 📝', responseSummary.data);
+      setN8nData((prev: any) => ({
+        ...prev,
+        summary: responseSummary.data.answer,
+      }));
+
+
       // Actualización CORRECTA - conserva otros datos y solo actualiza upload
     } catch (error) {
       Alert.alert('Error', error.message);
@@ -182,7 +214,8 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       wordToDelete,
       setWordToDelete,
       n8nData,
-      setN8nData
+      setN8nData,
+      updateStories,
     }}>
       {children}
     </GlobalContext.Provider>

@@ -35,7 +35,7 @@ const getTextVariantStyle = (variant: ButtonProps['textVariant']) => {
 const CustomButton = ({ onPress, title, bgVariant = "primary", textVariant = "danger", IconLeft, IconRight, className, ...props }: ButtonProps) => (
   <TouchableOpacity
     onPress={onPress}
-    className={`w-full p-3 border-2 border-black rounded-xl  flex-row justify-center items-center shadow-md ${getBgVariantStyle(bgVariant)} ${className}`}
+    className={`w-full p-3 border-2 border-black rounded-xl  flex-row justify-center items-center shadow-sm ${getBgVariantStyle(bgVariant)} ${className}`}
     {...props}
   >
     {IconLeft && <IconLeft />}

@@ -1,12 +1,13 @@
 // components/screens/N8n.tsx
 import BottomSheet from '@gorhom/bottom-sheet';
 import axios from 'axios';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { ArrowLeft } from 'lucide-react-native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
   ImageBackground,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
@@ -28,7 +29,7 @@ import { useGlobalContext } from '@/context/GlobalProvider';
 
 const N8n = () => {
   /* ─── Ruta & contexto ─────────────────────────────────────── */
-  const { query } = useLocalSearchParams<{ query?: string }>(); // query opcional
+  const { query, id } = useLocalSearchParams<{ query?: string, id?: number }>(); // query opcional
   const {
     yourWords,
     setStories,            // actualizar historias
@@ -56,7 +57,8 @@ const N8n = () => {
   }, []);
 
   /* ─── Historia actual ─────────────────────────────────────── */
-  const contentStory = query ? stories[query] : undefined;
+  console.log('Query:', query, 'ID:', id);
+  const contentStory = !id ? stories[query] : stories.find((s) => s.story_details_id === Number(id));
   const [originalStory, setOriginalStory] = useState({
     title: contentStory?.title || 'Mi Historia',
     character: contentStory?.character || 'Steve',
@@ -125,14 +127,19 @@ const N8n = () => {
     <SafeAreaView className="flex-1">
       <ImageBackground source={images.bgHome} className="flex-1">
         {/* Header */}
-        <View className="h-24 flex-row items-center justify-center relative">
+        <Pressable
+          className="h-24 flex-row items-center justify-center relative"
+          onPress={() =>
+            router.back()
+          }
+        >
           <View className="absolute left-3 bg-[#003366] p-3 rounded-full">
             <ArrowLeft size={28} color="#fff" />
           </View>
           <Text className="font-BlockHead text-[#FFD200] text-2xl">
             Tu Historia
           </Text>
-        </View>
+        </Pressable>
 
         {/* Personaje */}
         <View

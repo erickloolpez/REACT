@@ -45,7 +45,7 @@ const InputField = ({
               <Image source={icon} className={`w-6 h-6 ml-4 ${iconStyle}`} />
             )}
             <TextInput
-              className={`rounded-full p-4 text-[15px] flex-1 ${inputStyle} text-left`}
+              className={`rounded-full p-4 text-[15px] bg-[#ddd] flex-1 ${inputStyle} text-left`}
               onFocus={() => setCustomHeight(true)}
               onSubmitEditing={() => setCustomHeight(false)}
               secureTextEntry={showPassword ? !showPassword : secureTextEntry}
