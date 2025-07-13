@@ -2,7 +2,7 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import axios from 'axios';
 import { router, useLocalSearchParams } from 'expo-router';
-import { ArrowLeft, Maximize2 } from 'lucide-react-native';
+import { ArrowLeft, Maximize2, Quote } from 'lucide-react-native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
@@ -113,6 +113,9 @@ const N8n = () => {
   const wordsSplitted = useMemo(() => chunkArray(storyWordsDB, Math.floor(storyWordsDB.length / 2)),
     []
   )
+  /* ─── Sections ─────────────────────────────────────── */
+
+  const sections = ['history', 'words']
 
   /* ─── Guardar cambios ─────────────────────────────────────── */
   const diffFields = (orig: any, mod: any) => {
@@ -173,9 +176,9 @@ const N8n = () => {
           </Text>
         </Pressable>
 
-        {/* Personaje */}
+        {/* Main ideas */}
         <View
-          className={`flex-col justify-center ${!open ? 'flex-1' : 'hidden'} gap-y-10 `}
+          className={`flex-col justify-center ${!open ? 'flex-1' : 'hidden'} gap-y-6 `}
           style={{
             overflow: 'hidden',
             transform: [{
@@ -193,8 +196,9 @@ const N8n = () => {
               >
                 <View style={{ flexDirection: 'row', gap: _spacing }}>
                   {w.map((word, index) => (
-                    <View key={`word-${index}`} className=" w-44 h-20 bg-white border border-black p-4 rounded-lg justify-center " >
-                      <Text numberOfLines={2} className="text-black">{word.relation}</Text>
+                    <View key={`word-${index}`} className=" relative w-52 h-24 bg-white border border-black p-4 rounded-lg justify-center " >
+                      <Quote size={24} color="black" />
+                      <Text numberOfLines={4} className="text-black">{word.relation}</Text>
                     </View>
                   ))}
                 </View>
@@ -211,57 +215,80 @@ const N8n = () => {
           <Swiper
             ref={swiperRef}
             loop={false}
-            dot={<View className="w-8 h-1 mx-1 bg-slate-200 rounded-full" />}
-            activeDot={<View className="w-8 h-1 mx-1 bg-[#FFD200] rounded-full" />}
+            dot={<View className="w-8 h-1 mx-1 bottom-[-15px] bg-white rounded-full" />}
+            activeDot={<View className="w-8 h-1 mx-1 bottom-[-15px] bg-[#FFD200] rounded-full" />}
           >
-            <View className="flex-1 relative p-6">
-              <Pressable
-                className="absolute top-4 right-6 "
-                onPress={changeHeight}
-              >
-                <Maximize2 size={24} color="#FFD200" />
-              </Pressable>
-              {/* Campos editables */}
-              <View className="flex-row flex-wrap gap-x-2 gap-y-1">
-                {(['title', 'character', 'place'] as const).map((field) => (
-                  <View key={field} className="flex-row items-center h-10 bg-white rounded-full border border-black px-2">
-                    <Text className=" text-yellow-600 capitalize text-lg font-bold">
-                      {field}:{' '}
-                    </Text>
-                    <TextInput
-                      value={(story as any)[field]}
-                      onChangeText={(t) =>
-                        setStory((p: any) => ({ ...p, [field]: t }))
-                      }
-                      className=" w-auto h-10 items-center pb-2 pr-3 px-2 rounded-md text-black text-base "
-                    />
-                  </View>
-                ))}
-              </View>
-              {/* Texto + palabras clicables */}
-              <ScrollView className="mt-4 h-44">
-                <Text className="text-white text-base leading-7">
-                  {wordsCleaned.map((w, i) =>
-                    wordsDB.includes(w) ? (
-                      <Text
-                        key={`${w}-${i}`}
-                        className="text-red-600"
-                        onPress={() => openModalForWord(w)}
+            {
+              sections.map((section, index) => (
+                <View key={index} className="flex-1">
+                  {section === 'history' ? (
+                    <View className="flex-1 relative p-6">
+                      <Pressable
+                        className="absolute top-2 right-3 "
+                        onPress={changeHeight}
                       >
-                        {words[i]}{' '}
-                      </Text>
-                    ) : (
-                      <Text key={`${w}-${i}`}>{words[i]} </Text>
-                    ),
-                  )}
-                </Text>
-              </ScrollView>
+                        <Maximize2 size={24} color="#FFD200" />
+                      </Pressable>
+                      {/* Campos editables */}
+                      <View className="flex-row mt-2 flex-wrap gap-x-2 gap-y-1">
+                        {(['title', 'character', 'place'] as const).map((field) => (
+                          <View key={field} className="flex-row items-center h-10 bg-white rounded-full border border-black px-2">
+                            <Text className=" text-yellow-600 capitalize text-lg font-bold">
+                              {field}:{' '}
+                            </Text>
+                            <TextInput
+                              value={(story as any)[field]}
+                              onChangeText={(t) =>
+                                setStory((p: any) => ({ ...p, [field]: t }))
+                              }
+                              className=" w-auto h-10 items-center pb-2 pr-3 px-2 rounded-md text-black text-base "
+                            />
+                          </View>
+                        ))}
+                      </View>
+                      {/* Texto + palabras clicables */}
+                      <ScrollView className="mt-4 h-44">
+                        <Text className="text-white text-base leading-7">
+                          {wordsCleaned.map((w, i) =>
+                            wordsDB.includes(w) ? (
+                              <Text
+                                key={`${w}-${i}`}
+                                className="text-red-600"
+                                onPress={() => openModalForWord(w)}
+                              >
+                                {words[i]}{' '}
+                              </Text>
+                            ) : (
+                              <Text key={`${w}-${i}`}>{words[i]} </Text>
+                            ),
+                          )}
+                        </Text>
+                      </ScrollView>
 
-              {/* Botón guardar */}
-              {Object.keys(diffFields(originalStory, story)).length > 0 && (
-                <CustomButton title="Guardar Cambios" onPress={saveYourChanges} />
-              )}
-            </View>
+                      {/* Botón guardar */}
+                      {Object.keys(diffFields(originalStory, story)).length > 0 && (
+                        <CustomButton title="Guardar Cambios" onPress={saveYourChanges} />
+                      )}
+                    </View>
+                  ) : (
+                    <ScrollView className="flex-1 p-6">
+                      {storyWordsDB.map((word, idx) => (
+                        <View
+                          key={idx}
+                          className="rounded-sm px-3 py-3 border border-l-8 border-t-0 border-r-0 border-b-0 border-[#978AE2] bg-white mb-4"
+                        >
+                          <View className="flex-row justify-between">
+                            <Text className="text-black mb-4 capitalize font-bold">{word.word}</Text>
+                            <Quote size={16} color="black" />
+                          </View>
+                          <Text>{word.relation}</Text>
+                        </View>
+                      ))}
+                    </ScrollView>
+                  )}
+                </View>
+              ))
+            }
           </Swiper>
 
           {/* Modal BottomSheet */}

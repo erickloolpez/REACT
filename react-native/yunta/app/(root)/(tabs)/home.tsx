@@ -6,7 +6,7 @@ import { carrusel, icons, images } from '@/constants'
 import { useGlobalContext } from '@/context/GlobalProvider'
 import axios from 'axios'
 import { router } from 'expo-router'
-import { Origami, XIcon } from 'lucide-react-native'
+import { Castle, Origami, User, XIcon } from 'lucide-react-native'
 import React, { useEffect, useState } from 'react'
 import { Alert, Dimensions, Image, ImageBackground, Pressable, Text, TouchableOpacity, View } from 'react-native'
 import ReactNativeModal from 'react-native-modal'
@@ -118,7 +118,7 @@ const Home = () => {
               cornerRadius={10}
               vNotchDepth={30}
             />
-            <View className="w-[220px] flex-row h-10 bg-red-600 rounded-lg justify-between items-center px-5">
+            <View className="w-[220px] flex-row h-10 bg-red-600 rounded-r-lg justify-between items-center px-5">
               <View className="flex-1 items-center justify-center">
                 <Text className="font-Waku text-xl text-white">{copyOfUser.username}</Text>
               </View>
@@ -144,18 +144,40 @@ const Home = () => {
                 </View>
               ) :
                 (
-                  <View className="w-full h-[300px] ">
-                    <View className="h-10 bg-[#003366] self-end items-center p-2 rounded-sm">
+                  <View className="w-full h-[300px]">
+                    <View className="h-10 bg-[#003366] self-end items-center p-2 rounded-l-md">
                       <Text className="text-white font-BlockHead">{dataWithAddButton[activeIndex]?.title}</Text>
                     </View>
-                    <View className="flex-1  items-center">
-                      <TouchableOpacity onPress={() => router.push(`/(n8n)/${activeIndex}`)} className="flex-1 rounded-lg items-center justify-center overflow-hidden">
-                        <Animated.Image key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-48 h-48 object-contain rounded-t-full " />
-                      </TouchableOpacity>
-                      <View className="w-4/5 h-20 items-center justify-center p-3 bg-[#ffd700] rounded-lg ">
-                        <Text numberOfLines={3}>
-                          {dataWithAddButton[activeIndex]?.story_text.slice(0, 100) || 'No hay descripción disponible.'}
-                        </Text>
+                    <View className="flex-1 flex-row items-center justify-between ">
+                      <View className="w-3/6 ml-2 items-center justify-around p-3 bg-[#ffd700] rounded-lg border border-[#003366] border-l-8">
+                        <View className="flex-row flex-wrap gap-x-2 gap-y-2 w-full mb-4">
+                          <View className="flex-row rounded-full bg-white p-2 items-center border border-black">
+                            <User size={20} color="black" />
+                            <Text className="ml-2">{dataWithAddButton[activeIndex]?.character}</Text>
+                          </View>
+                          <View className="flex-row rounded-full bg-white p-2 items-center border border-black">
+                            <Castle size={20} color="black" />
+                            <Text className="ml-2 wrap">
+                              {dataWithAddButton[activeIndex]?.place.length > 19
+                                ? dataWithAddButton[activeIndex]?.place.slice(0, 16) + '...'
+                                : dataWithAddButton[activeIndex]?.place}
+                            </Text>
+                          </View>
+                        </View>
+                        <View className="mb-4">
+                          <Text numberOfLines={4}>
+                            {dataWithAddButton[activeIndex]?.story_text || 'No hay descripción disponible.'}
+                          </Text>
+                        </View>
+                        <CustomButton
+                          title="Revisar"
+                          textVariant="default"
+                          onPress={() => router.push(`/(n8n)/${activeIndex}`)}
+                        />
+
+                      </View>
+                      <View className="w-2/5 rounded-lg items-center justify-center overflow-hidden">
+                        <Animated.Image key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-full h-full object-contain" />
                       </View>
                     </View>
                   </View>
