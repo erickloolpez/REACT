@@ -73,7 +73,7 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, 
                   handleEnterPress(1);
                 }}
               >
-                <Text className="font-Waku text-gray-500">{comment}</Text>
+                <Text className="text-gray-500">{comment}</Text>
               </Pressable>
               <View className="w-20 h-20 items-center justify-center">
                 <ArrowRightLeft size={24} color="black" />
@@ -87,7 +87,7 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, 
                   handleEnterPress(1);
                 }}
               >
-                <Text className="font-Waku text-gray-500">{newWord}</Text>
+                <Text className=" text-gray-500">{newWord}</Text>
               </Pressable>
             </View>
             <TouchableOpacity
@@ -130,17 +130,17 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, 
             estimatedItemSize={50}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={() => (
-              <View className="bg-red-400 mb-6">
-                <View className="w-10 h-10 bg-blue-400 rounded-full items-center justify-center">
-                  <ArrowLeft
-                    size={24}
-                    color="black"
-                    onPress={() => {
-                      setShowList(false);
-                      handleEnterPress(0);
-                    }}
-                  />
-                </View>
+              <View className="mb-2">
+                <Pressable
+                  className="w-32 h-10  flex-row   rounded-lg items-center justify-center shadow-lg"
+                  onPress={() => {
+                    setShowList(false);
+                    handleEnterPress(0);
+                  }}
+                >
+                  <ArrowLeft size={24} color="#ffd700" />
+                  <Text className="ml-2 text-red-400">Volver atras</Text>
+                </Pressable>
               </View>
             )}
           />

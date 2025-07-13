@@ -2,10 +2,11 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import axios from 'axios';
 import { router, useLocalSearchParams } from 'expo-router';
-import { ArrowLeft } from 'lucide-react-native';
+import { ArrowLeft, Maximize2 } from 'lucide-react-native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
+  Dimensions,
   ImageBackground,
   Pressable,
   ScrollView,
@@ -14,6 +15,7 @@ import {
   View,
 } from 'react-native';
 import Animated, {
+  LinearTransition,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
@@ -26,6 +28,7 @@ import ModalFeedBack from '@/components/(n8n)/ModalFeedback';
 import CustomButton from '@/components/CustomButton';
 import { images } from '@/constants';
 import { useGlobalContext } from '@/context/GlobalProvider';
+import { Marquee } from '@animatereactnative/marquee';
 
 const N8n = () => {
   /* ─── Ruta & contexto ─────────────────────────────────────── */
@@ -38,6 +41,10 @@ const N8n = () => {
 
   const wordsDB = yourWords.map((w) => w.word.toLowerCase());
 
+  const { width } = Dimensions.get('window')
+  const _itemSize = width * 0.4
+  const _spacing = 8
+
   /* ─── Refs / estado ───────────────────────────────────────── */
   const bottomSheetModalRef = useRef<BottomSheet>(null);
   const swiperRef = useRef<Swiper>(null);
@@ -45,7 +52,7 @@ const N8n = () => {
   const [selectedWord, setSelectedWord] = useState('');
   const [newWord, setNewWord] = useState(wordsDB[0]);
   const [ready, setReady] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   /* ─── Animación personaje ─────────────────────────────────── */
   const move = useSharedValue(0);
@@ -75,12 +82,37 @@ const N8n = () => {
     () => wordsCleaned.filter((w) => wordsDB.includes(w)),
     [story.story_text],
   );
+  const storyWordsDB = useMemo(
+    () => yourWords.filter((w) => wordsCleaned.includes(w.word.toLowerCase())),
+    [story.story_text],
+  );
 
   /* ─── Abrir modal para cambiar palabra ────────────────────── */
   const openModalForWord = (word: string) => {
     setSelectedWord(word);
     bottomSheetModalRef.current?.present();
   };
+
+  /* ─── Change height picture ────────────────────── */
+  const changeHeight = () => {
+    setOpen(!open);
+  };
+
+  const _layout = LinearTransition.springify().damping(14);
+
+  function chunkArray(arr: string[], size: number) {
+    const chunked_arr = []
+    let index = 0
+    while (index < arr.length) {
+      chunked_arr.push(arr.slice(index, index + size))
+      index += size
+    }
+    return chunked_arr
+  }
+
+  const wordsSplitted = useMemo(() => chunkArray(storyWordsDB, Math.floor(storyWordsDB.length / 2)),
+    []
+  )
 
   /* ─── Guardar cambios ─────────────────────────────────────── */
   const diffFields = (orig: any, mod: any) => {
@@ -143,40 +175,69 @@ const N8n = () => {
 
         {/* Personaje */}
         <View
-          className={`flex-row justify-center ${loading ? 'flex-1' : ''} items-center`}
+          className={`flex-col justify-center ${!open ? 'flex-1' : 'hidden'} gap-y-10 `}
+          style={{
+            overflow: 'hidden',
+            transform: [{
+              rotate: '-4deg'
+            }]
+          }}
         >
-          <Animated.Image
-            source={images.steve}
-            className="w-40 h-64 object-contain"
-            style={imageStyle}
-          />
+          {
+            wordsSplitted.map((w, i) => (
+              <Marquee
+                speed={0.5}
+                spacing={_spacing}
+                key={`marquee-${i}`}
+                reverse={i % 2 !== 0}
+              >
+                <View style={{ flexDirection: 'row', gap: _spacing }}>
+                  {w.map((word, index) => (
+                    <View key={`word-${index}`} className=" w-44 h-20 bg-white border border-black p-4 rounded-lg justify-center " >
+                      <Text numberOfLines={2} className="text-black">{word.relation}</Text>
+                    </View>
+                  ))}
+                </View>
+              </Marquee>
+            ))
+          }
         </View>
 
         {/* Contenedor azul */}
-        <View className="flex-1 bg-[#003366] rounded-t-3xl overflow-hidden">
+        <Animated.View
+          layout={_layout}
+          className="flex-1 bg-[#003366] rounded-t-3xl overflow-hidden"
+        >
           <Swiper
             ref={swiperRef}
             loop={false}
             dot={<View className="w-8 h-1 mx-1 bg-slate-200 rounded-full" />}
             activeDot={<View className="w-8 h-1 mx-1 bg-[#FFD200] rounded-full" />}
           >
-            <View className="flex-1 p-6">
+            <View className="flex-1 relative p-6">
+              <Pressable
+                className="absolute top-4 right-6 "
+                onPress={changeHeight}
+              >
+                <Maximize2 size={24} color="#FFD200" />
+              </Pressable>
               {/* Campos editables */}
-              {(['title', 'character', 'place'] as const).map((field) => (
-                <View key={field} className="flex-row items-center h-10">
-                  <Text className="font-BlockHead text-white capitalize">
-                    {field}:{' '}
-                  </Text>
-                  <TextInput
-                    value={(story as any)[field]}
-                    onChangeText={(t) =>
-                      setStory((p: any) => ({ ...p, [field]: t }))
-                    }
-                    className="bg-white border border-black px-2 rounded-md font-BlockHead text-black text-base flex-1"
-                  />
-                </View>
-              ))}
-
+              <View className="flex-row flex-wrap gap-x-2 gap-y-1">
+                {(['title', 'character', 'place'] as const).map((field) => (
+                  <View key={field} className="flex-row items-center h-10 bg-white rounded-full border border-black px-2">
+                    <Text className=" text-yellow-600 capitalize text-lg font-bold">
+                      {field}:{' '}
+                    </Text>
+                    <TextInput
+                      value={(story as any)[field]}
+                      onChangeText={(t) =>
+                        setStory((p: any) => ({ ...p, [field]: t }))
+                      }
+                      className=" w-auto h-10 items-center pb-2 pr-3 px-2 rounded-md text-black text-base "
+                    />
+                  </View>
+                ))}
+              </View>
               {/* Texto + palabras clicables */}
               <ScrollView className="mt-4 h-44">
                 <Text className="text-white text-base leading-7">
@@ -215,9 +276,9 @@ const N8n = () => {
             setComment={setSelectedWord}
             setHadAnUpdate={() => { }}
           />
-        </View>
+        </Animated.View>
       </ImageBackground>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 
