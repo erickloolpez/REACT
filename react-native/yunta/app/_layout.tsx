@@ -30,7 +30,7 @@ export default function RootLayout() {
     <ClerkProvider tokenCache={tokenCache}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
-          <StatusBar hidden={true} />
+          <StatusBar />
           <GlobalProvider>
             <Stack>
               <Stack.Screen name="index" options={{ headerShown: false }} />

@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/material-top-tabs';
 import { ParamListBase, TabNavigationState } from '@react-navigation/native';
 import { withLayoutContext } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { Navigator } = createMaterialTopTabNavigator();
 export const MaterialTopTabs = withLayoutContext<
@@ -16,25 +17,28 @@ export const MaterialTopTabs = withLayoutContext<
 
 const Layout = () => {
   return (
-    <MaterialTopTabs
-      screenOptions={{
-        tabBarActiveTintColor: "#003366",
-        tabBarLabelStyle: { fontSize: 16, fontWeight: "bold" },
-        tabBarIndicatorStyle: { backgroundColor: "#003366", height: 3 },
-        tabBarStyle: {
-          height: 50,
-        }
-      }}
-    >
-      <MaterialTopTabs.Screen
-        name="chat"
-        options={{ title: "Chat" }}
-      />
-      <MaterialTopTabs.Screen
-        name="lessons"
-        options={{ title: "Lessons" }}
-      />
-    </MaterialTopTabs>
+    <SafeAreaView className="flex-1 bg-white">
+      <MaterialTopTabs
+        screenOptions={{
+          tabBarActiveTintColor: "#003366",
+          tabBarLabelStyle: { fontSize: 16, fontWeight: "bold" },
+          tabBarIndicatorStyle: { backgroundColor: "#2e669f", height: 4 },
+          tabBarStyle: {
+            height: 50,
+            backgroundColor: "#FFD200",
+          }
+        }}
+      >
+        <MaterialTopTabs.Screen
+          name="chat"
+          options={{ title: "Chat" }}
+        />
+        <MaterialTopTabs.Screen
+          name="lessons"
+          options={{ title: "Lessons" }}
+        />
+      </MaterialTopTabs>
+    </SafeAreaView>
   )
 }
 export default Layout

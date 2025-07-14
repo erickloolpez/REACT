@@ -5,11 +5,9 @@ import { generateAPIUrl } from '@/utils/utils';
 import { useChat } from '@ai-sdk/react';
 import { fetch as expoFetch } from 'expo/fetch';
 import React from 'react';
-import { Dimensions, ImageBackground, KeyboardAvoidingView, Platform, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Dimensions, ImageBackground, KeyboardAvoidingView, Platform, Text, View } from 'react-native';
 
 const { height: screenHeight } = Dimensions.get('window');
-const _tabBottomHeight = 90;
 const _tabTopHeight = 50
 
 const Notes = () => {
@@ -20,24 +18,55 @@ const Notes = () => {
     onError: error => console.error(error, 'ERROR'),
   });
 
-  return (
-    <SafeAreaView edges={'top'} className="flex-1">
-      <ImageBackground source={images.bgNotes} className="flex-1">
-        <View className="w-full relative" style={{ height: screenHeight - _tabBottomHeight - _tabTopHeight }}>
-          <View className="flex-1 px-4 py-4" >
-            <MessageList messages={messages} />
-          </View>
+  const templateMessages = [
+    {
+      role: 'system',
+      content: 'You are a helpful assistant.',
+    },
+    {
+      role: 'user',
+      content: 'Hello, who are you?',
+    },
+    {
+      role: 'assistant',
+      content: 'I am an AI assistant, here to help you with your questions.',
+    },
+    {
+      role: 'user',
+      content: 'I am an AI assistant, here to help you with your questions.',
+    },
+  ];
 
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={50}
-            className="w-full h-12 justify-end"
-          >
-            <ChatInput onSendMessage={handleInputChange} input={input} handleSubmit={handleSubmit} isLoading={false} />
-          </KeyboardAvoidingView>
+  return (
+    <ImageBackground source={images.bgLessons} className="flex-1">
+      <View className="flex-1 w-full relative" >
+        <View className="flex-1 items-center justify-start" >
+          <MessageList messages={messages} />
         </View>
-      </ImageBackground>
-    </SafeAreaView>
+
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={90}
+          className="w-full absolute h-12 justify-end"
+          style={{
+            bottom: _tabTopHeight,
+            left: 0,
+            right: 0,
+          }}
+        >
+          <View className="flex-row flex-wrap gap-2 items-center justify-center">
+            {
+              templateMessages.map((item, index) => (
+                <View className="w-[40%] h-24 items-center justify-center bg-white">
+                  <Text>{item.role}</Text>
+                </View>
+              ))
+            }
+          </View>
+          <ChatInput onSendMessage={handleInputChange} input={input} handleSubmit={handleSubmit} isLoading={false} />
+        </KeyboardAvoidingView>
+      </View>
+    </ImageBackground>
   )
 }
 
