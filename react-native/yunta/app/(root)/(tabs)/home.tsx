@@ -102,8 +102,8 @@ const Home = () => {
   }, [user])
 
   return (
-    <SafeAreaView className="flex-1">
-      <ImageBackground source={images.bgHome} className="flex-1">
+    <ImageBackground source={images.bgHome} className="flex-1">
+      <SafeAreaView className="flex-1">
         <View style={{ flex: 1 }}>
           <Pressable
             onPress={() => setOpenModal(true)}
@@ -213,69 +213,69 @@ const Home = () => {
           </View>
         </View>
 
-      </ImageBackground>
-      <ReactNativeModal
-        isVisible={openModal}
-        backdropTransitionOutTiming={1}
-        onModalHide={() => {
-          // if (verification.state === 'success') setShowSuccessModal(true)
-        }
-        }
-        style={{ marginBottom: customHeight ? 240 : 0 }}
-      >
-        <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
-          <View className="w-full h-10  items-end justify-center">
-            <Pressable
-              onPress={() => {
-                setCustomHeight(false)
-                setOpenModal(false)
-              }
-              }
-              className="w-8 h-8 bg-red-400 rounded-lg justify-center items-center ">
-              <XIcon size={15} color="#fff" />
-            </Pressable>
-          </View>
-          <View className="w-full h-auto">
-            <View className={`bg-blue-400 rounded-full w-30 h-30 items-center justify-center overflow-hidden self-center border-2 border-black`}>
-              <Image source={icons.catIcon} className="w-20 h-20" resizeMode="contain" />
-            </View>
-            <Text className="text-2xl font-BlockHead mb-2 ">Perfil</Text>
-          </View>
-          <Text className="font-Waku mb-5 mt-2">Actualiza tu nombre de usuario o correo</Text>
-          <InputField
-            label="Username"
-            value={copyOfUser?.username || ''}
-            onChangeText={(text) => setCopyOfUser({ ...copyOfUser, username: text })}
-            placeholder="Escribe tu nombre de usuario"
-            placeholderTextColor="#8c8c8c"
-            onFocus={() => setCustomHeight(true)}
-            onSubmitEditing={() => setCustomHeight(false)}
-          // icon={icons.lock}
-          // value={verification.code}
-          // onChangeText={(code) => setVerification({ ...verification, code })}
-          />
-
-          {/* {verification.error && (
-              <Text className="text-red-500 text-sm mt-1">
-                {verification.error}
-              </Text>
-            )} */}
-          {
-            hasChanges() && (
-              <CustomButton
-                title="Guardar Cambios"
-                textVariant="default"
-                onPress={saveYourChanges}
-                className="mt-5 bg-success-500"
-              />
-            )
+        <ReactNativeModal
+          isVisible={openModal}
+          backdropTransitionOutTiming={1}
+          onModalHide={() => {
+            // if (verification.state === 'success') setShowSuccessModal(true)
           }
+          }
+          style={{ marginBottom: customHeight ? 240 : 0 }}
+        >
+          <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
+            <View className="w-full h-10  items-end justify-center">
+              <Pressable
+                onPress={() => {
+                  setCustomHeight(false)
+                  setOpenModal(false)
+                }
+                }
+                className="w-8 h-8 bg-red-400 rounded-lg justify-center items-center ">
+                <XIcon size={15} color="#fff" />
+              </Pressable>
+            </View>
+            <View className="w-full h-auto">
+              <View className={`bg-blue-400 rounded-full w-30 h-30 items-center justify-center overflow-hidden self-center border-2 border-black`}>
+                <Image source={icons.catIcon} className="w-20 h-20" resizeMode="contain" />
+              </View>
+              <Text className="text-2xl font-BlockHead mb-2 ">Perfil</Text>
+            </View>
+            <Text className="font-Waku mb-5 mt-2">Actualiza tu nombre de usuario o correo</Text>
+            <InputField
+              label="Username"
+              value={copyOfUser?.username || ''}
+              onChangeText={(text) => setCopyOfUser({ ...copyOfUser, username: text })}
+              placeholder="Escribe tu nombre de usuario"
+              placeholderTextColor="#8c8c8c"
+              onFocus={() => setCustomHeight(true)}
+              onSubmitEditing={() => setCustomHeight(false)}
+            // icon={icons.lock}
+            // value={verification.code}
+            // onChangeText={(code) => setVerification({ ...verification, code })}
+            />
+
+            {/* {verification.error && (
+              <Text className="text-red-500 text-sm mt-1">
+              {verification.error}
+              </Text>
+              )} */}
+            {
+              hasChanges() && (
+                <CustomButton
+                  title="Guardar Cambios"
+                  textVariant="default"
+                  onPress={saveYourChanges}
+                  className="mt-5 bg-success-500"
+                />
+              )
+            }
 
 
-        </View>
-      </ReactNativeModal>
+          </View>
+        </ReactNativeModal>
 
-    </SafeAreaView >
+      </SafeAreaView >
+    </ImageBackground>
   )
 }
 

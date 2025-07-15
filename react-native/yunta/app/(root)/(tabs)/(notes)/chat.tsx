@@ -1,5 +1,8 @@
 import ChatInput from '@/components/(chat)/ChatInput';
 import MessageList from '@/components/(chat)/MessageList';
+import CircleShape from '@/components/CircleShape';
+import LineShape from '@/components/LineShape';
+import TriangleShape from '@/components/TriangleShape';
 import { images } from '@/constants';
 import { generateAPIUrl } from '@/utils/utils';
 import { useChat } from '@ai-sdk/react';
@@ -9,6 +12,7 @@ import { Dimensions, ImageBackground, KeyboardAvoidingView, Platform, Text, View
 
 const { height: screenHeight } = Dimensions.get('window');
 const _tabTopHeight = 50
+const _bottomHeight = 90
 
 const Notes = () => {
 
@@ -20,20 +24,28 @@ const Notes = () => {
 
   const templateMessages = [
     {
-      role: 'system',
-      content: 'You are a helpful assistant.',
+      role: 'Hola 👋',
+      triangle: { top: 10, left: 10, rotate: '45deg' },
+      circle: { bottom: 10, right: 10 },
+      line: { bottom: 10, left: 10, rotate: '135deg' },
     },
     {
-      role: 'user',
-      content: 'Hello, who are you?',
+      role: '¿Cuál fue mi último tema de estudio?',
+      triangle: { bottom: 5, right: 0, rotate: '0deg' },
+      circle: { top: 2, left: 5 },
+      line: { bottom: 0, left: 10, rotate: '180deg' },
     },
     {
-      role: 'assistant',
-      content: 'I am an AI assistant, here to help you with your questions.',
+      role: 'Cuando es mi proxima leccion?',
+      triangle: { top: 8, right: 4, rotate: '240deg' },
+      circle: { bottom: 5, left: 10 },
+      line: { bottom: 5, right: 5, rotate: '180deg' },
     },
     {
-      role: 'user',
-      content: 'I am an AI assistant, here to help you with your questions.',
+      role: 'Como estas 🤖',
+      triangle: { bottom: 8, left: 8, rotate: '15deg' },
+      circle: { bottom: 8, right: 8 },
+      line: { top: 8, right: 4, rotate: '140deg' },
     },
   ];
 
@@ -46,19 +58,56 @@ const Notes = () => {
 
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={90}
+          keyboardVerticalOffset={70}
           className="w-full absolute h-12 justify-end"
           style={{
-            bottom: _tabTopHeight,
+            bottom: _bottomHeight,
             left: 0,
             right: 0,
           }}
         >
-          <View className="flex-row flex-wrap gap-2 items-center justify-center">
+          <View className="flex-row flex-wrap gap-2 items-center justify-center mb-8">
             {
               templateMessages.map((item, index) => (
-                <View className="w-[40%] h-24 items-center justify-center bg-white">
-                  <Text>{item.role}</Text>
+                <View key={index} className="w-[40%] relative h-24 items-center justify-center bg-white rounded-lg">
+                  {/* Triángulo */}
+                  <TriangleShape
+                    width={20}
+                    height={20}
+                    direction="up"
+                    fillColor="#FFD700"
+                    strokeColor="#003366"
+                    style={{
+                      position: 'absolute',
+                      ...item.triangle,
+                      transform: [{ rotate: item.triangle?.rotate || '0deg' }],
+                    }}
+                  />
+
+                  {/* Círculo */}
+                  <CircleShape
+                    size={24}
+                    fillColor="#FFD700"
+                    strokeColor="#003366"
+                    strokeWidth={2}
+                    style={{ position: 'absolute', ...item.circle }}
+                  />
+
+                  {/* Línea */}
+                  <LineShape
+                    length={30}
+                    thickness={6}
+                    strokeColor="#FFD700"
+                    direction="horizontal"
+                    style={{
+                      position: 'absolute',
+                      ...item.line,
+                      transform: [{ rotate: item.line?.rotate || '0deg' }],
+                    }}
+                  />
+
+                  {/* Texto */}
+                  <Text className="text-center">{item.role}</Text>
                 </View>
               ))
             }

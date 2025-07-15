@@ -17,10 +17,10 @@ export const MaterialTopTabs = withLayoutContext<
 
 const Layout = () => {
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-[#FFD200]">
       <MaterialTopTabs
         screenOptions={{
-          tabBarActiveTintColor: "#003366",
+          tabBarActiveTintColor: "blue",
           tabBarLabelStyle: { fontSize: 16, fontWeight: "bold" },
           tabBarIndicatorStyle: { backgroundColor: "#2e669f", height: 4 },
           tabBarStyle: {
