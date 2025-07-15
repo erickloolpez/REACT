@@ -22,6 +22,8 @@ const Notes = () => {
     onError: error => console.error(error, 'ERROR'),
   });
 
+  const [hideOptions, setHideOptions] = React.useState(false);
+
   const templateMessages = [
     {
       role: 'Hola 👋',
@@ -66,7 +68,7 @@ const Notes = () => {
             right: 0,
           }}
         >
-          <View className="flex-row flex-wrap gap-2 items-center justify-center mb-8">
+          <View className={` ${hideOptions || messages.length > 0 ? 'hidden' : 'flex-row'} flex-wrap gap-2 items-center justify-center mb-8`}>
             {
               templateMessages.map((item, index) => (
                 <View key={index} className="w-[40%] relative h-24 items-center justify-center bg-white rounded-lg">
@@ -112,7 +114,7 @@ const Notes = () => {
               ))
             }
           </View>
-          <ChatInput onSendMessage={handleInputChange} input={input} handleSubmit={handleSubmit} isLoading={false} />
+          <ChatInput onSendMessage={handleInputChange} input={input} handleSubmit={handleSubmit} isLoading={false} setHideOptions={setHideOptions} />
         </KeyboardAvoidingView>
       </View>
     </ImageBackground>

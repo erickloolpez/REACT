@@ -27,7 +27,7 @@ const MessageList = ({ messages }: Props) => {
             )}
             estimatedItemSize={400}
             contentContainerStyle={{
-              paddingBottom: 100,
+              paddingBottom: 220,
               paddingTop: 20,
               paddingHorizontal: 10,
             }}

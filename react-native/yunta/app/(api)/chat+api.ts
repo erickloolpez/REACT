@@ -20,7 +20,13 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
   const result = streamText({
     model: openai('gpt-4o-mini'),
-    messages,
+    messages: [
+      {
+        role: 'system',
+        content: 'Responde de forma breve y concisa, máximo 4 oraciones.',
+      },
+      ...messages,
+    ],
     tools: [searchRAGTool],
     toolChoice: 'auto',
     maxSteps: 5,

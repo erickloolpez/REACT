@@ -78,6 +78,14 @@ export default function TabTwoScreen() {
           <Text className="text-red-400" >LINK</Text>
         </Link>
       </Collapsible>
+      <Collapsible title="ranking">
+        <ThemedText>
+          This app use something incredible to present the horaries.
+        </ThemedText>
+        <Link href={'/raking'} style={{ marginTop: 8 }}>
+          <Text className="text-red-400" >LINK</Text>
+        </Link>
+      </Collapsible>
     </ParallaxScrollView >
   );
 }
