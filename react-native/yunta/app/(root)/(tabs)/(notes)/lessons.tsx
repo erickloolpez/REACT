@@ -2,15 +2,19 @@ import CustomButton from '@/components/CustomButton';
 import { carrusel, images } from '@/constants';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { BlurView } from 'expo-blur';
+import { BadgeCheck } from 'lucide-react-native';
 import React, { useEffect, useState } from 'react';
 import {
   Image,
   ImageBackground,
   Pressable,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
+import { ConfettiMethods, PIConfetti } from 'react-native-fast-confetti';
 import { FlatList } from 'react-native-gesture-handler';
+import ReactNativeModal from 'react-native-modal';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -43,8 +47,10 @@ const Lessons = () => {
   const [answered, setAnswered] = useState(false);
   const progress = useSharedValue(0);
   const [topic, setTopic] = useState(''); // Estado para el tema actual
+  const [openModal, setOpenModal] = useState(false);
 
   const current = questions[currentQuestion];
+  const ref = React.useRef<ConfettiMethods>(null);
 
   // ✅ Actualiza la barra de progreso animada
   useEffect(() => {
@@ -87,7 +93,9 @@ const Lessons = () => {
       setSelectedOption(null);
       setAnswered(false);
     } else {
-      resetQuiz(); // Reinicia el quiz al finalizar
+      setOpenModal(true)
+      ref.current?.restart()
+      // resetQuiz(); // Reinicia el quiz al finalizar
     }
   };
 
@@ -163,6 +171,35 @@ const Lessons = () => {
           </View>
         )
       }
+      <PIConfetti
+        ref={ref}
+        colors={['#FFD700', '#FF6347', '#4682B4']}
+        blastPosition={{ x: 180, y: 0 }}
+        fallDuration={3500}
+      />
+      <ReactNativeModal
+        isVisible={openModal}
+        backdropTransitionOutTiming={2}
+      >
+        <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px] items-center justify-around ">
+          <View className="w-16 h-16 rounded-full items-center justify-center">
+            <BadgeCheck size={36} color="green" />
+          </View>
+          <Text className="text-center font-bold">Has completado tu lección del día. Tu próxima lección te será recordada por correo electrónico.</Text>
+          <View className="flex-row w-full justify-around">
+            <TouchableOpacity
+              onPress={() => {
+                resetQuiz(); // Reinicia el quiz al finalizar
+                setOpenModal(false)
+                setTopic('') // Resetea el tema
+              }}
+              className="w-40 p-4 justify-center items-center rounded-lg bg-green-400"
+            >
+              <Text>Confirmar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ReactNativeModal>
     </ImageBackground>
   );
 };

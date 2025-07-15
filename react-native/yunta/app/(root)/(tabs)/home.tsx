@@ -165,7 +165,7 @@ const Home = () => {
                           </View>
                         </View>
                         <View className="mb-4">
-                          <Text numberOfLines={4}>
+                          <Text numberOfLines={2}>
                             {dataWithAddButton[activeIndex]?.story_text || 'No hay descripción disponible.'}
                           </Text>
                         </View>

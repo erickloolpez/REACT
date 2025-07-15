@@ -18,4 +18,7 @@ declare interface InputFieldProps extends TextInputProps {
   inputStyle?: string;
   iconStyle?: string;
   className?: string;
+  setCustomHeight?: (height: boolean) => void;
+  showPassword?: boolean;
+  setShowPassword?: (show: boolean) => void;
 }

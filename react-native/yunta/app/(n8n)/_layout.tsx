@@ -6,6 +6,7 @@ const Layout = () => {
   return (
     <Stack>
       <Stack.Screen name="[query]" options={{ headerShown: false }} />
+      <Stack.Screen name="history" options={{ headerShown: false }} />
     </Stack>
   )
 }

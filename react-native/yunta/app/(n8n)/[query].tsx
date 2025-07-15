@@ -159,44 +159,46 @@ const N8n = () => {
 
   /* ─── Render ──────────────────────────────────────────────── */
   return (
-    <SafeAreaView className="flex-1">
-      <ImageBackground source={images.bgHome} className="flex-1">
+    <ImageBackground source={images.bgHome} className="flex-1">
+      <SafeAreaView className="flex-1">
         {/* Header */}
-        <Pressable
+        <View
           className="h-24 flex-row items-center justify-center relative"
-          onPress={() =>
-            router.back()
-          }
         >
-          <View className="absolute left-3 bg-[#003366] p-3 rounded-full">
+          <Pressable
+            className="absolute left-3 bg-[#003366] p-3 rounded-full"
+            onPress={() =>
+              router.back()
+            }
+          >
             <ArrowLeft size={28} color="#fff" />
-          </View>
-          <Text className="font-BlockHead text-[#FFD200] text-2xl">
+          </Pressable>
+          <Text className="font-BlockHead bg-white rounded-lg p-2  text-2xl">
             Tu Historia
           </Text>
-        </Pressable>
+        </View>
 
         {/* Main ideas */}
         <View
           className={`flex-col justify-center ${!open ? 'flex-1' : 'hidden'} gap-y-6 `}
           style={{
             overflow: 'hidden',
-            transform: [{
-              rotate: '-4deg'
-            }]
+            // transform: [{
+            //   rotate: '-4deg'
+            // }]
           }}
         >
           {
             wordsSplitted.map((w, i) => (
               <Marquee
-                speed={0.5}
+                speed={0.3}
                 spacing={_spacing}
                 key={`marquee-${i}`}
                 reverse={i % 2 !== 0}
               >
                 <View style={{ flexDirection: 'row', gap: _spacing }}>
                   {w.map((word, index) => (
-                    <View key={`word-${index}`} className=" relative w-52 h-24 bg-white border border-black p-4 rounded-lg justify-center " >
+                    <View key={`word-${index}`} className=" relative w-56  bg-white border border-black p-4 rounded-lg justify-center " >
                       <Quote size={24} color="black" />
                       <Text numberOfLines={4} className="text-black">{word.relation}</Text>
                     </View>
@@ -304,8 +306,8 @@ const N8n = () => {
             setHadAnUpdate={() => { }}
           />
         </Animated.View>
-      </ImageBackground>
-    </SafeAreaView >
+      </SafeAreaView >
+    </ImageBackground>
   );
 };
 
