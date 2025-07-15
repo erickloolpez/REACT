@@ -165,24 +165,22 @@ export default function ModalFeedBack({
 
               {/* Formulario */}
               <View className="w-full mt-4">
-                <Text className="font-Waku text-gray-500">Nombre</Text>
+                <Text className="text-gray-500 font-bold">Nombre</Text>
                 <BottomSheetTextInput
                   ref={nameRef}
                   value={name}
                   onChangeText={setName}
-                  className="font-Waku"
                   style={inputStyle}
                   placeholder="Escribe un nombre..."
                   placeholderTextColor="gray"
                   onSubmitEditing={() => { }}
                 />
 
-                <Text className="font-Waku text-gray-500 mt-4">Asociación</Text>
+                <Text className=" text-gray-500 font-bold mt-4">Asociación</Text>
                 <BottomSheetTextInput
                   ref={relationRef}
                   value={relation}
                   onChangeText={setRelation}
-                  className="font-Waku"
                   style={inputStyle}
                   placeholder="Escribe una asociación..."
                   placeholderTextColor="gray"

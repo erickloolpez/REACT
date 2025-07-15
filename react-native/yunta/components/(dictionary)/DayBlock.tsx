@@ -94,17 +94,27 @@ export default function DayBlock({
       ))}
 
       {/* Historias relacionadas */}
-      <Text className="font-Waku">Historias</Text>
+      <Text className="font-Waku">Historias en las que esta presente:</Text>
       <View className="flex-row flex-wrap gap-1">
-        {day.fetchedRelations.map((story, index) => (
-          <View
-            key={`story-${index}`}
-            className="p-2 border border-black rounded-full"
-            style={{ backgroundColor: colors[index % colors.length] }}
-          >
-            <Text className="font-Waku text-white">{story.title}</Text>
-          </View>
-        ))}
+        {
+          day.fetchedRelations.length > 0 ? (
+            day.fetchedRelations.map((story, index) => (
+              <View
+                key={`story-${index}`}
+                className="p-2 border border-black rounded-full"
+                style={{ backgroundColor: colors[index % colors.length] }}
+              >
+                <Text className="font-Waku text-white">{story.title}</Text>
+              </View>
+            ))
+          ) : (
+            <View
+              className="p-2 border border-black rounded-full"
+            >
+              <Text className="font-Waku text-red-400">Ninguna</Text>
+            </View>
+          )
+        }
       </View>
 
       {/* Botones */}

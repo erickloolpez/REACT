@@ -122,7 +122,7 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, 
                   handleEnterPress(0);
                 }}
               >
-                <Text className="font-Waku">{item}</Text>
+                <Text >{item}</Text>
               </Pressable>
             )}
             contentContainerStyle={{ paddingBottom: 100 }}
@@ -132,7 +132,7 @@ const ModalFeedBack = ({ bottomSheetModalRef, comment, filterWords, storyWords, 
             ListHeaderComponent={() => (
               <View className="mb-2">
                 <Pressable
-                  className="w-32 h-10  flex-row   rounded-lg items-center justify-center shadow-lg"
+                  className="w-32 h-10 flex-row  rounded-lg items-center justify-center shadow-lg"
                   onPress={() => {
                     setShowList(false);
                     handleEnterPress(0);

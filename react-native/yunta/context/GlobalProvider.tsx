@@ -84,6 +84,19 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
     }
   }
 
+  const deleteStory = async (storyId: number) => {
+    console.log('Eliminando historia con ID:', storyId);
+    try {
+      const response = await axios.delete(`http://192.168.100.10:3003/story-details/${storyId}`)
+      console.log('Historia eliminada con éxito:', response.data);
+      setStories((prev) => prev.filter((story) => story.story_details_id !== storyId));
+      return { story_details_id: response.data.story_details_id }; // Devuelve el ID de la historia eliminada
+    } catch (err) {
+      console.error('❌ Error eliminando historia:', err);
+      return null;
+    }
+  }
+
   const updateWords = async () => {
     try {
       const response = await axios.get('http://192.168.100.10:3003/associations/');
@@ -216,6 +229,7 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
       n8nData,
       setN8nData,
       updateStories,
+      deleteStory
     }}>
       {children}
     </GlobalContext.Provider>

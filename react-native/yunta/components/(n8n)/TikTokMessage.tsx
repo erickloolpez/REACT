@@ -1,7 +1,6 @@
-import { MAX_MESSAGES } from '@/constants/chat'
 import React from 'react'
 import { FlatListProps, ListRenderItem } from 'react-native'
-import Animated, { FadeInDown, interpolate, LinearTransition, useAnimatedStyle, useDerivedValue, withSpring } from 'react-native-reanimated'
+import Animated, { FadeInDown, LinearTransition, useAnimatedStyle, useDerivedValue, withSpring } from 'react-native-reanimated'
 
 type TikTokMessageProps<T> = FlatListProps<T> & {
   renderItem: ListRenderItem<T>
@@ -14,7 +13,7 @@ function AnimatedItem({ index, children }: { index: number, children: React.Reac
 
   const stylez = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(newIndex.value, [0, 1], [1, 1 - 1 / MAX_MESSAGES])
+      // opacity: interpolate(newIndex.value, [0, 1], [1, 1 - 1 / MAX_MESSAGES])
     }
   })
   return (

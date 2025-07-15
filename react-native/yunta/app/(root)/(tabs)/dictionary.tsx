@@ -241,7 +241,7 @@ const Dictionary = () => {
                 value={query}
                 onChangeText={setQuery}
                 onSubmitEditing={submitQuery}
-                className="flex-1 h-10 p-2 font-Waku"
+                className="flex-1 h-10 p-2"
                 placeholder="Busca una palabra..."
                 placeholderTextColor="#8c8c8c"
               />

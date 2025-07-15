@@ -6,7 +6,7 @@ import { carrusel, icons, images } from '@/constants'
 import { useGlobalContext } from '@/context/GlobalProvider'
 import axios from 'axios'
 import { router } from 'expo-router'
-import { Castle, Origami, User, XIcon } from 'lucide-react-native'
+import { Castle, LogOut, Origami, User, XIcon } from 'lucide-react-native'
 import React, { useEffect, useState } from 'react'
 import { Alert, Dimensions, Image, ImageBackground, Pressable, Text, TouchableOpacity, View } from 'react-native'
 import ReactNativeModal from 'react-native-modal'
@@ -39,15 +39,13 @@ const Home = () => {
 
   const scale = useSharedValue(1)
   useEffect(() => {
-    if (activeIndex === 3) {
-      // Inicia animación infinita
+    if (activeIndex === dataWithAddButton.length - 1) {
       scale.value = withRepeat(
         withTiming(1.2, { duration: 650 }),
         -1,
         true
       );
     } else {
-      // Detiene la animación y vuelve a escala 1
       scale.value = withTiming(1, { duration: 200 });
     }
   }, [activeIndex]);
@@ -105,6 +103,10 @@ const Home = () => {
     <ImageBackground source={images.bgHome} className="flex-1">
       <SafeAreaView className="flex-1">
         <View style={{ flex: 1 }}>
+          <View className="absolute w-14 h-14 bg-[#2e669f] rounded-full items-center justify-center top-16 right-4">
+            <LogOut size={28} color="#fff" onPress={() => { }} />
+          </View>
+
           <Pressable
             onPress={() => setOpenModal(true)}
             className=""
@@ -176,7 +178,7 @@ const Home = () => {
                         />
 
                       </View>
-                      <View className="w-2/5 rounded-lg items-center justify-center overflow-hidden">
+                      <View className="w-2/5 rounded-l-lg items-center justify-center overflow-hidden">
                         <Animated.Image key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-full h-full object-contain" />
                       </View>
                     </View>
