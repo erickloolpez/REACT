@@ -147,12 +147,15 @@ const Home = () => {
               ) :
                 (
                   <View className="w-full h-[300px]">
-                    <View className="h-10 bg-[#003366] self-end items-center p-2 rounded-l-md">
-                      <Text className="text-white font-BlockHead">{dataWithAddButton[activeIndex]?.title}</Text>
-                    </View>
-                    <View className="flex-1 flex-row items-center justify-between ">
+                    <View className="flex-1 flex-row items-center justify-center ">
                       <View className="w-3/6 ml-2 items-center justify-around p-3 bg-[#ffd700] rounded-lg border border-[#003366] border-l-8">
-                        <View className="flex-row flex-wrap gap-x-2 gap-y-2 w-full mb-4">
+                        <View className="h-10 bg-[#003366] self-end items-center p-2 rounded-l-md">
+                          <Text className="text-white font-BlockHead">{dataWithAddButton[activeIndex]?.title}</Text>
+                        </View>
+                        <View className="w-16 h-16 rounded-full items-center justify-center overflow-hidden mt-2">
+                          <Animated.Image key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-full h-full object-contain" />
+                        </View>
+                        <View className="flex-row flex-wrap gap-x-2 gap-y-3 w-full mb-4 mt-2">
                           <View className="flex-row rounded-full bg-white p-2 items-center border border-black">
                             <User size={20} color="black" />
                             <Text className="ml-2">{dataWithAddButton[activeIndex]?.character}</Text>
@@ -177,9 +180,6 @@ const Home = () => {
                           onPress={() => router.push(`/(n8n)/${activeIndex}`)}
                         />
 
-                      </View>
-                      <View className="w-2/5 rounded-l-lg items-center justify-center overflow-hidden">
-                        <Animated.Image key={`image-${activeIndex}`} source={carrusel[activeIndex]} className="w-full h-full object-contain" />
                       </View>
                     </View>
                   </View>
